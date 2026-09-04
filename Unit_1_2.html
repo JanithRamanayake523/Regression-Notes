@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>1&nbsp; Review material – Math 3330: Regression Notes</title>
+<title>2&nbsp; Review of introductory statistics – Math 3330: Regression Notes</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -64,7 +64,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./index.html" rel="prev">
+<link href="./Unit_1_3.html" rel="next">
+<link href="./Unit_1_1.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -142,7 +143,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./Unit_1.html"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Review material</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./Unit_1_1.html">Review material</a></li><li class="breadcrumb-item"><a href="./Unit_1_2.html"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Review of introductory statistics</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -173,12 +174,41 @@ window.Quarto = {
  <span class="menu-text">Preface</span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">Review material</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./Unit_1.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Review material</span></span></a>
+  <a href="./Unit_1_1.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Review of random variables</span></span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Unit_1_2.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Review of introductory statistics</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Unit_1_3.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Review of matrices and linear algebra</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Unit_1_4.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Review Random Vectors</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
     </ul>
     </div>
 </nav>
@@ -189,45 +219,19 @@ window.Quarto = {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#review-of-random-variables" id="toc-review-of-random-variables" class="nav-link active" data-scroll-target="#review-of-random-variables"><span class="header-section-number">1.1</span> Review of random variables</a>
-  <ul class="collapse">
-  <li><a href="#discrete-random-variables" id="toc-discrete-random-variables" class="nav-link" data-scroll-target="#discrete-random-variables"><span class="header-section-number">1.1.1</span> Discrete Random Variables</a></li>
-  <li><a href="#continuous-random-variables" id="toc-continuous-random-variables" class="nav-link" data-scroll-target="#continuous-random-variables"><span class="header-section-number">1.1.2</span> Continuous Random Variables</a></li>
-  <li><a href="#properties-of-random-variables" id="toc-properties-of-random-variables" class="nav-link" data-scroll-target="#properties-of-random-variables"><span class="header-section-number">1.1.3</span> Properties of Random Variables</a></li>
-  <li><a href="#useful-properties-of-normal-and-related-random-variables" id="toc-useful-properties-of-normal-and-related-random-variables" class="nav-link" data-scroll-target="#useful-properties-of-normal-and-related-random-variables"><span class="header-section-number">1.1.4</span> Useful properties of normal and related random variables</a></li>
-  <li><a href="#central-limit-theorem" id="toc-central-limit-theorem" class="nav-link" data-scroll-target="#central-limit-theorem"><span class="header-section-number">1.1.5</span> Central Limit Theorem</a></li>
-  <li><a href="#homework-stop-1" id="toc-homework-stop-1" class="nav-link" data-scroll-target="#homework-stop-1"><span class="header-section-number">1.1.6</span> Homework stop 1</a></li>
-  </ul></li>
-  <li><a href="#review-of-introductory-statistics" id="toc-review-of-introductory-statistics" class="nav-link" data-scroll-target="#review-of-introductory-statistics"><span class="header-section-number">1.2</span> Review of introductory statistics</a>
-  <ul class="collapse">
-  <li><a href="#basic-premise-of-statistics" id="toc-basic-premise-of-statistics" class="nav-link" data-scroll-target="#basic-premise-of-statistics"><span class="header-section-number">1.2.1</span> Basic premise of statistics</a></li>
-  <li><a href="#confidence-intervals" id="toc-confidence-intervals" class="nav-link" data-scroll-target="#confidence-intervals"><span class="header-section-number">1.2.2</span> Confidence intervals</a></li>
-  <li><a href="#hypothesis-tests" id="toc-hypothesis-tests" class="nav-link" data-scroll-target="#hypothesis-tests"><span class="header-section-number">1.2.3</span> Hypothesis tests</a></li>
-  <li><a href="#homework-stop-2" id="toc-homework-stop-2" class="nav-link" data-scroll-target="#homework-stop-2"><span class="header-section-number">1.2.4</span> Homework stop 2</a></li>
-  </ul></li>
-  <li><a href="#review-of-matrices-and-linear-algebra" id="toc-review-of-matrices-and-linear-algebra" class="nav-link" data-scroll-target="#review-of-matrices-and-linear-algebra"><span class="header-section-number">1.3</span> Review of matrices and linear algebra</a>
-  <ul class="collapse">
-  <li><a href="#matrix-properties" id="toc-matrix-properties" class="nav-link" data-scroll-target="#matrix-properties"><span class="header-section-number">1.3.1</span> Matrix properties</a></li>
-  <li><a href="#important-identities" id="toc-important-identities" class="nav-link" data-scroll-target="#important-identities"><span class="header-section-number">1.3.2</span> Important identities</a></li>
-  <li><a href="#homework-stop-3" id="toc-homework-stop-3" class="nav-link" data-scroll-target="#homework-stop-3"><span class="header-section-number">1.3.3</span> Homework stop 3</a></li>
-  </ul></li>
-  <li><a href="#review-random-vectors" id="toc-review-random-vectors" class="nav-link" data-scroll-target="#review-random-vectors"><span class="header-section-number">1.4</span> Review Random Vectors</a>
-  <ul class="collapse">
-  <li><a href="#definition-of-random-vectors" id="toc-definition-of-random-vectors" class="nav-link" data-scroll-target="#definition-of-random-vectors"><span class="header-section-number">1.4.1</span> Definition of random vectors</a></li>
-  <li><a href="#expected-value-and-covariance" id="toc-expected-value-and-covariance" class="nav-link" data-scroll-target="#expected-value-and-covariance"><span class="header-section-number">1.4.2</span> Expected Value and Covariance</a></li>
-  <li><a href="#properties-of-expected-value-and-covariance" id="toc-properties-of-expected-value-and-covariance" class="nav-link" data-scroll-target="#properties-of-expected-value-and-covariance"><span class="header-section-number">1.4.3</span> Properties of expected value and covariance</a></li>
-  <li><a href="#multivariate-normal-distribution" id="toc-multivariate-normal-distribution" class="nav-link" data-scroll-target="#multivariate-normal-distribution"><span class="header-section-number">1.4.4</span> Multivariate normal distribution</a></li>
-  <li><a href="#homework-stop-4" id="toc-homework-stop-4" class="nav-link" data-scroll-target="#homework-stop-4"><span class="header-section-number">1.4.5</span> Homework stop 4</a></li>
-  </ul></li>
+  <li><a href="#basic-premise-of-statistics" id="toc-basic-premise-of-statistics" class="nav-link active" data-scroll-target="#basic-premise-of-statistics"><span class="header-section-number">2.1</span> Basic premise of statistics</a></li>
+  <li><a href="#confidence-intervals" id="toc-confidence-intervals" class="nav-link" data-scroll-target="#confidence-intervals"><span class="header-section-number">2.2</span> Confidence intervals</a></li>
+  <li><a href="#hypothesis-tests" id="toc-hypothesis-tests" class="nav-link" data-scroll-target="#hypothesis-tests"><span class="header-section-number">2.3</span> Hypothesis tests</a></li>
+  <li><a href="#homework-stop-2" id="toc-homework-stop-2" class="nav-link" data-scroll-target="#homework-stop-2"><span class="header-section-number">2.4</span> Homework stop 2</a></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default">
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./Unit_1_1.html">Review material</a></li><li class="breadcrumb-item"><a href="./Unit_1_2.html"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Review of introductory statistics</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Review material</span></h1>
+<h1 class="title"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Review of introductory statistics</span></h1>
 </div>
 
 
@@ -244,126 +248,6 @@ window.Quarto = {
 </header>
 
 
-<section id="review-of-random-variables" class="level2" data-number="1.1">
-<h2 data-number="1.1" data-anchor-id="review-of-random-variables"><span class="header-section-number">1.1</span> Review of random variables</h2>
-<p>Recall that</p>
-<p><strong>Definition 2.1</strong> A random variable <span class="math inline">\(X\)</span> is a function which maps outcomes <span class="math inline">\(\omega\in \Omega\)</span> to the real numbers, i.e., <span class="math inline">\(X\colon \Omega\rightarrow\mathbb{R}\)</span>.</p>
-<div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Note
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Note that the notation <span class="math inline">\(f\colon A\rightarrow B\)</span> means that <span class="math inline">\(f\)</span> is a function whose domain is <span class="math inline">\(A\)</span> and range is <span class="math inline">\(B\)</span>. That is, <span class="math inline">\(f\)</span> takes a value from <span class="math inline">\(A\)</span> and outputs some value in <span class="math inline">\(B\)</span>.</p>
-</div>
-</div>
-<p>Generally, we will just write <span class="math inline">\(X\)</span>, and ignore the fact that <span class="math inline">\(X\)</span> is a function.</p>
-<p>We can categorize a random variable <span class="math inline">\(X\)</span> as follows:</p>
-<ul>
-<li>If <span class="math inline">\(X\colon \Omega\rightarrow S\)</span> where <span class="math inline">\(S\)</span> is countable, then <span class="math inline">\(X\)</span> is a <em>discrete random variable</em></li>
-<li>We say <span class="math inline">\(X\)</span> is a <em>continuous random variable</em> if <span class="math inline">\(\Pr(X=r)=0\)</span> for all <span class="math inline">\(r\in\mathbb{R}\)</span>.</li>
-<li>Otherwise, <span class="math inline">\(X\)</span> is a <em>mixed random variable</em> (which we won’t worry about in this course)</li>
-</ul>
-<section id="discrete-random-variables" class="level3" data-number="1.1.1">
-<h3 data-number="1.1.1" data-anchor-id="discrete-random-variables"><span class="header-section-number">1.1.1</span> Discrete Random Variables</h3>
-<p>If <span class="math inline">\(X\colon \Omega\rightarrow S\)</span> where <span class="math inline">\(S\)</span> is countable, then <span class="math inline">\(X\)</span> is a discrete random variable. <span class="math inline">\(S\)</span> can be finite, but can also be any infinite subset of the integers <span class="math inline">\(\mathbb{Z}\)</span>. The distribution of <span class="math inline">\(X\)</span> is given by its PMF, denoted by <span class="math inline">\(f(x)\)</span>. For any <span class="math inline">\(x\in S\)</span>, <span class="math inline">\(f(x)=\Pr(X=x)\)</span>. (Note that ‘<span class="math inline">\(\in\)</span>’ means the word “in”.)</p>
-<p>We must have that:</p>
-<ul>
-<li><span class="math inline">\(\sum_{x\in S}f(x)=1\)</span>, (This notation means summing over all the elements in <span class="math inline">\(S\)</span>.)</li>
-<li><span class="math inline">\(\forall x\in S\)</span>, <span class="math inline">\(0\leq f(x)\leq 1\)</span>. (This notation means for all <span class="math inline">\(x\)</span> in <span class="math inline">\(S\)</span>, <span class="math inline">\(0\leq f(x)\leq 1\)</span>.)</li>
-</ul>
-<p>Examples: Binomial random variables, Poisson random variables and Geometric random variables are all discrete random variables.</p>
-<p><strong>Exercise 2.1</strong> What is the PMF of a Binomial random variable? Can two different random variables have the same PMF? Why or why not?</p>
-<p><em>Solution 2.1</em>. First: <span class="math inline">\(\Pr\left(X=x\right)\binom{n}{x}p^x(1-p)^{n-x}\)</span> Second: Yes. Two random variables can be different random variables, but have the same distribution.</p>
-</section>
-<section id="continuous-random-variables" class="level3" data-number="1.1.2">
-<h3 data-number="1.1.2" data-anchor-id="continuous-random-variables"><span class="header-section-number">1.1.2</span> Continuous Random Variables</h3>
-<p>We say <span class="math inline">\(X\)</span> is a <em>continuous random variable</em> if <span class="math inline">\(\Pr(X=r)=0\)</span> for all <span class="math inline">\(r\in\mathbb{R}\)</span>. If <span class="math inline">\(X\colon \Omega\rightarrow S\)</span> and <span class="math inline">\(X\)</span> is a continuous random variable, then <span class="math inline">\(S\)</span> is typically the real numbers, denoted by <span class="math inline">\(\mathbb{R}\)</span>, but can be any uncountable subset of <span class="math inline">\(\mathbb{R}\)</span>. The distribution of <span class="math inline">\(X\)</span> is given by the PDF <span class="math inline">\(f(x)\)</span>. For any interval <span class="math inline">\((a,b)\subset\in S\)</span>, <span class="math inline">\(\Pr(X\in (a,b))=\int_a^b f(x)dx\)</span>.</p>
-<p>We must have that:</p>
-<ul>
-<li><span class="math inline">\(\int_{- \infty}^\infty f(x)dx=1\)</span>,</li>
-<li><span class="math inline">\(\forall x\in \mathbb{R}\)</span>, <span class="math inline">\(f(x)\geq 0\)</span>.</li>
-</ul>
-<p>Examples: Normal random variables, Chi-squared random variables, <span class="math inline">\(t\)</span> random variables, Cauchy random variables, <span class="math inline">\(F\)</span> random variables are all continuous random variables. Generally, we will focus on continuous random variables.</p>
-<p><strong>Exercise 2.2</strong> What is the PMF of a Normal random variable?</p>
-<p><em>Solution 2.2</em>. <span class="math inline">\(f(x)=\frac{1}{\sqrt{2\pi}\sigma}e^{-(x-\mu)^2/2\sigma^2}\)</span></p>
-</section>
-<section id="properties-of-random-variables" class="level3" data-number="1.1.3">
-<h3 data-number="1.1.3" data-anchor-id="properties-of-random-variables"><span class="header-section-number">1.1.3</span> Properties of Random Variables</h3>
-<p>Let <span class="math inline">\(X,X_1,X_2\)</span> be random variables.</p>
-<p>Recall the important quantities <span class="math inline">\(\mathrm{E}({X})\)</span>, <span class="math inline">\(\mathrm{var}({X})\)</span>, <span class="math inline">\(\mathrm{cov}(X_1,X_2)\)</span>, <span class="math inline">\(\mathrm{corr}(X_1,X_2)\)</span>. Recall expectation:</p>
-<p><strong>Definition 2.2</strong> The expectation of a random variable <span class="math inline">\(X\)</span> is <span class="math display">\[\mathrm{E}({X})=\sum_{x\in S}x\Pr\left(X=x\right),\]</span> if <span class="math inline">\(X\)</span> is discrete and is <span class="math display">\[\mathrm{E}({X})=\int_{-\infty}^\infty xf(x)dx,\]</span> if <span class="math inline">\(X\)</span> is continuous.</p>
-<p>This is the ``average’’ value of the random variable. Note that it is possible for it to be impossible for <span class="math inline">\(X=\mathrm{E}({X})\)</span>. Try to come up with an example of this!</p>
-<p><strong>Definition 2.3</strong> The variance of a random variable <span class="math inline">\(X\)</span> is <span class="math display">\[{\textrm{Var}}\left[X\right]={\textrm{E}}\left[|X-{\textrm{E}}\left[X\right]|^2\right]=\sum_{x\in S}(x-{\textrm{E}}\left[X\right])^2\Pr\left(X=x\right),\]</span> if <span class="math inline">\(X\)</span> is discrete and is <span class="math display">\[{\textrm{Var}}\left[X\right]={\textrm{E}}\left[|X-{\textrm{E}}\left[X\right]|^2\right]=\int_{-\infty}^\infty (x-{\textrm{E}}\left[X\right])^2f(x)dx,\]</span> if <span class="math inline">\(X\)</span> is continuous.</p>
-<p>The variance describes the variation of <span class="math inline">\(X\)</span> about its mean. In other words, it describes on ``average’’, how far is <span class="math inline">\(X\)</span> from its mean.</p>
-<p><strong>Definition 2.4</strong> The covariance between two random variables <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> is <span class="math display">\[{\textrm{cov}}\left[X,Y\right]={\textrm{E}}\left[(X-{\textrm{E}}\left[X\right])(Y-{\textrm{E}}\left[Y\right])\right].\]</span></p>
-<p>The covariance describes the unnormalised linear association between <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span>.</p>
-<p><strong>Definition 2.5</strong> The correlation between two random variables <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> is <span class="math display">\[{\textrm{corr}}\left[X,Y\right]={\textrm{cov}}\left[X,Y\right]/\sqrt{{\textrm{Var}}\left[X\right]{\textrm{Var}}\left[Y\right]}.\]</span></p>
-<p>The correlation describes the normalized linear association between <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span>.</p>
-<p>Next, recall that for a random variable <span class="math inline">\(X\)</span>, its cumulative distribution function (CDF) is given by <span class="math inline">\(F_X(x)=\Pr\left(X\leq x\right)\)</span>. The joint CDF of <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> is given by <span class="math inline">\(F_{XY}(x,y)=\Pr\left(X\leq x, Y\leq y\right)\)</span>.</p>
-<p>Lastly, for a vector of <span class="math inline">\(d\)</span> random variables <span class="math inline">\(\mathbf{X}=(X_1,\ldots,X_d)\)</span>, let its CDF by <span class="math inline">\(F_{\mathbf{X}}(\mathbf{x})=\Pr\left(X_1\leq x_1,\ldots X_d\leq x_d\right)\)</span>, where here <span class="math inline">\(\mathbf{x}\in\mathbb{R}^{d}\)</span> and <span class="math inline">\(\mathbf{x}=(x_1,\ldots,x_d)\)</span>.</p>
-<p>We next present the concept of independence of random variables. Let <span class="math inline">\(F_{XY}(x,y)\)</span> be the joint CDF of <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> and let <span class="math inline">\(F_X\)</span> and <span class="math inline">\(F_Y\)</span> be the univariate CDFs of <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span>, respectively. For two random variables <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span>, we say that <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> are independent if <span class="math inline">\(F_{XY}(x,y)=F_X(x)F_Y(y)\)</span>. More generally, two vectors of random variables <span class="math inline">\(\mathbf{X}\)</span> and <span class="math inline">\(\mathbf{Y}\)</span> are independent if <span class="math inline">\(F_{(\mathbf{X},\mathbf{Y})}(\mathbf{x},\mathbf{y})=F_{\mathbf{X}}(\mathbf{x})F_{\mathbf{Y}}(\mathbf{y})\)</span>, where <span class="math inline">\(F_{(\mathbf{X},\mathbf{Y})}\)</span> is the CDF of the vector <span class="math inline">\((\mathbf{X},\mathbf{Y})\)</span>. A set of random variables <span class="math inline">\(\{X_i\}_{i=1}^n\)</span> are mutually independent if for any two mutually exclusive subsets of <span class="math inline">\(\{X_i\}_{i=1}^n\)</span> are also independent. Note that we write <span class="math inline">\(X \perp Y\)</span> if <span class="math inline">\(X\)</span> is independent of <span class="math inline">\(Y\)</span>.</p>
-<p>We have that:</p>
-<p><strong>Theorem 2.1</strong> The following holds:</p>
-<ul>
-<li><span class="math inline">\(X_1\perp X_2 \implies {\textrm{E}}\left[X_1 X_2\right]={\textrm{E}}\left[X_1\right]{\textrm{E}}\left[X_2\right]\)</span></li>
-<li><span class="math inline">\(X_1\perp X_2 \implies {\textrm{corr}}\left[X_1,X_2\right]=0\)</span></li>
-<li><span class="math inline">\({\textrm{corr}}\left[X_1,X_2\right]=0\)</span> does not imply <span class="math inline">\(X_1\perp X_2\)</span></li>
-</ul>
-<p><strong>Exercise 2.3</strong> Prove <a href="#thm-1">Theorem&nbsp;2.1</a> .</p>
-<p>Let <span class="math inline">\(X,X_1,X_2,\ldots X_n\)</span> be random variables. Recall the linearity of expectation property:</p>
-<p><strong>Theorem 2.2</strong> For <span class="math inline">\(a,b\in\mathbb{R}\)</span>, it holds that <span class="math inline">\(\mathrm{E}({aX+b})=a\mathrm{E}({X})+b\)</span>.</p>
-<p><strong>Exercise 2.4</strong> Prove <a href="#thm-2">Theorem&nbsp;2.2</a> .</p>
-<p>As a corollary of <a href="#thm-2">Theorem&nbsp;2.2</a> , we have that</p>
-<ul>
-<li><span class="math inline">\({\textrm{E}}\left[\sum_{i=1}^n a_i X_i\right]=\sum_{i=1}^n a_i{\textrm{E}}\left[ X_i\right]\)</span></li>
-<li><span class="math inline">\({\textrm{Var}}\left[\sum_{i=1}^n a_i X_i\right]=\sum_{i=1}^n a_i^2{\textrm{Var}}\left[ X_i\right]+\sum_{i\neq j}a_ia_j{\textrm{cov}}\left[X_i,X_j\right]\)</span></li>
-<li><span class="math inline">\({\textrm{Var}}\left[aX_1+bX_2+c\right]=a^2{\textrm{Var}}\left[X_1\right]+b^2{\textrm{Var}}\left[X_2\right]+2ab\ {\textrm{cov}}\left[X_1,X_2\right]\)</span></li>
-</ul>
-<p><strong>Exercise 2.5</strong> What happens to <span class="math inline">\({\textrm{Var}}\left[aX_1+bX_2+c\right]\)</span> when <span class="math inline">\(\{X_i\}_{i=1}^n\)</span> are mutually independent?</p>
-<p><strong>Exercise 2.6</strong> Let <span class="math inline">\(X_1,X_2,\ldots X_n\)</span> be i.i.d. (independent and identically distributed) random variables with expectation (also known as mean) <span class="math inline">\(\mu\)</span> and variance <span class="math inline">\(\sigma^2\)</span>. What is the expectation and variance of <span class="math display">\[\bar X=\sum_{i=1}^n X_i/n?.\]</span></p>
-</section>
-<section id="useful-properties-of-normal-and-related-random-variables" class="level3" data-number="1.1.4">
-<h3 data-number="1.1.4" data-anchor-id="useful-properties-of-normal-and-related-random-variables"><span class="header-section-number">1.1.4</span> Useful properties of normal and related random variables</h3>
-<p>Let</p>
-<ul>
-<li><span class="math inline">\(\mathcal{N}(\mu,\sigma^2)\)</span> represent the normal distribution with mean <span class="math inline">\(\mu\)</span> and variance <span class="math inline">\(\sigma^2\)</span>.</li>
-<li><span class="math inline">\(\chi^2_k\)</span> be the Chi-squared distribution with <span class="math inline">\(k\)</span> degrees of freedom</li>
-<li><span class="math inline">\(t_n\)</span> be the student-<span class="math inline">\(t\)</span> distribution with <span class="math inline">\(n\)</span> degrees of freedom</li>
-<li><span class="math inline">\(F_{m,n}\)</span> be the <span class="math inline">\(F\)</span> distribution with <span class="math inline">\(m\)</span> numerator degrees of freedom and <span class="math inline">\(n\)</span> denominator degrees of freedom</li>
-</ul>
-<p>We have the following results:</p>
-<p><strong>Theorem 2.3</strong> Suppose that <span class="math inline">\(X\sim \mathcal{N}(\mu,\sigma^2)\)</span>, then</p>
-<ul>
-<li><span class="math inline">\(Z=\frac{X- \mu}{\sigma}\sim \mathcal{N}(0,1)\)</span></li>
-<li><span class="math inline">\(Z^2\sim \chi^2_1\)</span>.</li>
-</ul>
-<p>Let <span class="math inline">\([n]=\{1,\ldots,n\}\)</span>. We also have that</p>
-<p><strong>Theorem 2.4</strong></p>
-<ul>
-<li>If for <span class="math inline">\(i\in [n]\)</span> <span class="math inline">\(Y_i\sim \chi^2_{k_i}\)</span> and <span class="math inline">\(Y_i \perp Y_j\)</span> for <span class="math inline">\(i\neq j\)</span> then <span class="math inline">\(\sum_{i=1}^n Y_i \sim \chi^2_{k_1+\ldots +k_n}\)</span>.</li>
-<li>If <span class="math inline">\(Y\sim \chi^2_k\)</span> and <span class="math inline">\(Y\perp Z\)</span>, then <span class="math inline">\(Z/\sqrt{Y/k}\sim t_k\)</span>.</li>
-<li>If <span class="math inline">\(Y_1\sim \chi^2_{k_1}\)</span>, <span class="math inline">\(Y_2\sim \chi^2_{k_2}\)</span> and <span class="math inline">\(Y_1 \perp Y_2\)</span> then <span class="math inline">\(\frac{Y_1/k_1}{Y_2/k_2}\sim F_{k_1,k_2}\)</span>.</li>
-</ul>
-<p>Define <span class="math display">\[\hat\sigma^2=\frac{1}{n- 1}\sum_{i=1}^n (X_i- \bar X)^2.\]</span></p>
-<p><strong>Theorem 2.5</strong> Suppose that <span class="math inline">\(X_1,X_2,\ldots X_n\sim \mathcal{N}(\mu,\sigma^2)\)</span> and are independent, then <span class="math inline">\(\frac{\bar X- \mu}{\sigma/\sqrt{n}}\sim \mathcal{N}(0,1)\)</span>, <span class="math inline">\(\bar X\perp \hat\sigma^2\)</span>, <span class="math inline">\((n- 1)\hat\sigma^2/\sigma^2\sim \chi^2_{n- 1}\)</span> and <span class="math inline">\(\frac{\bar X- \mu}{\hat\sigma/\sqrt{n}}\sim t_{n- 1}\)</span>.</p>
-</section>
-<section id="central-limit-theorem" class="level3" data-number="1.1.5">
-<h3 data-number="1.1.5" data-anchor-id="central-limit-theorem"><span class="header-section-number">1.1.5</span> Central Limit Theorem</h3>
-<p>If <span class="math inline">\(X_1,X_2,\ldots X_n\)</span> are i.i.d. with mean <span class="math inline">\(\mu\)</span> and variance <span class="math inline">\(\sigma^2&lt;\infty\)</span>, then <span class="math inline">\(\frac{\bar X- \mu}{\sigma/\sqrt{n}}\stackrel{\text{d}}{\rightarrow}\mathcal{N}(0,1)\)</span> as <span class="math inline">\(n\rightarrow\infty\)</span>.</p>
-<p>We have that in general, for large <span class="math inline">\(n\)</span>, regardless of the distribution of the random variables, the sample mean is approximately normally distributed.</p>
-</section>
-<section id="homework-stop-1" class="level3" data-number="1.1.6">
-<h3 data-number="1.1.6" data-anchor-id="homework-stop-1"><span class="header-section-number">1.1.6</span> Homework stop 1</h3>
-<p>Review your material and complete the above exercises before continuing to the next section.</p>
-</section>
-</section>
-<section id="review-of-introductory-statistics" class="level2" data-number="1.2">
-<h2 data-number="1.2" data-anchor-id="review-of-introductory-statistics"><span class="header-section-number">1.2</span> Review of introductory statistics</h2>
 <p>The followings are some concepts that you have learned from prerequisites, and/or we have reviewed in the last two lectures.</p>
 <ul>
 <li>Sample vs.&nbsp;Population</li>
@@ -374,22 +258,22 @@ Note
 <li>Mean and variance of random variable</li>
 <li>Relationships between Normal, <span class="math inline">\(t\)</span> , <span class="math inline">\(\chi^2\)</span>, <span class="math inline">\(F\)</span> etc.</li>
 </ul>
-<section id="basic-premise-of-statistics" class="level3" data-number="1.2.1">
-<h3 data-number="1.2.1" data-anchor-id="basic-premise-of-statistics"><span class="header-section-number">1.2.1</span> Basic premise of statistics</h3>
+<section id="basic-premise-of-statistics" class="level2" data-number="2.1">
+<h2 data-number="2.1" data-anchor-id="basic-premise-of-statistics"><span class="header-section-number">2.1</span> Basic premise of statistics</h2>
 <p>The whole purpose of statistics is to learn something about a population using only a sample of units from that population. A <strong>sample</strong> is a smaller, typically randomly selected, subset of a population. A <strong>population</strong> is a collection of units which we would like to know something about. For example, we may collect a sample of hamburgers from McDonald’s if we want to learn something about the population of McDonald’s hamburgers.</p>
 <p>In general, at least for this course, we assume that we have access to a sample of units from a given population. Furthermore, we assume that that sample is a <strong>random sample</strong>. Specifically, we assume that these units in the sample are realizations of random variables. In addition, we also assume that these random variables are mutually independent. For example, we could assume that our sample <span class="math inline">\(X_1,\ldots,X_n\)</span> is Normally distributed with some fixed mean <span class="math inline">\(\mu\)</span> and fixed variance <span class="math inline">\(\sigma^2\)</span>. In this case, <span class="math inline">\(\mu\)</span> and <span class="math inline">\(\sigma^2\)</span> are unknown <strong>parameters</strong> of the population. A parameter of a population is some quantity that is a function of the distribution of our given sample. For instance, <span class="math inline">\({\textrm{E}}\left[X_i\right]=\mu\)</span>. Generally, we are concerned with unknown population parameters, which are parts of the distribution that are unknown, and can only ever be estimated. For example, we may know our data is normal, but not know the mean parameter. In that case, we need to use an <strong>estimate</strong> of the parameter. We use a function of the data, typically called the estimator, say <span class="math inline">\(T\)</span>, which produces the estimate, given by <span class="math inline">\(T\)</span> computed at the sample we observed: <span class="math inline">\(T(X_1,\ldots,X_n)\)</span>.</p>
 <p>For example, to estimate <span class="math inline">\(\mu\)</span>, we typically use the sample mean. Here, the estimate is given by <span class="math inline">\(\bar X=\sum_{i=1}^nX_i/n\)</span>. To be specific, the estimate is the value of <span class="math inline">\(\bar X\)</span> and the estimator <span class="math inline">\(T\)</span> is the function that maps <span class="math inline">\(n\)</span> real numbers to their mean. In general, estimates are used to give our `best guess’ at population parameters.</p>
 </section>
-<section id="confidence-intervals" class="level3" data-number="1.2.2">
-<h3 data-number="1.2.2" data-anchor-id="confidence-intervals"><span class="header-section-number">1.2.2</span> Confidence intervals</h3>
+<section id="confidence-intervals" class="level2" data-number="2.2">
+<h2 data-number="2.2" data-anchor-id="confidence-intervals"><span class="header-section-number">2.2</span> Confidence intervals</h2>
 <p>Recall from the previous section that our estimate of a parameter is only that, an estimate. In other words, it is not exactly equal to the population parameter. For instance, if we drew a different sample our estimate would change. A confidence interval is used to acknowledge this phenomenon in the reporting of our statistics. Its used to give a range of estimates that we might have obtained from any “regular” sample we might observe. It is ultimately used to quantify the error (sometimes called uncertainty) in our estimate.</p>
 <p>Confidence intervals consist of a level, usually denoted by <span class="math inline">\((1-\alpha)100\%\)</span> and two end points. For example, you have learned confidence intervals for the population mean. When we say <span class="math inline">\((-1,1)\)</span> is <span class="math inline">\(95\%\)</span> confidence interval for the population mean, what does this mean? Colloquially, it means that we expect the sample mean to be somewhere within <span class="math inline">\((-1,1)\)</span> with high confidence. Note that confidence intervals are computed from the data, which means also that for each new sample, we would get a different confidence interval. However, the population parameter never changes. Therefore, the interval is what is varying from sample to sample. This impacts the interpretation of a confidence interval.</p>
 <p>Continuing our example, we have that the interval <span class="math inline">\((-1,1)\)</span> can be interpreted as: “if we drew many more samples, 95% of the <strong>intervals</strong> will contain the population parameter.” We <strong>do not</strong> say that the parameter has a 95% chance of falling in (-1,1), since the parameter is not random, the interval end points are.</p>
 <p>For example, we have the formula for a confidence interval for the population mean is given by: <span class="math inline">\(\bar X\pm 1.96\hat\sigma\)</span>. Notice that it is based only on the data. Therefore, it will change if we drew a new sample.</p>
 <p>To summarize this section, a confidence interval is used to quantify the uncertainty in our reported estimates. By uncertainty, we specifically mean the uncertainty resulting from the fact that we have only a sample of the population, and our estimate varies depending on the sample.</p>
 </section>
-<section id="hypothesis-tests" class="level3" data-number="1.2.3">
-<h3 data-number="1.2.3" data-anchor-id="hypothesis-tests"><span class="header-section-number">1.2.3</span> Hypothesis tests</h3>
+<section id="hypothesis-tests" class="level2" data-number="2.3">
+<h2 data-number="2.3" data-anchor-id="hypothesis-tests"><span class="header-section-number">2.3</span> Hypothesis tests</h2>
 <p>Hypothesis tests are used to determine whether an effect is spurious or a real property of the population. A spurious effect is one that is specific to the sample we observed, and is not a real property of the population. For example, if the heights of males and female students are measured, and we observe that the sample mean of both male and females are equal, then this would be a spurious effect. We know that the population heights of males and females are substantially different. If we drew a new sample, we would likely observe something that mirrors the population reality (provided it is large enough).</p>
 <p>Formally, a hypothesis test compares two competing beliefs about a population parameter, called the null and alternative hypothesis. For instance, we may wish to test whether the population heights of men is greater than women, vs.&nbsp;the heights being less than or equal to that of men.</p>
 <p>We write this as follows: <span class="math inline">\(H_0\colon \mu_{men}\leq \mu_{women}\)</span> vs.&nbsp;<span class="math inline">\(H_a\colon \mu_{men}&gt; \mu_{women}\)</span>.</p>
@@ -503,7 +387,7 @@ Note
 <pre><code>[1] 15.72805</code></pre>
 <div class="sourceCode" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">var</span>(male_ages)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <pre><code>[1] 26.22371</code></pre>
-<div class="sourceCode" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Putting the data in a dataframe</span></span>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Putting the data in a dataframe</span></span>
 <span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="fu">cbind</span>(<span class="st">"Age"</span><span class="ot">=</span><span class="fu">c</span>(female_ages,male_ages),<span class="st">"Gender"</span><span class="ot">=</span><span class="fu">rep</span>(<span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">1</span>),<span class="at">each=</span><span class="dv">20</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <pre><code>           Age Gender
  [1,] 37.19809      0
@@ -591,8 +475,8 @@ Note
 </div>
 </div>
 </section>
-<section id="homework-stop-2" class="level3" data-number="1.2.4">
-<h3 data-number="1.2.4" data-anchor-id="homework-stop-2"><span class="header-section-number">1.2.4</span> Homework stop 2</h3>
+<section id="homework-stop-2" class="level2" data-number="2.4">
+<h2 data-number="2.4" data-anchor-id="homework-stop-2"><span class="header-section-number">2.4</span> Homework stop 2</h2>
 <p><strong>Exercise 2.10</strong> IBM Human Resources (HR) department is evaluating job applicants from York University.</p>
 <p>They are interested to know if the 2020 ITEC graduating class has an average GPA higher than 6 (i.e.&nbsp;average GPA higher than ``B’’). They collected the GPA of 25 ITEC students graduated in 2020.</p>
 <table class="caption-top table">
@@ -658,225 +542,8 @@ Tip
 <li>Statistic vs.&nbsp;Parameter</li>
 <li>Estimate vs.&nbsp;Estimator</li>
 </ul>
-</section>
-</section>
-<section id="review-of-matrices-and-linear-algebra" class="level2" data-number="1.3">
-<h2 data-number="1.3" data-anchor-id="review-of-matrices-and-linear-algebra"><span class="header-section-number">1.3</span> Review of matrices and linear algebra</h2>
-<p>Recall that</p>
-<p><strong>Definition 2.6</strong> An <span class="math inline">\((n \times m)\)</span> matrix <span class="math inline">\(A\)</span> takes the form <span class="math display">\[\begin{eqnarray*}
-A &amp; = &amp; \left( \begin{array}{cccc}
-a_{11} &amp; a_{12} &amp; \cdots &amp; a_{1m} \\
-a_{21} &amp; a_{22} &amp; \cdots &amp; a_{2m} \\
-\vdots &amp; \vdots &amp; \vdots &amp; \vdots \\
-a_{n1} &amp; a_{n2} &amp; \cdots &amp; a_{nm} \\
-\end{array} \right) \\
-&amp;=&amp; (( \ a_{ij} \ )) \hspace{0.5in} i=1, \ldots, n, \ \ j=1, \ldots, m
-\end{eqnarray*}\]</span> and <span class="math inline">\(a_{ij}\)</span> is the element in the <span class="math inline">\(i^{th}\)</span> row and <span class="math inline">\(j^{th}\)</span> column of the matrix <span class="math inline">\(A\)</span></p>
-<p>We also define the following:</p>
-<ul>
-<li><p>An <span class="math inline">\((n \times 1)\)</span> matrix is also known as a <span class="math inline">\(n\)</span> dimensional column vector. Note: in this course, a vector means a column vector.</p></li>
-<li><p>A <span class="math inline">\((1 \times m)\)</span> matrix is also known as a <span class="math inline">\(m\)</span> dimensional row vector</p></li>
-<li><p>The <span class="math inline">\(n\)</span> dimensional one vector, <span class="math inline">\(1_n\)</span>, (sometimes the subscript <span class="math inline">\(n\)</span> is suppressed when the dimension is obvious), is an <span class="math inline">\(n\)</span> dimensional column vector with all entries being <span class="math inline">\(1\)</span>.</p></li>
-<li><p>The <span class="math inline">\((n \times n)\)</span> identity matrix, <span class="math inline">\(I_n\)</span>, is the <span class="math inline">\((n \times n)\)</span> matrix with diagonal entries set equal to 1 and the off diagonal entries set equal to 0</p></li>
-</ul>
-<p>Throughout this section, we will use the following matrices to demonstrate the numerical calculations: <span class="math display">\[
-U = \left( \begin{array}{ccc} 1 &amp; 2 &amp; 3 \\ -1 &amp; 4 &amp; -2 \end{array} \right), \
-V = \left( \begin{array}{cc} 2 &amp; 4 \\ 1 &amp; -2 \\ -1 &amp; 0 \end{array} \right), \ k = 4
-\]</span></p>
-<section id="matrix-properties" class="level3" data-number="1.3.1">
-<h3 data-number="1.3.1" data-anchor-id="matrix-properties"><span class="header-section-number">1.3.1</span> Matrix properties</h3>
-<p>First, we define the transpose of a matrix:</p>
-<p><strong>Definition 2.7</strong> Let <span class="math inline">\(A = (( \ a_{ij} \ ))\)</span> for <span class="math inline">\(i=1, \ldots, n\)</span> and <span class="math inline">\(j=1, \ldots, m\)</span>, is an <span class="math inline">\((n \times m)\)</span> matrix. Then <span class="math inline">\(A^\top = A\)</span> transpose <span class="math inline">\(=  (( \ a_{ji} \ ))\)</span> for <span class="math inline">\(j=1, \ldots, m\)</span> and <span class="math inline">\(i=1, \ldots, n\)</span>, and <span class="math inline">\(A^\top\)</span> is an <span class="math inline">\((m \times n)\)</span> matrix.</p>
-<p>When we transpose a matrix <span class="math inline">\(A\)</span>, the rows of <span class="math inline">\(A\)</span> becomes the columns of <span class="math inline">\(A^\top\)</span> and the columns of <span class="math inline">\(A\)</span> becomes the rows of <span class="math inline">\(A^\top\)</span>.</p>
-<p><strong>Example 2.1</strong> Using our example matrices, we have that <span class="math display">\[
-U^\top = \left( \begin{array}{cc} 1 &amp; -1 \\ 2 &amp; 4 \\ 3 &amp; -2 \end{array} \right), \
-V^\top = \left( \begin{array}{ccc} 2 &amp; 1 &amp; -1 \\ 4 &amp; -2 &amp; 0 \end{array} \right)
-\]</span></p>
-<p><strong>Definition 2.8</strong> Let <span class="math inline">\(A = (( \ a_{ij} \ ))\)</span> and <span class="math inline">\(B = (( \ b_{ij} \ ))\)</span> be two <span class="math inline">\((n \times m)\)</span> matrices. Then <span class="math display">\[
-A \pm B = (( \ a_{ij} \pm \ b_{ij} \ )).
-\]</span></p>
-<p>Addition and subtraction of matrices required the matrices to have the same dimension.</p>
-<p><strong>Example 2.2</strong> Using our example matrices, we have that: <span class="math inline">\(U + V\)</span> is undefined because they are not of the same dimension, and <span class="math display">\[
-U + V^\top = \left( \begin{array}{ccc} 1+2 &amp; 2+1 &amp; 3+(-1) \\ (-1)+4 &amp; 4 + (-2) &amp; (-2)+0
-\end{array} \right) =
-\left( \begin{array}{ccc} 3 &amp; 3 &amp; 3 \\ 3 &amp; 2 &amp; -2 \end{array} \right)\]</span></p>
-<p><strong>Definition 2.9</strong> Let <span class="math inline">\(A = (( \ a_{ij} \ ))\)</span> for <span class="math inline">\(i=1, \ldots, n\)</span> and <span class="math inline">\(j=1, \ldots, m\)</span>, is an <span class="math inline">\((n \times m)\)</span> matrix and <span class="math inline">\(k\)</span> is a constant. Then <span class="math display">\[
-kA = (( \ k a_{ij} \ )) = Ak,
-\]</span> i.e.&nbsp;each element of the matrix <span class="math inline">\(A\)</span> is multiplied by <span class="math inline">\(k\)</span>.</p>
-<p><strong>Example 2.3</strong> Using our example matrices, we have that: <span class="math display">\[
-kU^\top = 4 \left( \begin{array}{cc} 1 &amp; -1 \\ 2 &amp; 4 \\ 3 &amp; -2 \end{array} \right)
-= \left( \begin{array}{cc} 4(1) &amp;4(-1) \\ 4(2) &amp; 4(4) \\ 4(3) &amp; 4(-2) \end{array} \right)
-= \left( \begin{array}{cc} 4 &amp; -4 \\ 8 &amp; 8 \\ 12 &amp; -2 \end{array} \right)
-\]</span></p>
-<p><strong>Definition 2.10</strong> Let <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span> be two matrices. Then <span class="math inline">\(A\)</span> multiplied by <span class="math inline">\(B\)</span>, <span class="math inline">\(AB\)</span>, is defined only if (number of columns of <span class="math inline">\(A\)</span>) <span class="math inline">\(=\)</span> (number of rows of <span class="math inline">\(B\)</span>).</p>
-<p>The product is a <span class="math inline">\(\left( \right.\)</span> (number of rows of <span class="math inline">\(A\)</span>) <span class="math inline">\(\times\)</span> (number of columns of <span class="math inline">\(B\)</span>) <span class="math inline">\(\left. \right)\)</span> matrix.</p>
-<p>More precisely, let <span class="math inline">\(A = (( \ a_{ij} \ ))\)</span> be an <span class="math inline">\((n \times m)\)</span> matrix and <span class="math inline">\(B = (( \ b_{ij} \ ))\)</span> be an <span class="math inline">\((m \times p)\)</span> matrix. Then <span class="math inline">\(C = AB = (( \ c_{ij} \ ))\)</span> is an <span class="math inline">\((n \times p)\)</span> matrix with <span class="math display">\[
-c_{ij} = a_{i1}b_{1j} + a_{i2}b_{2j} + \cdots + a_{im}b_{mj}
-\]</span></p>
-<div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Note
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>In matrix algebra, <span class="math inline">\(AB\)</span> is not necessarily equal to <span class="math inline">\(BA\)</span>.</p>
-</div>
-</div>
-<p><strong>Example 2.4</strong> Using our example matrices, we have that: <span class="math display">\[\begin{eqnarray*}
-U V &amp; = &amp; \left( \begin{array}{ccc} 1 &amp; 2 &amp; 3 \\ -1 &amp; 4 &amp; -2 \end{array} \right)
-\left( \begin{array}{cc} 2 &amp; 4 \\ 1 &amp; -2 \\ -1 &amp; 0 \end{array} \right) \\
-&amp; = &amp; \left( \begin{array}{cc}
-1(2) + 2(1) + 3(-1) &amp; 1(4) + 2(-2) + 3(0) \\
-(-1)(2) + 4(1) + (-2)(-1) &amp; (-1)(4) + 4(-2) + (-2)(0)
-\end{array} \right) \\
-&amp; = &amp; \left( \begin{array}{cc} 1 &amp; 0 \\ 4 &amp; -12 \end{array} \right)
-\end{eqnarray*}\]</span></p>
-<p>Assume all the matrix multiplication works. Let <span class="math inline">\(I_n\)</span> be an <span class="math inline">\((n \times n)\)</span> identity matrix. Then <span class="math display">\[
-AI_n = A, \ \ \ and \ \ \ I_nB = B.
-\]</span></p>
-<p><strong>Definition 2.11</strong> Let <span class="math inline">\(A\)</span> be an <span class="math inline">\((n \times n)\)</span> matrix. The inverse of <span class="math inline">\(A\)</span>, <span class="math inline">\(A^{-1}\)</span>, if exists satisfies <span class="math display">\[
-A A^{-1} = A^{-1} A = I_n
-\]</span> and if <span class="math inline">\(A^{-1}\)</span> does not exist, then <span class="math inline">\(A\)</span> is a singular matrix.</p>
-<div class="callout callout-style-default callout-important callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Important
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>From your linear algebra course, a prerequisite, you have learned the condition(s) for the existence of an inverse, <a href="https://mathworld.wolfram.com/InvertibleMatrixTheorem.html">The Invertible Matrix Theorem</a> and you have learned how to obtain an inverse. You should review them.</p>
-</div>
-</div>
-<p>Specifically, you should know how to obtain inverse of any diagonal matrix and any <span class="math inline">\((2 \times 2)\)</span> non-singular matrix, i.e., <span class="math display">\[
-\left( \begin{array}{cc} a &amp; b \\ c &amp; d \end{array} \right)^{-1} =
-\frac{1}{ad - bc} \left( \begin{array}{cc} d &amp; -b \\ -c &amp; a \end{array} \right).
-\]</span></p>
-<p><strong>Example 2.5</strong> Using our example matrices, let <span class="math display">\[
-W = UV = \left( \begin{array}{cc} 1 &amp; 0 \\ 4 &amp; -12 \end{array} \right)
-\]</span> Then <span class="math display">\[
-W^{-1} = \frac{1}{1(-12) - 0(4)}
-\left( \begin{array}{cc} -12 &amp; 0 \\ -4 &amp; 1 \end{array} \right) =
-\left( \begin{array}{cc} 1 &amp; 0 \\ 1/3 &amp; -1/12 \end{array} \right)
-.\]</span></p>
-<p>You can verify that <span class="math inline">\(W W^{-1} = W^{-1} W = I_2\)</span>.</p>
-</section>
-<section id="important-identities" class="level3" data-number="1.3.2">
-<h3 data-number="1.3.2" data-anchor-id="important-identities"><span class="header-section-number">1.3.2</span> Important identities</h3>
-<p>Lastly, we introduce some important identities:</p>
-<p><span class="math display">\[
-X = \left( \begin{array}{cc} 1 &amp; x_1 \\ \vdots &amp; \vdots \\ 1 &amp; x_n \end{array} \right), \ \ \
-and \ \ \
-y = \left( \begin{array}{c} y_1 \\ \vdots \\ y_n \end{array} \right)
-\]</span> Then <span class="math display">\[
-X^\top X = \left( \begin{array}{cc} n &amp; \sum_{i=1}^n x_i \\
-\sum_{i=1}^n x_i &amp; \sum_{i=1}^n x_i^2 \end{array} \right), \ \ \ {\textrm{and}} \ \ \
-X^\top y = \left( \begin{array}{c} \sum_{i=1}^n y_i \\ \sum_{i=1}^n x_i y_i
-\end{array} \right).
-\]</span> Also <span class="math inline">\(\bar{y} = \frac{1}{n} 1^\top y\)</span> and <span class="math inline">\(\sum_{i=1}^n y_i = n \bar{y}\)</span> and, finally <span class="math inline">\(\sum_{i=1}^n (y_i - \bar{y})^2 = \sum_{i=1}^n y_i^2 - n \bar{y}^2\)</span>. These are useful identities that we will use throughout this course.</p>
-<p><strong>Exercise 2.11</strong> Prove the previously introduced identities.</p>
-<p>Lastly, we recall an important application of matrices. An application of matrices: Suppose that we want to solve for <span class="math inline">\(x_1, x_2, x_3\)</span> where they satisfy the following set of linear equations:</p>
-<p><span class="math display">\[\begin{eqnarray*}
-2 x_1 + 3 x_2 - 4 x_3 &amp; = &amp; 0 \\
--x_1 + 4 x_2 &amp; = &amp; -1 \\
-5 x_1 + x_2 - 2 x_3 &amp; = &amp; 4
-\end{eqnarray*}\]</span></p>
-<p>We can set it up in matrix form as follows: <span class="math display">\[
-\left( \begin{array}{rrr} 2 &amp; 3 &amp; -4 \\ -1 &amp; 4 &amp; 0 \\ 5 &amp; 1 &amp; -2 \end{array} \right)
-\left( \begin{array}{c} x_1 \\ x_2 \\ x_3 \end{array} \right) =
-\left( \begin{array}{c} 0 \\ -1 \\ 4  \end{array} \right)
-\]</span> Or it can be presented as <span class="math inline">\(A x = b\)</span>. If <span class="math inline">\(A\)</span> is not a singular matrix, then <span class="math inline">\(x= A^{-1} b\)</span>. Since <span class="math inline">\(det(A) = 62\)</span>, it is not a singular matrix. Solving the above equation this using <span class="math inline">\(x= A^{-1} b\)</span> yields that <span class="math inline">\(x = (1, 0, 0.5)^\top\)</span>. Keep this in mind, we will see it return in the next chapter.</p>
-<p>Lastly - I will remind you of two definitions:</p>
-<p><strong>Definition 2.12</strong> A set of vectors <span class="math inline">\(v_1,\ldots,v_d\)</span> is linearly independent if the only <span class="math inline">\(d\)</span>-dimensional set of scalars <span class="math inline">\(a_1,\ldots,a_d\in\mathbb{R}\)</span> such that <span class="math inline">\(\sum_{i=1}^d a_i v_i=0\)</span> implies is the <span class="math inline">\(d\)</span>-dimensional 0 vector.</p>
-<p><strong>Definition 2.13</strong> A <span class="math inline">\(d\times d\)</span> symmetric matrix <span class="math inline">\(A\)</span> is positive-definite if for all <span class="math inline">\(x\in\mathbb{R}^d \backslash \{0\}\)</span> it holds that <span class="math inline">\(x^\top A x&gt;0\)</span>.</p>
-</section>
-<section id="homework-stop-3" class="level3" data-number="1.3.3">
-<h3 data-number="1.3.3" data-anchor-id="homework-stop-3"><span class="header-section-number">1.3.3</span> Homework stop 3</h3>
-<p><strong>Exercise 2.12</strong> Let <span class="math display">\[
-W =  \left( \begin{array}{cc} 3 &amp; 2 \\ -4 &amp; 6 \end{array} \right)
-\]</span> and <span class="math inline">\(x=(2,1)^\top\)</span>. Compute <span class="math inline">\(W^{-1}\)</span>, <span class="math inline">\(xx^\top\)</span> and <span class="math inline">\(x^\top W\)</span>. Verify that <span class="math inline">\(W W^{-1} = W^{-1} W = I_2\)</span>.</p>
-<ul>
-<li>Prove each of the <a href="Important-identities">important identities</a>.</li>
-<li>Verify <span class="math inline">\(X^\top A=(A^\top X)^\top\)</span>.</li>
-<li>What is the rank of a matrix? Is a matrix’s rank related to whether or not a matrix is invertible? Why?</li>
-<li>Define a positive definite matrix. When is <span class="math inline">\(X^\top X\)</span> positive definite?</li>
-</ul>
-</section>
-</section>
-<section id="review-random-vectors" class="level2" data-number="1.4">
-<h2 data-number="1.4" data-anchor-id="review-random-vectors"><span class="header-section-number">1.4</span> Review Random Vectors</h2>
-<section id="definition-of-random-vectors" class="level3" data-number="1.4.1">
-<h3 data-number="1.4.1" data-anchor-id="definition-of-random-vectors"><span class="header-section-number">1.4.1</span> Definition of random vectors</h3>
-<p><strong>Definition 2.14</strong> Let <span class="math inline">\(Y_1, \cdots, Y_n\)</span> be random variables. Then <span class="math display">\[
-Y = \left( \begin{array}{c} Y_1 \\ \vdots \\ Y_n \end{array} \right)
-\]</span> is an <span class="math inline">\(n\)</span>-dimensional random vector.</p>
-<p>Similar to a random variable, a random vector also comes with a probability mass function (if all the <span class="math inline">\(Y_i\)</span> are discrete) or a probability density function (if all the <span class="math inline">\(Y_i\)</span> are continuous), or a ``mixture’’ distribution (if some <span class="math inline">\(Y_i\)</span> are discrete and others are continuous). In general, a random vector is drawn from a multivariate distribution, defined by the PMF or PDF. Just as before, the PMF and PDF range is non-negative, the PMF sums to 1 over all outcomes, and the PDF integrates to 1 over <span class="math inline">\(\mathbb{R}^n\)</span>. One discrete multivariate distribution you have learned in 1131 is the Multinomial distribution. We will learn about the multivariate normal distribution soon.</p>
-</section>
-<section id="expected-value-and-covariance" class="level3" data-number="1.4.2">
-<h3 data-number="1.4.2" data-anchor-id="expected-value-and-covariance"><span class="header-section-number">1.4.2</span> Expected Value and Covariance</h3>
-<p><strong>Definition 2.15</strong> Let <span class="math inline">\(Y\)</span> be an <span class="math inline">\(n\)</span>-dimensional random vector, then the mean (expected value) of <span class="math inline">\(Y\)</span> is defined as <span class="math display">\[
-{\textrm{E}}(Y) = \left( \begin{array}{c} {\textrm{E}}(Y_1) \\ \vdots \\ {\textrm{E}}(Y_n) \end{array} \right) =
-\mu
-\]</span> and the covariance matrix of <span class="math inline">\(Y\)</span> is defined as <span class="math display">\[
-{\textrm{cov}}\left[Y\right] = {\textrm{E}}[ (Y - \mu) (Y - \mu)^\top ] =
-(( {\textrm{cov}}\left[Y_i, Y_j\right] \ )) = \Sigma.
-\]</span></p>
-<p>Sometimes <span class="math inline">\({\textrm{cov}}\left[Y\right]\)</span> is written as <span class="math inline">\({\textrm{Var}}\left[Y\right]\)</span>.</p>
-<p>The following are some facts about <span class="math inline">\(\Sigma\)</span>:</p>
-<p><span class="math inline">\(\Sigma\)</span> is an <span class="math inline">\(n \times n\)</span> matrix with the diagonal elements being the variances, <span class="math inline">\({\textrm{Var}}\left[Y_i\right]\)</span> for <span class="math inline">\(i=1, \ldots, n\)</span>, and the off-diagonal elements being the covariances, <span class="math inline">\({\textrm{cov}}\left[Y_i, Y_j\right]\)</span> for <span class="math inline">\(i, j = 1, \ldots, n\)</span> and <span class="math inline">\(i \ne j\)</span>. <span class="math inline">\(\Sigma\)</span> is a symmetric, non-negative definite matrix. In this course, we further restrict it to be a positive definite matrix. <span class="math inline">\(\Sigma\)</span> is referred to as the <strong>covariance matrix</strong>.</p>
-</section>
-<section id="properties-of-expected-value-and-covariance" class="level3" data-number="1.4.3">
-<h3 data-number="1.4.3" data-anchor-id="properties-of-expected-value-and-covariance"><span class="header-section-number">1.4.3</span> Properties of expected value and covariance</h3>
-<p>Let <span class="math inline">\(X,Y\in \mathbb{R}^{d}\)</span> be random vectors with <span class="math inline">\(A\in \mathbb{R}^d\)</span> and <span class="math inline">\(B\in \mathbb{R}^{n\times d}\)</span> be matrices. It holds that</p>
-<ul>
-<li><span class="math inline">\({\textrm{E}}(X+ Y) = {\textrm{E}}(X)+{\textrm{E}}(Y)\)</span></li>
-<li><span class="math inline">\({\textrm{E}}(A + B Y) = A + B {\textrm{E}}(Y)\)</span></li>
-<li><span class="math inline">\({\textrm{cov}}\left[A + B Y\right] = B {\textrm{cov}}\left[Y\right] B^\top\)</span>.</li>
-</ul>
-<p><strong>Exercise 2.13</strong> Let <span class="math inline">\(Y = (Y_1, \ldots, Y_n)^\top\)</span> be a random vector, where <span class="math inline">\(Y_i\)</span> are i.i.d.&nbsp;random variables with mean <span class="math inline">\(\mu\)</span> and variance <span class="math inline">\(\sigma^2\)</span>. What are the mean and covariance of <span class="math inline">\(Y\)</span>? Use properties of random vectors to compute the mean and variance of the sample mean.</p>
-<p><em>Solution 2.4</em>. First, <span class="math inline">\({\textrm{E}}(Y) = \mu 1\)</span> and <span class="math inline">\({\textrm{cov}}\left[Y\right] = \sigma^2 I\)</span>. Note that <span class="math inline">\(\bar{Y} = (Y_1 + \cdots + Y_n)/n = \frac{1}{n}1^\top Y\)</span>. Now, we have <span class="math display">\[
-{\textrm{E}}(\bar{Y}) = {\textrm{E}}\left( \frac{1}{n}1^\top Y \right) =
-\frac{1}{n} \left( 1^\top {\textrm{E}}(Y) \right) = \frac{1}{n} (n \mu) = \mu
-\]</span> and,</p>
-<p><span class="math display">\[\begin{align*}
-{\textrm{cov}}\left[\bar{Y}\right] &amp;={\textrm{cov}}\left[ \frac{1}{n}1^\top Y\right]\\
-&amp;=
-\left( \frac{1}{n} \right)^2
-\left( 1^\top {\textrm{cov}}\left[Y\right]  1 \right) \\
-&amp;=
-\left( \frac{1}{n} \right)^2 (n \sigma^2) = \frac{\sigma^2}{n}.
-\end{align*}\]</span></p>
-</section>
-<section id="multivariate-normal-distribution" class="level3" data-number="1.4.4">
-<h3 data-number="1.4.4" data-anchor-id="multivariate-normal-distribution"><span class="header-section-number">1.4.4</span> Multivariate normal distribution</h3>
-<p>We say that a random vector <span class="math inline">\(X\sim \mathcal{N}_d(\mu,\Sigma)\)</span> follows a multivariate normal distribution if <span class="math inline">\(X\)</span> has PDF: <span class="math display">\[
-\phi(\mathbf{x})=\left(\frac{1}{2 \pi}\right)^{d / 2}|\Sigma|^{-1 / 2} \exp \left\{-\frac{1}{2}(\mathbf{x}-\mu)^{\prime} \Sigma^{-1}(\mathbf{x}-\mu)\right\}.
-\]</span></p>
-<p>If <span class="math inline">\(X\sim \mathcal{N}_d(\mu,\Sigma)\)</span> and <span class="math inline">\(c\in \mathbb{R}^d\)</span>, <span class="math inline">\(A\in \mathbb{R}^{m\times d}\)</span> then:</p>
-<ul>
-<li><span class="math inline">\(AX\sim \mathcal{N}(A\mu,A\Sigma A^\top)\)</span>.</li>
-<li><span class="math inline">\(c^\top X\sim \mathcal{N}(c^\top\mu,c^\top\Sigma c)\)</span>.</li>
-<li>Any conditional distribution for a subset of the variables conditional on another subset of variables is a multivariate distribution.</li>
-</ul>
-<p>Using random vectors is a simple way of deriving lots of equations for this course. Working with vectors also allows those who are “geometrically gifted” to view the whole regression concepts geometrically! If not, not to worry!</p>
-</section>
-<section id="homework-stop-4" class="level3" data-number="1.4.5">
-<h3 data-number="1.4.5" data-anchor-id="homework-stop-4"><span class="header-section-number">1.4.5</span> Homework stop 4</h3>
-<p><strong>Exercise 2.14</strong> For a (full-rank) non-random matrix <span class="math inline">\(X\in \mathbb{R}^{n\times p}\)</span> with <span class="math inline">\(n&gt;p\)</span>, and random vector <span class="math inline">\(Y\in \mathbb{R}^{n\times 1}\)</span> with mean <span class="math inline">\(\mu\)</span> and covariance <span class="math inline">\(\Sigma\)</span>, compute the following:</p>
-<ul>
-<li>Expected value and covariance matrix of <span class="math inline">\((X^\top X)^{-1}X^\top Y\)</span></li>
-<li>Expected value of <span class="math inline">\(Y^\top Y\)</span></li>
-<li>Expected value and covariance matrix of <span class="math inline">\(Z^\top Z\)</span> where <span class="math inline">\(Z\)</span> is a fixed, nonrandom vector of <span class="math inline">\(d\)</span> dimensions</li>
-</ul>
 
 
-</section>
 </section>
 
 </main> <!-- /main -->
@@ -1292,11 +959,14 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./index.html" class="pagination-link" aria-label="Preface">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Preface</span>
+      <a href="./Unit_1_1.html" class="pagination-link" aria-label="Review of random variables">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Review of random variables</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
+      <a href="./Unit_1_3.html" class="pagination-link" aria-label="Review of matrices and linear algebra">
+        <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Review of matrices and linear algebra</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
   </div>
 </nav>
 </div> <!-- /content -->

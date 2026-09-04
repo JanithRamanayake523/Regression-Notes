@@ -6,10 +6,8 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="author" content="Kelly Ramsay">
-<meta name="dcterms.date" content="2026-09-05">
 
-<title>Math 3330: Regression Notes</title>
+<title>4&nbsp; Review Random Vectors – Math 3330: Regression Notes</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -32,7 +30,7 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./Unit_1_1.html" rel="next">
+<link href="./Unit_1_3.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -69,6 +67,35 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 </head>
 
@@ -81,7 +108,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./index.html">Preface</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./Unit_1_1.html">Review material</a></li><li class="breadcrumb-item"><a href="./Unit_1_4.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Review Random Vectors</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -108,7 +135,7 @@ ul.task-list li input[type="checkbox"] {
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./index.html" class="sidebar-item-text sidebar-link active">
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Preface</span></a>
   </div>
 </li>
@@ -141,7 +168,7 @@ ul.task-list li input[type="checkbox"] {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./Unit_1_4.html" class="sidebar-item-text sidebar-link">
+  <a href="./Unit_1_4.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Review Random Vectors</span></span></a>
   </div>
 </li>
@@ -157,35 +184,27 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#preface" id="toc-preface" class="nav-link active" data-scroll-target="#preface">Preface</a></li>
+  <li><a href="#definition-of-random-vectors" id="toc-definition-of-random-vectors" class="nav-link active" data-scroll-target="#definition-of-random-vectors"><span class="header-section-number">4.1</span> Definition of random vectors</a></li>
+  <li><a href="#expected-value-and-covariance" id="toc-expected-value-and-covariance" class="nav-link" data-scroll-target="#expected-value-and-covariance"><span class="header-section-number">4.2</span> Expected Value and Covariance</a></li>
+  <li><a href="#properties-of-expected-value-and-covariance" id="toc-properties-of-expected-value-and-covariance" class="nav-link" data-scroll-target="#properties-of-expected-value-and-covariance"><span class="header-section-number">4.3</span> Properties of expected value and covariance</a></li>
+  <li><a href="#multivariate-normal-distribution" id="toc-multivariate-normal-distribution" class="nav-link" data-scroll-target="#multivariate-normal-distribution"><span class="header-section-number">4.4</span> Multivariate normal distribution</a></li>
+  <li><a href="#homework-stop-4" id="toc-homework-stop-4" class="nav-link" data-scroll-target="#homework-stop-4"><span class="header-section-number">4.5</span> Homework stop 4</a></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default">
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./Unit_1_1.html">Review material</a></li><li class="breadcrumb-item"><a href="./Unit_1_4.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Review Random Vectors</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">Math 3330: Regression Notes</h1>
+<h1 class="title"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Review Random Vectors</span></h1>
 </div>
 
 
 
 <div class="quarto-title-meta">
 
-    <div>
-    <div class="quarto-title-meta-heading">Author</div>
-    <div class="quarto-title-meta-contents">
-             <p>Kelly Ramsay </p>
-          </div>
-  </div>
     
-    <div>
-    <div class="quarto-title-meta-heading">Published</div>
-    <div class="quarto-title-meta-contents">
-      <p class="date">September 5, 2026</p>
-    </div>
-  </div>
   
     
   </div>
@@ -195,26 +214,69 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<section id="preface" class="level1 unnumbered">
-<h1 class="unnumbered">Preface</h1>
-<p>Welcome to the MATH 3330 Notes! Please install <a href="https://www.r-project.org/">R</a> and <a href="https://posit.co/download/rstudio-desktop/">R studio</a> (Or you can use VSCode if you’re comfortable there.)</p>
-<p>In order to make the most of these notes, do all of the exercises in the order they appear.</p>
-<p>There will likely be typos and some errors, please let me know if you encounter any.</p>
-<p>These notes should be used in conjunction with the book:</p>
-<p>Title: Introduction to Linear Regression Analysis, Volume 821 of Wiley Series in Probability and Statistics Authors: Douglas C. Montgomery, Elizabeth A. Peck, G. Geoffrey Vining Edition: 5, illustrated, reprint Publisher: John Wiley &amp; Sons, 2012 ISBN: 0470542810, 9780470542811</p>
-<div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Note
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>This is a work in progress. Currently only the <strong>Review material</strong> unit is available; more units will be added as they are rebuilt.</p>
-</div>
-</div>
+<section id="definition-of-random-vectors" class="level2" data-number="4.1">
+<h2 data-number="4.1" data-anchor-id="definition-of-random-vectors"><span class="header-section-number">4.1</span> Definition of random vectors</h2>
+<p><strong>Definition 2.14</strong> Let <span class="math inline">\(Y_1, \cdots, Y_n\)</span> be random variables. Then <span class="math display">\[
+Y = \left( \begin{array}{c} Y_1 \\ \vdots \\ Y_n \end{array} \right)
+\]</span> is an <span class="math inline">\(n\)</span>-dimensional random vector.</p>
+<p>Similar to a random variable, a random vector also comes with a probability mass function (if all the <span class="math inline">\(Y_i\)</span> are discrete) or a probability density function (if all the <span class="math inline">\(Y_i\)</span> are continuous), or a ``mixture’’ distribution (if some <span class="math inline">\(Y_i\)</span> are discrete and others are continuous). In general, a random vector is drawn from a multivariate distribution, defined by the PMF or PDF. Just as before, the PMF and PDF range is non-negative, the PMF sums to 1 over all outcomes, and the PDF integrates to 1 over <span class="math inline">\(\mathbb{R}^n\)</span>. One discrete multivariate distribution you have learned in 1131 is the Multinomial distribution. We will learn about the multivariate normal distribution soon.</p>
+</section>
+<section id="expected-value-and-covariance" class="level2" data-number="4.2">
+<h2 data-number="4.2" data-anchor-id="expected-value-and-covariance"><span class="header-section-number">4.2</span> Expected Value and Covariance</h2>
+<p><strong>Definition 2.15</strong> Let <span class="math inline">\(Y\)</span> be an <span class="math inline">\(n\)</span>-dimensional random vector, then the mean (expected value) of <span class="math inline">\(Y\)</span> is defined as <span class="math display">\[
+{\textrm{E}}(Y) = \left( \begin{array}{c} {\textrm{E}}(Y_1) \\ \vdots \\ {\textrm{E}}(Y_n) \end{array} \right) =
+\mu
+\]</span> and the covariance matrix of <span class="math inline">\(Y\)</span> is defined as <span class="math display">\[
+{\textrm{cov}}\left[Y\right] = {\textrm{E}}[ (Y - \mu) (Y - \mu)^\top ] =
+(( {\textrm{cov}}\left[Y_i, Y_j\right] \ )) = \Sigma.
+\]</span></p>
+<p>Sometimes <span class="math inline">\({\textrm{cov}}\left[Y\right]\)</span> is written as <span class="math inline">\({\textrm{Var}}\left[Y\right]\)</span>.</p>
+<p>The following are some facts about <span class="math inline">\(\Sigma\)</span>:</p>
+<p><span class="math inline">\(\Sigma\)</span> is an <span class="math inline">\(n \times n\)</span> matrix with the diagonal elements being the variances, <span class="math inline">\({\textrm{Var}}\left[Y_i\right]\)</span> for <span class="math inline">\(i=1, \ldots, n\)</span>, and the off-diagonal elements being the covariances, <span class="math inline">\({\textrm{cov}}\left[Y_i, Y_j\right]\)</span> for <span class="math inline">\(i, j = 1, \ldots, n\)</span> and <span class="math inline">\(i \ne j\)</span>. <span class="math inline">\(\Sigma\)</span> is a symmetric, non-negative definite matrix. In this course, we further restrict it to be a positive definite matrix. <span class="math inline">\(\Sigma\)</span> is referred to as the <strong>covariance matrix</strong>.</p>
+</section>
+<section id="properties-of-expected-value-and-covariance" class="level2" data-number="4.3">
+<h2 data-number="4.3" data-anchor-id="properties-of-expected-value-and-covariance"><span class="header-section-number">4.3</span> Properties of expected value and covariance</h2>
+<p>Let <span class="math inline">\(X,Y\in \mathbb{R}^{d}\)</span> be random vectors with <span class="math inline">\(A\in \mathbb{R}^d\)</span> and <span class="math inline">\(B\in \mathbb{R}^{n\times d}\)</span> be matrices. It holds that</p>
+<ul>
+<li><span class="math inline">\({\textrm{E}}(X+ Y) = {\textrm{E}}(X)+{\textrm{E}}(Y)\)</span></li>
+<li><span class="math inline">\({\textrm{E}}(A + B Y) = A + B {\textrm{E}}(Y)\)</span></li>
+<li><span class="math inline">\({\textrm{cov}}\left[A + B Y\right] = B {\textrm{cov}}\left[Y\right] B^\top\)</span>.</li>
+</ul>
+<p><strong>Exercise 2.13</strong> Let <span class="math inline">\(Y = (Y_1, \ldots, Y_n)^\top\)</span> be a random vector, where <span class="math inline">\(Y_i\)</span> are i.i.d.&nbsp;random variables with mean <span class="math inline">\(\mu\)</span> and variance <span class="math inline">\(\sigma^2\)</span>. What are the mean and covariance of <span class="math inline">\(Y\)</span>? Use properties of random vectors to compute the mean and variance of the sample mean.</p>
+<p><em>Solution 2.4</em>. First, <span class="math inline">\({\textrm{E}}(Y) = \mu 1\)</span> and <span class="math inline">\({\textrm{cov}}\left[Y\right] = \sigma^2 I\)</span>. Note that <span class="math inline">\(\bar{Y} = (Y_1 + \cdots + Y_n)/n = \frac{1}{n}1^\top Y\)</span>. Now, we have <span class="math display">\[
+{\textrm{E}}(\bar{Y}) = {\textrm{E}}\left( \frac{1}{n}1^\top Y \right) =
+\frac{1}{n} \left( 1^\top {\textrm{E}}(Y) \right) = \frac{1}{n} (n \mu) = \mu
+\]</span> and,</p>
+<p><span class="math display">\[\begin{align*}
+{\textrm{cov}}\left[\bar{Y}\right] &amp;={\textrm{cov}}\left[ \frac{1}{n}1^\top Y\right]\\
+&amp;=
+\left( \frac{1}{n} \right)^2
+\left( 1^\top {\textrm{cov}}\left[Y\right]  1 \right) \\
+&amp;=
+\left( \frac{1}{n} \right)^2 (n \sigma^2) = \frac{\sigma^2}{n}.
+\end{align*}\]</span></p>
+</section>
+<section id="multivariate-normal-distribution" class="level2" data-number="4.4">
+<h2 data-number="4.4" data-anchor-id="multivariate-normal-distribution"><span class="header-section-number">4.4</span> Multivariate normal distribution</h2>
+<p>We say that a random vector <span class="math inline">\(X\sim \mathcal{N}_d(\mu,\Sigma)\)</span> follows a multivariate normal distribution if <span class="math inline">\(X\)</span> has PDF: <span class="math display">\[
+\phi(\mathbf{x})=\left(\frac{1}{2 \pi}\right)^{d / 2}|\Sigma|^{-1 / 2} \exp \left\{-\frac{1}{2}(\mathbf{x}-\mu)^{\prime} \Sigma^{-1}(\mathbf{x}-\mu)\right\}.
+\]</span></p>
+<p>If <span class="math inline">\(X\sim \mathcal{N}_d(\mu,\Sigma)\)</span> and <span class="math inline">\(c\in \mathbb{R}^d\)</span>, <span class="math inline">\(A\in \mathbb{R}^{m\times d}\)</span> then:</p>
+<ul>
+<li><span class="math inline">\(AX\sim \mathcal{N}(A\mu,A\Sigma A^\top)\)</span>.</li>
+<li><span class="math inline">\(c^\top X\sim \mathcal{N}(c^\top\mu,c^\top\Sigma c)\)</span>.</li>
+<li>Any conditional distribution for a subset of the variables conditional on another subset of variables is a multivariate distribution.</li>
+</ul>
+<p>Using random vectors is a simple way of deriving lots of equations for this course. Working with vectors also allows those who are “geometrically gifted” to view the whole regression concepts geometrically! If not, not to worry!</p>
+</section>
+<section id="homework-stop-4" class="level2" data-number="4.5">
+<h2 data-number="4.5" data-anchor-id="homework-stop-4"><span class="header-section-number">4.5</span> Homework stop 4</h2>
+<p><strong>Exercise 2.14</strong> For a (full-rank) non-random matrix <span class="math inline">\(X\in \mathbb{R}^{n\times p}\)</span> with <span class="math inline">\(n&gt;p\)</span>, and random vector <span class="math inline">\(Y\in \mathbb{R}^{n\times 1}\)</span> with mean <span class="math inline">\(\mu\)</span> and covariance <span class="math inline">\(\Sigma\)</span>, compute the following:</p>
+<ul>
+<li>Expected value and covariance matrix of <span class="math inline">\((X^\top X)^{-1}X^\top Y\)</span></li>
+<li>Expected value of <span class="math inline">\(Y^\top Y\)</span></li>
+<li>Expected value and covariance matrix of <span class="math inline">\(Z^\top Z\)</span> where <span class="math inline">\(Z\)</span> is a fixed, nonrandom vector of <span class="math inline">\(d\)</span> dimensions</li>
+</ul>
 
 
 </section>
@@ -632,11 +694,11 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
+      <a href="./Unit_1_3.html" class="pagination-link" aria-label="Review of matrices and linear algebra">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Review of matrices and linear algebra</span></span>
+      </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./Unit_1_1.html" class="pagination-link" aria-label="Review of random variables">
-        <span class="nav-page-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Review of random variables</span></span> <i class="bi bi-arrow-right-short"></i>
-      </a>
   </div>
 </nav>
 </div> <!-- /content -->

@@ -6,10 +6,8 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="author" content="Kelly Ramsay">
-<meta name="dcterms.date" content="2026-09-05">
 
-<title>Math 3330: Regression Notes</title>
+<title>3&nbsp; Review of matrices and linear algebra – Math 3330: Regression Notes</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -32,7 +30,8 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./Unit_1_1.html" rel="next">
+<link href="./Unit_1_4.html" rel="next">
+<link href="./Unit_1_2.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -69,6 +68,35 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 </head>
 
@@ -81,7 +109,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./index.html">Preface</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./Unit_1_1.html">Review material</a></li><li class="breadcrumb-item"><a href="./Unit_1_3.html"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Review of matrices and linear algebra</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -108,7 +136,7 @@ ul.task-list li input[type="checkbox"] {
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./index.html" class="sidebar-item-text sidebar-link active">
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Preface</span></a>
   </div>
 </li>
@@ -135,7 +163,7 @@ ul.task-list li input[type="checkbox"] {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./Unit_1_3.html" class="sidebar-item-text sidebar-link">
+  <a href="./Unit_1_3.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Review of matrices and linear algebra</span></span></a>
   </div>
 </li>
@@ -157,35 +185,25 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#preface" id="toc-preface" class="nav-link active" data-scroll-target="#preface">Preface</a></li>
+  <li><a href="#matrix-properties" id="toc-matrix-properties" class="nav-link active" data-scroll-target="#matrix-properties"><span class="header-section-number">3.1</span> Matrix properties</a></li>
+  <li><a href="#important-identities" id="toc-important-identities" class="nav-link" data-scroll-target="#important-identities"><span class="header-section-number">3.2</span> Important identities</a></li>
+  <li><a href="#homework-stop-3" id="toc-homework-stop-3" class="nav-link" data-scroll-target="#homework-stop-3"><span class="header-section-number">3.3</span> Homework stop 3</a></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default">
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./Unit_1_1.html">Review material</a></li><li class="breadcrumb-item"><a href="./Unit_1_3.html"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Review of matrices and linear algebra</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">Math 3330: Regression Notes</h1>
+<h1 class="title"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Review of matrices and linear algebra</span></h1>
 </div>
 
 
 
 <div class="quarto-title-meta">
 
-    <div>
-    <div class="quarto-title-meta-heading">Author</div>
-    <div class="quarto-title-meta-contents">
-             <p>Kelly Ramsay </p>
-          </div>
-  </div>
     
-    <div>
-    <div class="quarto-title-meta-heading">Published</div>
-    <div class="quarto-title-meta-contents">
-      <p class="date">September 5, 2026</p>
-    </div>
-  </div>
   
     
   </div>
@@ -195,13 +213,57 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<section id="preface" class="level1 unnumbered">
-<h1 class="unnumbered">Preface</h1>
-<p>Welcome to the MATH 3330 Notes! Please install <a href="https://www.r-project.org/">R</a> and <a href="https://posit.co/download/rstudio-desktop/">R studio</a> (Or you can use VSCode if you’re comfortable there.)</p>
-<p>In order to make the most of these notes, do all of the exercises in the order they appear.</p>
-<p>There will likely be typos and some errors, please let me know if you encounter any.</p>
-<p>These notes should be used in conjunction with the book:</p>
-<p>Title: Introduction to Linear Regression Analysis, Volume 821 of Wiley Series in Probability and Statistics Authors: Douglas C. Montgomery, Elizabeth A. Peck, G. Geoffrey Vining Edition: 5, illustrated, reprint Publisher: John Wiley &amp; Sons, 2012 ISBN: 0470542810, 9780470542811</p>
+<p>Recall that</p>
+<p><strong>Definition 2.6</strong> An <span class="math inline">\((n \times m)\)</span> matrix <span class="math inline">\(A\)</span> takes the form <span class="math display">\[\begin{eqnarray*}
+A &amp; = &amp; \left( \begin{array}{cccc}
+a_{11} &amp; a_{12} &amp; \cdots &amp; a_{1m} \\
+a_{21} &amp; a_{22} &amp; \cdots &amp; a_{2m} \\
+\vdots &amp; \vdots &amp; \vdots &amp; \vdots \\
+a_{n1} &amp; a_{n2} &amp; \cdots &amp; a_{nm} \\
+\end{array} \right) \\
+&amp;=&amp; (( \ a_{ij} \ )) \hspace{0.5in} i=1, \ldots, n, \ \ j=1, \ldots, m
+\end{eqnarray*}\]</span> and <span class="math inline">\(a_{ij}\)</span> is the element in the <span class="math inline">\(i^{th}\)</span> row and <span class="math inline">\(j^{th}\)</span> column of the matrix <span class="math inline">\(A\)</span></p>
+<p>We also define the following:</p>
+<ul>
+<li><p>An <span class="math inline">\((n \times 1)\)</span> matrix is also known as a <span class="math inline">\(n\)</span> dimensional column vector. Note: in this course, a vector means a column vector.</p></li>
+<li><p>A <span class="math inline">\((1 \times m)\)</span> matrix is also known as a <span class="math inline">\(m\)</span> dimensional row vector</p></li>
+<li><p>The <span class="math inline">\(n\)</span> dimensional one vector, <span class="math inline">\(1_n\)</span>, (sometimes the subscript <span class="math inline">\(n\)</span> is suppressed when the dimension is obvious), is an <span class="math inline">\(n\)</span> dimensional column vector with all entries being <span class="math inline">\(1\)</span>.</p></li>
+<li><p>The <span class="math inline">\((n \times n)\)</span> identity matrix, <span class="math inline">\(I_n\)</span>, is the <span class="math inline">\((n \times n)\)</span> matrix with diagonal entries set equal to 1 and the off diagonal entries set equal to 0</p></li>
+</ul>
+<p>Throughout this section, we will use the following matrices to demonstrate the numerical calculations: <span class="math display">\[
+U = \left( \begin{array}{ccc} 1 &amp; 2 &amp; 3 \\ -1 &amp; 4 &amp; -2 \end{array} \right), \
+V = \left( \begin{array}{cc} 2 &amp; 4 \\ 1 &amp; -2 \\ -1 &amp; 0 \end{array} \right), \ k = 4
+\]</span></p>
+<section id="matrix-properties" class="level2" data-number="3.1">
+<h2 data-number="3.1" data-anchor-id="matrix-properties"><span class="header-section-number">3.1</span> Matrix properties</h2>
+<p>First, we define the transpose of a matrix:</p>
+<p><strong>Definition 2.7</strong> Let <span class="math inline">\(A = (( \ a_{ij} \ ))\)</span> for <span class="math inline">\(i=1, \ldots, n\)</span> and <span class="math inline">\(j=1, \ldots, m\)</span>, is an <span class="math inline">\((n \times m)\)</span> matrix. Then <span class="math inline">\(A^\top = A\)</span> transpose <span class="math inline">\(=  (( \ a_{ji} \ ))\)</span> for <span class="math inline">\(j=1, \ldots, m\)</span> and <span class="math inline">\(i=1, \ldots, n\)</span>, and <span class="math inline">\(A^\top\)</span> is an <span class="math inline">\((m \times n)\)</span> matrix.</p>
+<p>When we transpose a matrix <span class="math inline">\(A\)</span>, the rows of <span class="math inline">\(A\)</span> becomes the columns of <span class="math inline">\(A^\top\)</span> and the columns of <span class="math inline">\(A\)</span> becomes the rows of <span class="math inline">\(A^\top\)</span>.</p>
+<p><strong>Example 2.1</strong> Using our example matrices, we have that <span class="math display">\[
+U^\top = \left( \begin{array}{cc} 1 &amp; -1 \\ 2 &amp; 4 \\ 3 &amp; -2 \end{array} \right), \
+V^\top = \left( \begin{array}{ccc} 2 &amp; 1 &amp; -1 \\ 4 &amp; -2 &amp; 0 \end{array} \right)
+\]</span></p>
+<p><strong>Definition 2.8</strong> Let <span class="math inline">\(A = (( \ a_{ij} \ ))\)</span> and <span class="math inline">\(B = (( \ b_{ij} \ ))\)</span> be two <span class="math inline">\((n \times m)\)</span> matrices. Then <span class="math display">\[
+A \pm B = (( \ a_{ij} \pm \ b_{ij} \ )).
+\]</span></p>
+<p>Addition and subtraction of matrices required the matrices to have the same dimension.</p>
+<p><strong>Example 2.2</strong> Using our example matrices, we have that: <span class="math inline">\(U + V\)</span> is undefined because they are not of the same dimension, and <span class="math display">\[
+U + V^\top = \left( \begin{array}{ccc} 1+2 &amp; 2+1 &amp; 3+(-1) \\ (-1)+4 &amp; 4 + (-2) &amp; (-2)+0
+\end{array} \right) =
+\left( \begin{array}{ccc} 3 &amp; 3 &amp; 3 \\ 3 &amp; 2 &amp; -2 \end{array} \right)\]</span></p>
+<p><strong>Definition 2.9</strong> Let <span class="math inline">\(A = (( \ a_{ij} \ ))\)</span> for <span class="math inline">\(i=1, \ldots, n\)</span> and <span class="math inline">\(j=1, \ldots, m\)</span>, is an <span class="math inline">\((n \times m)\)</span> matrix and <span class="math inline">\(k\)</span> is a constant. Then <span class="math display">\[
+kA = (( \ k a_{ij} \ )) = Ak,
+\]</span> i.e.&nbsp;each element of the matrix <span class="math inline">\(A\)</span> is multiplied by <span class="math inline">\(k\)</span>.</p>
+<p><strong>Example 2.3</strong> Using our example matrices, we have that: <span class="math display">\[
+kU^\top = 4 \left( \begin{array}{cc} 1 &amp; -1 \\ 2 &amp; 4 \\ 3 &amp; -2 \end{array} \right)
+= \left( \begin{array}{cc} 4(1) &amp;4(-1) \\ 4(2) &amp; 4(4) \\ 4(3) &amp; 4(-2) \end{array} \right)
+= \left( \begin{array}{cc} 4 &amp; -4 \\ 8 &amp; 8 \\ 12 &amp; -2 \end{array} \right)
+\]</span></p>
+<p><strong>Definition 2.10</strong> Let <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span> be two matrices. Then <span class="math inline">\(A\)</span> multiplied by <span class="math inline">\(B\)</span>, <span class="math inline">\(AB\)</span>, is defined only if (number of columns of <span class="math inline">\(A\)</span>) <span class="math inline">\(=\)</span> (number of rows of <span class="math inline">\(B\)</span>).</p>
+<p>The product is a <span class="math inline">\(\left( \right.\)</span> (number of rows of <span class="math inline">\(A\)</span>) <span class="math inline">\(\times\)</span> (number of columns of <span class="math inline">\(B\)</span>) <span class="math inline">\(\left. \right)\)</span> matrix.</p>
+<p>More precisely, let <span class="math inline">\(A = (( \ a_{ij} \ ))\)</span> be an <span class="math inline">\((n \times m)\)</span> matrix and <span class="math inline">\(B = (( \ b_{ij} \ ))\)</span> be an <span class="math inline">\((m \times p)\)</span> matrix. Then <span class="math inline">\(C = AB = (( \ c_{ij} \ ))\)</span> is an <span class="math inline">\((n \times p)\)</span> matrix with <span class="math display">\[
+c_{ij} = a_{i1}b_{1j} + a_{i2}b_{2j} + \cdots + a_{im}b_{mj}
+\]</span></p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -212,9 +274,90 @@ Note
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>This is a work in progress. Currently only the <strong>Review material</strong> unit is available; more units will be added as they are rebuilt.</p>
+<p>In matrix algebra, <span class="math inline">\(AB\)</span> is not necessarily equal to <span class="math inline">\(BA\)</span>.</p>
 </div>
 </div>
+<p><strong>Example 2.4</strong> Using our example matrices, we have that: <span class="math display">\[\begin{eqnarray*}
+U V &amp; = &amp; \left( \begin{array}{ccc} 1 &amp; 2 &amp; 3 \\ -1 &amp; 4 &amp; -2 \end{array} \right)
+\left( \begin{array}{cc} 2 &amp; 4 \\ 1 &amp; -2 \\ -1 &amp; 0 \end{array} \right) \\
+&amp; = &amp; \left( \begin{array}{cc}
+1(2) + 2(1) + 3(-1) &amp; 1(4) + 2(-2) + 3(0) \\
+(-1)(2) + 4(1) + (-2)(-1) &amp; (-1)(4) + 4(-2) + (-2)(0)
+\end{array} \right) \\
+&amp; = &amp; \left( \begin{array}{cc} 1 &amp; 0 \\ 4 &amp; -12 \end{array} \right)
+\end{eqnarray*}\]</span></p>
+<p>Assume all the matrix multiplication works. Let <span class="math inline">\(I_n\)</span> be an <span class="math inline">\((n \times n)\)</span> identity matrix. Then <span class="math display">\[
+AI_n = A, \ \ \ and \ \ \ I_nB = B.
+\]</span></p>
+<p><strong>Definition 2.11</strong> Let <span class="math inline">\(A\)</span> be an <span class="math inline">\((n \times n)\)</span> matrix. The inverse of <span class="math inline">\(A\)</span>, <span class="math inline">\(A^{-1}\)</span>, if exists satisfies <span class="math display">\[
+A A^{-1} = A^{-1} A = I_n
+\]</span> and if <span class="math inline">\(A^{-1}\)</span> does not exist, then <span class="math inline">\(A\)</span> is a singular matrix.</p>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Important
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>From your linear algebra course, a prerequisite, you have learned the condition(s) for the existence of an inverse, <a href="https://mathworld.wolfram.com/InvertibleMatrixTheorem.html">The Invertible Matrix Theorem</a> and you have learned how to obtain an inverse. You should review them.</p>
+</div>
+</div>
+<p>Specifically, you should know how to obtain inverse of any diagonal matrix and any <span class="math inline">\((2 \times 2)\)</span> non-singular matrix, i.e., <span class="math display">\[
+\left( \begin{array}{cc} a &amp; b \\ c &amp; d \end{array} \right)^{-1} =
+\frac{1}{ad - bc} \left( \begin{array}{cc} d &amp; -b \\ -c &amp; a \end{array} \right).
+\]</span></p>
+<p><strong>Example 2.5</strong> Using our example matrices, let <span class="math display">\[
+W = UV = \left( \begin{array}{cc} 1 &amp; 0 \\ 4 &amp; -12 \end{array} \right)
+\]</span> Then <span class="math display">\[
+W^{-1} = \frac{1}{1(-12) - 0(4)}
+\left( \begin{array}{cc} -12 &amp; 0 \\ -4 &amp; 1 \end{array} \right) =
+\left( \begin{array}{cc} 1 &amp; 0 \\ 1/3 &amp; -1/12 \end{array} \right)
+.\]</span></p>
+<p>You can verify that <span class="math inline">\(W W^{-1} = W^{-1} W = I_2\)</span>.</p>
+</section>
+<section id="important-identities" class="level2" data-number="3.2">
+<h2 data-number="3.2" data-anchor-id="important-identities"><span class="header-section-number">3.2</span> Important identities</h2>
+<p>Lastly, we introduce some important identities:</p>
+<p><span class="math display">\[
+X = \left( \begin{array}{cc} 1 &amp; x_1 \\ \vdots &amp; \vdots \\ 1 &amp; x_n \end{array} \right), \ \ \
+and \ \ \
+y = \left( \begin{array}{c} y_1 \\ \vdots \\ y_n \end{array} \right)
+\]</span> Then <span class="math display">\[
+X^\top X = \left( \begin{array}{cc} n &amp; \sum_{i=1}^n x_i \\
+\sum_{i=1}^n x_i &amp; \sum_{i=1}^n x_i^2 \end{array} \right), \ \ \ {\textrm{and}} \ \ \
+X^\top y = \left( \begin{array}{c} \sum_{i=1}^n y_i \\ \sum_{i=1}^n x_i y_i
+\end{array} \right).
+\]</span> Also <span class="math inline">\(\bar{y} = \frac{1}{n} 1^\top y\)</span> and <span class="math inline">\(\sum_{i=1}^n y_i = n \bar{y}\)</span> and, finally <span class="math inline">\(\sum_{i=1}^n (y_i - \bar{y})^2 = \sum_{i=1}^n y_i^2 - n \bar{y}^2\)</span>. These are useful identities that we will use throughout this course.</p>
+<p><strong>Exercise 2.11</strong> Prove the previously introduced identities.</p>
+<p>Lastly, we recall an important application of matrices. An application of matrices: Suppose that we want to solve for <span class="math inline">\(x_1, x_2, x_3\)</span> where they satisfy the following set of linear equations:</p>
+<p><span class="math display">\[\begin{eqnarray*}
+2 x_1 + 3 x_2 - 4 x_3 &amp; = &amp; 0 \\
+-x_1 + 4 x_2 &amp; = &amp; -1 \\
+5 x_1 + x_2 - 2 x_3 &amp; = &amp; 4
+\end{eqnarray*}\]</span></p>
+<p>We can set it up in matrix form as follows: <span class="math display">\[
+\left( \begin{array}{rrr} 2 &amp; 3 &amp; -4 \\ -1 &amp; 4 &amp; 0 \\ 5 &amp; 1 &amp; -2 \end{array} \right)
+\left( \begin{array}{c} x_1 \\ x_2 \\ x_3 \end{array} \right) =
+\left( \begin{array}{c} 0 \\ -1 \\ 4  \end{array} \right)
+\]</span> Or it can be presented as <span class="math inline">\(A x = b\)</span>. If <span class="math inline">\(A\)</span> is not a singular matrix, then <span class="math inline">\(x= A^{-1} b\)</span>. Since <span class="math inline">\(det(A) = 62\)</span>, it is not a singular matrix. Solving the above equation this using <span class="math inline">\(x= A^{-1} b\)</span> yields that <span class="math inline">\(x = (1, 0, 0.5)^\top\)</span>. Keep this in mind, we will see it return in the next chapter.</p>
+<p>Lastly - I will remind you of two definitions:</p>
+<p><strong>Definition 2.12</strong> A set of vectors <span class="math inline">\(v_1,\ldots,v_d\)</span> is linearly independent if the only <span class="math inline">\(d\)</span>-dimensional set of scalars <span class="math inline">\(a_1,\ldots,a_d\in\mathbb{R}\)</span> such that <span class="math inline">\(\sum_{i=1}^d a_i v_i=0\)</span> implies is the <span class="math inline">\(d\)</span>-dimensional 0 vector.</p>
+<p><strong>Definition 2.13</strong> A <span class="math inline">\(d\times d\)</span> symmetric matrix <span class="math inline">\(A\)</span> is positive-definite if for all <span class="math inline">\(x\in\mathbb{R}^d \backslash \{0\}\)</span> it holds that <span class="math inline">\(x^\top A x&gt;0\)</span>.</p>
+</section>
+<section id="homework-stop-3" class="level2" data-number="3.3">
+<h2 data-number="3.3" data-anchor-id="homework-stop-3"><span class="header-section-number">3.3</span> Homework stop 3</h2>
+<p><strong>Exercise 2.12</strong> Let <span class="math display">\[
+W =  \left( \begin{array}{cc} 3 &amp; 2 \\ -4 &amp; 6 \end{array} \right)
+\]</span> and <span class="math inline">\(x=(2,1)^\top\)</span>. Compute <span class="math inline">\(W^{-1}\)</span>, <span class="math inline">\(xx^\top\)</span> and <span class="math inline">\(x^\top W\)</span>. Verify that <span class="math inline">\(W W^{-1} = W^{-1} W = I_2\)</span>.</p>
+<ul>
+<li>Prove each of the <a href="Important-identities">important identities</a>.</li>
+<li>Verify <span class="math inline">\(X^\top A=(A^\top X)^\top\)</span>.</li>
+<li>What is the rank of a matrix? Is a matrix’s rank related to whether or not a matrix is invertible? Why?</li>
+<li>Define a positive definite matrix. When is <span class="math inline">\(X^\top X\)</span> positive definite?</li>
+</ul>
 
 
 </section>
@@ -632,10 +775,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
+      <a href="./Unit_1_2.html" class="pagination-link" aria-label="Review of introductory statistics">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Review of introductory statistics</span></span>
+      </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./Unit_1_1.html" class="pagination-link" aria-label="Review of random variables">
-        <span class="nav-page-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Review of random variables</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./Unit_1_4.html" class="pagination-link" aria-label="Review Random Vectors">
+        <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Review Random Vectors</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

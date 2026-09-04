@@ -6,10 +6,8 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="author" content="Kelly Ramsay">
-<meta name="dcterms.date" content="2026-09-05">
 
-<title>Math 3330: Regression Notes</title>
+<title>1&nbsp; Review of random variables – Math 3330: Regression Notes</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -32,7 +30,8 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./Unit_1_1.html" rel="next">
+<link href="./Unit_1_2.html" rel="next">
+<link href="./index.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -69,6 +68,35 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 </head>
 
@@ -81,7 +109,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./index.html">Preface</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./Unit_1_1.html">Review material</a></li><li class="breadcrumb-item"><a href="./Unit_1_1.html"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Review of random variables</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -108,7 +136,7 @@ ul.task-list li input[type="checkbox"] {
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./index.html" class="sidebar-item-text sidebar-link active">
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Preface</span></a>
   </div>
 </li>
@@ -123,7 +151,7 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./Unit_1_1.html" class="sidebar-item-text sidebar-link">
+  <a href="./Unit_1_1.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Review of random variables</span></span></a>
   </div>
 </li>
@@ -157,35 +185,28 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#preface" id="toc-preface" class="nav-link active" data-scroll-target="#preface">Preface</a></li>
+  <li><a href="#discrete-random-variables" id="toc-discrete-random-variables" class="nav-link active" data-scroll-target="#discrete-random-variables"><span class="header-section-number">1.1</span> Discrete Random Variables</a></li>
+  <li><a href="#continuous-random-variables" id="toc-continuous-random-variables" class="nav-link" data-scroll-target="#continuous-random-variables"><span class="header-section-number">1.2</span> Continuous Random Variables</a></li>
+  <li><a href="#properties-of-random-variables" id="toc-properties-of-random-variables" class="nav-link" data-scroll-target="#properties-of-random-variables"><span class="header-section-number">1.3</span> Properties of Random Variables</a></li>
+  <li><a href="#useful-properties-of-normal-and-related-random-variables" id="toc-useful-properties-of-normal-and-related-random-variables" class="nav-link" data-scroll-target="#useful-properties-of-normal-and-related-random-variables"><span class="header-section-number">1.4</span> Useful properties of normal and related random variables</a></li>
+  <li><a href="#central-limit-theorem" id="toc-central-limit-theorem" class="nav-link" data-scroll-target="#central-limit-theorem"><span class="header-section-number">1.5</span> Central Limit Theorem</a></li>
+  <li><a href="#homework-stop-1" id="toc-homework-stop-1" class="nav-link" data-scroll-target="#homework-stop-1"><span class="header-section-number">1.6</span> Homework stop 1</a></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default">
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./Unit_1_1.html">Review material</a></li><li class="breadcrumb-item"><a href="./Unit_1_1.html"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Review of random variables</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">Math 3330: Regression Notes</h1>
+<h1 class="title"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Review of random variables</span></h1>
 </div>
 
 
 
 <div class="quarto-title-meta">
 
-    <div>
-    <div class="quarto-title-meta-heading">Author</div>
-    <div class="quarto-title-meta-contents">
-             <p>Kelly Ramsay </p>
-          </div>
-  </div>
     
-    <div>
-    <div class="quarto-title-meta-heading">Published</div>
-    <div class="quarto-title-meta-contents">
-      <p class="date">September 5, 2026</p>
-    </div>
-  </div>
   
     
   </div>
@@ -195,13 +216,8 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<section id="preface" class="level1 unnumbered">
-<h1 class="unnumbered">Preface</h1>
-<p>Welcome to the MATH 3330 Notes! Please install <a href="https://www.r-project.org/">R</a> and <a href="https://posit.co/download/rstudio-desktop/">R studio</a> (Or you can use VSCode if you’re comfortable there.)</p>
-<p>In order to make the most of these notes, do all of the exercises in the order they appear.</p>
-<p>There will likely be typos and some errors, please let me know if you encounter any.</p>
-<p>These notes should be used in conjunction with the book:</p>
-<p>Title: Introduction to Linear Regression Analysis, Volume 821 of Wiley Series in Probability and Statistics Authors: Douglas C. Montgomery, Elizabeth A. Peck, G. Geoffrey Vining Edition: 5, illustrated, reprint Publisher: John Wiley &amp; Sons, 2012 ISBN: 0470542810, 9780470542811</p>
+<p>Recall that</p>
+<p><strong>Definition 2.1</strong> A random variable <span class="math inline">\(X\)</span> is a function which maps outcomes <span class="math inline">\(\omega\in \Omega\)</span> to the real numbers, i.e., <span class="math inline">\(X\colon \Omega\rightarrow\mathbb{R}\)</span>.</p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -212,9 +228,108 @@ Note
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>This is a work in progress. Currently only the <strong>Review material</strong> unit is available; more units will be added as they are rebuilt.</p>
+<p>Note that the notation <span class="math inline">\(f\colon A\rightarrow B\)</span> means that <span class="math inline">\(f\)</span> is a function whose domain is <span class="math inline">\(A\)</span> and range is <span class="math inline">\(B\)</span>. That is, <span class="math inline">\(f\)</span> takes a value from <span class="math inline">\(A\)</span> and outputs some value in <span class="math inline">\(B\)</span>.</p>
 </div>
 </div>
+<p>Generally, we will just write <span class="math inline">\(X\)</span>, and ignore the fact that <span class="math inline">\(X\)</span> is a function.</p>
+<p>We can categorize a random variable <span class="math inline">\(X\)</span> as follows:</p>
+<ul>
+<li>If <span class="math inline">\(X\colon \Omega\rightarrow S\)</span> where <span class="math inline">\(S\)</span> is countable, then <span class="math inline">\(X\)</span> is a <em>discrete random variable</em></li>
+<li>We say <span class="math inline">\(X\)</span> is a <em>continuous random variable</em> if <span class="math inline">\(\Pr(X=r)=0\)</span> for all <span class="math inline">\(r\in\mathbb{R}\)</span>.</li>
+<li>Otherwise, <span class="math inline">\(X\)</span> is a <em>mixed random variable</em> (which we won’t worry about in this course)</li>
+</ul>
+<section id="discrete-random-variables" class="level2" data-number="1.1">
+<h2 data-number="1.1" data-anchor-id="discrete-random-variables"><span class="header-section-number">1.1</span> Discrete Random Variables</h2>
+<p>If <span class="math inline">\(X\colon \Omega\rightarrow S\)</span> where <span class="math inline">\(S\)</span> is countable, then <span class="math inline">\(X\)</span> is a discrete random variable. <span class="math inline">\(S\)</span> can be finite, but can also be any infinite subset of the integers <span class="math inline">\(\mathbb{Z}\)</span>. The distribution of <span class="math inline">\(X\)</span> is given by its PMF, denoted by <span class="math inline">\(f(x)\)</span>. For any <span class="math inline">\(x\in S\)</span>, <span class="math inline">\(f(x)=\Pr(X=x)\)</span>. (Note that ‘<span class="math inline">\(\in\)</span>’ means the word “in”.)</p>
+<p>We must have that:</p>
+<ul>
+<li><span class="math inline">\(\sum_{x\in S}f(x)=1\)</span>, (This notation means summing over all the elements in <span class="math inline">\(S\)</span>.)</li>
+<li><span class="math inline">\(\forall x\in S\)</span>, <span class="math inline">\(0\leq f(x)\leq 1\)</span>. (This notation means for all <span class="math inline">\(x\)</span> in <span class="math inline">\(S\)</span>, <span class="math inline">\(0\leq f(x)\leq 1\)</span>.)</li>
+</ul>
+<p>Examples: Binomial random variables, Poisson random variables and Geometric random variables are all discrete random variables.</p>
+<p><strong>Exercise 2.1</strong> What is the PMF of a Binomial random variable? Can two different random variables have the same PMF? Why or why not?</p>
+<p><em>Solution 2.1</em>. First: <span class="math inline">\(\Pr\left(X=x\right)\binom{n}{x}p^x(1-p)^{n-x}\)</span> Second: Yes. Two random variables can be different random variables, but have the same distribution.</p>
+</section>
+<section id="continuous-random-variables" class="level2" data-number="1.2">
+<h2 data-number="1.2" data-anchor-id="continuous-random-variables"><span class="header-section-number">1.2</span> Continuous Random Variables</h2>
+<p>We say <span class="math inline">\(X\)</span> is a <em>continuous random variable</em> if <span class="math inline">\(\Pr(X=r)=0\)</span> for all <span class="math inline">\(r\in\mathbb{R}\)</span>. If <span class="math inline">\(X\colon \Omega\rightarrow S\)</span> and <span class="math inline">\(X\)</span> is a continuous random variable, then <span class="math inline">\(S\)</span> is typically the real numbers, denoted by <span class="math inline">\(\mathbb{R}\)</span>, but can be any uncountable subset of <span class="math inline">\(\mathbb{R}\)</span>. The distribution of <span class="math inline">\(X\)</span> is given by the PDF <span class="math inline">\(f(x)\)</span>. For any interval <span class="math inline">\((a,b)\subset\in S\)</span>, <span class="math inline">\(\Pr(X\in (a,b))=\int_a^b f(x)dx\)</span>.</p>
+<p>We must have that:</p>
+<ul>
+<li><span class="math inline">\(\int_{- \infty}^\infty f(x)dx=1\)</span>,</li>
+<li><span class="math inline">\(\forall x\in \mathbb{R}\)</span>, <span class="math inline">\(f(x)\geq 0\)</span>.</li>
+</ul>
+<p>Examples: Normal random variables, Chi-squared random variables, <span class="math inline">\(t\)</span> random variables, Cauchy random variables, <span class="math inline">\(F\)</span> random variables are all continuous random variables. Generally, we will focus on continuous random variables.</p>
+<p><strong>Exercise 2.2</strong> What is the PMF of a Normal random variable?</p>
+<p><em>Solution 2.2</em>. <span class="math inline">\(f(x)=\frac{1}{\sqrt{2\pi}\sigma}e^{-(x-\mu)^2/2\sigma^2}\)</span></p>
+</section>
+<section id="properties-of-random-variables" class="level2" data-number="1.3">
+<h2 data-number="1.3" data-anchor-id="properties-of-random-variables"><span class="header-section-number">1.3</span> Properties of Random Variables</h2>
+<p>Let <span class="math inline">\(X,X_1,X_2\)</span> be random variables.</p>
+<p>Recall the important quantities <span class="math inline">\(\mathrm{E}({X})\)</span>, <span class="math inline">\(\mathrm{var}({X})\)</span>, <span class="math inline">\(\mathrm{cov}(X_1,X_2)\)</span>, <span class="math inline">\(\mathrm{corr}(X_1,X_2)\)</span>. Recall expectation:</p>
+<p><strong>Definition 2.2</strong> The expectation of a random variable <span class="math inline">\(X\)</span> is <span class="math display">\[\mathrm{E}({X})=\sum_{x\in S}x\Pr\left(X=x\right),\]</span> if <span class="math inline">\(X\)</span> is discrete and is <span class="math display">\[\mathrm{E}({X})=\int_{-\infty}^\infty xf(x)dx,\]</span> if <span class="math inline">\(X\)</span> is continuous.</p>
+<p>This is the ``average’’ value of the random variable. Note that it is possible for it to be impossible for <span class="math inline">\(X=\mathrm{E}({X})\)</span>. Try to come up with an example of this!</p>
+<p><strong>Definition 2.3</strong> The variance of a random variable <span class="math inline">\(X\)</span> is <span class="math display">\[{\textrm{Var}}\left[X\right]={\textrm{E}}\left[|X-{\textrm{E}}\left[X\right]|^2\right]=\sum_{x\in S}(x-{\textrm{E}}\left[X\right])^2\Pr\left(X=x\right),\]</span> if <span class="math inline">\(X\)</span> is discrete and is <span class="math display">\[{\textrm{Var}}\left[X\right]={\textrm{E}}\left[|X-{\textrm{E}}\left[X\right]|^2\right]=\int_{-\infty}^\infty (x-{\textrm{E}}\left[X\right])^2f(x)dx,\]</span> if <span class="math inline">\(X\)</span> is continuous.</p>
+<p>The variance describes the variation of <span class="math inline">\(X\)</span> about its mean. In other words, it describes on ``average’’, how far is <span class="math inline">\(X\)</span> from its mean.</p>
+<p><strong>Definition 2.4</strong> The covariance between two random variables <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> is <span class="math display">\[{\textrm{cov}}\left[X,Y\right]={\textrm{E}}\left[(X-{\textrm{E}}\left[X\right])(Y-{\textrm{E}}\left[Y\right])\right].\]</span></p>
+<p>The covariance describes the unnormalised linear association between <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span>.</p>
+<p><strong>Definition 2.5</strong> The correlation between two random variables <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> is <span class="math display">\[{\textrm{corr}}\left[X,Y\right]={\textrm{cov}}\left[X,Y\right]/\sqrt{{\textrm{Var}}\left[X\right]{\textrm{Var}}\left[Y\right]}.\]</span></p>
+<p>The correlation describes the normalized linear association between <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span>.</p>
+<p>Next, recall that for a random variable <span class="math inline">\(X\)</span>, its cumulative distribution function (CDF) is given by <span class="math inline">\(F_X(x)=\Pr\left(X\leq x\right)\)</span>. The joint CDF of <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> is given by <span class="math inline">\(F_{XY}(x,y)=\Pr\left(X\leq x, Y\leq y\right)\)</span>.</p>
+<p>Lastly, for a vector of <span class="math inline">\(d\)</span> random variables <span class="math inline">\(\mathbf{X}=(X_1,\ldots,X_d)\)</span>, let its CDF by <span class="math inline">\(F_{\mathbf{X}}(\mathbf{x})=\Pr\left(X_1\leq x_1,\ldots X_d\leq x_d\right)\)</span>, where here <span class="math inline">\(\mathbf{x}\in\mathbb{R}^{d}\)</span> and <span class="math inline">\(\mathbf{x}=(x_1,\ldots,x_d)\)</span>.</p>
+<p>We next present the concept of independence of random variables. Let <span class="math inline">\(F_{XY}(x,y)\)</span> be the joint CDF of <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> and let <span class="math inline">\(F_X\)</span> and <span class="math inline">\(F_Y\)</span> be the univariate CDFs of <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span>, respectively. For two random variables <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span>, we say that <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> are independent if <span class="math inline">\(F_{XY}(x,y)=F_X(x)F_Y(y)\)</span>. More generally, two vectors of random variables <span class="math inline">\(\mathbf{X}\)</span> and <span class="math inline">\(\mathbf{Y}\)</span> are independent if <span class="math inline">\(F_{(\mathbf{X},\mathbf{Y})}(\mathbf{x},\mathbf{y})=F_{\mathbf{X}}(\mathbf{x})F_{\mathbf{Y}}(\mathbf{y})\)</span>, where <span class="math inline">\(F_{(\mathbf{X},\mathbf{Y})}\)</span> is the CDF of the vector <span class="math inline">\((\mathbf{X},\mathbf{Y})\)</span>. A set of random variables <span class="math inline">\(\{X_i\}_{i=1}^n\)</span> are mutually independent if for any two mutually exclusive subsets of <span class="math inline">\(\{X_i\}_{i=1}^n\)</span> are also independent. Note that we write <span class="math inline">\(X \perp Y\)</span> if <span class="math inline">\(X\)</span> is independent of <span class="math inline">\(Y\)</span>.</p>
+<p>We have that:</p>
+<p><strong>Theorem 2.1</strong> The following holds:</p>
+<ul>
+<li><span class="math inline">\(X_1\perp X_2 \implies {\textrm{E}}\left[X_1 X_2\right]={\textrm{E}}\left[X_1\right]{\textrm{E}}\left[X_2\right]\)</span></li>
+<li><span class="math inline">\(X_1\perp X_2 \implies {\textrm{corr}}\left[X_1,X_2\right]=0\)</span></li>
+<li><span class="math inline">\({\textrm{corr}}\left[X_1,X_2\right]=0\)</span> does not imply <span class="math inline">\(X_1\perp X_2\)</span></li>
+</ul>
+<p><strong>Exercise 2.3</strong> Prove <a href="#thm-1">Theorem&nbsp;2.1</a> .</p>
+<p>Let <span class="math inline">\(X,X_1,X_2,\ldots X_n\)</span> be random variables. Recall the linearity of expectation property:</p>
+<p><strong>Theorem 2.2</strong> For <span class="math inline">\(a,b\in\mathbb{R}\)</span>, it holds that <span class="math inline">\(\mathrm{E}({aX+b})=a\mathrm{E}({X})+b\)</span>.</p>
+<p><strong>Exercise 2.4</strong> Prove <a href="#thm-2">Theorem&nbsp;2.2</a> .</p>
+<p>As a corollary of <a href="#thm-2">Theorem&nbsp;2.2</a> , we have that</p>
+<ul>
+<li><span class="math inline">\({\textrm{E}}\left[\sum_{i=1}^n a_i X_i\right]=\sum_{i=1}^n a_i{\textrm{E}}\left[ X_i\right]\)</span></li>
+<li><span class="math inline">\({\textrm{Var}}\left[\sum_{i=1}^n a_i X_i\right]=\sum_{i=1}^n a_i^2{\textrm{Var}}\left[ X_i\right]+\sum_{i\neq j}a_ia_j{\textrm{cov}}\left[X_i,X_j\right]\)</span></li>
+<li><span class="math inline">\({\textrm{Var}}\left[aX_1+bX_2+c\right]=a^2{\textrm{Var}}\left[X_1\right]+b^2{\textrm{Var}}\left[X_2\right]+2ab\ {\textrm{cov}}\left[X_1,X_2\right]\)</span></li>
+</ul>
+<p><strong>Exercise 2.5</strong> What happens to <span class="math inline">\({\textrm{Var}}\left[aX_1+bX_2+c\right]\)</span> when <span class="math inline">\(\{X_i\}_{i=1}^n\)</span> are mutually independent?</p>
+<p><strong>Exercise 2.6</strong> Let <span class="math inline">\(X_1,X_2,\ldots X_n\)</span> be i.i.d. (independent and identically distributed) random variables with expectation (also known as mean) <span class="math inline">\(\mu\)</span> and variance <span class="math inline">\(\sigma^2\)</span>. What is the expectation and variance of <span class="math display">\[\bar X=\sum_{i=1}^n X_i/n?.\]</span></p>
+</section>
+<section id="useful-properties-of-normal-and-related-random-variables" class="level2" data-number="1.4">
+<h2 data-number="1.4" data-anchor-id="useful-properties-of-normal-and-related-random-variables"><span class="header-section-number">1.4</span> Useful properties of normal and related random variables</h2>
+<p>Let</p>
+<ul>
+<li><span class="math inline">\(\mathcal{N}(\mu,\sigma^2)\)</span> represent the normal distribution with mean <span class="math inline">\(\mu\)</span> and variance <span class="math inline">\(\sigma^2\)</span>.</li>
+<li><span class="math inline">\(\chi^2_k\)</span> be the Chi-squared distribution with <span class="math inline">\(k\)</span> degrees of freedom</li>
+<li><span class="math inline">\(t_n\)</span> be the student-<span class="math inline">\(t\)</span> distribution with <span class="math inline">\(n\)</span> degrees of freedom</li>
+<li><span class="math inline">\(F_{m,n}\)</span> be the <span class="math inline">\(F\)</span> distribution with <span class="math inline">\(m\)</span> numerator degrees of freedom and <span class="math inline">\(n\)</span> denominator degrees of freedom</li>
+</ul>
+<p>We have the following results:</p>
+<p><strong>Theorem 2.3</strong> Suppose that <span class="math inline">\(X\sim \mathcal{N}(\mu,\sigma^2)\)</span>, then</p>
+<ul>
+<li><span class="math inline">\(Z=\frac{X- \mu}{\sigma}\sim \mathcal{N}(0,1)\)</span></li>
+<li><span class="math inline">\(Z^2\sim \chi^2_1\)</span>.</li>
+</ul>
+<p>Let <span class="math inline">\([n]=\{1,\ldots,n\}\)</span>. We also have that</p>
+<p><strong>Theorem 2.4</strong></p>
+<ul>
+<li>If for <span class="math inline">\(i\in [n]\)</span> <span class="math inline">\(Y_i\sim \chi^2_{k_i}\)</span> and <span class="math inline">\(Y_i \perp Y_j\)</span> for <span class="math inline">\(i\neq j\)</span> then <span class="math inline">\(\sum_{i=1}^n Y_i \sim \chi^2_{k_1+\ldots +k_n}\)</span>.</li>
+<li>If <span class="math inline">\(Y\sim \chi^2_k\)</span> and <span class="math inline">\(Y\perp Z\)</span>, then <span class="math inline">\(Z/\sqrt{Y/k}\sim t_k\)</span>.</li>
+<li>If <span class="math inline">\(Y_1\sim \chi^2_{k_1}\)</span>, <span class="math inline">\(Y_2\sim \chi^2_{k_2}\)</span> and <span class="math inline">\(Y_1 \perp Y_2\)</span> then <span class="math inline">\(\frac{Y_1/k_1}{Y_2/k_2}\sim F_{k_1,k_2}\)</span>.</li>
+</ul>
+<p>Define <span class="math display">\[\hat\sigma^2=\frac{1}{n- 1}\sum_{i=1}^n (X_i- \bar X)^2.\]</span></p>
+<p><strong>Theorem 2.5</strong> Suppose that <span class="math inline">\(X_1,X_2,\ldots X_n\sim \mathcal{N}(\mu,\sigma^2)\)</span> and are independent, then <span class="math inline">\(\frac{\bar X- \mu}{\sigma/\sqrt{n}}\sim \mathcal{N}(0,1)\)</span>, <span class="math inline">\(\bar X\perp \hat\sigma^2\)</span>, <span class="math inline">\((n- 1)\hat\sigma^2/\sigma^2\sim \chi^2_{n- 1}\)</span> and <span class="math inline">\(\frac{\bar X- \mu}{\hat\sigma/\sqrt{n}}\sim t_{n- 1}\)</span>.</p>
+</section>
+<section id="central-limit-theorem" class="level2" data-number="1.5">
+<h2 data-number="1.5" data-anchor-id="central-limit-theorem"><span class="header-section-number">1.5</span> Central Limit Theorem</h2>
+<p>If <span class="math inline">\(X_1,X_2,\ldots X_n\)</span> are i.i.d. with mean <span class="math inline">\(\mu\)</span> and variance <span class="math inline">\(\sigma^2&lt;\infty\)</span>, then <span class="math inline">\(\frac{\bar X- \mu}{\sigma/\sqrt{n}}\stackrel{\text{d}}{\rightarrow}\mathcal{N}(0,1)\)</span> as <span class="math inline">\(n\rightarrow\infty\)</span>.</p>
+<p>We have that in general, for large <span class="math inline">\(n\)</span>, regardless of the distribution of the random variables, the sample mean is approximately normally distributed.</p>
+</section>
+<section id="homework-stop-1" class="level2" data-number="1.6">
+<h2 data-number="1.6" data-anchor-id="homework-stop-1"><span class="header-section-number">1.6</span> Homework stop 1</h2>
+<p>Review your material and complete the above exercises before continuing to the next section.</p>
 
 
 </section>
@@ -632,10 +747,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
+      <a href="./index.html" class="pagination-link" aria-label="Preface">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Preface</span>
+      </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./Unit_1_1.html" class="pagination-link" aria-label="Review of random variables">
-        <span class="nav-page-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Review of random variables</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./Unit_1_2.html" class="pagination-link" aria-label="Review of introductory statistics">
+        <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Review of introductory statistics</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
