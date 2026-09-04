@@ -7,10 +7,12 @@ This is a plain static site — no interactive widgets or animations.
 
 ## Structure
 
-- `_quarto.yml` — book configuration (chapters, theme, TOC, numbering)
+- `_quarto.yml` — book configuration (chapters/parts, theme, TOC, numbering)
 - `index.qmd` — Preface
-- `Unit_1.qmd` — Review material
-- `Unit_1_files/` — figures used in Unit 1
+- `Unit_1_1.qmd` … `Unit_1_4.qmd` — the **Review material** part, split into
+  one page per sub-topic (random variables, intro statistics, matrices and
+  linear algebra, random vectors)
+- `Unit_1_files/` — figures used by the Review material pages
 - `old notes/` — the original scraped site, kept for reference while
   the new notes are rebuilt unit by unit
 - `_book/` — generated static HTML output (not tracked in git; rebuild
@@ -38,7 +40,19 @@ Starts a local server and reloads automatically when a `.qmd` file changes.
 
 ## Adding a new unit
 
-1. Create `Unit_N.qmd` at the project root.
-2. Add its filename to the `chapters:` list in `_quarto.yml`.
+1. Create `Unit_N.qmd` (or split it into `Unit_N_1.qmd`, `Unit_N_2.qmd`, ...
+   for sub-topics, one page each) at the project root.
+2. Add the filename(s) to the `chapters:` list in `_quarto.yml`. Group
+   related pages under a `part:` entry (see the "Review material" part)
+   to get a nested, expandable section in the sidebar.
 3. Put any figures it uses in `Unit_N_files/`.
 4. Re-render.
+
+## Publishing to GitHub Pages
+
+```bash
+quarto publish gh-pages
+```
+
+Builds the site and pushes it to the `gh-pages` branch. Run this again
+after any content changes to redeploy.

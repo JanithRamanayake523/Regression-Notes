@@ -1,0 +1,71 @@
+# Review Random Vectors
+
+## Definition of random vectors
+
+**Definition 2.14** Let $Y_1, \cdots, Y_n$ be random variables. Then $$
+Y = \left( \begin{array}{c} Y_1 \\ \vdots \\ Y_n \end{array} \right)
+$$ is an $n$-dimensional random vector.
+
+Similar to a random variable, a random vector also comes with a probability mass function (if all the $Y_i$ are discrete) or a probability density function (if all the $Y_i$ are continuous), or a ``mixture’’ distribution (if some $Y_i$ are discrete and others are continuous). In general, a random vector is drawn from a multivariate distribution, defined by the PMF or PDF. Just as before, the PMF and PDF range is non-negative, the PMF sums to 1 over all outcomes, and the PDF integrates to 1 over $\mathbb{R}^n$. One discrete multivariate distribution you have learned in 1131 is the Multinomial distribution. We will learn about the multivariate normal distribution soon.
+
+## Expected Value and Covariance
+
+**Definition 2.15** Let $Y$ be an $n$-dimensional random vector, then the mean (expected value) of $Y$ is defined as $$
+{\textrm{E}}(Y) = \left( \begin{array}{c} {\textrm{E}}(Y_1) \\ \vdots \\ {\textrm{E}}(Y_n) \end{array} \right) =
+\mu
+$$ and the covariance matrix of $Y$ is defined as $$
+{\textrm{cov}}\left[Y\right] = {\textrm{E}}[ (Y - \mu) (Y - \mu)^\top ] =
+(( {\textrm{cov}}\left[Y_i, Y_j\right] \ )) = \Sigma.
+$$
+
+Sometimes ${\textrm{cov}}\left[Y\right]$ is written as ${\textrm{Var}}\left[Y\right]$.
+
+The following are some facts about $\Sigma$:
+
+$\Sigma$ is an $n \times n$ matrix with the diagonal elements being the variances, ${\textrm{Var}}\left[Y_i\right]$ for $i=1, \ldots, n$, and the off-diagonal elements being the covariances, ${\textrm{cov}}\left[Y_i, Y_j\right]$ for $i, j = 1, \ldots, n$ and $i \ne j$. $\Sigma$ is a symmetric, non-negative definite matrix. In this course, we further restrict it to be a positive definite matrix. $\Sigma$ is referred to as the **covariance matrix**.
+
+## Properties of expected value and covariance
+
+Let $X,Y\in \mathbb{R}^{d}$ be random vectors with $A\in \mathbb{R}^d$ and $B\in \mathbb{R}^{n\times d}$ be matrices. It holds that
+
+- ${\textrm{E}}(X+ Y) = {\textrm{E}}(X)+{\textrm{E}}(Y)$
+- ${\textrm{E}}(A + B Y) = A + B {\textrm{E}}(Y)$
+- ${\textrm{cov}}\left[A + B Y\right] = B {\textrm{cov}}\left[Y\right] B^\top$.
+
+**Exercise 2.13** Let $Y = (Y_1, \ldots, Y_n)^\top$ be a random vector, where $Y_i$ are i.i.d. random variables with mean $\mu$ and variance $\sigma^2$. What are the mean and covariance of $Y$? Use properties of random vectors to compute the mean and variance of the sample mean.
+
+*Solution 2.4*. First, ${\textrm{E}}(Y) = \mu 1$ and ${\textrm{cov}}\left[Y\right] = \sigma^2 I$. Note that $\bar{Y} = (Y_1 + \cdots + Y_n)/n = \frac{1}{n}1^\top Y$. Now, we have $$
+{\textrm{E}}(\bar{Y}) = {\textrm{E}}\left( \frac{1}{n}1^\top Y \right) =
+\frac{1}{n} \left( 1^\top {\textrm{E}}(Y) \right) = \frac{1}{n} (n \mu) = \mu
+$$ and,
+
+$$\begin{align*}
+{\textrm{cov}}\left[\bar{Y}\right] &={\textrm{cov}}\left[ \frac{1}{n}1^\top Y\right]\\
+&=
+\left( \frac{1}{n} \right)^2
+\left( 1^\top {\textrm{cov}}\left[Y\right]  1 \right) \\
+&=
+\left( \frac{1}{n} \right)^2 (n \sigma^2) = \frac{\sigma^2}{n}.
+\end{align*}$$
+
+## Multivariate normal distribution
+
+We say that a random vector $X\sim \mathcal{N}_d(\mu,\Sigma)$ follows a multivariate normal distribution if $X$ has PDF: $$
+\phi(\mathbf{x})=\left(\frac{1}{2 \pi}\right)^{d / 2}|\Sigma|^{-1 / 2} \exp \left\{-\frac{1}{2}(\mathbf{x}-\mu)^{\prime} \Sigma^{-1}(\mathbf{x}-\mu)\right\}.
+$$
+
+If $X\sim \mathcal{N}_d(\mu,\Sigma)$ and $c\in \mathbb{R}^d$, $A\in \mathbb{R}^{m\times d}$ then:
+
+- $AX\sim \mathcal{N}(A\mu,A\Sigma A^\top)$.
+- $c^\top X\sim \mathcal{N}(c^\top\mu,c^\top\Sigma c)$.
+- Any conditional distribution for a subset of the variables conditional on another subset of variables is a multivariate distribution.
+
+Using random vectors is a simple way of deriving lots of equations for this course. Working with vectors also allows those who are “geometrically gifted” to view the whole regression concepts geometrically! If not, not to worry!
+
+## Homework stop 4
+
+**Exercise 2.14** For a (full-rank) non-random matrix $X\in \mathbb{R}^{n\times p}$ with $n>p$, and random vector $Y\in \mathbb{R}^{n\times 1}$ with mean $\mu$ and covariance $\Sigma$, compute the following:
+
+- Expected value and covariance matrix of $(X^\top X)^{-1}X^\top Y$
+- Expected value of $Y^\top Y$
+- Expected value and covariance matrix of $Z^\top Z$ where $Z$ is a fixed, nonrandom vector of $d$ dimensions

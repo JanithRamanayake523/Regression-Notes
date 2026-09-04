@@ -1,0 +1,139 @@
+# Review of random variables
+
+Recall that
+
+**Definition 2.1** A random variable $X$ is a function which maps outcomes $\omega\in \Omega$ to the real numbers, i.e., $X\colon \Omega\rightarrow\mathbb{R}$.
+
+::: {.callout-note}
+Note that the notation $f\colon A\rightarrow B$ means that $f$ is a function whose domain is $A$ and range is $B$. That is, $f$ takes a value from $A$ and outputs some value in $B$.
+:::
+
+Generally, we will just write $X$, and ignore the fact that $X$ is a function.
+
+We can categorize a random variable $X$ as follows:
+
+- If $X\colon \Omega\rightarrow S$ where $S$ is countable, then $X$ is a *discrete random variable*
+- We say $X$ is a *continuous random variable* if $\Pr(X=r)=0$ for all $r\in\mathbb{R}$.
+- Otherwise, $X$ is a *mixed random variable* (which we won’t worry about in this course)
+
+## Discrete Random Variables
+
+If $X\colon \Omega\rightarrow S$ where $S$ is countable, then $X$ is a discrete random variable. $S$ can be finite, but can also be any infinite subset of the integers $\mathbb{Z}$. The distribution of $X$ is given by its PMF, denoted by $f(x)$. For any $x\in S$, $f(x)=\Pr(X=x)$. (Note that ‘$\in$’ means the word “in”.)
+
+We must have that:
+
+- $\sum_{x\in S}f(x)=1$, (This notation means summing over all the elements in $S$.)
+- $\forall x\in S$, $0\leq f(x)\leq 1$. (This notation means for all $x$ in $S$, $0\leq f(x)\leq 1$.)
+
+Examples: Binomial random variables, Poisson random variables and Geometric random variables are all discrete random variables.
+
+**Exercise 2.1** What is the PMF of a Binomial random variable? Can two different random variables have the same PMF? Why or why not?
+
+*Solution 2.1*. First: $\Pr\left(X=x\right)\binom{n}{x}p^x(1-p)^{n-x}$ Second: Yes. Two random variables can be different random variables, but have the same distribution.
+
+## Continuous Random Variables
+
+We say $X$ is a *continuous random variable* if $\Pr(X=r)=0$ for all $r\in\mathbb{R}$. If $X\colon \Omega\rightarrow S$ and $X$ is a continuous random variable, then $S$ is typically the real numbers, denoted by $\mathbb{R}$, but can be any uncountable subset of $\mathbb{R}$. The distribution of $X$ is given by the PDF $f(x)$. For any interval $(a,b)\subset\in S$, $\Pr(X\in (a,b))=\int_a^b f(x)dx$.
+
+We must have that:
+
+- $\int_{- \infty}^\infty f(x)dx=1$,
+- $\forall x\in \mathbb{R}$, $f(x)\geq 0$.
+
+Examples: Normal random variables, Chi-squared random variables, $t$ random variables, Cauchy random variables, $F$ random variables are all continuous random variables. Generally, we will focus on continuous random variables.
+
+**Exercise 2.2** What is the PMF of a Normal random variable?
+
+*Solution 2.2*. $f(x)=\frac{1}{\sqrt{2\pi}\sigma}e^{-(x-\mu)^2/2\sigma^2}$
+
+## Properties of Random Variables
+
+Let $X,X_1,X_2$ be random variables.
+
+Recall the important quantities $\mathrm{E}({X})$, $\mathrm{var}({X})$, $\mathrm{cov}(X_1,X_2)$, $\mathrm{corr}(X_1,X_2)$. Recall expectation:
+
+**Definition 2.2** The expectation of a random variable $X$ is $$\mathrm{E}({X})=\sum_{x\in S}x\Pr\left(X=x\right),$$ if $X$ is discrete and is $$\mathrm{E}({X})=\int_{-\infty}^\infty xf(x)dx,$$ if $X$ is continuous.
+
+This is the ``average’’ value of the random variable. Note that it is possible for it to be impossible for $X=\mathrm{E}({X})$. Try to come up with an example of this!
+
+**Definition 2.3** The variance of a random variable $X$ is $${\textrm{Var}}\left[X\right]={\textrm{E}}\left[|X-{\textrm{E}}\left[X\right]|^2\right]=\sum_{x\in S}(x-{\textrm{E}}\left[X\right])^2\Pr\left(X=x\right),$$ if $X$ is discrete and is $${\textrm{Var}}\left[X\right]={\textrm{E}}\left[|X-{\textrm{E}}\left[X\right]|^2\right]=\int_{-\infty}^\infty (x-{\textrm{E}}\left[X\right])^2f(x)dx,$$ if $X$ is continuous.
+
+The variance describes the variation of $X$ about its mean. In other words, it describes on ``average’’, how far is $X$ from its mean.
+
+**Definition 2.4** The covariance between two random variables $X$ and $Y$ is $${\textrm{cov}}\left[X,Y\right]={\textrm{E}}\left[(X-{\textrm{E}}\left[X\right])(Y-{\textrm{E}}\left[Y\right])\right].$$
+
+The covariance describes the unnormalised linear association between $X$ and $Y$.
+
+**Definition 2.5** The correlation between two random variables $X$ and $Y$ is $${\textrm{corr}}\left[X,Y\right]={\textrm{cov}}\left[X,Y\right]/\sqrt{{\textrm{Var}}\left[X\right]{\textrm{Var}}\left[Y\right]}.$$
+
+The correlation describes the normalized linear association between $X$ and $Y$.
+
+Next, recall that for a random variable $X$, its cumulative distribution function (CDF) is given by $F_X(x)=\Pr\left(X\leq x\right)$. The joint CDF of $X$ and $Y$ is given by $F_{XY}(x,y)=\Pr\left(X\leq x, Y\leq y\right)$.
+
+Lastly, for a vector of $d$ random variables $\mathbf{X}=(X_1,\ldots,X_d)$, let its CDF by $F_{\mathbf{X}}(\mathbf{x})=\Pr\left(X_1\leq x_1,\ldots X_d\leq x_d\right)$, where here $\mathbf{x}\in\mathbb{R}^{d}$ and $\mathbf{x}=(x_1,\ldots,x_d)$.
+
+We next present the concept of independence of random variables. Let $F_{XY}(x,y)$ be the joint CDF of $X$ and $Y$ and let $F_X$ and $F_Y$ be the univariate CDFs of $X$ and $Y$, respectively. For two random variables $X$ and $Y$, we say that $X$ and $Y$ are independent if $F_{XY}(x,y)=F_X(x)F_Y(y)$. More generally, two vectors of random variables $\mathbf{X}$ and $\mathbf{Y}$ are independent if $F_{(\mathbf{X},\mathbf{Y})}(\mathbf{x},\mathbf{y})=F_{\mathbf{X}}(\mathbf{x})F_{\mathbf{Y}}(\mathbf{y})$, where $F_{(\mathbf{X},\mathbf{Y})}$ is the CDF of the vector $(\mathbf{X},\mathbf{Y})$. A set of random variables $\{X_i\}_{i=1}^n$ are mutually independent if for any two mutually exclusive subsets of $\{X_i\}_{i=1}^n$ are also independent. Note that we write $X \perp Y$ if $X$ is independent of $Y$.
+
+We have that:
+
+**Theorem 2.1** The following holds:
+
+- $X_1\perp X_2 \implies {\textrm{E}}\left[X_1 X_2\right]={\textrm{E}}\left[X_1\right]{\textrm{E}}\left[X_2\right]$
+- $X_1\perp X_2 \implies {\textrm{corr}}\left[X_1,X_2\right]=0$
+- ${\textrm{corr}}\left[X_1,X_2\right]=0$ does not imply $X_1\perp X_2$
+
+**Exercise 2.3** Prove [Theorem 2.1](#thm-1) .
+
+Let $X,X_1,X_2,\ldots X_n$ be random variables. Recall the linearity of expectation property:
+
+**Theorem 2.2** For $a,b\in\mathbb{R}$, it holds that $\mathrm{E}({aX+b})=a\mathrm{E}({X})+b$.
+
+**Exercise 2.4** Prove [Theorem 2.2](#thm-2) .
+
+As a corollary of [Theorem 2.2](#thm-2) , we have that
+
+- ${\textrm{E}}\left[\sum_{i=1}^n a_i X_i\right]=\sum_{i=1}^n a_i{\textrm{E}}\left[ X_i\right]$
+- ${\textrm{Var}}\left[\sum_{i=1}^n a_i X_i\right]=\sum_{i=1}^n a_i^2{\textrm{Var}}\left[ X_i\right]+\sum_{i\neq j}a_ia_j{\textrm{cov}}\left[X_i,X_j\right]$
+- ${\textrm{Var}}\left[aX_1+bX_2+c\right]=a^2{\textrm{Var}}\left[X_1\right]+b^2{\textrm{Var}}\left[X_2\right]+2ab\ {\textrm{cov}}\left[X_1,X_2\right]$
+
+**Exercise 2.5** What happens to ${\textrm{Var}}\left[aX_1+bX_2+c\right]$ when $\{X_i\}_{i=1}^n$ are mutually independent?
+
+**Exercise 2.6** Let $X_1,X_2,\ldots X_n$ be i.i.d. (independent and identically distributed) random variables with expectation (also known as mean) $\mu$ and variance $\sigma^2$. What is the expectation and variance of $$\bar X=\sum_{i=1}^n X_i/n?.$$
+
+## Useful properties of normal and related random variables
+
+Let
+
+- $\mathcal{N}(\mu,\sigma^2)$ represent the normal distribution with mean $\mu$ and variance $\sigma^2$.
+- $\chi^2_k$ be the Chi-squared distribution with $k$ degrees of freedom
+- $t_n$ be the student-$t$ distribution with $n$ degrees of freedom
+- $F_{m,n}$ be the $F$ distribution with $m$ numerator degrees of freedom and $n$ denominator degrees of freedom
+
+We have the following results:
+
+**Theorem 2.3** Suppose that $X\sim \mathcal{N}(\mu,\sigma^2)$, then
+
+- $Z=\frac{X- \mu}{\sigma}\sim \mathcal{N}(0,1)$
+- $Z^2\sim \chi^2_1$.
+
+Let $[n]=\{1,\ldots,n\}$. We also have that
+
+**Theorem 2.4**
+
+- If for $i\in [n]$ $Y_i\sim \chi^2_{k_i}$ and $Y_i \perp Y_j$ for $i\neq j$ then $\sum_{i=1}^n Y_i \sim \chi^2_{k_1+\ldots +k_n}$.
+- If $Y\sim \chi^2_k$ and $Y\perp Z$, then $Z/\sqrt{Y/k}\sim t_k$.
+- If $Y_1\sim \chi^2_{k_1}$, $Y_2\sim \chi^2_{k_2}$ and $Y_1 \perp Y_2$ then $\frac{Y_1/k_1}{Y_2/k_2}\sim F_{k_1,k_2}$.
+
+Define $$\hat\sigma^2=\frac{1}{n- 1}\sum_{i=1}^n (X_i- \bar X)^2.$$
+
+**Theorem 2.5** Suppose that $X_1,X_2,\ldots X_n\sim \mathcal{N}(\mu,\sigma^2)$ and are independent, then $\frac{\bar X- \mu}{\sigma/\sqrt{n}}\sim \mathcal{N}(0,1)$, $\bar X\perp \hat\sigma^2$, $(n- 1)\hat\sigma^2/\sigma^2\sim \chi^2_{n- 1}$ and $\frac{\bar X- \mu}{\hat\sigma/\sqrt{n}}\sim t_{n- 1}$.
+
+## Central Limit Theorem
+
+If $X_1,X_2,\ldots X_n$ are i.i.d. with mean $\mu$ and variance $\sigma^2<\infty$, then $\frac{\bar X- \mu}{\sigma/\sqrt{n}}\stackrel{\text{d}}{\rightarrow}\mathcal{N}(0,1)$ as $n\rightarrow\infty$.
+
+We have that in general, for large $n$, regardless of the distribution of the random variables, the sample mean is approximately normally distributed.
+
+## Homework stop 1
+
+Review your material and complete the above exercises before continuing to the next section.

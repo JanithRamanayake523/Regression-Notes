@@ -7,7 +7,12 @@ book:
   date: last-modified
   chapters:
     - index.qmd
-    - Unit_1.qmd
+    - part: "Review material"
+      chapters:
+        - Unit_1_1.qmd
+        - Unit_1_2.qmd
+        - Unit_1_3.qmd
+        - Unit_1_4.qmd
 
 format:
   html:
