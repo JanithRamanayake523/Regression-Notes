@@ -299,39 +299,6 @@ Let
 "Degrees of freedom" is loosely "how many independent pieces of information went into the calculation." For instance, $\hat\sigma^2$ below is built from $n$ data points, but because we first had to estimate the mean $\bar X$ from that same data, only $n-1$ independent pieces of information remain to estimate the spread — hence $n-1$ degrees of freedom.
 :::
 
-<div style="text-align:center; margin: 1.5em 0;">
-<svg viewBox="0 0 620 230" width="100%" style="max-width:600px;" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="A diagram showing how standardizing and squaring a Normal random variable produces a Chi-squared distribution, and how combining Normal and Chi-squared variables produces the t and F distributions.">
-  <defs>
-    <marker id="arrowUnit1" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#555"/></marker>
-  </defs>
-  <rect x="10" y="15" width="140" height="46" rx="6" fill="#eaf2f8" stroke="#2e86c1"/>
-  <text x="80" y="43" font-size="14" text-anchor="middle" fill="#154360">Normal N(μ,σ²)</text>
-  <line x1="150" y1="38" x2="205" y2="38" stroke="#555" stroke-width="1.5" marker-end="url(#arrowUnit1)"/>
-  <text x="177" y="30" font-size="11" text-anchor="middle" fill="#555">standardize</text>
-  <rect x="205" y="15" width="110" height="46" rx="6" fill="#eaf2f8" stroke="#2e86c1"/>
-  <text x="260" y="43" font-size="14" text-anchor="middle" fill="#154360">Z ~ N(0,1)</text>
-  <line x1="315" y1="38" x2="370" y2="38" stroke="#555" stroke-width="1.5" marker-end="url(#arrowUnit1)"/>
-  <text x="342" y="30" font-size="11" text-anchor="middle" fill="#555">square</text>
-  <rect x="370" y="15" width="110" height="46" rx="6" fill="#fdebd0" stroke="#ca6f1e"/>
-  <text x="425" y="43" font-size="14" text-anchor="middle" fill="#7e5109">χ²₁</text>
-  <line x1="425" y1="61" x2="425" y2="95" stroke="#555" stroke-width="1.5" marker-end="url(#arrowUnit1)"/>
-  <text x="480" y="82" font-size="11" text-anchor="middle" fill="#555">sum k independent copies</text>
-  <rect x="370" y="100" width="110" height="46" rx="6" fill="#fdebd0" stroke="#ca6f1e"/>
-  <text x="425" y="128" font-size="14" text-anchor="middle" fill="#7e5109">χ²ₖ</text>
-  <line x1="260" y1="61" x2="260" y2="105" stroke="#555" stroke-width="1.5"/>
-  <line x1="260" y1="105" x2="360" y2="123" stroke="#555" stroke-width="1.5" marker-end="url(#arrowUnit1)"/>
-  <text x="270" y="100" font-size="11" text-anchor="middle" fill="#555">Z divided by</text>
-  <text x="270" y="113" font-size="11" text-anchor="middle" fill="#555">√(χ²ₖ/k)</text>
-  <rect x="10" y="165" width="110" height="46" rx="6" fill="#eafaf1" stroke="#1e8449"/>
-  <text x="65" y="193" font-size="14" text-anchor="middle" fill="#186a3b">tₖ</text>
-  <line x1="120" y1="188" x2="360" y2="140" stroke="#555" stroke-width="1.5" marker-end="url(#arrowUnit1)"/>
-  <rect x="480" y="165" width="130" height="46" rx="6" fill="#f4ecf7" stroke="#7d3c98"/>
-  <text x="545" y="193" font-size="14" text-anchor="middle" fill="#4a235a">F(m,n)</text>
-  <line x1="480" y1="188" x2="480" y2="146" stroke="#555" stroke-width="1.5" marker-end="url(#arrowUnit1)"/>
-  <text x="545" y="155" font-size="11" text-anchor="middle" fill="#555">ratio of two independent, scaled χ²'s</text>
-</svg>
-</div>
-
 We have the following results:
 
 **Theorem 2.3** Suppose that $X\sim \mathcal{N}(\mu,\sigma^2)$, then
@@ -412,6 +379,30 @@ A rough mental picture: imagine averaging the result of rolling a single die man
 - The CLT is why sample means behave approximately Normally even when the underlying data doesn't.
 :::
 
-## Homework stop 1
+## Check Your Understanding
 
-Review your material and complete the above exercises before continuing to the next section.
+Review your material and complete the above exercises before continuing to the next section. The questions below are a quick self-check on the material from this page — try each one before reading the answer.
+
+**Question 1.** Classify each of the following as discrete or continuous: (a) the number of texts you send in a day, (b) the time (in seconds) it takes you to run 100m, (c) the number of siblings you have.
+
+*Answer.* (a) Discrete — a count, can only take whole-number values. (b) Continuous — time can (in principle) take any value in an interval. (c) Discrete — again a count.
+
+**Question 2.** A random variable $Y$ takes values $1, 2, 3$ with probabilities $0.2$, $0.3$, $0.6$. Is this a valid PMF? If not, explain why.
+
+*Answer.* No. The probabilities must sum to 1, but $0.2+0.3+0.6=1.1\neq1$. (Each individual value is between 0 and 1, so it fails only the first PMF condition, not the second.)
+
+**Question 3.** A spinner lands on 10 points with probability $0.5$, 20 points with probability $0.3$, and 30 points with probability $0.2$. Let $X$ be the points earned on one spin. Find $\mathrm{E}(X)$ and $\mathrm{Var}(X)$.
+
+*Answer.* $\mathrm{E}(X)=10(0.5)+20(0.3)+30(0.2)=5+6+6=17.$ For the variance, first find $\mathrm{E}(X^2)=100(0.5)+400(0.3)+900(0.2)=50+120+180=350$, then $\mathrm{Var}(X)=\mathrm{E}(X^2)-\mathrm{E}(X)^2=350-17^2=350-289=61.$
+
+**Question 4.** Let $X$ be hours studied per week and $Y$ be a student's exam score. Would you expect $\mathrm{cov}(X,Y)$ to be positive, negative, or near zero? Briefly explain.
+
+*Answer.* Positive — students who study more hours tend to score higher, so when $X$ is above its average, $Y$ tends to be above its average too, which is exactly the pattern positive covariance captures. (In reality the relationship is rarely perfectly linear, and other factors matter too, but the general direction should be positive.)
+
+**Question 5.** True or False: if $\mathrm{corr}(X,Y)=0$, then $X$ and $Y$ must be independent. Justify your answer.
+
+*Answer.* False. Correlation only measures *linear* association, so a zero correlation just means there's no *linear* pattern — it says nothing about non-linear relationships. The $Y=X^2$ example from the Independence section above (with $X$ uniform on $[-1,1]$) is a case where $X$ and $Y$ are clearly dependent (knowing $X$ tells you $Y$ exactly) yet $\mathrm{corr}(X,Y)=0$.
+
+**Question 6.** Waiting times at a hospital ER are heavily right-skewed (most patients wait a short time, but a few wait a very long time). If you take random samples of $n=40$ patients and compute the average wait time for each sample, will a histogram of these sample averages look skewed like the original data, or roughly bell-shaped? Explain using the CLT.
+
+*Answer.* Roughly bell-shaped. The CLT says that regardless of the shape of the original distribution (skewed, in this case), the distribution of the *sample mean* becomes approximately Normal as the sample size grows, and $n=40$ is generally large enough for this approximation to be reasonable. The individual wait times stay skewed — it's specifically the *averages* that smooth out into a bell shape.

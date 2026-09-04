@@ -1,6 +1,6 @@
 # Preface {.unnumbered}
 
-Welcome to the MATH 3330 Notes! Please install [R](https://www.r-project.org/) and [R studio](https://posit.co/download/rstudio-desktop/) (Or you can use VSCode if you're comfortable there.)
+Welcome to the Regression Notes! Please install [R](https://www.r-project.org/) and [R studio](https://posit.co/download/rstudio-desktop/) (Or you can use VSCode if you're comfortable there.)
 
 In order to make the most of these notes, do all of the exercises in the order they appear.
 

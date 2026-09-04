@@ -1,6 +1,6 @@
-# Math 3330: Regression Notes
+# Regression Notes
 
-A static Quarto book rebuilding the MATH 3330 course notes
+A static Quarto book rebuilding a university regression course's notes
 (originally at https://12ramsake.github.io/MATH-3330/).
 
 This is a plain static site — no interactive widgets or animations.

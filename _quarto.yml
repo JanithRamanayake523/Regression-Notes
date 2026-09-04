@@ -2,7 +2,7 @@ project:
   type: book
 
 book:
-  title: "Math 3330: Regression Notes"
+  title: "Regression Notes"
   author: "Kelly Ramsay"
   date: last-modified
   chapters:
