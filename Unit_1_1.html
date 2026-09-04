@@ -733,19 +733,68 @@ Key takeaways before moving on
 </section>
 <section id="check-your-understanding" class="level2" data-number="1.6">
 <h2 data-number="1.6" data-anchor-id="check-your-understanding"><span class="header-section-number">1.6</span> Check Your Understanding</h2>
-<p>Review your material and complete the above exercises before continuing to the next section. The questions below are a quick self-check on the material from this page — try each one before reading the answer.</p>
+<style>
+details.qa-answer { margin: 0 0 1.25em 0; border-left: 3px solid #d6eaf8; padding-left: 0.75em; }
+details.qa-answer > summary { cursor: pointer; color: #2e86c1; font-weight: 600; }
+details.qa-answer > summary::marker { color: #2e86c1; }
+details.qa-answer[open] > summary { margin-bottom: 0.5em; }
+details.qa-answer p { margin: 0; }
+</style>
+<p>Review your material and complete the above exercises before continuing to the next section. The questions below are a quick self-check on the material from this page — try each one, then click <strong>Show answer</strong> to check yourself.</p>
 <p><strong>Question 1.</strong> Classify each of the following as discrete or continuous: (a) the number of texts you send in a day, (b) the time (in seconds) it takes you to run 100m, (c) the number of siblings you have.</p>
-<p><em>Answer.</em> (a) Discrete — a count, can only take whole-number values. (b) Continuous — time can (in principle) take any value in an interval. (c) Discrete — again a count.</p>
+<details class="qa-answer">
+<summary>
+Show answer
+</summary>
+<p>
+Texts sent per day: discrete — a count, can only take whole-number values. 100m sprint time: continuous — time can (in principle) take any value in an interval. Number of siblings: discrete — again a count.
+</p>
+</details>
 <p><strong>Question 2.</strong> A random variable <span class="math inline">\(Y\)</span> takes values <span class="math inline">\(1, 2, 3\)</span> with probabilities <span class="math inline">\(0.2\)</span>, <span class="math inline">\(0.3\)</span>, <span class="math inline">\(0.6\)</span>. Is this a valid PMF? If not, explain why.</p>
-<p><em>Answer.</em> No.&nbsp;The probabilities must sum to 1, but <span class="math inline">\(0.2+0.3+0.6=1.1\neq1\)</span>. (Each individual value is between 0 and 1, so it fails only the first PMF condition, not the second.)</p>
+<details class="qa-answer">
+<summary>
+Show answer
+</summary>
+<p>
+No.&nbsp;The probabilities must sum to 1, but <span class="math inline">\(0.2+0.3+0.6=1.1\neq1\)</span>. (Each individual value is between 0 and 1, so it fails only the first PMF condition, not the second.)
+</p>
+</details>
 <p><strong>Question 3.</strong> A spinner lands on 10 points with probability <span class="math inline">\(0.5\)</span>, 20 points with probability <span class="math inline">\(0.3\)</span>, and 30 points with probability <span class="math inline">\(0.2\)</span>. Let <span class="math inline">\(X\)</span> be the points earned on one spin. Find <span class="math inline">\(\mathrm{E}(X)\)</span> and <span class="math inline">\(\mathrm{Var}(X)\)</span>.</p>
-<p><em>Answer.</em> <span class="math inline">\(\mathrm{E}(X)=10(0.5)+20(0.3)+30(0.2)=5+6+6=17.\)</span> For the variance, first find <span class="math inline">\(\mathrm{E}(X^2)=100(0.5)+400(0.3)+900(0.2)=50+120+180=350\)</span>, then <span class="math inline">\(\mathrm{Var}(X)=\mathrm{E}(X^2)-\mathrm{E}(X)^2=350-17^2=350-289=61.\)</span></p>
+<details class="qa-answer">
+<summary>
+Show answer
+</summary>
+<p>
+<span class="math inline">\(\mathrm{E}(X)=10(0.5)+20(0.3)+30(0.2)=5+6+6=17.\)</span> For the variance, first find <span class="math inline">\(\mathrm{E}(X^2)=100(0.5)+400(0.3)+900(0.2)=50+120+180=350\)</span>, then <span class="math inline">\(\mathrm{Var}(X)=\mathrm{E}(X^2)-\mathrm{E}(X)^2=350-17^2=350-289=61.\)</span>
+</p>
+</details>
 <p><strong>Question 4.</strong> Let <span class="math inline">\(X\)</span> be hours studied per week and <span class="math inline">\(Y\)</span> be a student’s exam score. Would you expect <span class="math inline">\(\mathrm{cov}(X,Y)\)</span> to be positive, negative, or near zero? Briefly explain.</p>
-<p><em>Answer.</em> Positive — students who study more hours tend to score higher, so when <span class="math inline">\(X\)</span> is above its average, <span class="math inline">\(Y\)</span> tends to be above its average too, which is exactly the pattern positive covariance captures. (In reality the relationship is rarely perfectly linear, and other factors matter too, but the general direction should be positive.)</p>
+<details class="qa-answer">
+<summary>
+Show answer
+</summary>
+<p>
+Positive — students who study more hours tend to score higher, so when <span class="math inline">\(X\)</span> is above its average, <span class="math inline">\(Y\)</span> tends to be above its average too, which is exactly the pattern positive covariance captures. (In reality the relationship is rarely perfectly linear, and other factors matter too, but the general direction should be positive.)
+</p>
+</details>
 <p><strong>Question 5.</strong> True or False: if <span class="math inline">\(\mathrm{corr}(X,Y)=0\)</span>, then <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> must be independent. Justify your answer.</p>
-<p><em>Answer.</em> False. Correlation only measures <em>linear</em> association, so a zero correlation just means there’s no <em>linear</em> pattern — it says nothing about non-linear relationships. The <span class="math inline">\(Y=X^2\)</span> example from the Independence section above (with <span class="math inline">\(X\)</span> uniform on <span class="math inline">\([-1,1]\)</span>) is a case where <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> are clearly dependent (knowing <span class="math inline">\(X\)</span> tells you <span class="math inline">\(Y\)</span> exactly) yet <span class="math inline">\(\mathrm{corr}(X,Y)=0\)</span>.</p>
+<details class="qa-answer">
+<summary>
+Show answer
+</summary>
+<p>
+False. Correlation only measures <em>linear</em> association, so a zero correlation just means there’s no <em>linear</em> pattern — it says nothing about non-linear relationships. The <span class="math inline">\(Y=X^2\)</span> example from the Independence section above (with <span class="math inline">\(X\)</span> uniform on <span class="math inline">\([-1,1]\)</span>) is a case where <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> are clearly dependent (knowing <span class="math inline">\(X\)</span> tells you <span class="math inline">\(Y\)</span> exactly) yet <span class="math inline">\(\mathrm{corr}(X,Y)=0\)</span>.
+</p>
+</details>
 <p><strong>Question 6.</strong> Waiting times at a hospital ER are heavily right-skewed (most patients wait a short time, but a few wait a very long time). If you take random samples of <span class="math inline">\(n=40\)</span> patients and compute the average wait time for each sample, will a histogram of these sample averages look skewed like the original data, or roughly bell-shaped? Explain using the CLT.</p>
-<p><em>Answer.</em> Roughly bell-shaped. The CLT says that regardless of the shape of the original distribution (skewed, in this case), the distribution of the <em>sample mean</em> becomes approximately Normal as the sample size grows, and <span class="math inline">\(n=40\)</span> is generally large enough for this approximation to be reasonable. The individual wait times stay skewed — it’s specifically the <em>averages</em> that smooth out into a bell shape.</p>
+<details class="qa-answer">
+<summary>
+Show answer
+</summary>
+<p>
+Roughly bell-shaped. The CLT says that regardless of the shape of the original distribution (skewed, in this case), the distribution of the <em>sample mean</em> becomes approximately Normal as the sample size grows, and <span class="math inline">\(n=40\)</span> is generally large enough for this approximation to be reasonable. The individual wait times stay skewed — it’s specifically the <em>averages</em> that smooth out into a bell shape.
+</p>
+</details>
 
 
 </section>
