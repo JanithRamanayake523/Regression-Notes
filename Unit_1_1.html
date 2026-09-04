@@ -216,6 +216,7 @@ window.Quarto = {
 </header>
 
 
+<p>This section reviews probability concepts you should have already seen in a prior course — random variables, their distributions, expectation, variance, and the Central Limit Theorem. These are not just background trivia: throughout this course, we treat both our data and our regression estimates as random variables, and we lean on exactly these tools (expectation, variance, independence, CLT) to reason about how good an estimate is and to build hypothesis tests. If this material feels rusty, that’s completely normal — we’ll rebuild the intuition with concrete examples alongside the formal definitions.</p>
 <p>Recall that</p>
 <p><strong>Definition 2.1</strong> A random variable <span class="math inline">\(X\)</span> is a function which maps outcomes <span class="math inline">\(\omega\in \Omega\)</span> to the real numbers, i.e., <span class="math inline">\(X\colon \Omega\rightarrow\mathbb{R}\)</span>.</p>
 <div class="callout callout-style-default callout-note callout-titled">
@@ -231,6 +232,20 @@ Note
 <p>Note that the notation <span class="math inline">\(f\colon A\rightarrow B\)</span> means that <span class="math inline">\(f\)</span> is a function whose domain is <span class="math inline">\(A\)</span> and range is <span class="math inline">\(B\)</span>. That is, <span class="math inline">\(f\)</span> takes a value from <span class="math inline">\(A\)</span> and outputs some value in <span class="math inline">\(B\)</span>.</p>
 </div>
 </div>
+<div class="callout callout-style-default callout-tip callout-titled" title="Intuition: what is $\Omega$, and why is $X$ a function?">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Intuition: what is <span class="math inline">\(\Omega\)</span>, and why is <span class="math inline">\(X\)</span> a function?
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><span class="math inline">\(\Omega\)</span> (the <em>sample space</em>) is just the set of all possible outcomes of some random experiment — it doesn’t have to be a number at all. Flip a coin: <span class="math inline">\(\Omega=\{H,T\}\)</span>. Roll a die: <span class="math inline">\(\Omega=\{1,2,3,4,5,6\}\)</span>. Pick a random student: <span class="math inline">\(\Omega\)</span> is the set of all students.</p>
+<p>A random variable <span class="math inline">\(X\)</span> takes whatever outcome actually happens and converts it into a number, because numbers are what we know how to do arithmetic and statistics with. For the coin flip, we might define <span class="math inline">\(X(H)=1\)</span> and <span class="math inline">\(X(T)=0\)</span> — now “the coin landed heads” becomes the numeric statement “<span class="math inline">\(X=1\)</span>.” This is why <span class="math inline">\(X\)</span> is formally a <em>function</em>: it’s a rule for translating outcomes into numbers, even though in practice we’ll rarely write it out explicitly and will just talk about <span class="math inline">\(X\)</span> as if it <em>were</em> the number.</p>
+</div>
+</div>
 <p>Generally, we will just write <span class="math inline">\(X\)</span>, and ignore the fact that <span class="math inline">\(X\)</span> is a function.</p>
 <p>We can categorize a random variable <span class="math inline">\(X\)</span> as follows:</p>
 <ul>
@@ -241,6 +256,44 @@ Note
 <section id="discrete-random-variables" class="level2" data-number="1.1">
 <h2 data-number="1.1" data-anchor-id="discrete-random-variables"><span class="header-section-number">1.1</span> Discrete Random Variables</h2>
 <p>If <span class="math inline">\(X\colon \Omega\rightarrow S\)</span> where <span class="math inline">\(S\)</span> is countable, then <span class="math inline">\(X\)</span> is a discrete random variable. <span class="math inline">\(S\)</span> can be finite, but can also be any infinite subset of the integers <span class="math inline">\(\mathbb{Z}\)</span>. The distribution of <span class="math inline">\(X\)</span> is given by its PMF, denoted by <span class="math inline">\(f(x)\)</span>. For any <span class="math inline">\(x\in S\)</span>, <span class="math inline">\(f(x)=\Pr(X=x)\)</span>. (Note that ‘<span class="math inline">\(\in\)</span>’ means the word “in”.)</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Intuition: think of a die">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Intuition: think of a die
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The simplest example of a discrete random variable is a fair six-sided die roll: let <span class="math inline">\(X\)</span> be the number that comes up. The possible outcomes are <span class="math inline">\(S=\{1,2,3,4,5,6\}\)</span>, a finite (hence countable) set, so <span class="math inline">\(X\)</span> is discrete. Its PMF is flat: <span class="math inline">\(f(x)=\Pr(X=x)=1/6\)</span> for every <span class="math inline">\(x\in S\)</span>.</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th><span class="math inline">\(x\)</span></th>
+<th>1</th>
+<th>2</th>
+<th>3</th>
+<th>4</th>
+<th>5</th>
+<th>6</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><span class="math inline">\(f(x)\)</span></td>
+<td>1/6</td>
+<td>1/6</td>
+<td>1/6</td>
+<td>1/6</td>
+<td>1/6</td>
+<td>1/6</td>
+</tr>
+</tbody>
+</table>
+<p>Check the two conditions below against this table: the six probabilities add up to <span class="math inline">\(6\times\frac16=1\)</span>, and every entry is between 0 and 1. A PMF doesn’t have to be flat like this one — for a biased coin, or the number of heads in 10 flips, the probabilities would be spread unevenly across the outcomes — but it always has to satisfy these two rules.</p>
+</div>
+</div>
 <p>We must have that:</p>
 <ul>
 <li><span class="math inline">\(\sum_{x\in S}f(x)=1\)</span>, (This notation means summing over all the elements in <span class="math inline">\(S\)</span>.)</li>
@@ -253,6 +306,20 @@ Note
 <section id="continuous-random-variables" class="level2" data-number="1.2">
 <h2 data-number="1.2" data-anchor-id="continuous-random-variables"><span class="header-section-number">1.2</span> Continuous Random Variables</h2>
 <p>We say <span class="math inline">\(X\)</span> is a <em>continuous random variable</em> if <span class="math inline">\(\Pr(X=r)=0\)</span> for all <span class="math inline">\(r\in\mathbb{R}\)</span>. If <span class="math inline">\(X\colon \Omega\rightarrow S\)</span> and <span class="math inline">\(X\)</span> is a continuous random variable, then <span class="math inline">\(S\)</span> is typically the real numbers, denoted by <span class="math inline">\(\mathbb{R}\)</span>, but can be any uncountable subset of <span class="math inline">\(\mathbb{R}\)</span>. The distribution of <span class="math inline">\(X\)</span> is given by the PDF <span class="math inline">\(f(x)\)</span>. For any interval <span class="math inline">\((a,b)\subset\in S\)</span>, <span class="math inline">\(\Pr(X\in (a,b))=\int_a^b f(x)dx\)</span>.</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Intuition: why do we need a whole new type of variable?">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Intuition: why do we need a whole new type of variable?
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Think of <span class="math inline">\(X\)</span> as someone’s height in centimeters. Unlike a die roll, height can (in principle) take <em>any</em> value in an interval — 170, 170.1, 170.001, and so on, forever. Because there are uncountably many possible values, the chance of landing on any one <em>exact</em> value is effectively zero — that’s exactly the condition <span class="math inline">\(\Pr(X=r)=0\)</span>. So instead of asking “what’s the probability height is exactly 170cm?” (answer: 0, not a useful question), we ask “what’s the probability height is <em>between</em> 169 and 171cm?” That’s a question about <strong>area under a curve</strong>, which is exactly what <span class="math inline">\(\Pr(X\in(a,b))=\int_a^b f(x)dx\)</span> computes.</p>
+<p>A common point of confusion: <span class="math inline">\(f(x)\)</span> itself is <strong>not</strong> a probability — it’s called a <em>density</em>, and it can even be bigger than 1 (try plugging small <span class="math inline">\(\sigma\)</span> into the Normal PDF below). Only the <em>area</em> under <span class="math inline">\(f(x)\)</span> over some range is a probability, and that area is always between 0 and 1.</p>
+</div>
+</div>
 <p>We must have that:</p>
 <ul>
 <li><span class="math inline">\(\int_{- \infty}^\infty f(x)dx=1\)</span>,</li>
@@ -268,15 +335,68 @@ Note
 <p>Recall the important quantities <span class="math inline">\(\mathrm{E}({X})\)</span>, <span class="math inline">\(\mathrm{var}({X})\)</span>, <span class="math inline">\(\mathrm{cov}(X_1,X_2)\)</span>, <span class="math inline">\(\mathrm{corr}(X_1,X_2)\)</span>. Recall expectation:</p>
 <p><strong>Definition 2.2</strong> The expectation of a random variable <span class="math inline">\(X\)</span> is <span class="math display">\[\mathrm{E}({X})=\sum_{x\in S}x\Pr\left(X=x\right),\]</span> if <span class="math inline">\(X\)</span> is discrete and is <span class="math display">\[\mathrm{E}({X})=\int_{-\infty}^\infty xf(x)dx,\]</span> if <span class="math inline">\(X\)</span> is continuous.</p>
 <p>This is the ``average’’ value of the random variable. Note that it is possible for it to be impossible for <span class="math inline">\(X=\mathrm{E}({X})\)</span>. Try to come up with an example of this!</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Intuition: expectation is a weighted average">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Intuition: expectation is a weighted average
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The expectation is just a weighted average of all the possible values <span class="math inline">\(X\)</span> could take, where each value is weighted by how likely it is. Going back to the fair die, <span class="math inline">\(\mathrm{E}(X)=1\cdot\frac16+2\cdot\frac16+\cdots+6\cdot\frac16=3.5\)</span>. Notice <span class="math inline">\(3.5\)</span> is not even a possible outcome of a die roll — that’s exactly the “impossible to have <span class="math inline">\(X=\mathrm{E}(X)\)</span>” idea mentioned above. Expectation tells you where the distribution “balances,” not a value you should expect to actually observe on any single trial.</p>
+</div>
+</div>
 <p><strong>Definition 2.3</strong> The variance of a random variable <span class="math inline">\(X\)</span> is <span class="math display">\[{\textrm{Var}}\left[X\right]={\textrm{E}}\left[|X-{\textrm{E}}\left[X\right]|^2\right]=\sum_{x\in S}(x-{\textrm{E}}\left[X\right])^2\Pr\left(X=x\right),\]</span> if <span class="math inline">\(X\)</span> is discrete and is <span class="math display">\[{\textrm{Var}}\left[X\right]={\textrm{E}}\left[|X-{\textrm{E}}\left[X\right]|^2\right]=\int_{-\infty}^\infty (x-{\textrm{E}}\left[X\right])^2f(x)dx,\]</span> if <span class="math inline">\(X\)</span> is continuous.</p>
 <p>The variance describes the variation of <span class="math inline">\(X\)</span> about its mean. In other words, it describes on ``average’’, how far is <span class="math inline">\(X\)</span> from its mean.</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Intuition: variance measures spread">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Intuition: variance measures spread
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>If you rolled the die many, many times and, each time, measured how far the outcome landed from the mean <span class="math inline">\(3.5\)</span> (squaring that distance so negative and positive deviations don’t cancel out), the variance is the long-run average of those squared distances. A random variable that’s usually very close to its mean (like a very precise measuring instrument) has small variance; one that swings wildly (like a lottery payout) has large variance. The square root of the variance, <span class="math inline">\(\sqrt{{\textrm{Var}}[X]}\)</span>, is called the <strong>standard deviation</strong> — it’s often easier to interpret because it’s back in the original units of <span class="math inline">\(X\)</span> (variance is in <em>squared</em> units).</p>
+</div>
+</div>
 <p><strong>Definition 2.4</strong> The covariance between two random variables <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> is <span class="math display">\[{\textrm{cov}}\left[X,Y\right]={\textrm{E}}\left[(X-{\textrm{E}}\left[X\right])(Y-{\textrm{E}}\left[Y\right])\right].\]</span></p>
 <p>The covariance describes the unnormalised linear association between <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span>.</p>
 <p><strong>Definition 2.5</strong> The correlation between two random variables <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> is <span class="math display">\[{\textrm{corr}}\left[X,Y\right]={\textrm{cov}}\left[X,Y\right]/\sqrt{{\textrm{Var}}\left[X\right]{\textrm{Var}}\left[Y\right]}.\]</span></p>
 <p>The correlation describes the normalized linear association between <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span>.</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Intuition: covariance and correlation">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Intuition: covariance and correlation
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Covariance tells you the <em>direction</em> two variables tend to move together. If <span class="math inline">\(X\)</span> is height and <span class="math inline">\(Y\)</span> is weight, taller people tend to also be heavier, so when <span class="math inline">\(X\)</span> is above its mean, <span class="math inline">\(Y\)</span> tends to be above its mean too — the products <span class="math inline">\((X-\mathrm{E}[X])(Y-\mathrm{E}[Y])\)</span> are typically positive, giving positive covariance. If <span class="math inline">\(X\)</span> is hours of weekly exercise and <span class="math inline">\(Y\)</span> is resting heart rate, they might move in <em>opposite</em> directions (negative covariance).</p>
+<p>The problem with covariance is that its size depends on the units of <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> (e.g., measuring height in millimeters instead of centimeters inflates the covariance), which makes it hard to judge how <em>strong</em> an association is just by looking at the number. Correlation fixes this by dividing out the standard deviations of <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span>, which rescales the result to always lie in <span class="math inline">\([-1,1]\)</span>: <span class="math inline">\(+1\)</span> means a perfect increasing straight-line relationship, <span class="math inline">\(-1\)</span> a perfect decreasing one, and <span class="math inline">\(0\)</span> means no <em>linear</em> relationship (see the Theorem below for why that last part comes with a caveat).</p>
+</div>
+</div>
 <p>Next, recall that for a random variable <span class="math inline">\(X\)</span>, its cumulative distribution function (CDF) is given by <span class="math inline">\(F_X(x)=\Pr\left(X\leq x\right)\)</span>. The joint CDF of <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> is given by <span class="math inline">\(F_{XY}(x,y)=\Pr\left(X\leq x, Y\leq y\right)\)</span>.</p>
 <p>Lastly, for a vector of <span class="math inline">\(d\)</span> random variables <span class="math inline">\(\mathbf{X}=(X_1,\ldots,X_d)\)</span>, let its CDF by <span class="math inline">\(F_{\mathbf{X}}(\mathbf{x})=\Pr\left(X_1\leq x_1,\ldots X_d\leq x_d\right)\)</span>, where here <span class="math inline">\(\mathbf{x}\in\mathbb{R}^{d}\)</span> and <span class="math inline">\(\mathbf{x}=(x_1,\ldots,x_d)\)</span>.</p>
 <p>We next present the concept of independence of random variables. Let <span class="math inline">\(F_{XY}(x,y)\)</span> be the joint CDF of <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> and let <span class="math inline">\(F_X\)</span> and <span class="math inline">\(F_Y\)</span> be the univariate CDFs of <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span>, respectively. For two random variables <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span>, we say that <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> are independent if <span class="math inline">\(F_{XY}(x,y)=F_X(x)F_Y(y)\)</span>. More generally, two vectors of random variables <span class="math inline">\(\mathbf{X}\)</span> and <span class="math inline">\(\mathbf{Y}\)</span> are independent if <span class="math inline">\(F_{(\mathbf{X},\mathbf{Y})}(\mathbf{x},\mathbf{y})=F_{\mathbf{X}}(\mathbf{x})F_{\mathbf{Y}}(\mathbf{y})\)</span>, where <span class="math inline">\(F_{(\mathbf{X},\mathbf{Y})}\)</span> is the CDF of the vector <span class="math inline">\((\mathbf{X},\mathbf{Y})\)</span>. A set of random variables <span class="math inline">\(\{X_i\}_{i=1}^n\)</span> are mutually independent if for any two mutually exclusive subsets of <span class="math inline">\(\{X_i\}_{i=1}^n\)</span> are also independent. Note that we write <span class="math inline">\(X \perp Y\)</span> if <span class="math inline">\(X\)</span> is independent of <span class="math inline">\(Y\)</span>.</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Intuition: independence">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Intuition: independence
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Two random variables are independent if knowing the value of one tells you <em>nothing</em> about the other. Two separate, fair coin flips are independent: knowing the first landed heads doesn’t change the probability that the second lands heads. Contrast this with drawing two cards from a deck <em>without replacement</em>: knowing the first card was the Ace of Spades changes the probabilities for the second draw (it definitely won’t also be the Ace of Spades) — those draws are <strong>not</strong> independent.</p>
+</div>
+</div>
 <p>We have that:</p>
 <p><strong>Theorem 2.1</strong> The following holds:</p>
 <ul>
@@ -284,21 +404,61 @@ Note
 <li><span class="math inline">\(X_1\perp X_2 \implies {\textrm{corr}}\left[X_1,X_2\right]=0\)</span></li>
 <li><span class="math inline">\({\textrm{corr}}\left[X_1,X_2\right]=0\)</span> does not imply <span class="math inline">\(X_1\perp X_2\)</span></li>
 </ul>
-<p><strong>Exercise 2.3</strong> Prove <a href="#thm-1">Theorem&nbsp;2.1</a> .</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Intuition: uncorrelated is not the same as independent">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Intuition: uncorrelated is not the same as independent
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The first two bullets say independence is a <em>strong</em> condition — it implies zero correlation. But the third bullet is the tricky, easy-to-forget direction: zero correlation does <strong>not</strong> guarantee independence, because correlation only detects <em>linear</em> relationships. A classic example: let <span class="math inline">\(X\)</span> be uniform on <span class="math inline">\([-1,1]\)</span> and <span class="math inline">\(Y=X^2\)</span>. Here <span class="math inline">\(Y\)</span> is completely <em>determined</em> by <span class="math inline">\(X\)</span> (about as dependent as two variables can get!), yet it turns out <span class="math inline">\(\mathrm{corr}(X,Y)=0\)</span>, because the relationship is curved (symmetric), not linear — the positive and negative associations cancel out on average. So: independence <span class="math inline">\(\Rightarrow\)</span> uncorrelated, but uncorrelated <span class="math inline">\(\not\Rightarrow\)</span> independence.</p>
+</div>
+</div>
+<p><strong>Exercise 2.3</strong> Prove <a href="#thm-1">Theorem 2.1</a> .</p>
 <p>Let <span class="math inline">\(X,X_1,X_2,\ldots X_n\)</span> be random variables. Recall the linearity of expectation property:</p>
 <p><strong>Theorem 2.2</strong> For <span class="math inline">\(a,b\in\mathbb{R}\)</span>, it holds that <span class="math inline">\(\mathrm{E}({aX+b})=a\mathrm{E}({X})+b\)</span>.</p>
-<p><strong>Exercise 2.4</strong> Prove <a href="#thm-2">Theorem&nbsp;2.2</a> .</p>
-<p>As a corollary of <a href="#thm-2">Theorem&nbsp;2.2</a> , we have that</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Intuition: linearity of expectation">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Intuition: linearity of expectation
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>This theorem says expectation “passes through” simple rescaling and shifting exactly the way you’d hope: if you double every possible outcome, the average doubles too; if you add 5 to every outcome, the average goes up by 5. Remarkably, the more general versions of this fact below (sums of many random variables) hold <em>no matter how the variables are related to each other</em> — dependent, independent, it doesn’t matter. Linearity of expectation is one of the few “free lunches” in probability, and it’s used constantly in this course to figure out the expected value of a regression estimator.</p>
+</div>
+</div>
+<p><strong>Exercise 2.4</strong> Prove <a href="#thm-2">Theorem 2.2</a> .</p>
+<p>As a corollary of <a href="#thm-2">Theorem 2.2</a> , we have that</p>
 <ul>
 <li><span class="math inline">\({\textrm{E}}\left[\sum_{i=1}^n a_i X_i\right]=\sum_{i=1}^n a_i{\textrm{E}}\left[ X_i\right]\)</span></li>
 <li><span class="math inline">\({\textrm{Var}}\left[\sum_{i=1}^n a_i X_i\right]=\sum_{i=1}^n a_i^2{\textrm{Var}}\left[ X_i\right]+\sum_{i\neq j}a_ia_j{\textrm{cov}}\left[X_i,X_j\right]\)</span></li>
 <li><span class="math inline">\({\textrm{Var}}\left[aX_1+bX_2+c\right]=a^2{\textrm{Var}}\left[X_1\right]+b^2{\textrm{Var}}\left[X_2\right]+2ab\ {\textrm{cov}}\left[X_1,X_2\right]\)</span></li>
 </ul>
+<div class="callout callout-style-default callout-tip callout-titled" title="Intuition: variance of a sum is not just the sum of variances">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Intuition: variance of a sum is not just the sum of variances
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Unlike expectation, variance does <strong>not</strong> simply add up unless the variables are uncorrelated — you can see this in the middle bullet, where the extra <span class="math inline">\(\sum_{i\neq j}a_ia_j{\textrm{cov}}[X_i,X_j]\)</span> term captures how the variables move together. If two stocks in a portfolio tend to rise and fall together (positive covariance), the portfolio’s overall risk (variance) is <em>larger</em> than just adding up each stock’s individual risk — the ups and downs reinforce each other rather than canceling out. If instead the variables are independent (so all covariance terms are 0), the middle bullet collapses to the simple “variances just add up” rule you may already be used to.</p>
+</div>
+</div>
 <p><strong>Exercise 2.5</strong> What happens to <span class="math inline">\({\textrm{Var}}\left[aX_1+bX_2+c\right]\)</span> when <span class="math inline">\(\{X_i\}_{i=1}^n\)</span> are mutually independent?</p>
 <p><strong>Exercise 2.6</strong> Let <span class="math inline">\(X_1,X_2,\ldots X_n\)</span> be i.i.d. (independent and identically distributed) random variables with expectation (also known as mean) <span class="math inline">\(\mu\)</span> and variance <span class="math inline">\(\sigma^2\)</span>. What is the expectation and variance of <span class="math display">\[\bar X=\sum_{i=1}^n X_i/n?.\]</span></p>
 </section>
 <section id="useful-properties-of-normal-and-related-random-variables" class="level2" data-number="1.4">
 <h2 data-number="1.4" data-anchor-id="useful-properties-of-normal-and-related-random-variables"><span class="header-section-number">1.4</span> Useful properties of normal and related random variables</h2>
+<p>The results in this section are the machinery behind almost every hypothesis test and confidence interval you’ll build later in this course. Roughly speaking: whenever we standardize, square, sum, or take ratios of Normal random variables, we land on one of a small handful of named distributions (Chi-squared, <span class="math inline">\(t\)</span>, <span class="math inline">\(F\)</span>) — and it’s exactly these distributions that show up when we test whether a regression coefficient is significant.</p>
 <p>Let</p>
 <ul>
 <li><span class="math inline">\(\mathcal{N}(\mu,\sigma^2)\)</span> represent the normal distribution with mean <span class="math inline">\(\mu\)</span> and variance <span class="math inline">\(\sigma^2\)</span>.</li>
@@ -306,6 +466,24 @@ Note
 <li><span class="math inline">\(t_n\)</span> be the student-<span class="math inline">\(t\)</span> distribution with <span class="math inline">\(n\)</span> degrees of freedom</li>
 <li><span class="math inline">\(F_{m,n}\)</span> be the <span class="math inline">\(F\)</span> distribution with <span class="math inline">\(m\)</span> numerator degrees of freedom and <span class="math inline">\(n\)</span> denominator degrees of freedom</li>
 </ul>
+<div class="callout callout-style-default callout-tip callout-titled" title="Intuition: what are these distributions, and what are degrees of freedom?">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Intuition: what are these distributions, and what are degrees of freedom?
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li><span class="math inline">\(\chi^2_k\)</span> arises from <strong>summing <span class="math inline">\(k\)</span> independent squared standard Normals</strong>. Since it’s a sum of squares, it’s always non-negative and right-skewed. You’ll see it show up whenever we sum up squared <em>residuals</em> (leftover errors) later in the course.</li>
+<li><span class="math inline">\(t_n\)</span> arises from <strong>dividing a standard Normal by an independent estimate of its own spread</strong>. It looks like a Normal curve but with heavier tails, because dividing by an <em>estimated</em> (rather than known) standard deviation adds extra uncertainty. This is exactly why we use <span class="math inline">\(t\)</span>, not <span class="math inline">\(\mathcal{N}\)</span>, when testing means or coefficients with an estimated variance.</li>
+<li><span class="math inline">\(F_{m,n}\)</span> arises from a <strong>ratio of two (scaled) Chi-squared variables</strong>. It’s used to compare two variances, or (later in this course) to test whether a whole group of regression coefficients is jointly zero.</li>
+</ul>
+<p>“Degrees of freedom” is loosely “how many independent pieces of information went into the calculation.” For instance, <span class="math inline">\(\hat\sigma^2\)</span> below is built from <span class="math inline">\(n\)</span> data points, but because we first had to estimate the mean <span class="math inline">\(\bar X\)</span> from that same data, only <span class="math inline">\(n-1\)</span> independent pieces of information remain to estimate the spread — hence <span class="math inline">\(n-1\)</span> degrees of freedom.</p>
+</div>
+</div>
 <p>We have the following results:</p>
 <p><strong>Theorem 2.3</strong> Suppose that <span class="math inline">\(X\sim \mathcal{N}(\mu,\sigma^2)\)</span>, then</p>
 <ul>
@@ -321,11 +499,58 @@ Note
 </ul>
 <p>Define <span class="math display">\[\hat\sigma^2=\frac{1}{n- 1}\sum_{i=1}^n (X_i- \bar X)^2.\]</span></p>
 <p><strong>Theorem 2.5</strong> Suppose that <span class="math inline">\(X_1,X_2,\ldots X_n\sim \mathcal{N}(\mu,\sigma^2)\)</span> and are independent, then <span class="math inline">\(\frac{\bar X- \mu}{\sigma/\sqrt{n}}\sim \mathcal{N}(0,1)\)</span>, <span class="math inline">\(\bar X\perp \hat\sigma^2\)</span>, <span class="math inline">\((n- 1)\hat\sigma^2/\sigma^2\sim \chi^2_{n- 1}\)</span> and <span class="math inline">\(\frac{\bar X- \mu}{\hat\sigma/\sqrt{n}}\sim t_{n- 1}\)</span>.</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Intuition: putting Theorem 2.5 together">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Intuition: putting Theorem 2.5 together
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>This theorem is the engine behind the one-sample <span class="math inline">\(t\)</span>-test you’ll use in the next section. Read it as a chain: (1) the sample mean <span class="math inline">\(\bar X\)</span>, once standardized with the <em>true</em> <span class="math inline">\(\sigma\)</span>, is exactly standard Normal; (2) remarkably, <span class="math inline">\(\bar X\)</span> and the sample variance <span class="math inline">\(\hat\sigma^2\)</span> are independent of each other when the data is Normal; (3) <span class="math inline">\(\hat\sigma^2\)</span>, once rescaled, follows a Chi-squared distribution; and putting (1)–(3) together via Theorem 2.4’s <span class="math inline">\(t\)</span>-distribution result gives the last line — a standardized <span class="math inline">\(\bar X\)</span> using the <em>estimated</em> <span class="math inline">\(\hat\sigma\)</span> instead of the unknown true <span class="math inline">\(\sigma\)</span> follows a <span class="math inline">\(t\)</span>-distribution. This is precisely why, in practice (where we never know <span class="math inline">\(\sigma\)</span>), we use <span class="math inline">\(t\)</span>-tests instead of <span class="math inline">\(Z\)</span>-tests.</p>
+</div>
+</div>
 </section>
 <section id="central-limit-theorem" class="level2" data-number="1.5">
 <h2 data-number="1.5" data-anchor-id="central-limit-theorem"><span class="header-section-number">1.5</span> Central Limit Theorem</h2>
 <p>If <span class="math inline">\(X_1,X_2,\ldots X_n\)</span> are i.i.d. with mean <span class="math inline">\(\mu\)</span> and variance <span class="math inline">\(\sigma^2&lt;\infty\)</span>, then <span class="math inline">\(\frac{\bar X- \mu}{\sigma/\sqrt{n}}\stackrel{\text{d}}{\rightarrow}\mathcal{N}(0,1)\)</span> as <span class="math inline">\(n\rightarrow\infty\)</span>.</p>
 <p>We have that in general, for large <span class="math inline">\(n\)</span>, regardless of the distribution of the random variables, the sample mean is approximately normally distributed.</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Intuition: why the Central Limit Theorem is such a big deal">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Intuition: why the Central Limit Theorem is such a big deal
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The remarkable part of the CLT is the phrase “regardless of the distribution.” The individual <span class="math inline">\(X_i\)</span>’s could come from almost any distribution — heavily skewed, bounded between 0 and 1, lumpy with gaps — and it doesn’t matter: once you average enough of them together, that average’s <em>own</em> distribution smooths out into a bell curve. This is why, in practice, we’re often comfortable treating a sample mean as approximately Normal even when we know the underlying data clearly isn’t Normal (e.g., income data, wait times, or the ages example we’ll see in the next section).</p>
+<p>A rough mental picture: imagine averaging the result of rolling a single die many times. A single die roll is uniform (flat, not bell-shaped) across <span class="math inline">\(\{1,\ldots,6\}\)</span>. But if you rolled a die 30 times and recorded the <em>average</em>, and repeated that whole experiment thousands of times, the histogram of those averages would look distinctly bell-shaped and centered near <span class="math inline">\(3.5\)</span> — even though no single roll is ever bell-shaped. This is exactly the phenomenon the CLT describes, and it’s why the Normal distribution shows up so often in statistics even when the raw data doesn’t look Normal at all.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="Key takeaways before moving on">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Key takeaways before moving on
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li>A random variable just relabels outcomes as numbers; <em>discrete</em> variables take countable values (use a PMF), <em>continuous</em> variables take uncountably many values (use a PDF, where only areas — not points — are probabilities).</li>
+<li>Expectation is a probability-weighted average; variance measures typical squared distance from that average.</li>
+<li>Covariance/correlation measure linear association; zero correlation does <strong>not</strong> imply independence.</li>
+<li>Variance of a sum only splits into a simple sum of variances when the variables are uncorrelated — otherwise covariance terms matter.</li>
+<li>Chi-squared, <span class="math inline">\(t\)</span>, and <span class="math inline">\(F\)</span> are the distributions that appear when you square, standardize with an estimated spread, or take ratios of Normal random variables — and they are the basis of the hypothesis tests used throughout this course.</li>
+<li>The CLT is why sample means behave approximately Normally even when the underlying data doesn’t.</li>
+</ul>
+</div>
+</div>
 </section>
 <section id="homework-stop-1" class="level2" data-number="1.6">
 <h2 data-number="1.6" data-anchor-id="homework-stop-1"><span class="header-section-number">1.6</span> Homework stop 1</h2>
