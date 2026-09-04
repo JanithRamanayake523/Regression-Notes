@@ -1,0 +1,15 @@
+# Quarto build output and cache
+/.quarto/
+/_book/
+/_site/
+/_freeze/
+
+# R
+.Rproj.user/
+.Rhistory
+.RData
+.Ruserdata
+
+# OS files
+.DS_Store
+Thumbs.db

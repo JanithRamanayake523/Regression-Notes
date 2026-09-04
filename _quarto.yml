@@ -1,0 +1,21 @@
+project:
+  type: book
+
+book:
+  title: "Math 3330: Regression Notes"
+  author: "Kelly Ramsay"
+  date: last-modified
+  chapters:
+    - index.qmd
+    - Unit_1.qmd
+
+format:
+  html:
+    theme: cosmo
+    toc: true
+    number-sections: true
+    code-fold: false
+    smooth-scroll: false
+    anchor-sections: false
+
+editor: source
