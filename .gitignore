@@ -13,3 +13,6 @@
 # OS files
 .DS_Store
 Thumbs.db
+
+# Local Claude Code tool settings
+.claude/
