@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>1&nbsp; Review of random variables – Math 3330: Regression Notes</title>
+<title>1&nbsp; Review of random variables – Regression Notes</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -124,7 +124,7 @@ window.Quarto = {
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
-      <a href="./">Math 3330: Regression Notes</a> 
+      <a href="./">Regression Notes</a> 
     </div>
       </div>
         <div class="mt-2 flex-shrink-0 align-items-center">
@@ -198,7 +198,7 @@ window.Quarto = {
   </ul></li>
   <li><a href="#useful-properties-of-normal-and-related-random-variables" id="toc-useful-properties-of-normal-and-related-random-variables" class="nav-link" data-scroll-target="#useful-properties-of-normal-and-related-random-variables"><span class="header-section-number">1.4</span> Useful properties of normal and related random variables</a></li>
   <li><a href="#central-limit-theorem" id="toc-central-limit-theorem" class="nav-link" data-scroll-target="#central-limit-theorem"><span class="header-section-number">1.5</span> Central Limit Theorem</a></li>
-  <li><a href="#homework-stop-1" id="toc-homework-stop-1" class="nav-link" data-scroll-target="#homework-stop-1"><span class="header-section-number">1.6</span> Homework stop 1</a></li>
+  <li><a href="#check-your-understanding" id="toc-check-your-understanding" class="nav-link" data-scroll-target="#check-your-understanding"><span class="header-section-number">1.6</span> Check Your Understanding</a></li>
   </ul>
 </nav>
     </div>
@@ -658,11 +658,6 @@ Intuition: what are these distributions, and what are degrees of freedom?
 <p>“Degrees of freedom” is loosely “how many independent pieces of information went into the calculation.” For instance, <span class="math inline">\(\hat\sigma^2\)</span> below is built from <span class="math inline">\(n\)</span> data points, but because we first had to estimate the mean <span class="math inline">\(\bar X\)</span> from that same data, only <span class="math inline">\(n-1\)</span> independent pieces of information remain to estimate the spread — hence <span class="math inline">\(n-1\)</span> degrees of freedom.</p>
 </div>
 </div>
-<div style="text-align:center; margin: 1.5em 0;">
-<svg viewbox="0 0 620 230" width="100%" style="max-width:600px;" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="A diagram showing how standardizing and squaring a Normal random variable produces a Chi-squared distribution, and how combining Normal and Chi-squared variables produces the t and F distributions.">
-<defs> <marker id="arrowUnit1" markerwidth="8" markerheight="8" refx="6" refy="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#555"></path></marker> </defs> <rect x="10" y="15" width="140" height="46" rx="6" fill="#eaf2f8" stroke="#2e86c1"></rect> <text x="80" y="43" font-size="14" text-anchor="middle" fill="#154360">Normal N(μ,σ²)</text> <line x1="150" y1="38" x2="205" y2="38" stroke="#555" stroke-width="1.5" marker-end="url(#arrowUnit1)"></line> <text x="177" y="30" font-size="11" text-anchor="middle" fill="#555">standardize</text> <rect x="205" y="15" width="110" height="46" rx="6" fill="#eaf2f8" stroke="#2e86c1"></rect> <text x="260" y="43" font-size="14" text-anchor="middle" fill="#154360">Z ~ N(0,1)</text> <line x1="315" y1="38" x2="370" y2="38" stroke="#555" stroke-width="1.5" marker-end="url(#arrowUnit1)"></line> <text x="342" y="30" font-size="11" text-anchor="middle" fill="#555">square</text> <rect x="370" y="15" width="110" height="46" rx="6" fill="#fdebd0" stroke="#ca6f1e"></rect> <text x="425" y="43" font-size="14" text-anchor="middle" fill="#7e5109">χ²₁</text> <line x1="425" y1="61" x2="425" y2="95" stroke="#555" stroke-width="1.5" marker-end="url(#arrowUnit1)"></line> <text x="480" y="82" font-size="11" text-anchor="middle" fill="#555">sum k independent copies</text> <rect x="370" y="100" width="110" height="46" rx="6" fill="#fdebd0" stroke="#ca6f1e"></rect> <text x="425" y="128" font-size="14" text-anchor="middle" fill="#7e5109">χ²ₖ</text> <line x1="260" y1="61" x2="260" y2="105" stroke="#555" stroke-width="1.5"></line> <line x1="260" y1="105" x2="360" y2="123" stroke="#555" stroke-width="1.5" marker-end="url(#arrowUnit1)"></line> <text x="270" y="100" font-size="11" text-anchor="middle" fill="#555">Z divided by</text> <text x="270" y="113" font-size="11" text-anchor="middle" fill="#555">√(χ²ₖ/k)</text> <rect x="10" y="165" width="110" height="46" rx="6" fill="#eafaf1" stroke="#1e8449"></rect> <text x="65" y="193" font-size="14" text-anchor="middle" fill="#186a3b">tₖ</text> <line x1="120" y1="188" x2="360" y2="140" stroke="#555" stroke-width="1.5" marker-end="url(#arrowUnit1)"></line> <rect x="480" y="165" width="130" height="46" rx="6" fill="#f4ecf7" stroke="#7d3c98"></rect> <text x="545" y="193" font-size="14" text-anchor="middle" fill="#4a235a">F(m,n)</text> <line x1="480" y1="188" x2="480" y2="146" stroke="#555" stroke-width="1.5" marker-end="url(#arrowUnit1)"></line> <text x="545" y="155" font-size="11" text-anchor="middle" fill="#555">ratio of two independent, scaled χ²’s</text>
-</svg>
-</div>
 <p>We have the following results:</p>
 <p><strong>Theorem 2.3</strong> Suppose that <span class="math inline">\(X\sim \mathcal{N}(\mu,\sigma^2)\)</span>, then</p>
 <ul>
@@ -736,9 +731,21 @@ Key takeaways before moving on
 </div>
 </div>
 </section>
-<section id="homework-stop-1" class="level2" data-number="1.6">
-<h2 data-number="1.6" data-anchor-id="homework-stop-1"><span class="header-section-number">1.6</span> Homework stop 1</h2>
-<p>Review your material and complete the above exercises before continuing to the next section.</p>
+<section id="check-your-understanding" class="level2" data-number="1.6">
+<h2 data-number="1.6" data-anchor-id="check-your-understanding"><span class="header-section-number">1.6</span> Check Your Understanding</h2>
+<p>Review your material and complete the above exercises before continuing to the next section. The questions below are a quick self-check on the material from this page — try each one before reading the answer.</p>
+<p><strong>Question 1.</strong> Classify each of the following as discrete or continuous: (a) the number of texts you send in a day, (b) the time (in seconds) it takes you to run 100m, (c) the number of siblings you have.</p>
+<p><em>Answer.</em> (a) Discrete — a count, can only take whole-number values. (b) Continuous — time can (in principle) take any value in an interval. (c) Discrete — again a count.</p>
+<p><strong>Question 2.</strong> A random variable <span class="math inline">\(Y\)</span> takes values <span class="math inline">\(1, 2, 3\)</span> with probabilities <span class="math inline">\(0.2\)</span>, <span class="math inline">\(0.3\)</span>, <span class="math inline">\(0.6\)</span>. Is this a valid PMF? If not, explain why.</p>
+<p><em>Answer.</em> No.&nbsp;The probabilities must sum to 1, but <span class="math inline">\(0.2+0.3+0.6=1.1\neq1\)</span>. (Each individual value is between 0 and 1, so it fails only the first PMF condition, not the second.)</p>
+<p><strong>Question 3.</strong> A spinner lands on 10 points with probability <span class="math inline">\(0.5\)</span>, 20 points with probability <span class="math inline">\(0.3\)</span>, and 30 points with probability <span class="math inline">\(0.2\)</span>. Let <span class="math inline">\(X\)</span> be the points earned on one spin. Find <span class="math inline">\(\mathrm{E}(X)\)</span> and <span class="math inline">\(\mathrm{Var}(X)\)</span>.</p>
+<p><em>Answer.</em> <span class="math inline">\(\mathrm{E}(X)=10(0.5)+20(0.3)+30(0.2)=5+6+6=17.\)</span> For the variance, first find <span class="math inline">\(\mathrm{E}(X^2)=100(0.5)+400(0.3)+900(0.2)=50+120+180=350\)</span>, then <span class="math inline">\(\mathrm{Var}(X)=\mathrm{E}(X^2)-\mathrm{E}(X)^2=350-17^2=350-289=61.\)</span></p>
+<p><strong>Question 4.</strong> Let <span class="math inline">\(X\)</span> be hours studied per week and <span class="math inline">\(Y\)</span> be a student’s exam score. Would you expect <span class="math inline">\(\mathrm{cov}(X,Y)\)</span> to be positive, negative, or near zero? Briefly explain.</p>
+<p><em>Answer.</em> Positive — students who study more hours tend to score higher, so when <span class="math inline">\(X\)</span> is above its average, <span class="math inline">\(Y\)</span> tends to be above its average too, which is exactly the pattern positive covariance captures. (In reality the relationship is rarely perfectly linear, and other factors matter too, but the general direction should be positive.)</p>
+<p><strong>Question 5.</strong> True or False: if <span class="math inline">\(\mathrm{corr}(X,Y)=0\)</span>, then <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> must be independent. Justify your answer.</p>
+<p><em>Answer.</em> False. Correlation only measures <em>linear</em> association, so a zero correlation just means there’s no <em>linear</em> pattern — it says nothing about non-linear relationships. The <span class="math inline">\(Y=X^2\)</span> example from the Independence section above (with <span class="math inline">\(X\)</span> uniform on <span class="math inline">\([-1,1]\)</span>) is a case where <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> are clearly dependent (knowing <span class="math inline">\(X\)</span> tells you <span class="math inline">\(Y\)</span> exactly) yet <span class="math inline">\(\mathrm{corr}(X,Y)=0\)</span>.</p>
+<p><strong>Question 6.</strong> Waiting times at a hospital ER are heavily right-skewed (most patients wait a short time, but a few wait a very long time). If you take random samples of <span class="math inline">\(n=40\)</span> patients and compute the average wait time for each sample, will a histogram of these sample averages look skewed like the original data, or roughly bell-shaped? Explain using the CLT.</p>
+<p><em>Answer.</em> Roughly bell-shaped. The CLT says that regardless of the shape of the original distribution (skewed, in this case), the distribution of the <em>sample mean</em> becomes approximately Normal as the sample size grows, and <span class="math inline">\(n=40\)</span> is generally large enough for this approximation to be reasonable. The individual wait times stay skewed — it’s specifically the <em>averages</em> that smooth out into a bell shape.</p>
 
 
 </section>
