@@ -1,0 +1,1307 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.6.42">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>1&nbsp; Review material – Math 3330: Regression Notes</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./index.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-2f5df379a58b258e96c21c0638c20c03.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-8da5b4427184b79ecddefad3d342027e.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="nav-sidebar floating">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./Unit_1.html"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Review material</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Math 3330: Regression Notes</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Preface</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Unit_1.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Review material</span></span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#review-of-random-variables" id="toc-review-of-random-variables" class="nav-link active" data-scroll-target="#review-of-random-variables"><span class="header-section-number">1.1</span> Review of random variables</a>
+  <ul class="collapse">
+  <li><a href="#discrete-random-variables" id="toc-discrete-random-variables" class="nav-link" data-scroll-target="#discrete-random-variables"><span class="header-section-number">1.1.1</span> Discrete Random Variables</a></li>
+  <li><a href="#continuous-random-variables" id="toc-continuous-random-variables" class="nav-link" data-scroll-target="#continuous-random-variables"><span class="header-section-number">1.1.2</span> Continuous Random Variables</a></li>
+  <li><a href="#properties-of-random-variables" id="toc-properties-of-random-variables" class="nav-link" data-scroll-target="#properties-of-random-variables"><span class="header-section-number">1.1.3</span> Properties of Random Variables</a></li>
+  <li><a href="#useful-properties-of-normal-and-related-random-variables" id="toc-useful-properties-of-normal-and-related-random-variables" class="nav-link" data-scroll-target="#useful-properties-of-normal-and-related-random-variables"><span class="header-section-number">1.1.4</span> Useful properties of normal and related random variables</a></li>
+  <li><a href="#central-limit-theorem" id="toc-central-limit-theorem" class="nav-link" data-scroll-target="#central-limit-theorem"><span class="header-section-number">1.1.5</span> Central Limit Theorem</a></li>
+  <li><a href="#homework-stop-1" id="toc-homework-stop-1" class="nav-link" data-scroll-target="#homework-stop-1"><span class="header-section-number">1.1.6</span> Homework stop 1</a></li>
+  </ul></li>
+  <li><a href="#review-of-introductory-statistics" id="toc-review-of-introductory-statistics" class="nav-link" data-scroll-target="#review-of-introductory-statistics"><span class="header-section-number">1.2</span> Review of introductory statistics</a>
+  <ul class="collapse">
+  <li><a href="#basic-premise-of-statistics" id="toc-basic-premise-of-statistics" class="nav-link" data-scroll-target="#basic-premise-of-statistics"><span class="header-section-number">1.2.1</span> Basic premise of statistics</a></li>
+  <li><a href="#confidence-intervals" id="toc-confidence-intervals" class="nav-link" data-scroll-target="#confidence-intervals"><span class="header-section-number">1.2.2</span> Confidence intervals</a></li>
+  <li><a href="#hypothesis-tests" id="toc-hypothesis-tests" class="nav-link" data-scroll-target="#hypothesis-tests"><span class="header-section-number">1.2.3</span> Hypothesis tests</a></li>
+  <li><a href="#homework-stop-2" id="toc-homework-stop-2" class="nav-link" data-scroll-target="#homework-stop-2"><span class="header-section-number">1.2.4</span> Homework stop 2</a></li>
+  </ul></li>
+  <li><a href="#review-of-matrices-and-linear-algebra" id="toc-review-of-matrices-and-linear-algebra" class="nav-link" data-scroll-target="#review-of-matrices-and-linear-algebra"><span class="header-section-number">1.3</span> Review of matrices and linear algebra</a>
+  <ul class="collapse">
+  <li><a href="#matrix-properties" id="toc-matrix-properties" class="nav-link" data-scroll-target="#matrix-properties"><span class="header-section-number">1.3.1</span> Matrix properties</a></li>
+  <li><a href="#important-identities" id="toc-important-identities" class="nav-link" data-scroll-target="#important-identities"><span class="header-section-number">1.3.2</span> Important identities</a></li>
+  <li><a href="#homework-stop-3" id="toc-homework-stop-3" class="nav-link" data-scroll-target="#homework-stop-3"><span class="header-section-number">1.3.3</span> Homework stop 3</a></li>
+  </ul></li>
+  <li><a href="#review-random-vectors" id="toc-review-random-vectors" class="nav-link" data-scroll-target="#review-random-vectors"><span class="header-section-number">1.4</span> Review Random Vectors</a>
+  <ul class="collapse">
+  <li><a href="#definition-of-random-vectors" id="toc-definition-of-random-vectors" class="nav-link" data-scroll-target="#definition-of-random-vectors"><span class="header-section-number">1.4.1</span> Definition of random vectors</a></li>
+  <li><a href="#expected-value-and-covariance" id="toc-expected-value-and-covariance" class="nav-link" data-scroll-target="#expected-value-and-covariance"><span class="header-section-number">1.4.2</span> Expected Value and Covariance</a></li>
+  <li><a href="#properties-of-expected-value-and-covariance" id="toc-properties-of-expected-value-and-covariance" class="nav-link" data-scroll-target="#properties-of-expected-value-and-covariance"><span class="header-section-number">1.4.3</span> Properties of expected value and covariance</a></li>
+  <li><a href="#multivariate-normal-distribution" id="toc-multivariate-normal-distribution" class="nav-link" data-scroll-target="#multivariate-normal-distribution"><span class="header-section-number">1.4.4</span> Multivariate normal distribution</a></li>
+  <li><a href="#homework-stop-4" id="toc-homework-stop-4" class="nav-link" data-scroll-target="#homework-stop-4"><span class="header-section-number">1.4.5</span> Homework stop 4</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Review material</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="review-of-random-variables" class="level2" data-number="1.1">
+<h2 data-number="1.1" data-anchor-id="review-of-random-variables"><span class="header-section-number">1.1</span> Review of random variables</h2>
+<p>Recall that</p>
+<p><strong>Definition 2.1</strong> A random variable <span class="math inline">\(X\)</span> is a function which maps outcomes <span class="math inline">\(\omega\in \Omega\)</span> to the real numbers, i.e., <span class="math inline">\(X\colon \Omega\rightarrow\mathbb{R}\)</span>.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Note that the notation <span class="math inline">\(f\colon A\rightarrow B\)</span> means that <span class="math inline">\(f\)</span> is a function whose domain is <span class="math inline">\(A\)</span> and range is <span class="math inline">\(B\)</span>. That is, <span class="math inline">\(f\)</span> takes a value from <span class="math inline">\(A\)</span> and outputs some value in <span class="math inline">\(B\)</span>.</p>
+</div>
+</div>
+<p>Generally, we will just write <span class="math inline">\(X\)</span>, and ignore the fact that <span class="math inline">\(X\)</span> is a function.</p>
+<p>We can categorize a random variable <span class="math inline">\(X\)</span> as follows:</p>
+<ul>
+<li>If <span class="math inline">\(X\colon \Omega\rightarrow S\)</span> where <span class="math inline">\(S\)</span> is countable, then <span class="math inline">\(X\)</span> is a <em>discrete random variable</em></li>
+<li>We say <span class="math inline">\(X\)</span> is a <em>continuous random variable</em> if <span class="math inline">\(\Pr(X=r)=0\)</span> for all <span class="math inline">\(r\in\mathbb{R}\)</span>.</li>
+<li>Otherwise, <span class="math inline">\(X\)</span> is a <em>mixed random variable</em> (which we won’t worry about in this course)</li>
+</ul>
+<section id="discrete-random-variables" class="level3" data-number="1.1.1">
+<h3 data-number="1.1.1" data-anchor-id="discrete-random-variables"><span class="header-section-number">1.1.1</span> Discrete Random Variables</h3>
+<p>If <span class="math inline">\(X\colon \Omega\rightarrow S\)</span> where <span class="math inline">\(S\)</span> is countable, then <span class="math inline">\(X\)</span> is a discrete random variable. <span class="math inline">\(S\)</span> can be finite, but can also be any infinite subset of the integers <span class="math inline">\(\mathbb{Z}\)</span>. The distribution of <span class="math inline">\(X\)</span> is given by its PMF, denoted by <span class="math inline">\(f(x)\)</span>. For any <span class="math inline">\(x\in S\)</span>, <span class="math inline">\(f(x)=\Pr(X=x)\)</span>. (Note that ‘<span class="math inline">\(\in\)</span>’ means the word “in”.)</p>
+<p>We must have that:</p>
+<ul>
+<li><span class="math inline">\(\sum_{x\in S}f(x)=1\)</span>, (This notation means summing over all the elements in <span class="math inline">\(S\)</span>.)</li>
+<li><span class="math inline">\(\forall x\in S\)</span>, <span class="math inline">\(0\leq f(x)\leq 1\)</span>. (This notation means for all <span class="math inline">\(x\)</span> in <span class="math inline">\(S\)</span>, <span class="math inline">\(0\leq f(x)\leq 1\)</span>.)</li>
+</ul>
+<p>Examples: Binomial random variables, Poisson random variables and Geometric random variables are all discrete random variables.</p>
+<p><strong>Exercise 2.1</strong> What is the PMF of a Binomial random variable? Can two different random variables have the same PMF? Why or why not?</p>
+<p><em>Solution 2.1</em>. First: <span class="math inline">\(\Pr\left(X=x\right)\binom{n}{x}p^x(1-p)^{n-x}\)</span> Second: Yes. Two random variables can be different random variables, but have the same distribution.</p>
+</section>
+<section id="continuous-random-variables" class="level3" data-number="1.1.2">
+<h3 data-number="1.1.2" data-anchor-id="continuous-random-variables"><span class="header-section-number">1.1.2</span> Continuous Random Variables</h3>
+<p>We say <span class="math inline">\(X\)</span> is a <em>continuous random variable</em> if <span class="math inline">\(\Pr(X=r)=0\)</span> for all <span class="math inline">\(r\in\mathbb{R}\)</span>. If <span class="math inline">\(X\colon \Omega\rightarrow S\)</span> and <span class="math inline">\(X\)</span> is a continuous random variable, then <span class="math inline">\(S\)</span> is typically the real numbers, denoted by <span class="math inline">\(\mathbb{R}\)</span>, but can be any uncountable subset of <span class="math inline">\(\mathbb{R}\)</span>. The distribution of <span class="math inline">\(X\)</span> is given by the PDF <span class="math inline">\(f(x)\)</span>. For any interval <span class="math inline">\((a,b)\subset\in S\)</span>, <span class="math inline">\(\Pr(X\in (a,b))=\int_a^b f(x)dx\)</span>.</p>
+<p>We must have that:</p>
+<ul>
+<li><span class="math inline">\(\int_{- \infty}^\infty f(x)dx=1\)</span>,</li>
+<li><span class="math inline">\(\forall x\in \mathbb{R}\)</span>, <span class="math inline">\(f(x)\geq 0\)</span>.</li>
+</ul>
+<p>Examples: Normal random variables, Chi-squared random variables, <span class="math inline">\(t\)</span> random variables, Cauchy random variables, <span class="math inline">\(F\)</span> random variables are all continuous random variables. Generally, we will focus on continuous random variables.</p>
+<p><strong>Exercise 2.2</strong> What is the PMF of a Normal random variable?</p>
+<p><em>Solution 2.2</em>. <span class="math inline">\(f(x)=\frac{1}{\sqrt{2\pi}\sigma}e^{-(x-\mu)^2/2\sigma^2}\)</span></p>
+</section>
+<section id="properties-of-random-variables" class="level3" data-number="1.1.3">
+<h3 data-number="1.1.3" data-anchor-id="properties-of-random-variables"><span class="header-section-number">1.1.3</span> Properties of Random Variables</h3>
+<p>Let <span class="math inline">\(X,X_1,X_2\)</span> be random variables.</p>
+<p>Recall the important quantities <span class="math inline">\(\mathrm{E}({X})\)</span>, <span class="math inline">\(\mathrm{var}({X})\)</span>, <span class="math inline">\(\mathrm{cov}(X_1,X_2)\)</span>, <span class="math inline">\(\mathrm{corr}(X_1,X_2)\)</span>. Recall expectation:</p>
+<p><strong>Definition 2.2</strong> The expectation of a random variable <span class="math inline">\(X\)</span> is <span class="math display">\[\mathrm{E}({X})=\sum_{x\in S}x\Pr\left(X=x\right),\]</span> if <span class="math inline">\(X\)</span> is discrete and is <span class="math display">\[\mathrm{E}({X})=\int_{-\infty}^\infty xf(x)dx,\]</span> if <span class="math inline">\(X\)</span> is continuous.</p>
+<p>This is the ``average’’ value of the random variable. Note that it is possible for it to be impossible for <span class="math inline">\(X=\mathrm{E}({X})\)</span>. Try to come up with an example of this!</p>
+<p><strong>Definition 2.3</strong> The variance of a random variable <span class="math inline">\(X\)</span> is <span class="math display">\[{\textrm{Var}}\left[X\right]={\textrm{E}}\left[|X-{\textrm{E}}\left[X\right]|^2\right]=\sum_{x\in S}(x-{\textrm{E}}\left[X\right])^2\Pr\left(X=x\right),\]</span> if <span class="math inline">\(X\)</span> is discrete and is <span class="math display">\[{\textrm{Var}}\left[X\right]={\textrm{E}}\left[|X-{\textrm{E}}\left[X\right]|^2\right]=\int_{-\infty}^\infty (x-{\textrm{E}}\left[X\right])^2f(x)dx,\]</span> if <span class="math inline">\(X\)</span> is continuous.</p>
+<p>The variance describes the variation of <span class="math inline">\(X\)</span> about its mean. In other words, it describes on ``average’’, how far is <span class="math inline">\(X\)</span> from its mean.</p>
+<p><strong>Definition 2.4</strong> The covariance between two random variables <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> is <span class="math display">\[{\textrm{cov}}\left[X,Y\right]={\textrm{E}}\left[(X-{\textrm{E}}\left[X\right])(Y-{\textrm{E}}\left[Y\right])\right].\]</span></p>
+<p>The covariance describes the unnormalised linear association between <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span>.</p>
+<p><strong>Definition 2.5</strong> The correlation between two random variables <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> is <span class="math display">\[{\textrm{corr}}\left[X,Y\right]={\textrm{cov}}\left[X,Y\right]/\sqrt{{\textrm{Var}}\left[X\right]{\textrm{Var}}\left[Y\right]}.\]</span></p>
+<p>The correlation describes the normalized linear association between <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span>.</p>
+<p>Next, recall that for a random variable <span class="math inline">\(X\)</span>, its cumulative distribution function (CDF) is given by <span class="math inline">\(F_X(x)=\Pr\left(X\leq x\right)\)</span>. The joint CDF of <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> is given by <span class="math inline">\(F_{XY}(x,y)=\Pr\left(X\leq x, Y\leq y\right)\)</span>.</p>
+<p>Lastly, for a vector of <span class="math inline">\(d\)</span> random variables <span class="math inline">\(\mathbf{X}=(X_1,\ldots,X_d)\)</span>, let its CDF by <span class="math inline">\(F_{\mathbf{X}}(\mathbf{x})=\Pr\left(X_1\leq x_1,\ldots X_d\leq x_d\right)\)</span>, where here <span class="math inline">\(\mathbf{x}\in\mathbb{R}^{d}\)</span> and <span class="math inline">\(\mathbf{x}=(x_1,\ldots,x_d)\)</span>.</p>
+<p>We next present the concept of independence of random variables. Let <span class="math inline">\(F_{XY}(x,y)\)</span> be the joint CDF of <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> and let <span class="math inline">\(F_X\)</span> and <span class="math inline">\(F_Y\)</span> be the univariate CDFs of <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span>, respectively. For two random variables <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span>, we say that <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> are independent if <span class="math inline">\(F_{XY}(x,y)=F_X(x)F_Y(y)\)</span>. More generally, two vectors of random variables <span class="math inline">\(\mathbf{X}\)</span> and <span class="math inline">\(\mathbf{Y}\)</span> are independent if <span class="math inline">\(F_{(\mathbf{X},\mathbf{Y})}(\mathbf{x},\mathbf{y})=F_{\mathbf{X}}(\mathbf{x})F_{\mathbf{Y}}(\mathbf{y})\)</span>, where <span class="math inline">\(F_{(\mathbf{X},\mathbf{Y})}\)</span> is the CDF of the vector <span class="math inline">\((\mathbf{X},\mathbf{Y})\)</span>. A set of random variables <span class="math inline">\(\{X_i\}_{i=1}^n\)</span> are mutually independent if for any two mutually exclusive subsets of <span class="math inline">\(\{X_i\}_{i=1}^n\)</span> are also independent. Note that we write <span class="math inline">\(X \perp Y\)</span> if <span class="math inline">\(X\)</span> is independent of <span class="math inline">\(Y\)</span>.</p>
+<p>We have that:</p>
+<p><strong>Theorem 2.1</strong> The following holds:</p>
+<ul>
+<li><span class="math inline">\(X_1\perp X_2 \implies {\textrm{E}}\left[X_1 X_2\right]={\textrm{E}}\left[X_1\right]{\textrm{E}}\left[X_2\right]\)</span></li>
+<li><span class="math inline">\(X_1\perp X_2 \implies {\textrm{corr}}\left[X_1,X_2\right]=0\)</span></li>
+<li><span class="math inline">\({\textrm{corr}}\left[X_1,X_2\right]=0\)</span> does not imply <span class="math inline">\(X_1\perp X_2\)</span></li>
+</ul>
+<p><strong>Exercise 2.3</strong> Prove <a href="#thm-1">Theorem&nbsp;2.1</a> .</p>
+<p>Let <span class="math inline">\(X,X_1,X_2,\ldots X_n\)</span> be random variables. Recall the linearity of expectation property:</p>
+<p><strong>Theorem 2.2</strong> For <span class="math inline">\(a,b\in\mathbb{R}\)</span>, it holds that <span class="math inline">\(\mathrm{E}({aX+b})=a\mathrm{E}({X})+b\)</span>.</p>
+<p><strong>Exercise 2.4</strong> Prove <a href="#thm-2">Theorem&nbsp;2.2</a> .</p>
+<p>As a corollary of <a href="#thm-2">Theorem&nbsp;2.2</a> , we have that</p>
+<ul>
+<li><span class="math inline">\({\textrm{E}}\left[\sum_{i=1}^n a_i X_i\right]=\sum_{i=1}^n a_i{\textrm{E}}\left[ X_i\right]\)</span></li>
+<li><span class="math inline">\({\textrm{Var}}\left[\sum_{i=1}^n a_i X_i\right]=\sum_{i=1}^n a_i^2{\textrm{Var}}\left[ X_i\right]+\sum_{i\neq j}a_ia_j{\textrm{cov}}\left[X_i,X_j\right]\)</span></li>
+<li><span class="math inline">\({\textrm{Var}}\left[aX_1+bX_2+c\right]=a^2{\textrm{Var}}\left[X_1\right]+b^2{\textrm{Var}}\left[X_2\right]+2ab\ {\textrm{cov}}\left[X_1,X_2\right]\)</span></li>
+</ul>
+<p><strong>Exercise 2.5</strong> What happens to <span class="math inline">\({\textrm{Var}}\left[aX_1+bX_2+c\right]\)</span> when <span class="math inline">\(\{X_i\}_{i=1}^n\)</span> are mutually independent?</p>
+<p><strong>Exercise 2.6</strong> Let <span class="math inline">\(X_1,X_2,\ldots X_n\)</span> be i.i.d. (independent and identically distributed) random variables with expectation (also known as mean) <span class="math inline">\(\mu\)</span> and variance <span class="math inline">\(\sigma^2\)</span>. What is the expectation and variance of <span class="math display">\[\bar X=\sum_{i=1}^n X_i/n?.\]</span></p>
+</section>
+<section id="useful-properties-of-normal-and-related-random-variables" class="level3" data-number="1.1.4">
+<h3 data-number="1.1.4" data-anchor-id="useful-properties-of-normal-and-related-random-variables"><span class="header-section-number">1.1.4</span> Useful properties of normal and related random variables</h3>
+<p>Let</p>
+<ul>
+<li><span class="math inline">\(\mathcal{N}(\mu,\sigma^2)\)</span> represent the normal distribution with mean <span class="math inline">\(\mu\)</span> and variance <span class="math inline">\(\sigma^2\)</span>.</li>
+<li><span class="math inline">\(\chi^2_k\)</span> be the Chi-squared distribution with <span class="math inline">\(k\)</span> degrees of freedom</li>
+<li><span class="math inline">\(t_n\)</span> be the student-<span class="math inline">\(t\)</span> distribution with <span class="math inline">\(n\)</span> degrees of freedom</li>
+<li><span class="math inline">\(F_{m,n}\)</span> be the <span class="math inline">\(F\)</span> distribution with <span class="math inline">\(m\)</span> numerator degrees of freedom and <span class="math inline">\(n\)</span> denominator degrees of freedom</li>
+</ul>
+<p>We have the following results:</p>
+<p><strong>Theorem 2.3</strong> Suppose that <span class="math inline">\(X\sim \mathcal{N}(\mu,\sigma^2)\)</span>, then</p>
+<ul>
+<li><span class="math inline">\(Z=\frac{X- \mu}{\sigma}\sim \mathcal{N}(0,1)\)</span></li>
+<li><span class="math inline">\(Z^2\sim \chi^2_1\)</span>.</li>
+</ul>
+<p>Let <span class="math inline">\([n]=\{1,\ldots,n\}\)</span>. We also have that</p>
+<p><strong>Theorem 2.4</strong></p>
+<ul>
+<li>If for <span class="math inline">\(i\in [n]\)</span> <span class="math inline">\(Y_i\sim \chi^2_{k_i}\)</span> and <span class="math inline">\(Y_i \perp Y_j\)</span> for <span class="math inline">\(i\neq j\)</span> then <span class="math inline">\(\sum_{i=1}^n Y_i \sim \chi^2_{k_1+\ldots +k_n}\)</span>.</li>
+<li>If <span class="math inline">\(Y\sim \chi^2_k\)</span> and <span class="math inline">\(Y\perp Z\)</span>, then <span class="math inline">\(Z/\sqrt{Y/k}\sim t_k\)</span>.</li>
+<li>If <span class="math inline">\(Y_1\sim \chi^2_{k_1}\)</span>, <span class="math inline">\(Y_2\sim \chi^2_{k_2}\)</span> and <span class="math inline">\(Y_1 \perp Y_2\)</span> then <span class="math inline">\(\frac{Y_1/k_1}{Y_2/k_2}\sim F_{k_1,k_2}\)</span>.</li>
+</ul>
+<p>Define <span class="math display">\[\hat\sigma^2=\frac{1}{n- 1}\sum_{i=1}^n (X_i- \bar X)^2.\]</span></p>
+<p><strong>Theorem 2.5</strong> Suppose that <span class="math inline">\(X_1,X_2,\ldots X_n\sim \mathcal{N}(\mu,\sigma^2)\)</span> and are independent, then <span class="math inline">\(\frac{\bar X- \mu}{\sigma/\sqrt{n}}\sim \mathcal{N}(0,1)\)</span>, <span class="math inline">\(\bar X\perp \hat\sigma^2\)</span>, <span class="math inline">\((n- 1)\hat\sigma^2/\sigma^2\sim \chi^2_{n- 1}\)</span> and <span class="math inline">\(\frac{\bar X- \mu}{\hat\sigma/\sqrt{n}}\sim t_{n- 1}\)</span>.</p>
+</section>
+<section id="central-limit-theorem" class="level3" data-number="1.1.5">
+<h3 data-number="1.1.5" data-anchor-id="central-limit-theorem"><span class="header-section-number">1.1.5</span> Central Limit Theorem</h3>
+<p>If <span class="math inline">\(X_1,X_2,\ldots X_n\)</span> are i.i.d. with mean <span class="math inline">\(\mu\)</span> and variance <span class="math inline">\(\sigma^2&lt;\infty\)</span>, then <span class="math inline">\(\frac{\bar X- \mu}{\sigma/\sqrt{n}}\stackrel{\text{d}}{\rightarrow}\mathcal{N}(0,1)\)</span> as <span class="math inline">\(n\rightarrow\infty\)</span>.</p>
+<p>We have that in general, for large <span class="math inline">\(n\)</span>, regardless of the distribution of the random variables, the sample mean is approximately normally distributed.</p>
+</section>
+<section id="homework-stop-1" class="level3" data-number="1.1.6">
+<h3 data-number="1.1.6" data-anchor-id="homework-stop-1"><span class="header-section-number">1.1.6</span> Homework stop 1</h3>
+<p>Review your material and complete the above exercises before continuing to the next section.</p>
+</section>
+</section>
+<section id="review-of-introductory-statistics" class="level2" data-number="1.2">
+<h2 data-number="1.2" data-anchor-id="review-of-introductory-statistics"><span class="header-section-number">1.2</span> Review of introductory statistics</h2>
+<p>The followings are some concepts that you have learned from prerequisites, and/or we have reviewed in the last two lectures.</p>
+<ul>
+<li>Sample vs.&nbsp;Population</li>
+<li>Observation vs.&nbsp;Random variable</li>
+<li>Statistic vs.&nbsp;Parameter</li>
+<li>Estimate vs.&nbsp;Estimator</li>
+<li>Estimator is a random variable and estimate is a number calculated from data</li>
+<li>Mean and variance of random variable</li>
+<li>Relationships between Normal, <span class="math inline">\(t\)</span> , <span class="math inline">\(\chi^2\)</span>, <span class="math inline">\(F\)</span> etc.</li>
+</ul>
+<section id="basic-premise-of-statistics" class="level3" data-number="1.2.1">
+<h3 data-number="1.2.1" data-anchor-id="basic-premise-of-statistics"><span class="header-section-number">1.2.1</span> Basic premise of statistics</h3>
+<p>The whole purpose of statistics is to learn something about a population using only a sample of units from that population. A <strong>sample</strong> is a smaller, typically randomly selected, subset of a population. A <strong>population</strong> is a collection of units which we would like to know something about. For example, we may collect a sample of hamburgers from McDonald’s if we want to learn something about the population of McDonald’s hamburgers.</p>
+<p>In general, at least for this course, we assume that we have access to a sample of units from a given population. Furthermore, we assume that that sample is a <strong>random sample</strong>. Specifically, we assume that these units in the sample are realizations of random variables. In addition, we also assume that these random variables are mutually independent. For example, we could assume that our sample <span class="math inline">\(X_1,\ldots,X_n\)</span> is Normally distributed with some fixed mean <span class="math inline">\(\mu\)</span> and fixed variance <span class="math inline">\(\sigma^2\)</span>. In this case, <span class="math inline">\(\mu\)</span> and <span class="math inline">\(\sigma^2\)</span> are unknown <strong>parameters</strong> of the population. A parameter of a population is some quantity that is a function of the distribution of our given sample. For instance, <span class="math inline">\({\textrm{E}}\left[X_i\right]=\mu\)</span>. Generally, we are concerned with unknown population parameters, which are parts of the distribution that are unknown, and can only ever be estimated. For example, we may know our data is normal, but not know the mean parameter. In that case, we need to use an <strong>estimate</strong> of the parameter. We use a function of the data, typically called the estimator, say <span class="math inline">\(T\)</span>, which produces the estimate, given by <span class="math inline">\(T\)</span> computed at the sample we observed: <span class="math inline">\(T(X_1,\ldots,X_n)\)</span>.</p>
+<p>For example, to estimate <span class="math inline">\(\mu\)</span>, we typically use the sample mean. Here, the estimate is given by <span class="math inline">\(\bar X=\sum_{i=1}^nX_i/n\)</span>. To be specific, the estimate is the value of <span class="math inline">\(\bar X\)</span> and the estimator <span class="math inline">\(T\)</span> is the function that maps <span class="math inline">\(n\)</span> real numbers to their mean. In general, estimates are used to give our `best guess’ at population parameters.</p>
+</section>
+<section id="confidence-intervals" class="level3" data-number="1.2.2">
+<h3 data-number="1.2.2" data-anchor-id="confidence-intervals"><span class="header-section-number">1.2.2</span> Confidence intervals</h3>
+<p>Recall from the previous section that our estimate of a parameter is only that, an estimate. In other words, it is not exactly equal to the population parameter. For instance, if we drew a different sample our estimate would change. A confidence interval is used to acknowledge this phenomenon in the reporting of our statistics. Its used to give a range of estimates that we might have obtained from any “regular” sample we might observe. It is ultimately used to quantify the error (sometimes called uncertainty) in our estimate.</p>
+<p>Confidence intervals consist of a level, usually denoted by <span class="math inline">\((1-\alpha)100\%\)</span> and two end points. For example, you have learned confidence intervals for the population mean. When we say <span class="math inline">\((-1,1)\)</span> is <span class="math inline">\(95\%\)</span> confidence interval for the population mean, what does this mean? Colloquially, it means that we expect the sample mean to be somewhere within <span class="math inline">\((-1,1)\)</span> with high confidence. Note that confidence intervals are computed from the data, which means also that for each new sample, we would get a different confidence interval. However, the population parameter never changes. Therefore, the interval is what is varying from sample to sample. This impacts the interpretation of a confidence interval.</p>
+<p>Continuing our example, we have that the interval <span class="math inline">\((-1,1)\)</span> can be interpreted as: “if we drew many more samples, 95% of the <strong>intervals</strong> will contain the population parameter.” We <strong>do not</strong> say that the parameter has a 95% chance of falling in (-1,1), since the parameter is not random, the interval end points are.</p>
+<p>For example, we have the formula for a confidence interval for the population mean is given by: <span class="math inline">\(\bar X\pm 1.96\hat\sigma\)</span>. Notice that it is based only on the data. Therefore, it will change if we drew a new sample.</p>
+<p>To summarize this section, a confidence interval is used to quantify the uncertainty in our reported estimates. By uncertainty, we specifically mean the uncertainty resulting from the fact that we have only a sample of the population, and our estimate varies depending on the sample.</p>
+</section>
+<section id="hypothesis-tests" class="level3" data-number="1.2.3">
+<h3 data-number="1.2.3" data-anchor-id="hypothesis-tests"><span class="header-section-number">1.2.3</span> Hypothesis tests</h3>
+<p>Hypothesis tests are used to determine whether an effect is spurious or a real property of the population. A spurious effect is one that is specific to the sample we observed, and is not a real property of the population. For example, if the heights of males and female students are measured, and we observe that the sample mean of both male and females are equal, then this would be a spurious effect. We know that the population heights of males and females are substantially different. If we drew a new sample, we would likely observe something that mirrors the population reality (provided it is large enough).</p>
+<p>Formally, a hypothesis test compares two competing beliefs about a population parameter, called the null and alternative hypothesis. For instance, we may wish to test whether the population heights of men is greater than women, vs.&nbsp;the heights being less than or equal to that of men.</p>
+<p>We write this as follows: <span class="math inline">\(H_0\colon \mu_{men}\leq \mu_{women}\)</span> vs.&nbsp;<span class="math inline">\(H_a\colon \mu_{men}&gt; \mu_{women}\)</span>.</p>
+<p>The null hypothesis is usually chosen to be one such that if we make a mistake, the error is most serious. However, it is usually clear from the context.</p>
+<p>In general, we compute a test statistic and its distribution <strong>under the null hypothesis.</strong> Then we compute how likely it was to see the observed test statistic we saw, if the null hypothesis was true. This likelihood is given by the <strong>p-value</strong>. If it was sufficiently unlikely (in other words, the p-value is less than the threshold <span class="math inline">\(\alpha\)</span>), then we reject the null hypothesis. Otherwise, we fail to reject the null hypothesis. If we fail to reject the null hypothesis then either the null hypothesis is true, it is not true, but there was not enough data collected to show the effect.</p>
+<p>There are two types of errors we can make in a hypothesis test: Type 1 and Type 2 error. Type one error occurs when we reject the null hypothesis when it is true. Type two error occurs when we fail to reject the null hypothesis when the alternative is true.</p>
+<p>Let’s do an example.</p>
+<p><strong>Exercise 2.7</strong> In a study about online dating, you are interested in determining the average age of individuals who use online dating platforms. You want to know whether the average age of online daters is significantly different from 30. You have a dataset of 40 ages of people using online dating platforms.</p>
+<p>How would you answer this question?</p>
+<p><span class="math display">\[H_0\colon \mu=30\qquad vs. \qquad H_1\colon \mu\neq 30.\]</span></p>
+<p>First, we can explore the data:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">getwd</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<pre><code>[1] "C:/Users/12RAM/OneDrive - York University/Teaching/Courses/Math 3330 Regression/Math 3330 Notes"</code></pre>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>ages<span class="ot">=</span><span class="fu">read.csv</span>(<span class="st">'C:</span><span class="sc">\\</span><span class="st">Users</span><span class="sc">\\</span><span class="st">12RAM</span><span class="sc">\\</span><span class="st">OneDrive - York University</span><span class="sc">\\</span><span class="st">Teaching</span><span class="sc">\\</span><span class="st">Courses</span><span class="sc">\\</span><span class="st">Math 3330 Regression</span><span class="sc">\\</span><span class="st">Lecture Codes</span><span class="sc">\\</span><span class="st">Data</span><span class="sc">\\</span><span class="st">dating_ages.csv'</span>)[,<span class="dv">2</span>]</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(ages,<span class="at">freq=</span>F)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><img src="Unit_1_files/figure-html/unnamed-chunk-1-1.png" class="img-fluid"></p>
+<p>Now, assume that <span class="math inline">\(X_1,\ldots, X_{40}\sim \mathcal{N}(\mu,\sigma^2)\)</span>, and independent. (We can justify normality with the histogram, or we could also invoke the CLT to get normality of the sample mean (not the data itself).) Therefore, we can do a one sample <span class="math inline">\(t\)</span>-test. Recall that, under the null hypothesis, we have <span class="math inline">\(\frac{\bar X-30}{\hat\sigma/\sqrt{n}}\sim t_{n-1}\)</span>. This means that if <span class="math inline">\(\left|\frac{\bar X-30}{\hat\sigma/\sqrt{n}}\right|\geq t_{n-1,1-\alpha/2}\)</span>, then we reject the null hypothesis! Here, <span class="math inline">\(t_{n-1,1-p}\)</span> is the <span class="math inline">\((1-p)\)</span>th quantile of the <span class="math inline">\(t_{n-1}\)</span> distribution. For large <span class="math inline">\(n\)</span> and <span class="math inline">\(p=0.025\)</span>, this is roughly equal to 2.</p>
+<p>Now, recall that <span class="math display">\[ H_0\colon \mu=30\qquad vs. \qquad H_1\colon \mu\neq 30 .\]</span></p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate the mean of the 'ages' data and assign it to xbar</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>xbar <span class="ot">=</span> <span class="fu">mean</span>(ages)</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>xbar  <span class="co"># Print the mean</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<pre><code>[1] 28.16378</code></pre>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate the variance of the 'ages' data and assign it to ssq</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>ssq <span class="ot">=</span> <span class="fu">var</span>(ages)</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>ssq  <span class="co"># Print the variance</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<pre><code>[1] 1.277377</code></pre>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate the length (number of observations) of the 'ages' data and assign it to n</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>n <span class="ot">=</span> <span class="fu">length</span>(ages)</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>n  <span class="co"># Print the number of observations</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<pre><code>[1] 40</code></pre>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Set the significance level </span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>alpha <span class="ot">=</span> <span class="fl">0.05</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="co"># print test statistic</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>ts<span class="ot">=</span>(xbar <span class="sc">-</span><span class="dv">30</span>)<span class="sc">/</span>(<span class="fu">sqrt</span>(ssq<span class="sc">/</span>n))</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(ts)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<pre><code>[1] -10.27532</code></pre>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># compute p-value</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>pval<span class="ot">=</span><span class="fu">pt</span>(ts,n<span class="dv">-1</span>)<span class="sc">*</span><span class="dv">2</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>pval</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<pre><code>[1] 1.179149e-12</code></pre>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Perform a two-sided t-test to check if the mean of 'ages' is significantly different from 30</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="co"># t.test() is the function for performing t-tests in R</span></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>test <span class="ot">=</span> <span class="fu">t.test</span>(ages, <span class="at">mu =</span> <span class="dv">30</span>, <span class="at">alternative =</span> <span class="st">'two.sided'</span>)</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>test  <span class="co"># Print the test result</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<pre><code>
+    One Sample t-test
+
+data:  ages
+t = -10.275, df = 39, p-value = 1.179e-12
+alternative hypothesis: true mean is not equal to 30
+95 percent confidence interval:
+ 27.80232 28.52524
+sample estimates:
+mean of x 
+ 28.16378 </code></pre>
+<p>We have that <span class="math inline">\(\left|\frac{\bar X-30}{\hat\sigma/\sqrt{n}}\right|=10.28\)</span>. Using R, we get that the p-value is <span class="math inline">\(1.179\times 10^{-12}\)</span>.</p>
+<p>Here the p-value measures how much evidence there is against the null hypothesis. If the p-value is very small, then this constitutes strong evidence against the null hypothesis. If the p-value is small, but closer to 0.05, then there is evidence against the null. If it is larger, but still small, say 0.1, then this is weak evidence against the null hypothesis. It is not helpful to throw it away if it is above 0.05, therefore we should not just take <span class="math inline">\(\alpha=0.05\)</span>. Choosing <span class="math inline">\(\alpha\)</span> depends on how serious a type 1 error is. If it is not that serious, we can take <span class="math inline">\(\alpha\)</span> larger. If it is very serious, we can take <span class="math inline">\(\alpha\)</span> smaller.</p>
+<p>In this example, there is very strong evidence against the null hypothesis.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Note also that we can use the confidence interval method with <span class="math display">\[ \bar X\pm t_{n-1,1-\alpha/2}\sqrt{\hat\sigma^2/n}.\]</span></p>
+</div>
+</div>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Alternative method to calculate the confidence interval</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="co"># ci will store the confidence interval values</span></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>ci <span class="ot">=</span> xbar <span class="sc">+</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="dv">1</span>) <span class="sc">*</span> <span class="fu">qt</span>(<span class="dv">1</span> <span class="sc">-</span> alpha <span class="sc">/</span> <span class="dv">2</span>, n <span class="sc">-</span> <span class="dv">1</span>) <span class="sc">*</span> <span class="fu">sqrt</span>(ssq <span class="sc">/</span> n)</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>ci  <span class="co"># Print the confidence interval</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<pre><code>[1] 27.80232 28.52524</code></pre>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Moving beyond the one-sample testing problem, we might be interested in other population parameters, say <span class="math inline">\(\theta\in \Theta\)</span>. Think Lecture 1: <span class="math inline">\({\textrm{E}}\left[Y|X\right]=\beta_0+X\beta_1\)</span>, we might want to estimate <span class="math inline">\({\textrm{E}}\left[Y|X\right]\)</span>, which amounts to <span class="math inline">\(\beta_0,\beta_1\in \mathbb{R}\)</span>! In general, we may estimate <span class="math inline">\(\theta\)</span> by <span class="math inline">\(\hat\theta\)</span>. Then we may compute the variance and distribution of <span class="math inline">\(\hat\theta\)</span>. From there, we can make confidence intervals and conduct hypothesis tests etc.</p>
+</div>
+</div>
+<p>Let’s do another example:</p>
+<p><strong>Exercise 2.8</strong> In a study about online dating, you are interested in determining if the average age of those who identify as men who use online dating platforms differs from those who identify as women. You have a dataset of 20 ages of each group using online dating platforms.</p>
+<p>What is the population parameter of interest here? It is <span class="math inline">\(\Delta=\mu_{1}-\mu_2\)</span>, the difference in means between the two populations. Now, suppose that <span class="math inline">\(X_1,\ldots, X_{20}\sim \mathcal{N}(\mu_1,\sigma^2)\)</span> and <span class="math inline">\(Y_1,\ldots, Y_{20}\sim \mathcal{N}(\mu_2,\sigma^2)\)</span>, and are mutually independent. (We could also invoke the CLT instead of assuming normality.) We can estimate those parameters with <strong>estimates.</strong> For instance, <span class="math inline">\(\bar X,\ \bar Y\)</span>, <span class="math display">\[\hat\sigma^2=\frac{(n_1-1)\hat\sigma_1^2+(n_2-1)\hat\sigma_2^2}{n_1+n_2-2}.\]</span></p>
+<p><strong>Exercise 2.9</strong> Suppose that <span class="math inline">\(X_1,\ldots, X_{20}\sim \mathcal{N}(\mu_1,\sigma^2)\)</span> and <span class="math inline">\(Y_1,\ldots, Y_{20}\sim \mathcal{N}(\mu_2,\sigma^2)\)</span>, and are mutually independent. Compute <span class="math inline">\({\textrm{Var}}\left[\bar X-\bar Y\right]\)</span>.</p>
+<p><em>Solution 2.3</em>. Using independence of <span class="math inline">\(\bar X\)</span> and <span class="math inline">\(\bar Y\)</span> and the result of the <a href="#exr-6">Exercise&nbsp;2.6</a> , we have that <span class="math display">\[{\textrm{Var}}\left[\bar X-\bar Y\right]={\textrm{Var}}\left[\bar X\right]+{\textrm{Var}}\left[\bar Y\right]=\sigma_1^2/n_1+\sigma_1^2/n_2.\]</span></p>
+<p>First, we write down the null and alternative hypothesis: <span class="math display">\[H_0\colon \Delta=0\qquad vs.. \qquad H_1\colon \Delta\neq 0.\]</span> Here, we can do a two sample <span class="math inline">\(t\)</span>-test.</p>
+<p>Recall that the pooled variance is given by: <span class="math display">\[\hat\sigma_p^2=\frac{(n_1-1)\hat\sigma_1^2+(n_2-1)\hat\sigma_2}{(n_1+n_2-2)}\]</span> We previously said that a multiple of a one sample standard deviation follows a Chi-squared distribution. It follows that <span class="math inline">\((n_1-1)\hat\sigma_1^2/\sigma^2\sim \chi^2_{n_1-1}\)</span> and <span class="math inline">\((n_2-1)\hat\sigma_2^2/\sigma^2\sim \chi^2_{n_2-1}\)</span>. Using the theory from <a href="#Useful-properties-of%20normal-and-related-random-variables">here</a>, specifically, <span class="math inline">\((n_1-1)\hat\sigma_1^2/\sigma^2+(n_2-1)\hat\sigma_2^2/\sigma^2\)</span> is a sum of independent Chi-squared random variables, and so we have <span class="math inline">\((n_1-1)\hat\sigma_1^2/\sigma^2+(n_2-1)\hat\sigma_2^2/\sigma^2\sim \chi^2_{n_1+n_2-2}\)</span>.</p>
+<p>Again, using the theory from <a href="#Useful-properties-of%20normal-and-related-random-variables">here</a>, under the null hypothesis, we have that <span class="math display">\[\frac{\bar X-\bar Y}{\hat\sigma_p\sqrt{1/n_1+1/n_2}}=\frac{(\bar X-\bar Y)/\sigma\sqrt{1/n_1+1/n_2}}{\hat\sigma_p/\sigma}\sim t_{n_1+n_2-2}.\]</span></p>
+<p>This follows from 3 facts, first, letting <span class="math inline">\(Z=(\bar X-\bar Y)/\sqrt{{\textrm{Var}}\left[\bar X-\bar Y\right]}\)</span>, note that <span class="math inline">\(Z\sim \mathcal{N}(0,1)\)</span>. We have that <span class="math display">\[Z=(\bar X-\bar Y)/\sqrt{{\textrm{Var}}\left[\bar X-\bar Y\right]}=(\bar X-\bar Y)/\sigma\sqrt{1/n_1+1/n_2}.\]</span></p>
+<p>Next, we said earlier that <span class="math inline">\(\bar X\)</span> is independent of <span class="math inline">\(\hat\sigma_1\)</span> and <span class="math inline">\(\bar Y\)</span> is independent of <span class="math inline">\(\hat\sigma_2\)</span>. Now, recall that if two random variables are independent, then any function of them is also independent. In other words, if <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> are independent, then for real functions <span class="math inline">\(f\)</span> and <span class="math inline">\(g\)</span>, we have that <span class="math inline">\(g(X)\)</span> is independent of <span class="math inline">\(f(Y)\)</span>. It follows that <span class="math inline">\(\bar X\)</span> is independent of <span class="math inline">\(\hat\sigma_2\)</span> and <span class="math inline">\(\bar Y\)</span> is independent of <span class="math inline">\(\hat\sigma_1\)</span>. It follows that <span class="math inline">\(\bar X-\bar Y\)</span> is independent of <span class="math inline">\(\hat\sigma_p\)</span>. Then, <span class="math display">\[\frac{(\bar X-\bar Y)/\sigma\sqrt{1/n_1+1/n_2}}{\hat\sigma_p/\sigma}\]</span> is a ratio of a standard normal random variable and the square root of a Chi-squared random variable, divided by its degrees of freedom. Further, the numerator and denominator are independent. Therefore, the above quantity follows a <span class="math inline">\(t\)</span> distribution with <span class="math inline">\(n_1+n_2-2\)</span> degrees of freedom.</p>
+<p>This means that if <span class="math inline">\(\left|\frac{\bar X-\bar Y}{\hat\sigma_p\sqrt{1/n_1+1/n_2}}\right|\geq t_{n_1+n_2-2,1-\alpha/2}\)</span>, then we reject the null hypothesis.</p>
+<p>Let’s execute the test in R:</p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Normally, I will give you a dataset. Here I generate the data</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">440</span>) </span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>female_ages<span class="ot">=</span><span class="fu">rnorm</span>(<span class="dv">20</span>,<span class="dv">28</span>,<span class="dv">4</span>)</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>male_ages<span class="ot">=</span><span class="fu">rnorm</span>(<span class="dv">20</span>,<span class="dv">32</span>,<span class="dv">4</span>)</span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Check for equal variance</span></span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a><span class="fu">var</span>(female_ages)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<pre><code>[1] 15.72805</code></pre>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">var</span>(male_ages)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<pre><code>[1] 26.22371</code></pre>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="do">## Putting the data in a dataframe</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="fu">cbind</span>(<span class="st">"Age"</span><span class="ot">=</span><span class="fu">c</span>(female_ages,male_ages),<span class="st">"Gender"</span><span class="ot">=</span><span class="fu">rep</span>(<span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">1</span>),<span class="at">each=</span><span class="dv">20</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<pre><code>           Age Gender
+ [1,] 37.19809      0
+ [2,] 20.69693      0
+ [3,] 27.80284      0
+ [4,] 27.69463      0
+ [5,] 29.53143      0
+ [6,] 29.46190      0
+ [7,] 30.41164      0
+ [8,] 33.27790      0
+ [9,] 22.65974      0
+[10,] 30.73540      0
+[11,] 34.08564      0
+[12,] 27.58077      0
+[13,] 23.26108      0
+[14,] 30.94523      0
+[15,] 31.52404      0
+[16,] 29.13246      0
+[17,] 26.95470      0
+[18,] 24.80749      0
+[19,] 28.60051      0
+[20,] 26.76294      0
+[21,] 25.94775      1
+[22,] 40.16080      1
+[23,] 25.58905      1
+[24,] 32.16780      1
+[25,] 29.87934      1
+[26,] 35.46593      1
+[27,] 35.71651      1
+[28,] 37.76510      1
+[29,] 27.23068      1
+[30,] 33.41994      1
+[31,] 40.43822      1
+[32,] 31.04841      1
+[33,] 32.66165      1
+[34,] 38.28678      1
+[35,] 34.72411      1
+[36,] 39.57994      1
+[37,] 26.85585      1
+[38,] 31.87533      1
+[39,] 23.71793      1
+[40,] 30.54803      1</code></pre>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>df<span class="ot">=</span><span class="fu">data.frame</span>(<span class="fu">cbind</span>(<span class="st">"Age"</span><span class="ot">=</span><span class="fu">c</span>(female_ages,male_ages),<span class="st">"Gender"</span><span class="ot">=</span><span class="fu">rep</span>(<span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">1</span>),<span class="at">each=</span><span class="dv">20</span>)))</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a><span class="co">#exploring the data</span></span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a><span class="co">#hist(x) creates a histogram of the vector x</span></span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(df<span class="sc">$</span>Age[df<span class="sc">$</span>Gender<span class="sc">==</span><span class="dv">0</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><img src="Unit_1_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid"></p>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(df<span class="sc">$</span>Age[df<span class="sc">$</span>Gender<span class="sc">==</span><span class="dv">1</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><img src="Unit_1_files/figure-html/unnamed-chunk-4-2.png" class="img-fluid"></p>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="co">#boxplot creates boxplots of Age against gender</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(Age<span class="sc">~</span>Gender, df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><img src="Unit_1_files/figure-html/unnamed-chunk-4-3.png" class="img-fluid"></p>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>test<span class="ot">=</span><span class="fu">t.test</span>(Age<span class="sc">~</span>Gender,<span class="at">data=</span>df,<span class="at">var.equal=</span><span class="cn">TRUE</span>)</span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>test</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<pre><code>
+    Two Sample t-test
+
+data:  Age by Gender
+t = -2.7603, df = 38, p-value = 0.008841
+alternative hypothesis: true difference in means between group 0 and group 1 is not equal to 0
+95 percent confidence interval:
+ -6.929630 -1.065749
+sample estimates:
+mean in group 0 mean in group 1 
+       28.65627        32.65396 </code></pre>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Interpret the P value, and CI, what are we going to say to a stakeholder?</span></span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a><span class="co">#e.g.</span></span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>test<span class="sc">$</span>estimate</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<pre><code>mean in group 0 mean in group 1 
+       28.65627        32.65396 </code></pre>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Note also that we can use the confidence interval method, meaning that if if 0 is in the interval: <span class="math display">\[ \hat\Delta\pm t_{n_1+n_2-2,1-\alpha/2}\hat\sigma_p\sqrt{1/n_1+1/n_2},\]</span> then we fail to reject the null hypothesis.</p>
+</div>
+</div>
+</section>
+<section id="homework-stop-2" class="level3" data-number="1.2.4">
+<h3 data-number="1.2.4" data-anchor-id="homework-stop-2"><span class="header-section-number">1.2.4</span> Homework stop 2</h3>
+<p><strong>Exercise 2.10</strong> IBM Human Resources (HR) department is evaluating job applicants from York University.</p>
+<p>They are interested to know if the 2020 ITEC graduating class has an average GPA higher than 6 (i.e.&nbsp;average GPA higher than ``B’’). They collected the GPA of 25 ITEC students graduated in 2020.</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>4.92</th>
+<th>4.79</th>
+<th>6.76</th>
+<th>5.64</th>
+<th>6.12</th>
+<th>7.37</th>
+<th>6.45</th>
+<th>6.31</th>
+<th>6.68</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>6.30</td>
+<td>4.91</td>
+<td>6.95</td>
+<td>5.87</td>
+<td>6.18</td>
+<td>6.60</td>
+<td>6.71</td>
+<td>6.69</td>
+<td>5.62</td>
+</tr>
+<tr class="even">
+<td>6.40</td>
+<td>5.51</td>
+<td>6.44</td>
+<td>6.13</td>
+<td>8.55</td>
+<td>7.94</td>
+<td>4.78</td>
+<td>-</td>
+<td>-</td>
+</tr>
+</tbody>
+</table>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Use chatGPT to convert the above table to an R vector, so you don’t have to waste time!</p>
+</div>
+</div>
+<ul>
+<li>For the one sample testing problem, i.e., you have a sample of <span class="math inline">\(n\)</span> normal random variables, with unknown mean and variance and you want to test whether <span class="math inline">\(H_0\colon \mu=0\)</span> vs.&nbsp;<span class="math inline">\(H_0\colon \mu\neq 0\)</span>, show that <span class="math inline">\(\frac{\bar X}{\hat\sigma/\sqrt{n}}\sim t_{n-1}\)</span> under the null hypothesis, assuming the observations are normally distributed.</li>
+<li>What is the distribution of each of the following: <span class="math inline">\(\bar X,\hat\sigma^2\)</span> (sample mean and sample variance) under the assumption of normal data with unknown mean and variance?</li>
+</ul>
+<p>Compare and contrast the following concepts. That is, define them and explain the difference between them.</p>
+<ul>
+<li>Sample vs.&nbsp;Population</li>
+<li>Observation vs.&nbsp;Random variable</li>
+<li>Statistic vs.&nbsp;Parameter</li>
+<li>Estimate vs.&nbsp;Estimator</li>
+</ul>
+</section>
+</section>
+<section id="review-of-matrices-and-linear-algebra" class="level2" data-number="1.3">
+<h2 data-number="1.3" data-anchor-id="review-of-matrices-and-linear-algebra"><span class="header-section-number">1.3</span> Review of matrices and linear algebra</h2>
+<p>Recall that</p>
+<p><strong>Definition 2.6</strong> An <span class="math inline">\((n \times m)\)</span> matrix <span class="math inline">\(A\)</span> takes the form <span class="math display">\[\begin{eqnarray*}
+A &amp; = &amp; \left( \begin{array}{cccc}
+a_{11} &amp; a_{12} &amp; \cdots &amp; a_{1m} \\
+a_{21} &amp; a_{22} &amp; \cdots &amp; a_{2m} \\
+\vdots &amp; \vdots &amp; \vdots &amp; \vdots \\
+a_{n1} &amp; a_{n2} &amp; \cdots &amp; a_{nm} \\
+\end{array} \right) \\
+&amp;=&amp; (( \ a_{ij} \ )) \hspace{0.5in} i=1, \ldots, n, \ \ j=1, \ldots, m
+\end{eqnarray*}\]</span> and <span class="math inline">\(a_{ij}\)</span> is the element in the <span class="math inline">\(i^{th}\)</span> row and <span class="math inline">\(j^{th}\)</span> column of the matrix <span class="math inline">\(A\)</span></p>
+<p>We also define the following:</p>
+<ul>
+<li><p>An <span class="math inline">\((n \times 1)\)</span> matrix is also known as a <span class="math inline">\(n\)</span> dimensional column vector. Note: in this course, a vector means a column vector.</p></li>
+<li><p>A <span class="math inline">\((1 \times m)\)</span> matrix is also known as a <span class="math inline">\(m\)</span> dimensional row vector</p></li>
+<li><p>The <span class="math inline">\(n\)</span> dimensional one vector, <span class="math inline">\(1_n\)</span>, (sometimes the subscript <span class="math inline">\(n\)</span> is suppressed when the dimension is obvious), is an <span class="math inline">\(n\)</span> dimensional column vector with all entries being <span class="math inline">\(1\)</span>.</p></li>
+<li><p>The <span class="math inline">\((n \times n)\)</span> identity matrix, <span class="math inline">\(I_n\)</span>, is the <span class="math inline">\((n \times n)\)</span> matrix with diagonal entries set equal to 1 and the off diagonal entries set equal to 0</p></li>
+</ul>
+<p>Throughout this section, we will use the following matrices to demonstrate the numerical calculations: <span class="math display">\[
+U = \left( \begin{array}{ccc} 1 &amp; 2 &amp; 3 \\ -1 &amp; 4 &amp; -2 \end{array} \right), \
+V = \left( \begin{array}{cc} 2 &amp; 4 \\ 1 &amp; -2 \\ -1 &amp; 0 \end{array} \right), \ k = 4
+\]</span></p>
+<section id="matrix-properties" class="level3" data-number="1.3.1">
+<h3 data-number="1.3.1" data-anchor-id="matrix-properties"><span class="header-section-number">1.3.1</span> Matrix properties</h3>
+<p>First, we define the transpose of a matrix:</p>
+<p><strong>Definition 2.7</strong> Let <span class="math inline">\(A = (( \ a_{ij} \ ))\)</span> for <span class="math inline">\(i=1, \ldots, n\)</span> and <span class="math inline">\(j=1, \ldots, m\)</span>, is an <span class="math inline">\((n \times m)\)</span> matrix. Then <span class="math inline">\(A^\top = A\)</span> transpose <span class="math inline">\(=  (( \ a_{ji} \ ))\)</span> for <span class="math inline">\(j=1, \ldots, m\)</span> and <span class="math inline">\(i=1, \ldots, n\)</span>, and <span class="math inline">\(A^\top\)</span> is an <span class="math inline">\((m \times n)\)</span> matrix.</p>
+<p>When we transpose a matrix <span class="math inline">\(A\)</span>, the rows of <span class="math inline">\(A\)</span> becomes the columns of <span class="math inline">\(A^\top\)</span> and the columns of <span class="math inline">\(A\)</span> becomes the rows of <span class="math inline">\(A^\top\)</span>.</p>
+<p><strong>Example 2.1</strong> Using our example matrices, we have that <span class="math display">\[
+U^\top = \left( \begin{array}{cc} 1 &amp; -1 \\ 2 &amp; 4 \\ 3 &amp; -2 \end{array} \right), \
+V^\top = \left( \begin{array}{ccc} 2 &amp; 1 &amp; -1 \\ 4 &amp; -2 &amp; 0 \end{array} \right)
+\]</span></p>
+<p><strong>Definition 2.8</strong> Let <span class="math inline">\(A = (( \ a_{ij} \ ))\)</span> and <span class="math inline">\(B = (( \ b_{ij} \ ))\)</span> be two <span class="math inline">\((n \times m)\)</span> matrices. Then <span class="math display">\[
+A \pm B = (( \ a_{ij} \pm \ b_{ij} \ )).
+\]</span></p>
+<p>Addition and subtraction of matrices required the matrices to have the same dimension.</p>
+<p><strong>Example 2.2</strong> Using our example matrices, we have that: <span class="math inline">\(U + V\)</span> is undefined because they are not of the same dimension, and <span class="math display">\[
+U + V^\top = \left( \begin{array}{ccc} 1+2 &amp; 2+1 &amp; 3+(-1) \\ (-1)+4 &amp; 4 + (-2) &amp; (-2)+0
+\end{array} \right) =
+\left( \begin{array}{ccc} 3 &amp; 3 &amp; 3 \\ 3 &amp; 2 &amp; -2 \end{array} \right)\]</span></p>
+<p><strong>Definition 2.9</strong> Let <span class="math inline">\(A = (( \ a_{ij} \ ))\)</span> for <span class="math inline">\(i=1, \ldots, n\)</span> and <span class="math inline">\(j=1, \ldots, m\)</span>, is an <span class="math inline">\((n \times m)\)</span> matrix and <span class="math inline">\(k\)</span> is a constant. Then <span class="math display">\[
+kA = (( \ k a_{ij} \ )) = Ak,
+\]</span> i.e.&nbsp;each element of the matrix <span class="math inline">\(A\)</span> is multiplied by <span class="math inline">\(k\)</span>.</p>
+<p><strong>Example 2.3</strong> Using our example matrices, we have that: <span class="math display">\[
+kU^\top = 4 \left( \begin{array}{cc} 1 &amp; -1 \\ 2 &amp; 4 \\ 3 &amp; -2 \end{array} \right)
+= \left( \begin{array}{cc} 4(1) &amp;4(-1) \\ 4(2) &amp; 4(4) \\ 4(3) &amp; 4(-2) \end{array} \right)
+= \left( \begin{array}{cc} 4 &amp; -4 \\ 8 &amp; 8 \\ 12 &amp; -2 \end{array} \right)
+\]</span></p>
+<p><strong>Definition 2.10</strong> Let <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span> be two matrices. Then <span class="math inline">\(A\)</span> multiplied by <span class="math inline">\(B\)</span>, <span class="math inline">\(AB\)</span>, is defined only if (number of columns of <span class="math inline">\(A\)</span>) <span class="math inline">\(=\)</span> (number of rows of <span class="math inline">\(B\)</span>).</p>
+<p>The product is a <span class="math inline">\(\left( \right.\)</span> (number of rows of <span class="math inline">\(A\)</span>) <span class="math inline">\(\times\)</span> (number of columns of <span class="math inline">\(B\)</span>) <span class="math inline">\(\left. \right)\)</span> matrix.</p>
+<p>More precisely, let <span class="math inline">\(A = (( \ a_{ij} \ ))\)</span> be an <span class="math inline">\((n \times m)\)</span> matrix and <span class="math inline">\(B = (( \ b_{ij} \ ))\)</span> be an <span class="math inline">\((m \times p)\)</span> matrix. Then <span class="math inline">\(C = AB = (( \ c_{ij} \ ))\)</span> is an <span class="math inline">\((n \times p)\)</span> matrix with <span class="math display">\[
+c_{ij} = a_{i1}b_{1j} + a_{i2}b_{2j} + \cdots + a_{im}b_{mj}
+\]</span></p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>In matrix algebra, <span class="math inline">\(AB\)</span> is not necessarily equal to <span class="math inline">\(BA\)</span>.</p>
+</div>
+</div>
+<p><strong>Example 2.4</strong> Using our example matrices, we have that: <span class="math display">\[\begin{eqnarray*}
+U V &amp; = &amp; \left( \begin{array}{ccc} 1 &amp; 2 &amp; 3 \\ -1 &amp; 4 &amp; -2 \end{array} \right)
+\left( \begin{array}{cc} 2 &amp; 4 \\ 1 &amp; -2 \\ -1 &amp; 0 \end{array} \right) \\
+&amp; = &amp; \left( \begin{array}{cc}
+1(2) + 2(1) + 3(-1) &amp; 1(4) + 2(-2) + 3(0) \\
+(-1)(2) + 4(1) + (-2)(-1) &amp; (-1)(4) + 4(-2) + (-2)(0)
+\end{array} \right) \\
+&amp; = &amp; \left( \begin{array}{cc} 1 &amp; 0 \\ 4 &amp; -12 \end{array} \right)
+\end{eqnarray*}\]</span></p>
+<p>Assume all the matrix multiplication works. Let <span class="math inline">\(I_n\)</span> be an <span class="math inline">\((n \times n)\)</span> identity matrix. Then <span class="math display">\[
+AI_n = A, \ \ \ and \ \ \ I_nB = B.
+\]</span></p>
+<p><strong>Definition 2.11</strong> Let <span class="math inline">\(A\)</span> be an <span class="math inline">\((n \times n)\)</span> matrix. The inverse of <span class="math inline">\(A\)</span>, <span class="math inline">\(A^{-1}\)</span>, if exists satisfies <span class="math display">\[
+A A^{-1} = A^{-1} A = I_n
+\]</span> and if <span class="math inline">\(A^{-1}\)</span> does not exist, then <span class="math inline">\(A\)</span> is a singular matrix.</p>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Important
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>From your linear algebra course, a prerequisite, you have learned the condition(s) for the existence of an inverse, <a href="https://mathworld.wolfram.com/InvertibleMatrixTheorem.html">The Invertible Matrix Theorem</a> and you have learned how to obtain an inverse. You should review them.</p>
+</div>
+</div>
+<p>Specifically, you should know how to obtain inverse of any diagonal matrix and any <span class="math inline">\((2 \times 2)\)</span> non-singular matrix, i.e., <span class="math display">\[
+\left( \begin{array}{cc} a &amp; b \\ c &amp; d \end{array} \right)^{-1} =
+\frac{1}{ad - bc} \left( \begin{array}{cc} d &amp; -b \\ -c &amp; a \end{array} \right).
+\]</span></p>
+<p><strong>Example 2.5</strong> Using our example matrices, let <span class="math display">\[
+W = UV = \left( \begin{array}{cc} 1 &amp; 0 \\ 4 &amp; -12 \end{array} \right)
+\]</span> Then <span class="math display">\[
+W^{-1} = \frac{1}{1(-12) - 0(4)}
+\left( \begin{array}{cc} -12 &amp; 0 \\ -4 &amp; 1 \end{array} \right) =
+\left( \begin{array}{cc} 1 &amp; 0 \\ 1/3 &amp; -1/12 \end{array} \right)
+.\]</span></p>
+<p>You can verify that <span class="math inline">\(W W^{-1} = W^{-1} W = I_2\)</span>.</p>
+</section>
+<section id="important-identities" class="level3" data-number="1.3.2">
+<h3 data-number="1.3.2" data-anchor-id="important-identities"><span class="header-section-number">1.3.2</span> Important identities</h3>
+<p>Lastly, we introduce some important identities:</p>
+<p><span class="math display">\[
+X = \left( \begin{array}{cc} 1 &amp; x_1 \\ \vdots &amp; \vdots \\ 1 &amp; x_n \end{array} \right), \ \ \
+and \ \ \
+y = \left( \begin{array}{c} y_1 \\ \vdots \\ y_n \end{array} \right)
+\]</span> Then <span class="math display">\[
+X^\top X = \left( \begin{array}{cc} n &amp; \sum_{i=1}^n x_i \\
+\sum_{i=1}^n x_i &amp; \sum_{i=1}^n x_i^2 \end{array} \right), \ \ \ {\textrm{and}} \ \ \
+X^\top y = \left( \begin{array}{c} \sum_{i=1}^n y_i \\ \sum_{i=1}^n x_i y_i
+\end{array} \right).
+\]</span> Also <span class="math inline">\(\bar{y} = \frac{1}{n} 1^\top y\)</span> and <span class="math inline">\(\sum_{i=1}^n y_i = n \bar{y}\)</span> and, finally <span class="math inline">\(\sum_{i=1}^n (y_i - \bar{y})^2 = \sum_{i=1}^n y_i^2 - n \bar{y}^2\)</span>. These are useful identities that we will use throughout this course.</p>
+<p><strong>Exercise 2.11</strong> Prove the previously introduced identities.</p>
+<p>Lastly, we recall an important application of matrices. An application of matrices: Suppose that we want to solve for <span class="math inline">\(x_1, x_2, x_3\)</span> where they satisfy the following set of linear equations:</p>
+<p><span class="math display">\[\begin{eqnarray*}
+2 x_1 + 3 x_2 - 4 x_3 &amp; = &amp; 0 \\
+-x_1 + 4 x_2 &amp; = &amp; -1 \\
+5 x_1 + x_2 - 2 x_3 &amp; = &amp; 4
+\end{eqnarray*}\]</span></p>
+<p>We can set it up in matrix form as follows: <span class="math display">\[
+\left( \begin{array}{rrr} 2 &amp; 3 &amp; -4 \\ -1 &amp; 4 &amp; 0 \\ 5 &amp; 1 &amp; -2 \end{array} \right)
+\left( \begin{array}{c} x_1 \\ x_2 \\ x_3 \end{array} \right) =
+\left( \begin{array}{c} 0 \\ -1 \\ 4  \end{array} \right)
+\]</span> Or it can be presented as <span class="math inline">\(A x = b\)</span>. If <span class="math inline">\(A\)</span> is not a singular matrix, then <span class="math inline">\(x= A^{-1} b\)</span>. Since <span class="math inline">\(det(A) = 62\)</span>, it is not a singular matrix. Solving the above equation this using <span class="math inline">\(x= A^{-1} b\)</span> yields that <span class="math inline">\(x = (1, 0, 0.5)^\top\)</span>. Keep this in mind, we will see it return in the next chapter.</p>
+<p>Lastly - I will remind you of two definitions:</p>
+<p><strong>Definition 2.12</strong> A set of vectors <span class="math inline">\(v_1,\ldots,v_d\)</span> is linearly independent if the only <span class="math inline">\(d\)</span>-dimensional set of scalars <span class="math inline">\(a_1,\ldots,a_d\in\mathbb{R}\)</span> such that <span class="math inline">\(\sum_{i=1}^d a_i v_i=0\)</span> implies is the <span class="math inline">\(d\)</span>-dimensional 0 vector.</p>
+<p><strong>Definition 2.13</strong> A <span class="math inline">\(d\times d\)</span> symmetric matrix <span class="math inline">\(A\)</span> is positive-definite if for all <span class="math inline">\(x\in\mathbb{R}^d \backslash \{0\}\)</span> it holds that <span class="math inline">\(x^\top A x&gt;0\)</span>.</p>
+</section>
+<section id="homework-stop-3" class="level3" data-number="1.3.3">
+<h3 data-number="1.3.3" data-anchor-id="homework-stop-3"><span class="header-section-number">1.3.3</span> Homework stop 3</h3>
+<p><strong>Exercise 2.12</strong> Let <span class="math display">\[
+W =  \left( \begin{array}{cc} 3 &amp; 2 \\ -4 &amp; 6 \end{array} \right)
+\]</span> and <span class="math inline">\(x=(2,1)^\top\)</span>. Compute <span class="math inline">\(W^{-1}\)</span>, <span class="math inline">\(xx^\top\)</span> and <span class="math inline">\(x^\top W\)</span>. Verify that <span class="math inline">\(W W^{-1} = W^{-1} W = I_2\)</span>.</p>
+<ul>
+<li>Prove each of the <a href="Important-identities">important identities</a>.</li>
+<li>Verify <span class="math inline">\(X^\top A=(A^\top X)^\top\)</span>.</li>
+<li>What is the rank of a matrix? Is a matrix’s rank related to whether or not a matrix is invertible? Why?</li>
+<li>Define a positive definite matrix. When is <span class="math inline">\(X^\top X\)</span> positive definite?</li>
+</ul>
+</section>
+</section>
+<section id="review-random-vectors" class="level2" data-number="1.4">
+<h2 data-number="1.4" data-anchor-id="review-random-vectors"><span class="header-section-number">1.4</span> Review Random Vectors</h2>
+<section id="definition-of-random-vectors" class="level3" data-number="1.4.1">
+<h3 data-number="1.4.1" data-anchor-id="definition-of-random-vectors"><span class="header-section-number">1.4.1</span> Definition of random vectors</h3>
+<p><strong>Definition 2.14</strong> Let <span class="math inline">\(Y_1, \cdots, Y_n\)</span> be random variables. Then <span class="math display">\[
+Y = \left( \begin{array}{c} Y_1 \\ \vdots \\ Y_n \end{array} \right)
+\]</span> is an <span class="math inline">\(n\)</span>-dimensional random vector.</p>
+<p>Similar to a random variable, a random vector also comes with a probability mass function (if all the <span class="math inline">\(Y_i\)</span> are discrete) or a probability density function (if all the <span class="math inline">\(Y_i\)</span> are continuous), or a ``mixture’’ distribution (if some <span class="math inline">\(Y_i\)</span> are discrete and others are continuous). In general, a random vector is drawn from a multivariate distribution, defined by the PMF or PDF. Just as before, the PMF and PDF range is non-negative, the PMF sums to 1 over all outcomes, and the PDF integrates to 1 over <span class="math inline">\(\mathbb{R}^n\)</span>. One discrete multivariate distribution you have learned in 1131 is the Multinomial distribution. We will learn about the multivariate normal distribution soon.</p>
+</section>
+<section id="expected-value-and-covariance" class="level3" data-number="1.4.2">
+<h3 data-number="1.4.2" data-anchor-id="expected-value-and-covariance"><span class="header-section-number">1.4.2</span> Expected Value and Covariance</h3>
+<p><strong>Definition 2.15</strong> Let <span class="math inline">\(Y\)</span> be an <span class="math inline">\(n\)</span>-dimensional random vector, then the mean (expected value) of <span class="math inline">\(Y\)</span> is defined as <span class="math display">\[
+{\textrm{E}}(Y) = \left( \begin{array}{c} {\textrm{E}}(Y_1) \\ \vdots \\ {\textrm{E}}(Y_n) \end{array} \right) =
+\mu
+\]</span> and the covariance matrix of <span class="math inline">\(Y\)</span> is defined as <span class="math display">\[
+{\textrm{cov}}\left[Y\right] = {\textrm{E}}[ (Y - \mu) (Y - \mu)^\top ] =
+(( {\textrm{cov}}\left[Y_i, Y_j\right] \ )) = \Sigma.
+\]</span></p>
+<p>Sometimes <span class="math inline">\({\textrm{cov}}\left[Y\right]\)</span> is written as <span class="math inline">\({\textrm{Var}}\left[Y\right]\)</span>.</p>
+<p>The following are some facts about <span class="math inline">\(\Sigma\)</span>:</p>
+<p><span class="math inline">\(\Sigma\)</span> is an <span class="math inline">\(n \times n\)</span> matrix with the diagonal elements being the variances, <span class="math inline">\({\textrm{Var}}\left[Y_i\right]\)</span> for <span class="math inline">\(i=1, \ldots, n\)</span>, and the off-diagonal elements being the covariances, <span class="math inline">\({\textrm{cov}}\left[Y_i, Y_j\right]\)</span> for <span class="math inline">\(i, j = 1, \ldots, n\)</span> and <span class="math inline">\(i \ne j\)</span>. <span class="math inline">\(\Sigma\)</span> is a symmetric, non-negative definite matrix. In this course, we further restrict it to be a positive definite matrix. <span class="math inline">\(\Sigma\)</span> is referred to as the <strong>covariance matrix</strong>.</p>
+</section>
+<section id="properties-of-expected-value-and-covariance" class="level3" data-number="1.4.3">
+<h3 data-number="1.4.3" data-anchor-id="properties-of-expected-value-and-covariance"><span class="header-section-number">1.4.3</span> Properties of expected value and covariance</h3>
+<p>Let <span class="math inline">\(X,Y\in \mathbb{R}^{d}\)</span> be random vectors with <span class="math inline">\(A\in \mathbb{R}^d\)</span> and <span class="math inline">\(B\in \mathbb{R}^{n\times d}\)</span> be matrices. It holds that</p>
+<ul>
+<li><span class="math inline">\({\textrm{E}}(X+ Y) = {\textrm{E}}(X)+{\textrm{E}}(Y)\)</span></li>
+<li><span class="math inline">\({\textrm{E}}(A + B Y) = A + B {\textrm{E}}(Y)\)</span></li>
+<li><span class="math inline">\({\textrm{cov}}\left[A + B Y\right] = B {\textrm{cov}}\left[Y\right] B^\top\)</span>.</li>
+</ul>
+<p><strong>Exercise 2.13</strong> Let <span class="math inline">\(Y = (Y_1, \ldots, Y_n)^\top\)</span> be a random vector, where <span class="math inline">\(Y_i\)</span> are i.i.d.&nbsp;random variables with mean <span class="math inline">\(\mu\)</span> and variance <span class="math inline">\(\sigma^2\)</span>. What are the mean and covariance of <span class="math inline">\(Y\)</span>? Use properties of random vectors to compute the mean and variance of the sample mean.</p>
+<p><em>Solution 2.4</em>. First, <span class="math inline">\({\textrm{E}}(Y) = \mu 1\)</span> and <span class="math inline">\({\textrm{cov}}\left[Y\right] = \sigma^2 I\)</span>. Note that <span class="math inline">\(\bar{Y} = (Y_1 + \cdots + Y_n)/n = \frac{1}{n}1^\top Y\)</span>. Now, we have <span class="math display">\[
+{\textrm{E}}(\bar{Y}) = {\textrm{E}}\left( \frac{1}{n}1^\top Y \right) =
+\frac{1}{n} \left( 1^\top {\textrm{E}}(Y) \right) = \frac{1}{n} (n \mu) = \mu
+\]</span> and,</p>
+<p><span class="math display">\[\begin{align*}
+{\textrm{cov}}\left[\bar{Y}\right] &amp;={\textrm{cov}}\left[ \frac{1}{n}1^\top Y\right]\\
+&amp;=
+\left( \frac{1}{n} \right)^2
+\left( 1^\top {\textrm{cov}}\left[Y\right]  1 \right) \\
+&amp;=
+\left( \frac{1}{n} \right)^2 (n \sigma^2) = \frac{\sigma^2}{n}.
+\end{align*}\]</span></p>
+</section>
+<section id="multivariate-normal-distribution" class="level3" data-number="1.4.4">
+<h3 data-number="1.4.4" data-anchor-id="multivariate-normal-distribution"><span class="header-section-number">1.4.4</span> Multivariate normal distribution</h3>
+<p>We say that a random vector <span class="math inline">\(X\sim \mathcal{N}_d(\mu,\Sigma)\)</span> follows a multivariate normal distribution if <span class="math inline">\(X\)</span> has PDF: <span class="math display">\[
+\phi(\mathbf{x})=\left(\frac{1}{2 \pi}\right)^{d / 2}|\Sigma|^{-1 / 2} \exp \left\{-\frac{1}{2}(\mathbf{x}-\mu)^{\prime} \Sigma^{-1}(\mathbf{x}-\mu)\right\}.
+\]</span></p>
+<p>If <span class="math inline">\(X\sim \mathcal{N}_d(\mu,\Sigma)\)</span> and <span class="math inline">\(c\in \mathbb{R}^d\)</span>, <span class="math inline">\(A\in \mathbb{R}^{m\times d}\)</span> then:</p>
+<ul>
+<li><span class="math inline">\(AX\sim \mathcal{N}(A\mu,A\Sigma A^\top)\)</span>.</li>
+<li><span class="math inline">\(c^\top X\sim \mathcal{N}(c^\top\mu,c^\top\Sigma c)\)</span>.</li>
+<li>Any conditional distribution for a subset of the variables conditional on another subset of variables is a multivariate distribution.</li>
+</ul>
+<p>Using random vectors is a simple way of deriving lots of equations for this course. Working with vectors also allows those who are “geometrically gifted” to view the whole regression concepts geometrically! If not, not to worry!</p>
+</section>
+<section id="homework-stop-4" class="level3" data-number="1.4.5">
+<h3 data-number="1.4.5" data-anchor-id="homework-stop-4"><span class="header-section-number">1.4.5</span> Homework stop 4</h3>
+<p><strong>Exercise 2.14</strong> For a (full-rank) non-random matrix <span class="math inline">\(X\in \mathbb{R}^{n\times p}\)</span> with <span class="math inline">\(n&gt;p\)</span>, and random vector <span class="math inline">\(Y\in \mathbb{R}^{n\times 1}\)</span> with mean <span class="math inline">\(\mu\)</span> and covariance <span class="math inline">\(\Sigma\)</span>, compute the following:</p>
+<ul>
+<li>Expected value and covariance matrix of <span class="math inline">\((X^\top X)^{-1}X^\top Y\)</span></li>
+<li>Expected value of <span class="math inline">\(Y^\top Y\)</span></li>
+<li>Expected value and covariance matrix of <span class="math inline">\(Z^\top Z\)</span> where <span class="math inline">\(Z\)</span> is a fixed, nonrandom vector of <span class="math inline">\(d\)</span> dimensions</li>
+</ul>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./index.html" class="pagination-link" aria-label="Preface">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Preface</span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
