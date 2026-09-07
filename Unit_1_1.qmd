@@ -142,6 +142,10 @@ The variance describes the variation of $X$ about its mean. In other words, it d
 If you rolled the die many, many times and, each time, measured how far the outcome landed from the mean $3.5$ (squaring that distance so negative and positive deviations don't cancel out), the variance is the long-run average of those squared distances. A random variable that's usually very close to its mean (like a very precise measuring instrument) has small variance; one that swings wildly (like a lottery payout) has large variance. The square root of the variance, $\sqrt{{\textrm{Var}}[X]}$, is called the **standard deviation** — it's often easier to interpret because it's back in the original units of $X$ (variance is in *squared* units).
 :::
 
+::: {.callout-warning title="Common mistake: E[X²] is not the same as (E[X])²"}
+It's tempting to think squaring "passes through" expectation the way multiplying by a constant does, but it doesn't: in general $\mathrm{E}[X^2]\neq(\mathrm{E}[X])^2$. For the fair die, $\mathrm{E}[X]=3.5$ so $(\mathrm{E}[X])^2=12.25$, but $\mathrm{E}[X^2]=\left(1^2+2^2+\cdots+6^2\right)/6=91/6\approx15.17$ — clearly different. The gap between them is exactly the variance: $\mathrm{Var}[X]=\mathrm{E}[X^2]-(\mathrm{E}[X])^2$ (a shortcut formula equivalent to Definition 2.3), which for the die gives $15.17-12.25\approx2.92$. Whenever you see $\mathrm{E}[X^2]$ in a problem, resist the urge to simplify it to $(\mathrm{E}[X])^2$ — they're only equal when $\mathrm{Var}[X]=0$, i.e., when $X$ is never actually random at all.
+:::
+
 ::: {.callout-note title="Worked Example: variance of the same coin-flip variable"}
 Continuing with $X=$ number of heads in 2 flips, where we found $\mathrm{E}(X)=1$. Applying Definition 2.3 directly:
 $$
@@ -315,6 +319,10 @@ Let $[n]=\{1,\ldots,n\}$. We also have that
 - If $Y_1\sim \chi^2_{k_1}$, $Y_2\sim \chi^2_{k_2}$ and $Y_1 \perp Y_2$ then $\frac{Y_1/k_1}{Y_2/k_2}\sim F_{k_1,k_2}$.
 
 Define $$\hat\sigma^2=\frac{1}{n- 1}\sum_{i=1}^n (X_i- \bar X)^2.$$
+
+::: {.callout-warning title="Common mistake: dropping the -1 in n-1"}
+It's easy to instinctively divide by $n$ here, since that's what you do for expectation-type averages elsewhere. But the sample variance divides by $n-1$, not $n$, precisely because one "degree of freedom" was already used up estimating $\bar X$ from the same data (see the intuition box on degrees of freedom above). Dividing by $n$ instead of $n-1$ would give an estimate of $\sigma^2$ that is systematically slightly too small — using $n-1$ corrects for that. This also means every place you see $n-1$ degrees of freedom later in the course (in $t_{n-1}$, for instance) traces back to this exact correction.
+:::
 
 **Theorem 2.5** Suppose that $X_1,X_2,\ldots X_n\sim \mathcal{N}(\mu,\sigma^2)$ and are independent, then $\frac{\bar X- \mu}{\sigma/\sqrt{n}}\sim \mathcal{N}(0,1)$, $\bar X\perp \hat\sigma^2$, $(n- 1)\hat\sigma^2/\sigma^2\sim \chi^2_{n- 1}$ and $\frac{\bar X- \mu}{\hat\sigma/\sqrt{n}}\sim t_{n- 1}$.
 

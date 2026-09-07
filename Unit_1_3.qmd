@@ -79,6 +79,10 @@ kU^\top = 4 \left( \begin{array}{cc} 1 & -1 \\ 2 & 4 \\ 3 & -2 \end{array} \righ
 = \left( \begin{array}{cc} 4 & -4 \\ 8 & 8 \\ 12 & -2 \end{array} \right)
 $$
 
+::: {.callout-warning title="Common mistake: assuming matrix multiplication commutes like scalar multiplication does"}
+Definition 2.9 just showed $kA=Ak$ for a scalar $k$ — multiplication by a number commutes, order doesn't matter. It's natural to assume the same is true once we get to multiplying two matrices together, but it is **not**: as the note below states, $AB\neq BA$ in general (and often only one of the two products is even *defined*, as Definition 2.10 explains next). Get in the habit of never swapping the order of two matrices being multiplied unless you've specifically verified it's allowed.
+:::
+
 **Definition 2.10** Let $A$ and $B$ be two matrices. Then $A$ multiplied by $B$, $AB$, is defined only if (number of columns of $A$) $=$ (number of rows of $B$).
 
 The product is a $\left( \right.$ (number of rows of $A$) $\times$ (number of columns of $B$) $\left. \right)$ matrix.
@@ -172,6 +176,10 @@ $$ Also $\bar{y} = \frac{1}{n} 1^\top y$ and $\sum_{i=1}^n y_i = n \bar{y}$ and,
 
 ::: {.callout-tip title="Intuition: why $X^\\top X$ is worth memorizing"}
 This is the single most important calculation in the whole course, so it's worth pausing on. $X$ here stacks a column of 1's next to a column of predictor values $x_1,\ldots,x_n$ — one row per observation. When you compute $X^\top X$, you're really just computing every possible pairwise "dot product" between $X$'s columns: (1's)&#183;(1's) $=n$, (1's)&#183;($x$'s) $=\sum x_i$, and ($x$'s)&#183;($x$'s) $=\sum x_i^2$. The reason this matters: later in the course, the least-squares regression coefficients come out of the formula $\hat\beta=(X^\top X)^{-1}X^\top y$ — so this exact $2\times2$ matrix (and its higher-dimensional generalizations) is the thing you'll need to invert every time you fit a regression line.
+:::
+
+::: {.callout-warning title="Common mistake: transposing a product without reversing the order"}
+A very common slip is writing $(AB)^\top=A^\top B^\top$ — it's tempting because it looks like it should "distribute" the way $k(A+B)=kA+kB$ does. The correct identity actually **reverses the order**: $(AB)^\top=B^\top A^\top$. You can see why with a dimension check: if $A$ is $(n\times m)$ and $B$ is $(m\times p)$, then $AB$ is $(n\times p)$, so $(AB)^\top$ must be $(p\times n)$. But $A^\top B^\top$ would be $(m\times n)(p\times m)$ — which isn't even a valid multiplication unless $n=p$! Only $B^\top A^\top$, being $(p\times m)(m\times n)=(p\times n)$, has the right shape. This exact identity is what the exercise below (verifying $X^\top A=(A^\top X)^\top$) is built on.
 :::
 
 **Exercise 2.11** Prove the previously introduced identities.

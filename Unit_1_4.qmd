@@ -68,6 +68,10 @@ We say that a random vector $X\sim \mathcal{N}_d(\mu,\Sigma)$ follows a multivar
 \phi(\mathbf{x})=\left(\frac{1}{2 \pi}\right)^{d / 2}|\Sigma|^{-1 / 2} \exp \left\{-\frac{1}{2}(\mathbf{x}-\mu)^{\prime} \Sigma^{-1}(\mathbf{x}-\mu)\right\}.
 $$
 
+::: {.callout-warning title="Common mistake: carrying over the univariate formula's σ² as if it were a single number"}
+The univariate Normal PDF from [1.1](Unit_1_1.qmd) has $\sigma^2$ (a single number) in the denominator and inside the exponent. Here, $\Sigma$ (the whole covariance *matrix*, not a single variance) takes its place, and the operations around it change accordingly: dividing by $\sigma^2$ becomes multiplying by the matrix inverse $\Sigma^{-1}$, and $|\Sigma|^{-1/2}$ (using the matrix determinant) replaces $1/\sigma$. Don't read $\Sigma^{-1}$ as "$1/\Sigma$" in the ordinary numeric sense, and don't forget that $(\mathbf{x}-\mu)$ is a whole vector here, not a single number — every piece of the univariate formula has a genuine matrix/vector counterpart, not just a relabeling.
+:::
+
 If $X\sim \mathcal{N}_d(\mu,\Sigma)$ and $c\in \mathbb{R}^d$, $A\in \mathbb{R}^{m\times d}$ then:
 
 - $AX\sim \mathcal{N}(A\mu,A\Sigma A^\top)$.

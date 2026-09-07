@@ -17,3 +17,87 @@ ISBN: 0470542810, 9780470542811
 ::: {.callout-note}
 This is a work in progress. Currently only the **Review material** unit is available; more units will be added as they are rebuilt.
 :::
+
+## How these notes are laid out (start here if you're new)
+
+If a lot of this material feels unfamiliar, or half-remembered from a previous course, that's exactly who these notes are written for — every page mixes the formal definitions with plain-language intuition, worked numeric examples, and self-check questions, so you never have to sit with just a bare definition.
+
+### The road map for the Review material chapter
+
+The four review sections build on each other in a specific order, all pointing toward one destination: being able to write down, estimate, and test a regression model.
+
+<div style="text-align:center; margin: 1.5em 0;">
+<svg viewBox="0 0 680 190" width="100%" style="max-width:640px;" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Flow diagram: Random variables leads to Confidence intervals and hypothesis tests, which together with Matrices and linear algebra lead to Random vectors, which leads to Regression (coming next).">
+  <defs>
+    <marker id="arrowIdx" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#7f8c8d"/></marker>
+  </defs>
+  <g font-size="13" text-anchor="middle">
+    <rect x="10" y="15" width="140" height="50" rx="6" fill="#d6eaf8" stroke="#2e86c1"/>
+    <text x="80" y="36" fill="#1a5276">1.1 Random</text>
+    <text x="80" y="52" fill="#1a5276">variables</text>
+    <rect x="10" y="115" width="140" height="50" rx="6" fill="#d6eaf8" stroke="#2e86c1"/>
+    <text x="80" y="136" fill="#1a5276">1.2 CIs &amp;</text>
+    <text x="80" y="152" fill="#1a5276">hypothesis tests</text>
+    <rect x="270" y="15" width="140" height="50" rx="6" fill="#fdebd0" stroke="#af601a"/>
+    <text x="340" y="36" fill="#873600">1.3 Matrices &amp;</text>
+    <text x="340" y="52" fill="#873600">linear algebra</text>
+    <rect x="270" y="115" width="140" height="50" rx="6" fill="#d5f5e3" stroke="#1e8449"/>
+    <text x="340" y="136" fill="#145a32">1.4 Random</text>
+    <text x="340" y="152" fill="#145a32">vectors</text>
+    <rect x="530" y="65" width="140" height="50" rx="6" fill="#eaeded" stroke="#566573"/>
+    <text x="600" y="86" fill="#333">Regression</text>
+    <text x="600" y="102" fill="#333">(coming next)</text>
+    <line x1="80" y1="65" x2="80" y2="115" stroke="#7f8c8d" marker-end="url(#arrowIdx)"/>
+    <line x1="150" y1="140" x2="270" y2="140" stroke="#7f8c8d" marker-end="url(#arrowIdx)"/>
+    <line x1="340" y1="65" x2="340" y2="115" stroke="#7f8c8d" marker-end="url(#arrowIdx)"/>
+    <line x1="410" y1="120" x2="530" y2="95" stroke="#7f8c8d" marker-end="url(#arrowIdx)"/>
+    <line x1="150" y1="40" x2="270" y2="40" stroke="#7f8c8d" stroke-dasharray="4,3"/>
+    <text x="210" y="30" font-size="11" fill="#888">(reviewed separately)</text>
+  </g>
+</svg>
+</div>
+
+In words: [1.1](Unit_1_1.qmd) gives you the probability vocabulary (expectation, variance, distributions) that [1.2](Unit_1_2.qmd) uses to build confidence intervals and hypothesis tests. Separately, [1.3](Unit_1_3.qmd) gives you the matrix algebra needed to handle many variables at once, which [1.4](Unit_1_4.qmd) uses to describe a whole dataset as a single random vector. Regression itself will combine both halves: it's a hypothesis-testing problem (1.1–1.2) solved using matrix algebra (1.3–1.4).
+
+### Notation you'll see throughout
+
+A lot of the difficulty in a first pass through this material is really just difficulty with notation, not with the ideas themselves. Keep this table handy — it isn't something to memorize up front, just something to glance back at whenever a symbol looks unfamiliar.
+
+| Symbol | Read it as | Means |
+|---|---|---|
+| $X$ (capital) | "the random variable X" | An outcome that hasn't happened yet / a rule for generating a number |
+| $x$ (lowercase) | "a specific value x" | One particular number $X$ could turn out to equal |
+| $\Pr(\cdot)$ | "the probability that..." | A number between 0 and 1 |
+| $\mathrm{E}[X]$ | "the expectation/expected value/mean of X" | The probability-weighted average of $X$ |
+| $\mathrm{Var}[X]$ | "the variance of X" | The average squared distance of $X$ from its mean |
+| $\mathrm{cov}[X,Y]$, $\mathrm{corr}[X,Y]$ | "the covariance/correlation of X and Y" | How strongly (and in what direction) $X$ and $Y$ move together |
+| $X\sim \mathcal{N}(\mu,\sigma^2)$ | "X is distributed as..." | $X$ follows this particular named distribution |
+| $X\perp Y$ | "X is independent of Y" | Knowing $X$ tells you nothing about $Y$ |
+| $\bar X$ (a bar) | "X bar" | The *sample* average, computed from actual data |
+| $\hat\theta$ (a hat) | "theta hat" | An *estimate* of the unknown quantity $\theta$, computed from data |
+| $\Sigma$ (capital sigma) | "Sigma", or "the covariance matrix" | In [1.4](Unit_1_4.qmd) specifically, this denotes a covariance *matrix* — don't confuse it with $\sum$ (below), even though they're drawn almost identically! |
+| $\sum_{i=1}^n$ | "the sum from i=1 to n" | Add up whatever comes after it, for each value of $i$ from 1 to $n$ |
+
+::: {.callout-warning title="Common mix-up: Σ the letter vs. Σ the sum"}
+$\Sigma$ (a covariance matrix, used starting in [1.4](Unit_1_4.qmd)) and $\sum$ (the summation symbol used everywhere) are typeset almost identically and easy to confuse at a glance. Context is really the only way to tell them apart: if it's followed by "$_{i=1}^n$ (something)$_i$", it's a sum; if it's referred to as a matrix with rows/columns, it's the covariance matrix.
+:::
+
+### What the colored boxes mean
+
+Every page uses the same three box styles, so once you know the color code you can decide at a glance how carefully to read a given box:
+
+::: {.callout-tip title="Blue 'Intuition' boxes"}
+These translate the formal definition just above into plain language and everyday examples. If a definition feels abstract, the intuition box right after it is where the "why" lives.
+:::
+
+::: {.callout-note title="Worked examples and definitions"}
+Grey/neutral boxes are either formal content (definitions, theorems) or fully worked numeric examples you can follow step by step with a calculator.
+:::
+
+::: {.callout-warning title="Common mistakes"}
+Yellow boxes flag a specific error that beginners very commonly make at that exact point in the material — worth pausing on, since these are the misunderstandings that tend to resurface later (often on a test).
+:::
+
+Each page also ends with a **Check Your Understanding** section — short self-check questions with click-to-reveal answers. Try to answer each one yourself before revealing the answer; if you get one wrong, that's useful information about which intuition box to reread, not a bad sign.
+
+For a quick, page-independent lookup of terms, see the [Glossary](Glossary.qmd).

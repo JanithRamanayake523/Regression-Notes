@@ -13,6 +13,7 @@ book:
         - Unit_1_2.qmd
         - Unit_1_3.qmd
         - Unit_1_4.qmd
+        - Glossary.qmd
 
 format:
   html:

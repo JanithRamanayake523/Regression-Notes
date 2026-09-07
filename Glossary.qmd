@@ -1,0 +1,65 @@
+# Glossary {.unnumbered}
+
+A quick, page-independent lookup for terms used across the Review material chapter. If you just need a refresher on what a word means without hunting back through a whole section, start here — each entry links back to the page where the concept is introduced in full.
+
+::: {.callout-note}
+This glossary is a reminder, not a replacement for the full pages — the intuition boxes and worked examples on [1.1](Unit_1_1.qmd)–[1.4](Unit_1_4.qmd) are where the "why" behind each term lives.
+:::
+
+**Population** — the entire collection of units you'd like to learn something about (e.g., all McDonald's hamburgers). See [1.2](Unit_1_2.qmd).
+
+**Sample** — a smaller, typically random, subset of the population that you actually observe. See [1.2](Unit_1_2.qmd).
+
+**Random variable** — a rule that maps outcomes of a random experiment to numbers. Discrete ones take countable values (described by a PMF); continuous ones take uncountably many values (described by a PDF). See [1.1](Unit_1_1.qmd).
+
+**Parameter** — a fixed, usually unknown, numerical fact about the population (e.g., the true population mean $\mu$). See [1.2](Unit_1_2.qmd).
+
+**Statistic / Estimator** — a function of the sample data (a "recipe") used to learn about a parameter; it's a random variable because it changes value from sample to sample. See [1.2](Unit_1_2.qmd).
+
+**Estimate** — the actual number you get out of an estimator once you plug in your specific observed data. See [1.2](Unit_1_2.qmd).
+
+**PMF (probability mass function)** — for a discrete random variable, $f(x)=\Pr(X=x)$; it must sum to 1 across all possible values. See [1.1](Unit_1_1.qmd).
+
+**PDF (probability density function)** — for a continuous random variable, a function $f(x)$ where *areas* under the curve (not single points) give probabilities; it must integrate to 1. See [1.1](Unit_1_1.qmd).
+
+**CDF (cumulative distribution function)** — $F_X(x)=\Pr(X\leq x)$, a running total of probability, non-decreasing from 0 to 1. See [1.1](Unit_1_1.qmd).
+
+**Expectation, $\mathrm{E}[X]$** — the probability-weighted average value of a random variable; where its distribution "balances." See [1.1](Unit_1_1.qmd).
+
+**Variance, $\mathrm{Var}[X]$** — the average squared distance of $X$ from its mean; measures spread. Its square root is the standard deviation, in the same units as $X$. See [1.1](Unit_1_1.qmd).
+
+**Covariance, $\mathrm{cov}[X,Y]$** — measures the direction of linear association between two random variables (positive, negative, or near zero); its size depends on the units of $X$ and $Y$. See [1.1](Unit_1_1.qmd).
+
+**Correlation, $\mathrm{corr}[X,Y]$** — covariance rescaled to always lie in $[-1,1]$, so it measures the *strength* of linear association independent of units. Zero correlation does **not** imply independence. See [1.1](Unit_1_1.qmd).
+
+**Independence, $X\perp Y$** — knowing the value of one random variable tells you nothing about the other; formally, their joint CDF factors as $F_{XY}(x,y)=F_X(x)F_Y(y)$. See [1.1](Unit_1_1.qmd).
+
+**Central Limit Theorem (CLT)** — regardless of the distribution of individual $X_i$'s, the sample mean $\bar X$ becomes approximately Normal as $n$ grows. See [1.1](Unit_1_1.qmd).
+
+**Chi-squared ($\chi^2_k$), $t_n$, $F_{m,n}$ distributions** — named distributions that arise from squaring, standardizing with an *estimated* spread, or taking ratios of Normal random variables; these are the basis of the hypothesis tests used throughout the course. See [1.1](Unit_1_1.qmd).
+
+**Confidence interval** — a range of values, computed from data, meant to capture the true (fixed) population parameter in a known proportion (e.g., 95%) of repeated samples. The interval is random; the parameter is not. See [1.2](Unit_1_2.qmd).
+
+**Null / Alternative hypothesis ($H_0$ / $H_1$)** — two competing claims about a population parameter; a hypothesis test starts by assuming $H_0$ and asks whether the data provides strong evidence against it. See [1.2](Unit_1_2.qmd).
+
+**p-value** — the probability, *assuming $H_0$ is true*, of seeing a test statistic at least as extreme as the one observed. A small p-value is evidence against $H_0$; it is not the probability that $H_0$ is true. See [1.2](Unit_1_2.qmd).
+
+**Type 1 error** — rejecting $H_0$ when it's actually true (a "false alarm"). **Type 2 error** — failing to reject $H_0$ when the alternative is actually true (a "missed detection"). See [1.2](Unit_1_2.qmd).
+
+**Matrix** — a rectangular grid of numbers with $n$ rows and $m$ columns; its shape controls which operations (addition, multiplication) are legal. See [1.3](Unit_1_3.qmd).
+
+**Transpose, $A^\top$** — flips a matrix along its diagonal, turning rows into columns and vice versa. See [1.3](Unit_1_3.qmd).
+
+**Identity matrix, $I_n$** — the matrix analogue of the number 1; multiplying by it leaves a (compatible) matrix unchanged. See [1.3](Unit_1_3.qmd).
+
+**Inverse, $A^{-1}$** — the matrix analogue of $1/a$; satisfies $AA^{-1}=A^{-1}A=I_n$. Not every matrix has one — a matrix without an inverse is called *singular*. See [1.3](Unit_1_3.qmd).
+
+**Linear independence** — a set of vectors where none can be written as a combination of the others; needed for $X^\top X$ to be invertible. See [1.3](Unit_1_3.qmd).
+
+**Positive-definite matrix** — the matrix analogue of "being a positive number": $x^\top Ax>0$ for every nonzero $x$. Covariance matrices and (well-behaved) $X^\top X$ matrices are positive-definite. See [1.3](Unit_1_3.qmd) and [1.4](Unit_1_4.qmd).
+
+**Random vector** — several random variables bundled into a single column, so matrix algebra can describe a whole dataset at once. See [1.4](Unit_1_4.qmd).
+
+**Covariance matrix, $\Sigma$** — a matrix whose diagonal holds variances and off-diagonal entries hold pairwise covariances of a random vector's entries; symmetric and positive-definite. Don't confuse the symbol $\Sigma$ with the summation sign $\sum$. See [1.4](Unit_1_4.qmd).
+
+**Multivariate Normal distribution** — the vector generalization of the Normal distribution; closed under linear transformations, meaning any linear function of a multivariate Normal vector is itself (multivariate) Normal. See [1.4](Unit_1_4.qmd).

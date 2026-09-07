@@ -168,6 +168,10 @@ pval
 [1] 1.179149e-12
 ```
 
+::: {.callout-warning title="Common mistake: misreading R's scientific notation"}
+`1.179149e-12` is not "1.179149 times 12" — the `e-12` means "times $10^{-12}$," i.e., move the decimal point 12 places to the *left*. So this number is $0.000000000001179149$, an extremely small number, not something close to 1 or 12. As a rule of thumb, `e-12`, `e-08`, etc. (negative exponent) mean "very small, close to zero," while `e+08` or `e08` (positive exponent) would mean "very large." Misreading this is an easy way to draw the exact opposite conclusion about how much evidence you have against $H_0$.
+:::
+
 ```r
 # Perform a two-sided t-test to check if the mean of 'ages' is significantly different from 30
 # t.test() is the function for performing t-tests in R
@@ -194,6 +198,10 @@ We have that $\left|\frac{\bar X-30}{\hat\sigma/\sqrt{n}}\right|=10.28$. Using R
 Here the p-value measures how much evidence there is against the null hypothesis. If the p-value is very small, then this constitutes strong evidence against the null hypothesis. If the p-value is small, but closer to 0.05, then there is evidence against the null. If it is larger, but still small, say 0.1, then this is weak evidence against the null hypothesis. It is not helpful to throw it away if it is above 0.05, therefore we should not just take $\alpha=0.05$. Choosing $\alpha$ depends on how serious a type 1 error is. If it is not that serious, we can take $\alpha$ larger. If it is very serious, we can take $\alpha$ smaller.
 
 In this example, there is very strong evidence against the null hypothesis.
+
+::: {.callout-warning title="Common mistake: statistical significance is not the same as practical importance"}
+A tiny p-value tells you the observed difference is unlikely to be due to chance alone — it does **not** tell you the difference is large or meaningful in real-world terms. Here, the sample mean age is $28.16$, which is statistically significantly different from $30$ (p is minuscule), but a gap of under 2 years might not matter at all for whatever decision prompted the question. With a large enough sample size, even a tiny, practically irrelevant difference can produce a very small p-value, since larger $n$ makes the test statistic more sensitive to any nonzero difference. Always look at the *size* of the estimated effect (and its confidence interval) alongside the p-value, not the p-value alone.
+:::
 
 ::: {.callout-note}
 Note also that we can use the confidence interval method with $$ \bar X\pm t_{n-1,1-\alpha/2}\sqrt{\hat\sigma^2/n}.$$
