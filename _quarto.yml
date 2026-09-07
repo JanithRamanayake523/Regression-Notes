@@ -3,7 +3,7 @@ project:
 
 book:
   title: "Regression Notes"
-  author: "Kelly Ramsay"
+  author: "Janith Ramanayake"
   date: last-modified
   chapters:
     - index.qmd
