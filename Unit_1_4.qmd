@@ -1,10 +1,16 @@
 # Review Random Vectors
 
+This section combines the previous two: we now treat a whole collection of random variables — like an entire dataset's worth of observations — as a single object, a random vector, and describe it using the matrix tools from the last section. This is the natural language for regression, where our data $Y_1,\ldots,Y_n$ is best thought of as one random vector $Y$, and our estimator $\hat\beta$ turns out to be a (matrix) function of that vector.
+
 ## Definition of random vectors
 
 **Definition 2.14** Let $Y_1, \cdots, Y_n$ be random variables. Then $$
 Y = \left( \begin{array}{c} Y_1 \\ \vdots \\ Y_n \end{array} \right)
 $$ is an $n$-dimensional random vector.
+
+::: {.callout-tip title="Intuition: a random vector is just a bundle of random variables"}
+There's no new randomness concept here — a random vector is simply a way of writing down several random variables *together*, as a single column, so we can manipulate them all at once with matrix algebra instead of writing $n$ separate equations. If $Y_1,\ldots,Y_n$ are, say, the heights of $n$ randomly sampled students, then $Y$ is the vector of all $n$ heights from that one sample. Once you bundle them into $Y$, you can ask not just "what's the distribution of each $Y_i$ on its own?" but also "how do the $Y_i$'s relate to *each other*?" — which is exactly what the covariance matrix below captures.
+:::
 
 Similar to a random variable, a random vector also comes with a probability mass function (if all the $Y_i$ are discrete) or a probability density function (if all the $Y_i$ are continuous), or a ``mixture’’ distribution (if some $Y_i$ are discrete and others are continuous). In general, a random vector is drawn from a multivariate distribution, defined by the PMF or PDF. Just as before, the PMF and PDF range is non-negative, the PMF sums to 1 over all outcomes, and the PDF integrates to 1 over $\mathbb{R}^n$. One discrete multivariate distribution you have learned in 1131 is the Multinomial distribution. We will learn about the multivariate normal distribution soon.
 
@@ -24,6 +30,10 @@ The following are some facts about $\Sigma$:
 
 $\Sigma$ is an $n \times n$ matrix with the diagonal elements being the variances, ${\textrm{Var}}\left[Y_i\right]$ for $i=1, \ldots, n$, and the off-diagonal elements being the covariances, ${\textrm{cov}}\left[Y_i, Y_j\right]$ for $i, j = 1, \ldots, n$ and $i \ne j$. $\Sigma$ is a symmetric, non-negative definite matrix. In this course, we further restrict it to be a positive definite matrix. $\Sigma$ is referred to as the **covariance matrix**.
 
+::: {.callout-tip title="Intuition: reading a covariance matrix"}
+Every entry of $\Sigma$ has a plain-language meaning. The diagonal tells you how spread out each individual $Y_i$ is on its own (its variance); the off-diagonal entry $(i,j)$ tells you how $Y_i$ and $Y_j$ move together (their covariance, in the sense from [Unit_1_1](Unit_1_1.qmd)). For example, for 3 stock returns $Y_1,Y_2,Y_3$, a $3\times3$ $\Sigma$ with large diagonal entries and large positive off-diagonal entries says: each stock is individually volatile, *and* they tend to rise and fall together — a genuinely risky portfolio, since there's no diversification benefit. $\Sigma$ being symmetric follows immediately from ${\textrm{cov}}[Y_i,Y_j]={\textrm{cov}}[Y_j,Y_i]$; it's positive-definite (in this course) for the same reason no variance can be negative — you can't have a linear combination of the $Y_i$'s with negative "spread."
+:::
+
 ## Properties of expected value and covariance
 
 Let $X,Y\in \mathbb{R}^{d}$ be random vectors with $A\in \mathbb{R}^d$ and $B\in \mathbb{R}^{n\times d}$ be matrices. It holds that
@@ -31,6 +41,10 @@ Let $X,Y\in \mathbb{R}^{d}$ be random vectors with $A\in \mathbb{R}^d$ and $B\in
 - ${\textrm{E}}(X+ Y) = {\textrm{E}}(X)+{\textrm{E}}(Y)$
 - ${\textrm{E}}(A + B Y) = A + B {\textrm{E}}(Y)$
 - ${\textrm{cov}}\left[A + B Y\right] = B {\textrm{cov}}\left[Y\right] B^\top$.
+
+::: {.callout-tip title="Intuition: these are the vector versions of rules you already know"}
+Compare these to the scalar linearity-of-expectation and variance-of-a-sum rules from [Unit_1_1](Unit_1_1.qmd) — they're exactly the same ideas, just written for vectors and matrices instead of single numbers. ${\textrm{E}}(A+BY)=A+B{\textrm{E}}(Y)$ is "expectation passes through linear transformations," identical in spirit to $\mathrm{E}(aX+b)=a\mathrm{E}(X)+b$. The covariance rule ${\textrm{cov}}[A+BY]=B\,{\textrm{cov}}[Y]\,B^\top$ is the multivariate analogue of ${\textrm{Var}}[aX+b]=a^2{\textrm{Var}}[X]$ — the matrix $B$ takes the place of the scalar $a$, and since matrices don't commute, $B$ shows up once on the left and once (transposed) on the right, rather than simply being squared. This exact rule is what lets us compute the covariance matrix of $\hat\beta=(X^\top X)^{-1}X^\top Y$ later in the course, by treating $B=(X^\top X)^{-1}X^\top$.
+:::
 
 **Exercise 2.13** Let $Y = (Y_1, \ldots, Y_n)^\top$ be a random vector, where $Y_i$ are i.i.d. random variables with mean $\mu$ and variance $\sigma^2$. What are the mean and covariance of $Y$? Use properties of random vectors to compute the mean and variance of the sample mean.
 
@@ -60,7 +74,21 @@ If $X\sim \mathcal{N}_d(\mu,\Sigma)$ and $c\in \mathbb{R}^d$, $A\in \mathbb{R}^{
 - $c^\top X\sim \mathcal{N}(c^\top\mu,c^\top\Sigma c)$.
 - Any conditional distribution for a subset of the variables conditional on another subset of variables is a multivariate distribution.
 
+::: {.callout-tip title="Intuition: the multivariate Normal is closed under linear transformations"}
+The single most useful fact here is the first bullet: take a multivariate Normal vector, apply *any* linear transformation ($AX$, a matrix times the vector), and the result is *still* multivariate Normal — you never leave the Normal family, you just get new mean and covariance parameters ($A\mu$ and $A\Sigma A^\top$, which is exactly the covariance rule from two sections up). This is why Normal assumptions are so convenient for regression: once we assume our data is (multivariate) Normal, any linear combination of it we might compute — including the regression estimator $\hat\beta$ itself, which is a linear function of $Y$ — is guaranteed to be Normal too, with a covariance matrix we already know how to compute.
+
+The second bullet, $c^\top X\sim\mathcal{N}(c^\top\mu,c^\top\Sigma c)$, is just a special case where $A$ is a single row: it says any single (scalar) weighted combination of the entries of $X$ is itself an ordinary, one-dimensional Normal random variable.
+:::
+
 Using random vectors is a simple way of deriving lots of equations for this course. Working with vectors also allows those who are “geometrically gifted” to view the whole regression concepts geometrically! If not, not to worry!
+
+::: {.callout-note title="Key takeaways before moving on"}
+- A random vector just bundles several random variables into one column so we can use matrix algebra on them together.
+- The covariance matrix $\Sigma$ packs variances on the diagonal and covariances off the diagonal — it's symmetric and positive-definite.
+- Expectation and covariance of a linear transformation $A+BY$ follow the same rules as the scalar case, just with matrices in place of scalars (and $B$ appearing on both sides of $\Sigma$ in the covariance rule, transposed on one side).
+- The multivariate Normal family is closed under linear transformations: any linear function of a multivariate Normal vector is itself (multivariate) Normal.
+- This machinery is exactly what lets us find the mean and covariance matrix of the regression estimator $\hat\beta=(X^\top X)^{-1}X^\top Y$ later in the course.
+:::
 
 ## Homework stop 4
 
@@ -69,3 +97,35 @@ Using random vectors is a simple way of deriving lots of equations for this cour
 - Expected value and covariance matrix of $(X^\top X)^{-1}X^\top Y$
 - Expected value of $Y^\top Y$
 - Expected value and covariance matrix of $Z^\top Z$ where $Z$ is a fixed, nonrandom vector of $d$ dimensions
+
+## Check Your Understanding
+
+<style>
+details.qa-answer { margin: 0 0 1.25em 0; border-left: 3px solid #d6eaf8; padding-left: 0.75em; }
+details.qa-answer > summary { cursor: pointer; color: #2e86c1; font-weight: 600; }
+details.qa-answer > summary::marker { color: #2e86c1; }
+details.qa-answer[open] > summary { margin-bottom: 0.5em; }
+details.qa-answer p { margin: 0; }
+</style>
+
+Review your material and complete the above exercises before continuing to the next section. The questions below are a quick self-check on the material from this page — try each one, then click **Show answer** to check yourself.
+
+**Question 1.** For a random vector $Y=(Y_1,Y_2,Y_3)^\top$, what does the $(2,3)$ entry of ${\textrm{cov}}[Y]$ represent? What about the $(1,1)$ entry?
+
+<details class="qa-answer"><summary>Show answer</summary><p>The $(2,3)$ entry is ${\textrm{cov}}[Y_2,Y_3]$, the covariance between the second and third entries of $Y$. The $(1,1)$ entry is ${\textrm{Var}}[Y_1]$, the variance of the first entry — diagonal entries of a covariance matrix are always variances.</p></details>
+
+**Question 2.** Why must a covariance matrix $\Sigma$ always be symmetric?
+
+<details class="qa-answer"><summary>Show answer</summary><p>Because ${\textrm{cov}}[Y_i,Y_j]={\textrm{cov}}[Y_j,Y_i]$ for any two random variables (covariance doesn't care about order), so the $(i,j)$ and $(j,i)$ entries of $\Sigma$ are always equal — which is exactly the definition of a symmetric matrix.</p></details>
+
+**Question 3.** If $Y$ has covariance matrix $\Sigma$ and $A$ is a matrix, what is the covariance matrix of $AY$? What happens if $A$ is just a single row vector $c^\top$?
+
+<details class="qa-answer"><summary>Show answer</summary><p>${\textrm{cov}}[AY]=A\Sigma A^\top$. If $A=c^\top$ is a single row (a $1\times n$ matrix), the result $c^\top\Sigma c$ is a $1\times1$ matrix, i.e., just a single number — the ordinary (scalar) variance of the scalar random variable $c^\top Y$.</p></details>
+
+**Question 4.** True or False: if $X$ is multivariate Normal, then any linear combination of its entries is also Normal.
+
+<details class="qa-answer"><summary>Show answer</summary><p>True. This is one of the most useful properties of the multivariate Normal: it's closed under linear transformations, so $AX$ (or, as a special case, $c^\top X$ for a single linear combination) is guaranteed to be (multivariate) Normal too, with mean $A\mu$ and covariance $A\Sigma A^\top$.</p></details>
+
+**Question 5.** Why is it useful to write our whole dataset $Y_1,\ldots,Y_n$ as a single random vector $Y$, rather than working with the $Y_i$'s one at a time?
+
+<details class="qa-answer"><summary>Show answer</summary><p>Bundling the data into one vector lets us use matrix algebra to handle the entire dataset at once — for instance, expressing the regression estimator as the single matrix formula $\hat\beta=(X^\top X)^{-1}X^\top Y$ instead of writing out $n$ separate scalar equations. It also lets us directly capture how observations relate to each other via the covariance matrix $\Sigma$, not just their individual variances.</p></details>

@@ -1,5 +1,7 @@
 # Review of introductory statistics
 
+This section reviews the core machinery of introductory statistics — confidence intervals and hypothesis tests — through two fully worked examples in R. These are the tools we will lean on throughout the course: once we build a regression estimator, we will want to attach a confidence interval to it and test whether a coefficient is really nonzero, and both of those tasks use exactly the logic developed here.
+
 The followings are some concepts that you have learned from prerequisites, and/or we have reviewed in the last two lectures.
 
 - Sample vs. Population
@@ -18,13 +20,35 @@ In general, at least for this course, we assume that we have access to a sample 
 
 For example, to estimate $\mu$, we typically use the sample mean. Here, the estimate is given by $\bar X=\sum_{i=1}^nX_i/n$. To be specific, the estimate is the value of $\bar X$ and the estimator $T$ is the function that maps $n$ real numbers to their mean. In general, estimates are used to give our `best guess’ at population parameters.
 
-## Confidence intervals
+::: {.callout-tip title="Intuition: estimator vs. estimate"}
+This distinction trips a lot of people up, so here's a concrete way to keep it straight: the **estimator** is a *recipe* (a formula, like "add up the numbers and divide by how many there are"), while the **estimate** is the *dish* you get out once you actually plug in ingredients. $\bar X=\sum_{i=1}^n X_i/n$ is the recipe — it works no matter what sample you feed it, which is exactly why it's a random variable (feed it a different sample, get a different number out). If your actual data happens to be $2,4,6$, the estimate is the specific number $4$. Every time you collect a new sample, the estimator stays the same rule, but the estimate it spits out will typically change.
+:::
 
 Recall from the previous section that our estimate of a parameter is only that, an estimate. In other words, it is not exactly equal to the population parameter. For instance, if we drew a different sample our estimate would change. A confidence interval is used to acknowledge this phenomenon in the reporting of our statistics. Its used to give a range of estimates that we might have obtained from any “regular” sample we might observe. It is ultimately used to quantify the error (sometimes called uncertainty) in our estimate.
 
 Confidence intervals consist of a level, usually denoted by $(1-\alpha)100\%$ and two end points. For example, you have learned confidence intervals for the population mean. When we say $(-1,1)$ is $95\%$ confidence interval for the population mean, what does this mean? Colloquially, it means that we expect the sample mean to be somewhere within $(-1,1)$ with high confidence. Note that confidence intervals are computed from the data, which means also that for each new sample, we would get a different confidence interval. However, the population parameter never changes. Therefore, the interval is what is varying from sample to sample. This impacts the interpretation of a confidence interval.
 
 Continuing our example, we have that the interval $(-1,1)$ can be interpreted as: “if we drew many more samples, 95% of the **intervals** will contain the population parameter.” We **do not** say that the parameter has a 95% chance of falling in (-1,1), since the parameter is not random, the interval end points are.
+
+::: {.callout-tip title="Intuition: it's the interval that's random, not the parameter"}
+This is the single most commonly misstated idea in intro statistics, so it's worth slowing down on. Imagine the true (unknown, fixed) population mean is $\mu=170$cm. You draw a sample and compute a 95% CI of $(168,172)$ — it happens to contain $170$. A colleague draws a *different* sample from the same population and gets $(171,174)$ — it happens to *miss* $170$. The number $170$ never moved; it's a fixed constant. What moved was the *interval*, because it was built from random data. "95% confidence" describes the *procedure*: if you repeated this sampling-and-interval-building process over and over, about 95% of the resulting intervals would happen to capture the true $\mu$. It does **not** mean "there's a 95% chance $\mu$ is in this one particular interval you already computed" — $\mu$ either is or isn't in it; there's no probability left once the interval is drawn.
+:::
+
+<div style="text-align:center; margin: 1.5em 0;">
+<svg viewBox="0 0 520 200" width="100%" style="max-width:480px;" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="A vertical dashed line marks the fixed true population mean. Around it, several horizontal confidence intervals from different hypothetical samples are drawn; most cross the true mean line but one, shown in red, misses it, illustrating that roughly 95 percent of such intervals would contain the true mean.">
+  <line x1="260" y1="10" x2="260" y2="190" stroke="#c0392b" stroke-width="1.5" stroke-dasharray="5,4"/>
+  <text x="260" y="198" font-size="13" text-anchor="middle" fill="#c0392b">true &#956; (fixed, unknown)</text>
+  <g stroke-width="4" fill="none">
+    <line x1="190" y1="30" x2="310" y2="30" stroke="#2e86c1"/>
+    <line x1="215" y1="55" x2="330" y2="55" stroke="#2e86c1"/>
+    <line x1="180" y1="80" x2="290" y2="80" stroke="#2e86c1"/>
+    <line x1="230" y1="105" x2="340" y2="105" stroke="#2e86c1"/>
+    <line x1="270" y1="130" x2="150" y2="130" stroke="#c0392b"/>
+    <line x1="200" y1="155" x2="320" y2="155" stroke="#2e86c1"/>
+  </g>
+  <text x="60" y="134" font-size="12" text-anchor="start" fill="#c0392b">misses &#956;</text>
+</svg>
+</div>
 
 For example, we have the formula for a confidence interval for the population mean is given by: $\bar X\pm 1.96\hat\sigma$. Notice that it is based only on the data. Therefore, it will change if we drew a new sample.
 
@@ -40,9 +64,26 @@ We write this as follows: $H_0\colon \mu_{men}\leq \mu_{women}$ vs. $H_a\colon 
 
 The null hypothesis is usually chosen to be one such that if we make a mistake, the error is most serious. However, it is usually clear from the context.
 
+::: {.callout-tip title="Intuition: hypothesis testing is like a courtroom trial"}
+Think of the null hypothesis $H_0$ as "innocent until proven guilty." We start by *assuming* $H_0$ is true (the defendant is innocent, or here, there's no effect), and only abandon that assumption if the data provides strong enough evidence against it — just like a jury only convicts if the evidence is beyond a reasonable doubt. This is why "fail to reject $H_0$" is not the same as "$H_0$ is proven true" — a jury verdict of "not guilty" doesn't mean innocence was proven, only that there wasn't enough evidence to convict. Maybe there really is no effect, or maybe there is one but our sample was too small or too noisy to detect it.
+:::
+
 In general, we compute a test statistic and its distribution **under the null hypothesis.** Then we compute how likely it was to see the observed test statistic we saw, if the null hypothesis was true. This likelihood is given by the **p-value**. If it was sufficiently unlikely (in other words, the p-value is less than the threshold $\alpha$), then we reject the null hypothesis. Otherwise, we fail to reject the null hypothesis. If we fail to reject the null hypothesis then either the null hypothesis is true, it is not true, but there was not enough data collected to show the effect.
 
+::: {.callout-tip title="Intuition: what a p-value actually measures"}
+A p-value answers one specific question: "*if* the null hypothesis were true, how surprising would data like ours be?" A small p-value (say, $0.001$) means our observed test statistic would be quite rare under $H_0$ — so rare that it's more believable that $H_0$ is simply false than that we got a fluke sample. A large p-value (say, $0.6$) means our data looks perfectly ordinary under $H_0$ — nothing here demands an explanation beyond "no real effect." A common misreading is to treat the p-value as "the probability $H_0$ is true" — it is **not** that; it's a probability about the *data*, computed by assuming $H_0$, not a probability about the hypothesis itself.
+:::
+
 There are two types of errors we can make in a hypothesis test: Type 1 and Type 2 error. Type one error occurs when we reject the null hypothesis when it is true. Type two error occurs when we fail to reject the null hypothesis when the alternative is true.
+
+::: {.callout-tip title="Intuition: Type 1 vs. Type 2 error"}
+Back to the courtroom: a **Type 1 error** is convicting an innocent person (rejecting $H_0$ when it's actually true) — a "false alarm." A **Type 2 error** is letting a guilty person go free (failing to reject $H_0$ when the alternative is actually true) — a "missed detection." These two error types trade off against each other: making the conviction threshold stricter (smaller $\alpha$) reduces Type 1 errors, but makes it easier for a real effect to slip through undetected (more Type 2 errors). Which error is worse depends entirely on context — for a new drug's side effects, a false alarm (Type 1) might be much less costly than missing a real danger (Type 2); for a criminal trial, most legal systems explicitly prioritize avoiding Type 1 errors.
+
+| | $H_0$ actually true | $H_0$ actually false |
+|---|---|---|
+| **Reject $H_0$** | Type 1 error | Correct |
+| **Fail to reject $H_0$** | Correct | Type 2 error |
+:::
 
 Let’s do an example.
 
@@ -171,6 +212,10 @@ ci  # Print the confidence interval
 
 ::: {.callout-note}
 Moving beyond the one-sample testing problem, we might be interested in other population parameters, say $\theta\in \Theta$. Think Lecture 1: ${\textrm{E}}\left[Y|X\right]=\beta_0+X\beta_1$, we might want to estimate ${\textrm{E}}\left[Y|X\right]$, which amounts to $\beta_0,\beta_1\in \mathbb{R}$! In general, we may estimate $\theta$ by $\hat\theta$. Then we may compute the variance and distribution of $\hat\theta$. From there, we can make confidence intervals and conduct hypothesis tests etc.
+:::
+
+::: {.callout-tip title="Intuition: two-sample tests just apply the same idea to a difference"}
+Nothing new is happening conceptually here — we're still doing the same "assume $H_0$, see how surprising the data is" procedure. The only change is that our parameter of interest, $\Delta=\mu_1-\mu_2$, is now a *difference* of two means instead of a single mean. Once we know how to find the distribution of $\hat\Delta=\bar X-\bar Y$ (the natural estimator of $\Delta$), everything else — the test statistic, the p-value, the confidence interval — follows exactly the same recipe as the one-sample case above.
 :::
 
 Let’s do another example:
@@ -327,6 +372,14 @@ mean in group 0 mean in group 1
 Note also that we can use the confidence interval method, meaning that if if 0 is in the interval: $$ \hat\Delta\pm t_{n_1+n_2-2,1-\alpha/2}\hat\sigma_p\sqrt{1/n_1+1/n_2},$$ then we fail to reject the null hypothesis.
 :::
 
+::: {.callout-note title="Key takeaways before moving on"}
+- A confidence interval quantifies sampling uncertainty in an estimate; the randomness lives in the *interval*, not in the fixed, unknown population parameter.
+- A hypothesis test starts by assuming $H_0$ is true, then asks how surprising the observed data would be under that assumption — that surprise level is the p-value.
+- A small p-value is evidence *against* $H_0$, not a probability that $H_0$ is true.
+- Type 1 error (false alarm: rejecting a true $H_0$) and Type 2 error (missed detection: failing to reject a false $H_0$) trade off against each other, and which one matters more depends on context.
+- Two-sample tests (comparing $\mu_1$ vs. $\mu_2$) use exactly the same logic as one-sample tests, just applied to the difference $\Delta=\mu_1-\mu_2$.
+:::
+
 ## Homework stop 2
 
 **Exercise 2.10** IBM Human Resources (HR) department is evaluating job applicants from York University.
@@ -351,3 +404,35 @@ Compare and contrast the following concepts. That is, define them and explain th
 - Observation vs. Random variable
 - Statistic vs. Parameter
 - Estimate vs. Estimator
+
+## Check Your Understanding
+
+<style>
+details.qa-answer { margin: 0 0 1.25em 0; border-left: 3px solid #d6eaf8; padding-left: 0.75em; }
+details.qa-answer > summary { cursor: pointer; color: #2e86c1; font-weight: 600; }
+details.qa-answer > summary::marker { color: #2e86c1; }
+details.qa-answer[open] > summary { margin-bottom: 0.5em; }
+details.qa-answer p { margin: 0; }
+</style>
+
+Review your material and complete the above exercises before continuing to the next section. The questions below are a quick self-check on the material from this page — try each one, then click **Show answer** to check yourself.
+
+**Question 1.** A 90% confidence interval for the average commute time of employees at a company is $(22,28)$ minutes. Which of the following is a correct interpretation? (a) There's a 90% chance the true average commute time is between 22 and 28 minutes. (b) If we repeated this sampling procedure many times, about 90% of the resulting intervals would contain the true average commute time.
+
+<details class="qa-answer"><summary>Show answer</summary><p>(b). The true average commute time is a fixed (though unknown) number — it either is or isn't in $(22,28)$, so it doesn't make sense to assign it a probability. It's the interval's endpoints that are random, varying from sample to sample, which is exactly what statement (b) describes.</p></details>
+
+**Question 2.** A researcher tests $H_0\colon \mu=0$ vs. $H_1\colon \mu\neq0$ and gets a p-value of $0.03$. Using $\alpha=0.05$, what do they conclude? What does the p-value of $0.03$ actually represent?
+
+<details class="qa-answer"><summary>Show answer</summary><p>Since $0.03<0.05$, they reject $H_0$. The p-value of $0.03$ means: if $H_0$ were actually true (true mean is 0), there would only be a 3% chance of observing a test statistic at least as extreme as the one actually observed. That's unlikely enough to conclude $H_0$ is probably false — it is not the probability that $H_0$ itself is true.</p></details>
+
+**Question 3.** A factory's quality control test has $H_0\colon$ "the product is safe" vs. $H_1\colon$ "the product is defective." Which type of error (Type 1 or Type 2) is more serious here, and why?
+
+<details class="qa-answer"><summary>Show answer</summary><p>Type 2 error (failing to reject $H_0$ — i.e., concluding the product is safe — when it's actually defective) is generally far more serious here, since it means a genuinely dangerous product reaches consumers. A Type 1 error (flagging a safe product as defective) is costly but not dangerous. In practice this would push a company toward a testing procedure that is more sensitive to detecting defects, even at the cost of more false alarms.</p></details>
+
+**Question 4.** True or False: failing to reject $H_0$ proves that $H_0$ is true. Explain.
+
+<details class="qa-answer"><summary>Show answer</summary><p>False. Failing to reject $H_0$ only means the data didn't provide strong enough evidence against it — it could be that $H_0$ really is true, or that it's false but the effect was too small or the sample too small/noisy to detect it. It is never proof that $H_0$ is true, the same way a "not guilty" verdict doesn't prove innocence.</p></details>
+
+**Question 5.** In the two-sample dating-age example on this page, why can we use a $t$-distribution (rather than, say, a Normal distribution) for the test statistic $\frac{\bar X-\bar Y}{\hat\sigma_p\sqrt{1/n_1+1/n_2}}$?
+
+<details class="qa-answer"><summary>Show answer</summary><p>Because the true variance $\sigma^2$ is unknown and had to be estimated (via the pooled variance $\hat\sigma_p^2$) from the data. Dividing a standard Normal by an independent, *estimated* standard deviation is exactly the situation that produces a $t$-distribution rather than a Normal — the extra uncertainty from estimating $\sigma^2$ widens the tails compared to a Normal.</p></details>
