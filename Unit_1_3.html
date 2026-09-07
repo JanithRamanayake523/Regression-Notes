@@ -2,17 +2,23 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.6.42">
+<meta name="generator" content="quarto-1.10.18">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
 <title>3&nbsp; Review of matrices and linear algebra – Regression Notes</title>
 <style>
-code{white-space: pre-wrap;}
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
 span.smallcaps{font-variant: small-caps;}
-div.columns{display: flex; gap: min(4vw, 1.5em);}
-div.column{flex: auto; overflow-x: auto;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
 div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
@@ -32,14 +38,15 @@ ul.task-list li input[type="checkbox"] {
 <meta name="quarto:offset" content="./">
 <link href="./Unit_1_4.html" rel="next">
 <link href="./Unit_1_2.html" rel="prev">
-<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-2f5df379a58b258e96c21c0638c20c03.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-8da5b4427184b79ecddefad3d342027e.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-ed7344add5f1663e434276306a2aa159.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -69,7 +76,7 @@ ul.task-list li input[type="checkbox"] {
 }</script>
 
   <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-chtml.js" type="text/javascript"></script>
 
 <script type="text/javascript">
 const typesetMath = (el) => {
@@ -82,7 +89,7 @@ const typesetMath = (el) => {
     var macros = [];
     for (var i = 0; i < mathElements.length; i++) {
       var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN") {
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
         window.katex.render(texText.data, mathElements[i], {
           displayMode: mathElements[i].classList.contains('display'),
           throwOnError: false,
@@ -100,7 +107,7 @@ window.Quarto = {
 
 </head>
 
-<body class="nav-sidebar floating">
+<body class="nav-sidebar floating quarto-light">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -173,6 +180,12 @@ window.Quarto = {
  <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Review Random Vectors</span></span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Glossary.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Glossary</span></a>
+  </div>
+</li>
       </ul>
   </li>
     </ul>
@@ -187,7 +200,7 @@ window.Quarto = {
   <ul>
   <li><a href="#matrix-properties" id="toc-matrix-properties" class="nav-link active" data-scroll-target="#matrix-properties"><span class="header-section-number">3.1</span> Matrix properties</a></li>
   <li><a href="#important-identities" id="toc-important-identities" class="nav-link" data-scroll-target="#important-identities"><span class="header-section-number">3.2</span> Important identities</a></li>
-  <li><a href="#homework-stop-3" id="toc-homework-stop-3" class="nav-link" data-scroll-target="#homework-stop-3"><span class="header-section-number">3.3</span> Homework stop 3</a></li>
+  <li><a href="#check-your-understanding" id="toc-check-your-understanding" class="nav-link" data-scroll-target="#check-your-understanding"><span class="header-section-number">3.3</span> Check Your Understanding</a></li>
   </ul>
 </nav>
     </div>
@@ -213,6 +226,7 @@ window.Quarto = {
 </header>
 
 
+<p>This section reviews the matrix algebra you’ll need for the rest of the course. The payoff comes fast: the whole point of writing data in matrix form is that a linear regression with any number of predictors can be written and solved with a single compact formula, <span class="math inline">\(\hat\beta=(X^\top X)^{-1}X^\top y\)</span>, instead of a different set of equations for every new number of variables. Everything below — transposes, multiplication, inverses — exists to make that one formula (and the theory around it) work.</p>
 <p>Recall that</p>
 <p><strong>Definition 2.6</strong> An <span class="math inline">\((n \times m)\)</span> matrix <span class="math inline">\(A\)</span> takes the form <span class="math display">\[\begin{eqnarray*}
 A &amp; = &amp; \left( \begin{array}{cccc}
@@ -223,6 +237,19 @@ a_{n1} &amp; a_{n2} &amp; \cdots &amp; a_{nm} \\
 \end{array} \right) \\
 &amp;=&amp; (( \ a_{ij} \ )) \hspace{0.5in} i=1, \ldots, n, \ \ j=1, \ldots, m
 \end{eqnarray*}\]</span> and <span class="math inline">\(a_{ij}\)</span> is the element in the <span class="math inline">\(i^{th}\)</span> row and <span class="math inline">\(j^{th}\)</span> column of the matrix <span class="math inline">\(A\)</span></p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Intuition: a matrix is just a grid of numbers with a shape">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Intuition: a matrix is just a grid of numbers with a shape
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Don’t overthink a matrix — it’s simply a rectangular table of numbers, with <span class="math inline">\(n\)</span> rows and <span class="math inline">\(m\)</span> columns. The <em>shape</em> (<span class="math inline">\(n\times m\)</span>) matters a lot, because it controls which operations are even allowed (you’ll see this below for addition and multiplication). In this course, matrices will most often hold data: for instance, one row per observation (e.g., one row per student) and one column per variable (e.g., height, weight, test score). Keeping track of “how many rows, how many columns” as you go is the single most useful habit for not getting lost in matrix algebra.</p>
+</div>
+</div>
 <p>We also define the following:</p>
 <ul>
 <li><p>An <span class="math inline">\((n \times 1)\)</span> matrix is also known as a <span class="math inline">\(n\)</span> dimensional column vector. Note: in this course, a vector means a column vector.</p></li>
@@ -239,6 +266,19 @@ V = \left( \begin{array}{cc} 2 &amp; 4 \\ 1 &amp; -2 \\ -1 &amp; 0 \end{array} \
 <p>First, we define the transpose of a matrix:</p>
 <p><strong>Definition 2.7</strong> Let <span class="math inline">\(A = (( \ a_{ij} \ ))\)</span> for <span class="math inline">\(i=1, \ldots, n\)</span> and <span class="math inline">\(j=1, \ldots, m\)</span>, is an <span class="math inline">\((n \times m)\)</span> matrix. Then <span class="math inline">\(A^\top = A\)</span> transpose <span class="math inline">\(=  (( \ a_{ji} \ ))\)</span> for <span class="math inline">\(j=1, \ldots, m\)</span> and <span class="math inline">\(i=1, \ldots, n\)</span>, and <span class="math inline">\(A^\top\)</span> is an <span class="math inline">\((m \times n)\)</span> matrix.</p>
 <p>When we transpose a matrix <span class="math inline">\(A\)</span>, the rows of <span class="math inline">\(A\)</span> becomes the columns of <span class="math inline">\(A^\top\)</span> and the columns of <span class="math inline">\(A\)</span> becomes the rows of <span class="math inline">\(A^\top\)</span>.</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Intuition: transpose flips the matrix along its diagonal">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Intuition: transpose flips the matrix along its diagonal
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Picture grabbing the top-left-to-bottom-right diagonal of the matrix like a hinge, and flipping the whole grid over it — that’s the transpose. An <span class="math inline">\((n\times m)\)</span> matrix becomes <span class="math inline">\((m\times n)\)</span>: row 1 of <span class="math inline">\(A\)</span> becomes column 1 of <span class="math inline">\(A^\top\)</span>, row 2 becomes column 2, and so on. A quick sanity check you can always use: the <span class="math inline">\((i,j)\)</span> entry of <span class="math inline">\(A\)</span> becomes the <span class="math inline">\((j,i)\)</span> entry of <span class="math inline">\(A^\top\)</span> — just swap the two indices.</p>
+</div>
+</div>
 <p><strong>Example 2.1</strong> Using our example matrices, we have that <span class="math display">\[
 U^\top = \left( \begin{array}{cc} 1 &amp; -1 \\ 2 &amp; 4 \\ 3 &amp; -2 \end{array} \right), \
 V^\top = \left( \begin{array}{ccc} 2 &amp; 1 &amp; -1 \\ 4 &amp; -2 &amp; 0 \end{array} \right)
@@ -247,6 +287,19 @@ V^\top = \left( \begin{array}{ccc} 2 &amp; 1 &amp; -1 \\ 4 &amp; -2 &amp; 0 \end
 A \pm B = (( \ a_{ij} \pm \ b_{ij} \ )).
 \]</span></p>
 <p>Addition and subtraction of matrices required the matrices to have the same dimension.</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Intuition: matching shapes for addition">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Intuition: matching shapes for addition
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Matrix addition is entry-by-entry — you literally just add the number in each position to the number in the same position of the other matrix. That’s exactly why the two matrices must have identical shape: if <span class="math inline">\(A\)</span> is <span class="math inline">\(2\times3\)</span> and <span class="math inline">\(B\)</span> is <span class="math inline">\(3\times2\)</span>, there’s no sensible way to pair up their entries one-to-one, so <span class="math inline">\(A+B\)</span> simply isn’t defined. This is why, in the example below, <span class="math inline">\(U+V\)</span> fails (different shapes) but <span class="math inline">\(U+V^\top\)</span> works — transposing <span class="math inline">\(V\)</span> first fixes its shape to match <span class="math inline">\(U\)</span>.</p>
+</div>
+</div>
 <p><strong>Example 2.2</strong> Using our example matrices, we have that: <span class="math inline">\(U + V\)</span> is undefined because they are not of the same dimension, and <span class="math display">\[
 U + V^\top = \left( \begin{array}{ccc} 1+2 &amp; 2+1 &amp; 3+(-1) \\ (-1)+4 &amp; 4 + (-2) &amp; (-2)+0
 \end{array} \right) =
@@ -259,11 +312,42 @@ kU^\top = 4 \left( \begin{array}{cc} 1 &amp; -1 \\ 2 &amp; 4 \\ 3 &amp; -2 \end{
 = \left( \begin{array}{cc} 4(1) &amp;4(-1) \\ 4(2) &amp; 4(4) \\ 4(3) &amp; 4(-2) \end{array} \right)
 = \left( \begin{array}{cc} 4 &amp; -4 \\ 8 &amp; 8 \\ 12 &amp; -2 \end{array} \right)
 \]</span></p>
+<div class="callout callout-style-default callout-warning callout-titled" title="Common mistake: assuming matrix multiplication commutes like scalar multiplication does">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Warning</span>Common mistake: assuming matrix multiplication commutes like scalar multiplication does
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Definition 2.9 just showed <span class="math inline">\(kA=Ak\)</span> for a scalar <span class="math inline">\(k\)</span> — multiplication by a number commutes, order doesn’t matter. It’s natural to assume the same is true once we get to multiplying two matrices together, but it is <strong>not</strong>: as the note below states, <span class="math inline">\(AB\neq BA\)</span> in general (and often only one of the two products is even <em>defined</em>, as Definition 2.10 explains next). Get in the habit of never swapping the order of two matrices being multiplied unless you’ve specifically verified it’s allowed.</p>
+</div>
+</div>
 <p><strong>Definition 2.10</strong> Let <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span> be two matrices. Then <span class="math inline">\(A\)</span> multiplied by <span class="math inline">\(B\)</span>, <span class="math inline">\(AB\)</span>, is defined only if (number of columns of <span class="math inline">\(A\)</span>) <span class="math inline">\(=\)</span> (number of rows of <span class="math inline">\(B\)</span>).</p>
 <p>The product is a <span class="math inline">\(\left( \right.\)</span> (number of rows of <span class="math inline">\(A\)</span>) <span class="math inline">\(\times\)</span> (number of columns of <span class="math inline">\(B\)</span>) <span class="math inline">\(\left. \right)\)</span> matrix.</p>
 <p>More precisely, let <span class="math inline">\(A = (( \ a_{ij} \ ))\)</span> be an <span class="math inline">\((n \times m)\)</span> matrix and <span class="math inline">\(B = (( \ b_{ij} \ ))\)</span> be an <span class="math inline">\((m \times p)\)</span> matrix. Then <span class="math inline">\(C = AB = (( \ c_{ij} \ ))\)</span> is an <span class="math inline">\((n \times p)\)</span> matrix with <span class="math display">\[
 c_{ij} = a_{i1}b_{1j} + a_{i2}b_{2j} + \cdots + a_{im}b_{mj}
 \]</span></p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Intuition: why the 'inner dimensions' must match, and what c_ij really is">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Intuition: why the ‘inner dimensions’ must match, and what c_ij really is
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The rule “(columns of <span class="math inline">\(A\)</span>) must equal (rows of <span class="math inline">\(B\)</span>)” isn’t arbitrary — it’s because each entry <span class="math inline">\(c_{ij}\)</span> of the product is built by pairing up an entire row of <span class="math inline">\(A\)</span> with an entire column of <span class="math inline">\(B\)</span>, multiplying corresponding entries, and summing them (this is called a <em>dot product</em>). That pairing only makes sense if the row of <span class="math inline">\(A\)</span> and the column of <span class="math inline">\(B\)</span> are the same length — i.e., <span class="math inline">\(A\)</span>’s number of columns matches <span class="math inline">\(B\)</span>’s number of rows. The result <span class="math inline">\(C=AB\)</span> inherits its shape from the <em>outer</em> dimensions: (rows of <span class="math inline">\(A\)</span>) rows and (columns of <span class="math inline">\(B\)</span>) columns, since those are the two directions you’re free to move in when picking out a row of <span class="math inline">\(A\)</span> or a column of <span class="math inline">\(B\)</span>.</p>
+</div>
+</div>
+<div style="text-align:center; margin: 1.5em 0;">
+<svg viewbox="0 0 460 190" width="100%" style="max-width:440px;" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Diagram showing that entry (i,j) of the product AB is formed by taking the dot product of row i of A (highlighted) with column j of B (highlighted).">
+<text x="60" y="20" font-size="13" text-anchor="middle" fill="#333">A (n×m)</text> <rect x="10" y="30" width="100" height="90" fill="none" stroke="#999"></rect> <rect x="10" y="60" width="100" height="14" fill="#cfe2f3"></rect> <text x="120" y="70" font-size="12" fill="#1a5276">row i</text> <text x="220" y="20" font-size="13" text-anchor="middle" fill="#333">B (m×p)</text> <rect x="180" y="30" width="80" height="90" fill="none" stroke="#999"></rect> <rect x="205" y="30" width="14" height="90" fill="#fde3cf"></rect> <text x="212" y="135" font-size="12" text-anchor="middle" fill="#a04000">col j</text> <text x="330" y="70" font-size="20" text-anchor="middle" fill="#555">→</text> <text x="390" y="20" font-size="13" text-anchor="middle" fill="#333">C=AB (n×p)</text> <rect x="350" y="30" width="80" height="90" fill="none" stroke="#999"></rect> <rect x="376" y="60" width="14" height="14" fill="#d5f5cf" stroke="#27ae60"></rect> <text x="383" y="140" font-size="12" text-anchor="middle" fill="#1e8449">entry (i,j)</text> <text x="230" y="170" font-size="12" text-anchor="middle" fill="#555">c_ij = (row i of A) · (col j of B), needs same length ⇒ m must match</text>
+</svg>
+</div>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -289,6 +373,19 @@ U V &amp; = &amp; \left( \begin{array}{ccc} 1 &amp; 2 &amp; 3 \\ -1 &amp; 4 &amp
 <p>Assume all the matrix multiplication works. Let <span class="math inline">\(I_n\)</span> be an <span class="math inline">\((n \times n)\)</span> identity matrix. Then <span class="math display">\[
 AI_n = A, \ \ \ and \ \ \ I_nB = B.
 \]</span></p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Intuition: the identity matrix is just the matrix version of '1'">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Intuition: the identity matrix is just the matrix version of ‘1’
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Multiplying any number by 1 leaves it unchanged; multiplying any (compatible) matrix by <span class="math inline">\(I_n\)</span> works the same way — it leaves the matrix unchanged. This is exactly why the inverse <span class="math inline">\(A^{-1}\)</span> below is defined the way it is: dividing by a number <span class="math inline">\(a\)</span> is the same as multiplying by <span class="math inline">\(1/a\)</span>, and <span class="math inline">\(a\cdot(1/a)=1\)</span>. The matrix analogue is <span class="math inline">\(A\cdot A^{-1}=I_n\)</span> — <span class="math inline">\(A^{-1}\)</span> plays the role of “<span class="math inline">\(1/A\)</span>,” undoing whatever <span class="math inline">\(A\)</span> did. Just like <span class="math inline">\(1/0\)</span> doesn’t exist, some matrices (singular ones) simply have no inverse.</p>
+</div>
+</div>
 <p><strong>Definition 2.11</strong> Let <span class="math inline">\(A\)</span> be an <span class="math inline">\((n \times n)\)</span> matrix. The inverse of <span class="math inline">\(A\)</span>, <span class="math inline">\(A^{-1}\)</span>, if exists satisfies <span class="math display">\[
 A A^{-1} = A^{-1} A = I_n
 \]</span> and if <span class="math inline">\(A^{-1}\)</span> does not exist, then <span class="math inline">\(A\)</span> is a singular matrix.</p>
@@ -331,6 +428,32 @@ X^\top X = \left( \begin{array}{cc} n &amp; \sum_{i=1}^n x_i \\
 X^\top y = \left( \begin{array}{c} \sum_{i=1}^n y_i \\ \sum_{i=1}^n x_i y_i
 \end{array} \right).
 \]</span> Also <span class="math inline">\(\bar{y} = \frac{1}{n} 1^\top y\)</span> and <span class="math inline">\(\sum_{i=1}^n y_i = n \bar{y}\)</span> and, finally <span class="math inline">\(\sum_{i=1}^n (y_i - \bar{y})^2 = \sum_{i=1}^n y_i^2 - n \bar{y}^2\)</span>. These are useful identities that we will use throughout this course.</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Intuition: why $X^\top X$ is worth memorizing">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Intuition: why <span class="math inline">\(X^\top X\)</span> is worth memorizing
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>This is the single most important calculation in the whole course, so it’s worth pausing on. <span class="math inline">\(X\)</span> here stacks a column of 1’s next to a column of predictor values <span class="math inline">\(x_1,\ldots,x_n\)</span> — one row per observation. When you compute <span class="math inline">\(X^\top X\)</span>, you’re really just computing every possible pairwise “dot product” between <span class="math inline">\(X\)</span>’s columns: (1’s)·(1’s) <span class="math inline">\(=n\)</span>, (1’s)·(<span class="math inline">\(x\)</span>’s) <span class="math inline">\(=\sum x_i\)</span>, and (<span class="math inline">\(x\)</span>’s)·(<span class="math inline">\(x\)</span>’s) <span class="math inline">\(=\sum x_i^2\)</span>. The reason this matters: later in the course, the least-squares regression coefficients come out of the formula <span class="math inline">\(\hat\beta=(X^\top X)^{-1}X^\top y\)</span> — so this exact <span class="math inline">\(2\times2\)</span> matrix (and its higher-dimensional generalizations) is the thing you’ll need to invert every time you fit a regression line.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-warning callout-titled" title="Common mistake: transposing a product without reversing the order">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Warning</span>Common mistake: transposing a product without reversing the order
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>A very common slip is writing <span class="math inline">\((AB)^\top=A^\top B^\top\)</span> — it’s tempting because it looks like it should “distribute” the way <span class="math inline">\(k(A+B)=kA+kB\)</span> does. The correct identity actually <strong>reverses the order</strong>: <span class="math inline">\((AB)^\top=B^\top A^\top\)</span>. You can see why with a dimension check: if <span class="math inline">\(A\)</span> is <span class="math inline">\((n\times m)\)</span> and <span class="math inline">\(B\)</span> is <span class="math inline">\((m\times p)\)</span>, then <span class="math inline">\(AB\)</span> is <span class="math inline">\((n\times p)\)</span>, so <span class="math inline">\((AB)^\top\)</span> must be <span class="math inline">\((p\times n)\)</span>. But <span class="math inline">\(A^\top B^\top\)</span> would be <span class="math inline">\((m\times n)(p\times m)\)</span> — which isn’t even a valid multiplication unless <span class="math inline">\(n=p\)</span>! Only <span class="math inline">\(B^\top A^\top\)</span>, being <span class="math inline">\((p\times m)(m\times n)=(p\times n)\)</span>, has the right shape. This exact identity is what the exercise below (verifying <span class="math inline">\(X^\top A=(A^\top X)^\top\)</span>) is built on.</p>
+</div>
+</div>
 <p><strong>Exercise 2.11</strong> Prove the previously introduced identities.</p>
 <p>Lastly, we recall an important application of matrices. An application of matrices: Suppose that we want to solve for <span class="math inline">\(x_1, x_2, x_3\)</span> where they satisfy the following set of linear equations:</p>
 <p><span class="math display">\[\begin{eqnarray*}
@@ -346,9 +469,39 @@ X^\top y = \left( \begin{array}{c} \sum_{i=1}^n y_i \\ \sum_{i=1}^n x_i y_i
 <p>Lastly - I will remind you of two definitions:</p>
 <p><strong>Definition 2.12</strong> A set of vectors <span class="math inline">\(v_1,\ldots,v_d\)</span> is linearly independent if the only <span class="math inline">\(d\)</span>-dimensional set of scalars <span class="math inline">\(a_1,\ldots,a_d\in\mathbb{R}\)</span> such that <span class="math inline">\(\sum_{i=1}^d a_i v_i=0\)</span> implies is the <span class="math inline">\(d\)</span>-dimensional 0 vector.</p>
 <p><strong>Definition 2.13</strong> A <span class="math inline">\(d\times d\)</span> symmetric matrix <span class="math inline">\(A\)</span> is positive-definite if for all <span class="math inline">\(x\in\mathbb{R}^d \backslash \{0\}\)</span> it holds that <span class="math inline">\(x^\top A x&gt;0\)</span>.</p>
-</section>
-<section id="homework-stop-3" class="level2" data-number="3.3">
-<h2 data-number="3.3" data-anchor-id="homework-stop-3"><span class="header-section-number">3.3</span> Homework stop 3</h2>
+<div class="callout callout-style-default callout-tip callout-titled" title="Intuition: linear independence and positive-definiteness">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Intuition: linear independence and positive-definiteness
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>A set of vectors is linearly independent if none of them is “redundant” — you can’t build any one of them as a combination of the others. If <span class="math inline">\(v_1\)</span> and <span class="math inline">\(v_2\)</span> point in exactly the same direction (one is a scalar multiple of the other), they’re not independent, since <span class="math inline">\(v_1-c\,v_2=0\)</span> for some nonzero coefficient. This matters for us because the columns of <span class="math inline">\(X\)</span> (e.g., a column of 1’s and a column of predictor values) need to be linearly independent for <span class="math inline">\(X^\top X\)</span> to be invertible — otherwise the regression formula <span class="math inline">\(\hat\beta=(X^\top X)^{-1}X^\top y\)</span> breaks down.</p>
+<p>Positive-definiteness is the matrix generalization of “being a positive number”: just as a positive number keeps quantities positive when you multiply by it, a positive-definite <span class="math inline">\(A\)</span> guarantees <span class="math inline">\(x^\top A x&gt;0\)</span> no matter which nonzero direction <span class="math inline">\(x\)</span> you probe it with. It’s exactly this property that makes a covariance matrix (which is always positive-definite, in this course) or <span class="math inline">\(X^\top X\)</span> well-behaved and invertible.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="Key takeaways before moving on">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Key takeaways before moving on
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li>A matrix’s <em>shape</em> (rows <span class="math inline">\(\times\)</span> columns) determines which operations are legal — addition needs matching shapes; multiplication needs the inner dimensions to match.</li>
+<li>Transpose flips a matrix along its diagonal, swapping rows and columns (and swapping index order: <span class="math inline">\((i,j)\to(j,i)\)</span>).</li>
+<li><span class="math inline">\(I_n\)</span> is the matrix analogue of the number 1, and <span class="math inline">\(A^{-1}\)</span> is the analogue of <span class="math inline">\(1/A\)</span> — it undoes <span class="math inline">\(A\)</span>, and (like <span class="math inline">\(1/0\)</span>) doesn’t always exist.</li>
+<li><span class="math inline">\(X^\top X\)</span> (built by pairing up <span class="math inline">\(X\)</span>’s columns via dot products) is central to this course: it’s the matrix inverted in the least-squares formula <span class="math inline">\(\hat\beta=(X^\top X)^{-1}X^\top y\)</span>.</li>
+<li>Linear independence of <span class="math inline">\(X\)</span>’s columns is what guarantees <span class="math inline">\(X^\top X\)</span> is invertible in the first place.</li>
+</ul>
+</div>
+</div>
 <p><strong>Exercise 2.12</strong> Let <span class="math display">\[
 W =  \left( \begin{array}{cc} 3 &amp; 2 \\ -4 &amp; 6 \end{array} \right)
 \]</span> and <span class="math inline">\(x=(2,1)^\top\)</span>. Compute <span class="math inline">\(W^{-1}\)</span>, <span class="math inline">\(xx^\top\)</span> and <span class="math inline">\(x^\top W\)</span>. Verify that <span class="math inline">\(W W^{-1} = W^{-1} W = I_2\)</span>.</p>
@@ -358,235 +511,307 @@ W =  \left( \begin{array}{cc} 3 &amp; 2 \\ -4 &amp; 6 \end{array} \right)
 <li>What is the rank of a matrix? Is a matrix’s rank related to whether or not a matrix is invertible? Why?</li>
 <li>Define a positive definite matrix. When is <span class="math inline">\(X^\top X\)</span> positive definite?</li>
 </ul>
+</section>
+<section id="check-your-understanding" class="level2" data-number="3.3">
+<h2 data-number="3.3" data-anchor-id="check-your-understanding"><span class="header-section-number">3.3</span> Check Your Understanding</h2>
+<style>
+details.qa-answer { margin: 0 0 1.25em 0; border-left: 3px solid #d6eaf8; padding-left: 0.75em; }
+details.qa-answer > summary { cursor: pointer; color: #2e86c1; font-weight: 600; }
+details.qa-answer > summary::marker { color: #2e86c1; }
+details.qa-answer[open] > summary { margin-bottom: 0.5em; }
+details.qa-answer p { margin: 0; }
+</style>
+<p>Review your material and complete the above exercises before continuing to the next section. The questions below are a quick self-check on the material from this page — try each one, then click <strong>Show answer</strong> to check yourself.</p>
+<p><strong>Question 1.</strong> If <span class="math inline">\(A\)</span> is <span class="math inline">\(3\times5\)</span> and <span class="math inline">\(B\)</span> is <span class="math inline">\(5\times2\)</span>, what is the shape of <span class="math inline">\(AB\)</span>? Is <span class="math inline">\(BA\)</span> defined?</p>
+<details class="qa-answer">
+<summary>
+Show answer
+</summary>
+<p>
+<span class="math inline">\(AB\)</span> is <span class="math inline">\(3\times2\)</span> (outer dimensions: 3 rows from <span class="math inline">\(A\)</span>, 2 columns from <span class="math inline">\(B\)</span>). <span class="math inline">\(BA\)</span> is <em>not</em> defined, because the inner dimensions don’t match: <span class="math inline">\(B\)</span> has 2 columns but <span class="math inline">\(A\)</span> has 3 rows, and <span class="math inline">\(2\neq3\)</span>.
+</p>
+</details>
+<p><strong>Question 2.</strong> Let <span class="math inline">\(A=\begin{pmatrix}1&amp;2\\3&amp;4\end{pmatrix}\)</span>. Write down <span class="math inline">\(A^\top\)</span>. Is <span class="math inline">\(A\)</span> symmetric?</p>
+<details class="qa-answer">
+<summary>
+Show answer
+</summary>
+<p>
+<span class="math inline">\(A^\top=\begin{pmatrix}1&amp;3\\2&amp;4\end{pmatrix}\)</span>. Since <span class="math inline">\(A^\top\neq A\)</span> (the off-diagonal entries 2 and 3 don’t match), <span class="math inline">\(A\)</span> is not symmetric. A matrix is symmetric only when <span class="math inline">\(A=A^\top\)</span>, i.e., swapping rows and columns leaves it unchanged.
+</p>
+</details>
+<p><strong>Question 3.</strong> Compute <span class="math inline">\(I_2\begin{pmatrix}5&amp;-1\\0&amp;2\end{pmatrix}\)</span>.</p>
+<details class="qa-answer">
+<summary>
+Show answer
+</summary>
+<p>
+<span class="math inline">\(\begin{pmatrix}5&amp;-1\\0&amp;2\end{pmatrix}\)</span> — unchanged. Just like multiplying a number by 1, multiplying any compatible matrix by the identity matrix leaves it exactly as it was.
+</p>
+</details>
+<p><strong>Question 4.</strong> Suppose <span class="math inline">\(X\)</span>’s columns are (a column of 1’s) and (a column that is exactly twice the first predictor column). Would you expect <span class="math inline">\(X^\top X\)</span> to be invertible? Why or why not?</p>
+<details class="qa-answer">
+<summary>
+Show answer
+</summary>
+<p>
+No — if one column is an exact scalar multiple of another, the columns are linearly dependent (not linearly independent), which means <span class="math inline">\(X^\top X\)</span> will be singular (non-invertible). This is exactly the condition mentioned in the Important identities section: <span class="math inline">\(X^\top X\)</span> needs <span class="math inline">\(X\)</span>’s columns to be linearly independent in order to be invertible, which is required for the regression formula <span class="math inline">\(\hat\beta=(X^\top X)^{-1}X^\top y\)</span> to make sense.
+</p>
+</details>
+<p><strong>Question 5.</strong> For a <span class="math inline">\(2\times2\)</span> matrix <span class="math inline">\(A=\begin{pmatrix}a&amp;b\\c&amp;d\end{pmatrix}\)</span>, under what condition does <span class="math inline">\(A^{-1}\)</span> fail to exist?</p>
+<details class="qa-answer">
+<summary>
+Show answer
+</summary>
+<p>
+When <span class="math inline">\(ad-bc=0\)</span> (the determinant is zero), since the inverse formula <span class="math inline">\(\frac{1}{ad-bc}\begin{pmatrix}d&amp;-b\\-c&amp;a\end{pmatrix}\)</span> requires dividing by <span class="math inline">\(ad-bc\)</span>. A matrix with zero determinant is exactly what’s meant by a <em>singular</em> matrix.
+</p>
+</details>
+<p><strong>Question 6.</strong> A <span class="math inline">\(4\times4\)</span> matrix <span class="math inline">\(A\)</span> has rank 3. Is <span class="math inline">\(A\)</span> invertible? Explain the connection between rank and invertibility.</p>
+<details class="qa-answer">
+<summary>
+Show answer
+</summary>
+<p>
+No, <span class="math inline">\(A\)</span> is not invertible. A <span class="math inline">\(d\times d\)</span> matrix is invertible exactly when it has <em>full rank</em>, i.e., rank <span class="math inline">\(d\)</span> — equivalently, when its columns (or rows) are linearly independent. Here <span class="math inline">\(A\)</span> is <span class="math inline">\(4\times4\)</span> but only has rank 3, meaning its columns are linearly dependent (one column can be written as a combination of the others), so <span class="math inline">\(A\)</span> is singular. This is the same underlying idea as needing <span class="math inline">\(X\)</span>’s columns to be linearly independent for <span class="math inline">\(X^\top X\)</span> to be invertible.
+</p>
+</details>
 
 
 </section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
-window.document.addEventListener("DOMContentLoaded", function (event) {
-  const toggleBodyColorMode = (bsSheetEl) => {
-    const mode = bsSheetEl.getAttribute("data-mode");
-    const bodyEl = window.document.querySelector("body");
-    if (mode === "dark") {
-      bodyEl.classList.add("quarto-dark");
-      bodyEl.classList.remove("quarto-light");
-    } else {
-      bodyEl.classList.add("quarto-light");
-      bodyEl.classList.remove("quarto-dark");
-    }
-  }
-  const toggleBodyColorPrimary = () => {
-    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
-    if (bsSheetEl) {
-      toggleBodyColorMode(bsSheetEl);
-    }
-  }
-  toggleBodyColorPrimary();  
-  const isCodeAnnotation = (el) => {
-    for (const clz of el.classList) {
-      if (clz.startsWith('code-annotation-')) {                     
-        return true;
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
       }
+      return false;
     }
-    return false;
-  }
-  const onCopySuccess = function(e) {
-    // button target
-    const button = e.trigger;
-    // don't keep focus
-    button.blur();
-    // flash "checked"
-    button.classList.add('code-copy-button-checked');
-    var currentTitle = button.getAttribute("title");
-    button.setAttribute("title", "Copied!");
-    let tooltip;
-    if (window.bootstrap) {
-      button.setAttribute("data-bs-toggle", "tooltip");
-      button.setAttribute("data-bs-placement", "left");
-      button.setAttribute("data-bs-title", "Copied!");
-      tooltip = new bootstrap.Tooltip(button, 
-        { trigger: "manual", 
-          customClass: "code-copy-button-tooltip",
-          offset: [0, -8]});
-      tooltip.show();    
-    }
-    setTimeout(function() {
-      if (tooltip) {
-        tooltip.hide();
-        button.removeAttribute("data-bs-title");
-        button.removeAttribute("data-bs-toggle");
-        button.removeAttribute("data-bs-placement");
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
       }
-      button.setAttribute("title", currentTitle);
-      button.classList.remove('code-copy-button-checked');
-    }, 1000);
-    // clear code selection
-    e.clearSelection();
-  }
-  const getTextToCopy = function(trigger) {
-      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
       for (const childEl of codeEl.children) {
         if (isCodeAnnotation(childEl)) {
           childEl.remove();
         }
       }
       return codeEl.innerText;
-  }
-  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
-    text: getTextToCopy
-  });
-  clipboard.on('success', onCopySuccess);
-  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
-    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
-      text: getTextToCopy,
-      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
     });
-    clipboardModal.on('success', onCopySuccess);
-  }
-    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
-    var mailtoRegex = new RegExp(/^mailto:/);
-      var filterRegex = new RegExp('/' + window.location.host + '/');
-    var isInternal = (href) => {
-        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
     }
-    // Inspect non-navigation links and adorn them if external
- 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
-    for (var i=0; i<links.length; i++) {
-      const link = links[i];
-      if (!isInternal(link.href)) {
-        // undo the damage that might have been done by quarto-nav.js in the case of
-        // links that we want to consider external
-        if (link.dataset.originalHref !== undefined) {
-          link.href = link.dataset.originalHref;
-        }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
       }
-    }
-  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
-    const config = {
-      allowHTML: true,
-      maxWidth: 500,
-      delay: 100,
-      arrow: false,
-      appendTo: function(el) {
-          return el.parentElement;
-      },
-      interactive: true,
-      interactiveBorder: 10,
-      theme: 'quarto',
-      placement: 'bottom-start',
-    };
-    if (contentFn) {
-      config.content = contentFn;
-    }
-    if (onTriggerFn) {
-      config.onTrigger = onTriggerFn;
-    }
-    if (onUntriggerFn) {
-      config.onUntrigger = onUntriggerFn;
-    }
-    window.tippy(el, config); 
-  }
-  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
-  for (var i=0; i<noterefs.length; i++) {
-    const ref = noterefs[i];
-    tippyHover(ref, function() {
-      // use id or data attribute instead here
-      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
-      try { href = new URL(href).hash; } catch {}
-      const id = href.replace(/^#\/?/, "");
-      const note = window.document.getElementById(id);
-      if (note) {
-        return note.innerHTML;
-      } else {
-        return "";
-      }
-    });
-  }
-  const xrefs = window.document.querySelectorAll('a.quarto-xref');
-  const processXRef = (id, note) => {
-    // Strip column container classes
-    const stripColumnClz = (el) => {
-      el.classList.remove("page-full", "page-columns");
-      if (el.children) {
-        for (const child of el.children) {
-          stripColumnClz(child);
-        }
-      }
-    }
-    stripColumnClz(note)
-    if (id === null || id.startsWith('sec-')) {
-      // Special case sections, only their first couple elements
-      const container = document.createElement("div");
-      if (note.children && note.children.length > 2) {
-        container.appendChild(note.children[0].cloneNode(true));
-        for (let i = 1; i < note.children.length; i++) {
-          const child = note.children[i];
-          if (child.tagName === "P" && child.innerText === "") {
-            continue;
-          } else {
-            container.appendChild(child.cloneNode(true));
-            break;
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
           }
         }
-        if (window.Quarto?.typesetMath) {
-          window.Quarto.typesetMath(container);
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
         }
-        return container.innerHTML
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
       } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
         if (window.Quarto?.typesetMath) {
           window.Quarto.typesetMath(note);
         }
-        return note.innerHTML;
-      }
-    } else {
-      // Remove any anchor links if they are present
-      const anchorLink = note.querySelector('a.anchorjs-link');
-      if (anchorLink) {
-        anchorLink.remove();
-      }
-      if (window.Quarto?.typesetMath) {
-        window.Quarto.typesetMath(note);
-      }
-      if (note.classList.contains("callout")) {
-        return note.outerHTML;
-      } else {
-        return note.innerHTML;
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
       }
     }
-  }
-  for (var i=0; i<xrefs.length; i++) {
-    const xref = xrefs[i];
-    tippyHover(xref, undefined, function(instance) {
-      instance.disable();
-      let url = xref.getAttribute('href');
-      let hash = undefined; 
-      if (url.startsWith('#')) {
-        hash = url;
-      } else {
-        try { hash = new URL(url).hash; } catch {}
-      }
-      if (hash) {
-        const id = hash.replace(/^#\/?/, "");
-        const note = window.document.getElementById(id);
-        if (note !== null) {
-          try {
-            const html = processXRef(id, note.cloneNode(true));
-            instance.setContent(html);
-          } finally {
-            instance.enable();
-            instance.show();
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
           }
         } else {
-          // See if we can fetch this
-          fetch(url.split('#')[0])
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
           .then(res => res.text())
           .then(html => {
             const parser = new DOMParser();
             const htmlDoc = parser.parseFromString(html, "text/html");
-            const note = htmlDoc.getElementById(id);
+            const note = htmlDoc.querySelector('main.content');
             if (note !== null) {
-              const html = processXRef(id, note);
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
               instance.setContent(html);
             } 
           }).finally(() => {
@@ -594,185 +819,161 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
             instance.show();
           });
         }
-      } else {
-        // See if we can fetch a full url (with no hash to target)
-        // This is a special case and we should probably do some content thinning / targeting
-        fetch(url)
-        .then(res => res.text())
-        .then(html => {
-          const parser = new DOMParser();
-          const htmlDoc = parser.parseFromString(html, "text/html");
-          const note = htmlDoc.querySelector('main.content');
-          if (note !== null) {
-            // This should only happen for chapter cross references
-            // (since there is no id in the URL)
-            // remove the first header
-            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
-              note.children[0].remove();
-            }
-            const html = processXRef(null, note);
-            instance.setContent(html);
-          } 
-        }).finally(() => {
-          instance.enable();
-          instance.show();
-        });
-      }
-    }, function(instance) {
-    });
-  }
-      let selectedAnnoteEl;
-      const selectorForAnnotation = ( cell, annotation) => {
-        let cellAttr = 'data-code-cell="' + cell + '"';
-        let lineAttr = 'data-code-annotation="' +  annotation + '"';
-        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
-        return selector;
-      }
-      const selectCodeLines = (annoteEl) => {
-        const doc = window.document;
-        const targetCell = annoteEl.getAttribute("data-target-cell");
-        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
-        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
-        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
-        const lineIds = lines.map((line) => {
-          return targetCell + "-" + line;
-        })
-        let top = null;
-        let height = null;
-        let parent = null;
-        if (lineIds.length > 0) {
-            //compute the position of the single el (top and bottom and make a div)
-            const el = window.document.getElementById(lineIds[0]);
-            top = el.offsetTop;
-            height = el.offsetHeight;
-            parent = el.parentElement.parentElement;
-          if (lineIds.length > 1) {
-            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
-            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
-            height = bottom - top;
-          }
-          if (top !== null && height !== null && parent !== null) {
-            // cook up a div (if necessary) and position it 
-            let div = window.document.getElementById("code-annotation-line-highlight");
-            if (div === null) {
-              div = window.document.createElement("div");
-              div.setAttribute("id", "code-annotation-line-highlight");
-              div.style.position = 'absolute';
-              parent.appendChild(div);
-            }
-            div.style.top = top - 2 + "px";
-            div.style.height = height + 4 + "px";
-            div.style.left = 0;
-            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
-            if (gutterDiv === null) {
-              gutterDiv = window.document.createElement("div");
-              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
-              gutterDiv.style.position = 'absolute';
-              const codeCell = window.document.getElementById(targetCell);
-              const gutter = codeCell.querySelector('.code-annotation-gutter');
-              gutter.appendChild(gutterDiv);
-            }
-            gutterDiv.style.top = top - 2 + "px";
-            gutterDiv.style.height = height + 4 + "px";
-          }
-          selectedAnnoteEl = annoteEl;
-        }
-      };
-      const unselectCodeLines = () => {
-        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
-        elementsIds.forEach((elId) => {
-          const div = window.document.getElementById(elId);
-          if (div) {
-            div.remove();
-          }
-        });
-        selectedAnnoteEl = undefined;
-      };
-        // Handle positioning of the toggle
-    window.addEventListener(
-      "resize",
-      throttle(() => {
-        elRect = undefined;
-        if (selectedAnnoteEl) {
-          selectCodeLines(selectedAnnoteEl);
-        }
-      }, 10)
-    );
-    function throttle(fn, ms) {
-    let throttle = false;
-    let timer;
-      return (...args) => {
-        if(!throttle) { // first call gets through
-            fn.apply(this, args);
-            throttle = true;
-        } else { // all the others get throttled
-            if(timer) clearTimeout(timer); // cancel #2
-            timer = setTimeout(() => {
-              fn.apply(this, args);
-              timer = throttle = false;
-            }, ms);
-        }
-      };
-    }
-      // Attach click handler to the DT
-      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
-      for (const annoteDlNode of annoteDls) {
-        annoteDlNode.addEventListener('click', (event) => {
-          const clickedEl = event.target;
-          if (clickedEl !== selectedAnnoteEl) {
-            unselectCodeLines();
-            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
-            if (activeEl) {
-              activeEl.classList.remove('code-annotation-active');
-            }
-            selectCodeLines(clickedEl);
-            clickedEl.classList.add('code-annotation-active');
-          } else {
-            // Unselect the line
-            unselectCodeLines();
-            clickedEl.classList.remove('code-annotation-active');
-          }
-        });
-      }
-  const findCites = (el) => {
-    const parentEl = el.parentElement;
-    if (parentEl) {
-      const cites = parentEl.dataset.cites;
-      if (cites) {
-        return {
-          el,
-          cites: cites.split(' ')
-        };
-      } else {
-        return findCites(el.parentElement)
-      }
-    } else {
-      return undefined;
-    }
-  };
-  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
-  for (var i=0; i<bibliorefs.length; i++) {
-    const ref = bibliorefs[i];
-    const citeInfo = findCites(ref);
-    if (citeInfo) {
-      tippyHover(citeInfo.el, function() {
-        var popup = window.document.createElement('div');
-        citeInfo.cites.forEach(function(cite) {
-          var citeDiv = window.document.createElement('div');
-          citeDiv.classList.add('hanging-indent');
-          citeDiv.classList.add('csl-entry');
-          var biblioDiv = window.document.getElementById('ref-' + cite);
-          if (biblioDiv) {
-            citeDiv.innerHTML = biblioDiv.innerHTML;
-          }
-          popup.appendChild(citeDiv);
-        });
-        return popup.innerHTML;
+      }, function(instance) {
       });
     }
-  }
-});
-</script>
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
       <a href="./Unit_1_2.html" class="pagination-link" aria-label="Review of introductory statistics">

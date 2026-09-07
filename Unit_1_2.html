@@ -2,17 +2,23 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.6.42">
+<meta name="generator" content="quarto-1.10.18">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
 <title>2&nbsp; Review of introductory statistics – Regression Notes</title>
 <style>
-code{white-space: pre-wrap;}
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
 span.smallcaps{font-variant: small-caps;}
-div.columns{display: flex; gap: min(4vw, 1.5em);}
-div.column{flex: auto; overflow-x: auto;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
 div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
@@ -21,8 +27,9 @@ ul.task-list li input[type="checkbox"] {
   vertical-align: middle;
 }
 /* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -33,7 +40,7 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -66,14 +73,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <meta name="quarto:offset" content="./">
 <link href="./Unit_1_3.html" rel="next">
 <link href="./Unit_1_1.html" rel="prev">
-<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-2f5df379a58b258e96c21c0638c20c03.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-8da5b4427184b79ecddefad3d342027e.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-ed7344add5f1663e434276306a2aa159.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -103,7 +111,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 }</script>
 
   <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-chtml.js" type="text/javascript"></script>
 
 <script type="text/javascript">
 const typesetMath = (el) => {
@@ -116,7 +124,7 @@ const typesetMath = (el) => {
     var macros = [];
     for (var i = 0; i < mathElements.length; i++) {
       var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN") {
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
         window.katex.render(texText.data, mathElements[i], {
           displayMode: mathElements[i].classList.contains('display'),
           throwOnError: false,
@@ -134,7 +142,7 @@ window.Quarto = {
 
 </head>
 
-<body class="nav-sidebar floating">
+<body class="nav-sidebar floating quarto-light">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -207,6 +215,12 @@ window.Quarto = {
  <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Review Random Vectors</span></span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Glossary.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Glossary</span></a>
+  </div>
+</li>
       </ul>
   </li>
     </ul>
@@ -220,9 +234,8 @@ window.Quarto = {
    
   <ul>
   <li><a href="#basic-premise-of-statistics" id="toc-basic-premise-of-statistics" class="nav-link active" data-scroll-target="#basic-premise-of-statistics"><span class="header-section-number">2.1</span> Basic premise of statistics</a></li>
-  <li><a href="#confidence-intervals" id="toc-confidence-intervals" class="nav-link" data-scroll-target="#confidence-intervals"><span class="header-section-number">2.2</span> Confidence intervals</a></li>
-  <li><a href="#hypothesis-tests" id="toc-hypothesis-tests" class="nav-link" data-scroll-target="#hypothesis-tests"><span class="header-section-number">2.3</span> Hypothesis tests</a></li>
-  <li><a href="#homework-stop-2" id="toc-homework-stop-2" class="nav-link" data-scroll-target="#homework-stop-2"><span class="header-section-number">2.4</span> Homework stop 2</a></li>
+  <li><a href="#hypothesis-tests" id="toc-hypothesis-tests" class="nav-link" data-scroll-target="#hypothesis-tests"><span class="header-section-number">2.2</span> Hypothesis tests</a></li>
+  <li><a href="#check-your-understanding" id="toc-check-your-understanding" class="nav-link" data-scroll-target="#check-your-understanding"><span class="header-section-number">2.3</span> Check Your Understanding</a></li>
   </ul>
 </nav>
     </div>
@@ -248,6 +261,7 @@ window.Quarto = {
 </header>
 
 
+<p>This section reviews the core machinery of introductory statistics — confidence intervals and hypothesis tests — through two fully worked examples in R. These are the tools we will lean on throughout the course: once we build a regression estimator, we will want to attach a confidence interval to it and test whether a coefficient is really nonzero, and both of those tasks use exactly the logic developed here.</p>
 <p>The followings are some concepts that you have learned from prerequisites, and/or we have reviewed in the last two lectures.</p>
 <ul>
 <li>Sample vs.&nbsp;Population</li>
@@ -263,63 +277,164 @@ window.Quarto = {
 <p>The whole purpose of statistics is to learn something about a population using only a sample of units from that population. A <strong>sample</strong> is a smaller, typically randomly selected, subset of a population. A <strong>population</strong> is a collection of units which we would like to know something about. For example, we may collect a sample of hamburgers from McDonald’s if we want to learn something about the population of McDonald’s hamburgers.</p>
 <p>In general, at least for this course, we assume that we have access to a sample of units from a given population. Furthermore, we assume that that sample is a <strong>random sample</strong>. Specifically, we assume that these units in the sample are realizations of random variables. In addition, we also assume that these random variables are mutually independent. For example, we could assume that our sample <span class="math inline">\(X_1,\ldots,X_n\)</span> is Normally distributed with some fixed mean <span class="math inline">\(\mu\)</span> and fixed variance <span class="math inline">\(\sigma^2\)</span>. In this case, <span class="math inline">\(\mu\)</span> and <span class="math inline">\(\sigma^2\)</span> are unknown <strong>parameters</strong> of the population. A parameter of a population is some quantity that is a function of the distribution of our given sample. For instance, <span class="math inline">\({\textrm{E}}\left[X_i\right]=\mu\)</span>. Generally, we are concerned with unknown population parameters, which are parts of the distribution that are unknown, and can only ever be estimated. For example, we may know our data is normal, but not know the mean parameter. In that case, we need to use an <strong>estimate</strong> of the parameter. We use a function of the data, typically called the estimator, say <span class="math inline">\(T\)</span>, which produces the estimate, given by <span class="math inline">\(T\)</span> computed at the sample we observed: <span class="math inline">\(T(X_1,\ldots,X_n)\)</span>.</p>
 <p>For example, to estimate <span class="math inline">\(\mu\)</span>, we typically use the sample mean. Here, the estimate is given by <span class="math inline">\(\bar X=\sum_{i=1}^nX_i/n\)</span>. To be specific, the estimate is the value of <span class="math inline">\(\bar X\)</span> and the estimator <span class="math inline">\(T\)</span> is the function that maps <span class="math inline">\(n\)</span> real numbers to their mean. In general, estimates are used to give our `best guess’ at population parameters.</p>
-</section>
-<section id="confidence-intervals" class="level2" data-number="2.2">
-<h2 data-number="2.2" data-anchor-id="confidence-intervals"><span class="header-section-number">2.2</span> Confidence intervals</h2>
+<div class="callout callout-style-default callout-tip callout-titled" title="Intuition: estimator vs. estimate">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Intuition: estimator vs.&nbsp;estimate
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>This distinction trips a lot of people up, so here’s a concrete way to keep it straight: the <strong>estimator</strong> is a <em>recipe</em> (a formula, like “add up the numbers and divide by how many there are”), while the <strong>estimate</strong> is the <em>dish</em> you get out once you actually plug in ingredients. <span class="math inline">\(\bar X=\sum_{i=1}^n X_i/n\)</span> is the recipe — it works no matter what sample you feed it, which is exactly why it’s a random variable (feed it a different sample, get a different number out). If your actual data happens to be <span class="math inline">\(2,4,6\)</span>, the estimate is the specific number <span class="math inline">\(4\)</span>. Every time you collect a new sample, the estimator stays the same rule, but the estimate it spits out will typically change.</p>
+</div>
+</div>
 <p>Recall from the previous section that our estimate of a parameter is only that, an estimate. In other words, it is not exactly equal to the population parameter. For instance, if we drew a different sample our estimate would change. A confidence interval is used to acknowledge this phenomenon in the reporting of our statistics. Its used to give a range of estimates that we might have obtained from any “regular” sample we might observe. It is ultimately used to quantify the error (sometimes called uncertainty) in our estimate.</p>
 <p>Confidence intervals consist of a level, usually denoted by <span class="math inline">\((1-\alpha)100\%\)</span> and two end points. For example, you have learned confidence intervals for the population mean. When we say <span class="math inline">\((-1,1)\)</span> is <span class="math inline">\(95\%\)</span> confidence interval for the population mean, what does this mean? Colloquially, it means that we expect the sample mean to be somewhere within <span class="math inline">\((-1,1)\)</span> with high confidence. Note that confidence intervals are computed from the data, which means also that for each new sample, we would get a different confidence interval. However, the population parameter never changes. Therefore, the interval is what is varying from sample to sample. This impacts the interpretation of a confidence interval.</p>
 <p>Continuing our example, we have that the interval <span class="math inline">\((-1,1)\)</span> can be interpreted as: “if we drew many more samples, 95% of the <strong>intervals</strong> will contain the population parameter.” We <strong>do not</strong> say that the parameter has a 95% chance of falling in (-1,1), since the parameter is not random, the interval end points are.</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Intuition: it's the interval that's random, not the parameter">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Intuition: it’s the interval that’s random, not the parameter
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>This is the single most commonly misstated idea in intro statistics, so it’s worth slowing down on. Imagine the true (unknown, fixed) population mean is <span class="math inline">\(\mu=170\)</span>cm. You draw a sample and compute a 95% CI of <span class="math inline">\((168,172)\)</span> — it happens to contain <span class="math inline">\(170\)</span>. A colleague draws a <em>different</em> sample from the same population and gets <span class="math inline">\((171,174)\)</span> — it happens to <em>miss</em> <span class="math inline">\(170\)</span>. The number <span class="math inline">\(170\)</span> never moved; it’s a fixed constant. What moved was the <em>interval</em>, because it was built from random data. “95% confidence” describes the <em>procedure</em>: if you repeated this sampling-and-interval-building process over and over, about 95% of the resulting intervals would happen to capture the true <span class="math inline">\(\mu\)</span>. It does <strong>not</strong> mean “there’s a 95% chance <span class="math inline">\(\mu\)</span> is in this one particular interval you already computed” — <span class="math inline">\(\mu\)</span> either is or isn’t in it; there’s no probability left once the interval is drawn.</p>
+</div>
+</div>
+<div style="text-align:center; margin: 1.5em 0;">
+<svg viewbox="0 0 520 200" width="100%" style="max-width:480px;" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="A vertical dashed line marks the fixed true population mean. Around it, several horizontal confidence intervals from different hypothetical samples are drawn; most cross the true mean line but one, shown in red, misses it, illustrating that roughly 95 percent of such intervals would contain the true mean.">
+<line x1="260" y1="10" x2="260" y2="190" stroke="#c0392b" stroke-width="1.5" stroke-dasharray="5,4"></line> <text x="260" y="198" font-size="13" text-anchor="middle" fill="#c0392b">true μ (fixed, unknown)</text> <g stroke-width="4" fill="none"> <line x1="190" y1="30" x2="310" y2="30" stroke="#2e86c1"></line> <line x1="215" y1="55" x2="330" y2="55" stroke="#2e86c1"></line> <line x1="180" y1="80" x2="290" y2="80" stroke="#2e86c1"></line> <line x1="230" y1="105" x2="340" y2="105" stroke="#2e86c1"></line> <line x1="270" y1="130" x2="150" y2="130" stroke="#c0392b"></line> <line x1="200" y1="155" x2="320" y2="155" stroke="#2e86c1"></line> </g> <text x="60" y="134" font-size="12" text-anchor="start" fill="#c0392b">misses μ</text>
+</svg>
+</div>
 <p>For example, we have the formula for a confidence interval for the population mean is given by: <span class="math inline">\(\bar X\pm 1.96\hat\sigma\)</span>. Notice that it is based only on the data. Therefore, it will change if we drew a new sample.</p>
 <p>To summarize this section, a confidence interval is used to quantify the uncertainty in our reported estimates. By uncertainty, we specifically mean the uncertainty resulting from the fact that we have only a sample of the population, and our estimate varies depending on the sample.</p>
 </section>
-<section id="hypothesis-tests" class="level2" data-number="2.3">
-<h2 data-number="2.3" data-anchor-id="hypothesis-tests"><span class="header-section-number">2.3</span> Hypothesis tests</h2>
+<section id="hypothesis-tests" class="level2" data-number="2.2">
+<h2 data-number="2.2" data-anchor-id="hypothesis-tests"><span class="header-section-number">2.2</span> Hypothesis tests</h2>
 <p>Hypothesis tests are used to determine whether an effect is spurious or a real property of the population. A spurious effect is one that is specific to the sample we observed, and is not a real property of the population. For example, if the heights of males and female students are measured, and we observe that the sample mean of both male and females are equal, then this would be a spurious effect. We know that the population heights of males and females are substantially different. If we drew a new sample, we would likely observe something that mirrors the population reality (provided it is large enough).</p>
 <p>Formally, a hypothesis test compares two competing beliefs about a population parameter, called the null and alternative hypothesis. For instance, we may wish to test whether the population heights of men is greater than women, vs.&nbsp;the heights being less than or equal to that of men.</p>
 <p>We write this as follows: <span class="math inline">\(H_0\colon \mu_{men}\leq \mu_{women}\)</span> vs.&nbsp;<span class="math inline">\(H_a\colon \mu_{men}&gt; \mu_{women}\)</span>.</p>
 <p>The null hypothesis is usually chosen to be one such that if we make a mistake, the error is most serious. However, it is usually clear from the context.</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Intuition: hypothesis testing is like a courtroom trial">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Intuition: hypothesis testing is like a courtroom trial
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Think of the null hypothesis <span class="math inline">\(H_0\)</span> as “innocent until proven guilty.” We start by <em>assuming</em> <span class="math inline">\(H_0\)</span> is true (the defendant is innocent, or here, there’s no effect), and only abandon that assumption if the data provides strong enough evidence against it — just like a jury only convicts if the evidence is beyond a reasonable doubt. This is why “fail to reject <span class="math inline">\(H_0\)</span>” is not the same as “<span class="math inline">\(H_0\)</span> is proven true” — a jury verdict of “not guilty” doesn’t mean innocence was proven, only that there wasn’t enough evidence to convict. Maybe there really is no effect, or maybe there is one but our sample was too small or too noisy to detect it.</p>
+</div>
+</div>
 <p>In general, we compute a test statistic and its distribution <strong>under the null hypothesis.</strong> Then we compute how likely it was to see the observed test statistic we saw, if the null hypothesis was true. This likelihood is given by the <strong>p-value</strong>. If it was sufficiently unlikely (in other words, the p-value is less than the threshold <span class="math inline">\(\alpha\)</span>), then we reject the null hypothesis. Otherwise, we fail to reject the null hypothesis. If we fail to reject the null hypothesis then either the null hypothesis is true, it is not true, but there was not enough data collected to show the effect.</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Intuition: what a p-value actually measures">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Intuition: what a p-value actually measures
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>A p-value answers one specific question: “<em>if</em> the null hypothesis were true, how surprising would data like ours be?” A small p-value (say, <span class="math inline">\(0.001\)</span>) means our observed test statistic would be quite rare under <span class="math inline">\(H_0\)</span> — so rare that it’s more believable that <span class="math inline">\(H_0\)</span> is simply false than that we got a fluke sample. A large p-value (say, <span class="math inline">\(0.6\)</span>) means our data looks perfectly ordinary under <span class="math inline">\(H_0\)</span> — nothing here demands an explanation beyond “no real effect.” A common misreading is to treat the p-value as “the probability <span class="math inline">\(H_0\)</span> is true” — it is <strong>not</strong> that; it’s a probability about the <em>data</em>, computed by assuming <span class="math inline">\(H_0\)</span>, not a probability about the hypothesis itself.</p>
+</div>
+</div>
 <p>There are two types of errors we can make in a hypothesis test: Type 1 and Type 2 error. Type one error occurs when we reject the null hypothesis when it is true. Type two error occurs when we fail to reject the null hypothesis when the alternative is true.</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Intuition: Type 1 vs. Type 2 error">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Intuition: Type 1 vs.&nbsp;Type 2 error
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Back to the courtroom: a <strong>Type 1 error</strong> is convicting an innocent person (rejecting <span class="math inline">\(H_0\)</span> when it’s actually true) — a “false alarm.” A <strong>Type 2 error</strong> is letting a guilty person go free (failing to reject <span class="math inline">\(H_0\)</span> when the alternative is actually true) — a “missed detection.” These two error types trade off against each other: making the conviction threshold stricter (smaller <span class="math inline">\(\alpha\)</span>) reduces Type 1 errors, but makes it easier for a real effect to slip through undetected (more Type 2 errors). Which error is worse depends entirely on context — for a new drug’s side effects, a false alarm (Type 1) might be much less costly than missing a real danger (Type 2); for a criminal trial, most legal systems explicitly prioritize avoiding Type 1 errors.</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th></th>
+<th><span class="math inline">\(H_0\)</span> actually true</th>
+<th><span class="math inline">\(H_0\)</span> actually false</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Reject <span class="math inline">\(H_0\)</span></strong></td>
+<td>Type 1 error</td>
+<td>Correct</td>
+</tr>
+<tr class="even">
+<td><strong>Fail to reject <span class="math inline">\(H_0\)</span></strong></td>
+<td>Correct</td>
+<td>Type 2 error</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <p>Let’s do an example.</p>
 <p><strong>Exercise 2.7</strong> In a study about online dating, you are interested in determining the average age of individuals who use online dating platforms. You want to know whether the average age of online daters is significantly different from 30. You have a dataset of 40 ages of people using online dating platforms.</p>
 <p>How would you answer this question?</p>
 <p><span class="math display">\[H_0\colon \mu=30\qquad vs. \qquad H_1\colon \mu\neq 30.\]</span></p>
 <p>First, we can explore the data:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">getwd</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">getwd</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <pre><code>[1] "C:/Users/12RAM/OneDrive - York University/Teaching/Courses/Math 3330 Regression/Math 3330 Notes"</code></pre>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>ages<span class="ot">=</span><span class="fu">read.csv</span>(<span class="st">'C:</span><span class="sc">\\</span><span class="st">Users</span><span class="sc">\\</span><span class="st">12RAM</span><span class="sc">\\</span><span class="st">OneDrive - York University</span><span class="sc">\\</span><span class="st">Teaching</span><span class="sc">\\</span><span class="st">Courses</span><span class="sc">\\</span><span class="st">Math 3330 Regression</span><span class="sc">\\</span><span class="st">Lecture Codes</span><span class="sc">\\</span><span class="st">Data</span><span class="sc">\\</span><span class="st">dating_ages.csv'</span>)[,<span class="dv">2</span>]</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>ages<span class="ot">=</span><span class="fu">read.csv</span>(<span class="st">'C:</span><span class="sc">\\</span><span class="st">Users</span><span class="sc">\\</span><span class="st">12RAM</span><span class="sc">\\</span><span class="st">OneDrive - York University</span><span class="sc">\\</span><span class="st">Teaching</span><span class="sc">\\</span><span class="st">Courses</span><span class="sc">\\</span><span class="st">Math 3330 Regression</span><span class="sc">\\</span><span class="st">Lecture Codes</span><span class="sc">\\</span><span class="st">Data</span><span class="sc">\\</span><span class="st">dating_ages.csv'</span>)[,<span class="dv">2</span>]</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(ages,<span class="at">freq=</span>F)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(ages,<span class="at">freq=</span>F)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><img src="Unit_1_files/figure-html/unnamed-chunk-1-1.png" class="img-fluid"></p>
 <p>Now, assume that <span class="math inline">\(X_1,\ldots, X_{40}\sim \mathcal{N}(\mu,\sigma^2)\)</span>, and independent. (We can justify normality with the histogram, or we could also invoke the CLT to get normality of the sample mean (not the data itself).) Therefore, we can do a one sample <span class="math inline">\(t\)</span>-test. Recall that, under the null hypothesis, we have <span class="math inline">\(\frac{\bar X-30}{\hat\sigma/\sqrt{n}}\sim t_{n-1}\)</span>. This means that if <span class="math inline">\(\left|\frac{\bar X-30}{\hat\sigma/\sqrt{n}}\right|\geq t_{n-1,1-\alpha/2}\)</span>, then we reject the null hypothesis! Here, <span class="math inline">\(t_{n-1,1-p}\)</span> is the <span class="math inline">\((1-p)\)</span>th quantile of the <span class="math inline">\(t_{n-1}\)</span> distribution. For large <span class="math inline">\(n\)</span> and <span class="math inline">\(p=0.025\)</span>, this is roughly equal to 2.</p>
 <p>Now, recall that <span class="math display">\[ H_0\colon \mu=30\qquad vs. \qquad H_1\colon \mu\neq 30 .\]</span></p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate the mean of the 'ages' data and assign it to xbar</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate the mean of the 'ages' data and assign it to xbar</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>xbar <span class="ot">=</span> <span class="fu">mean</span>(ages)</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>xbar  <span class="co"># Print the mean</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>xbar  <span class="co"># Print the mean</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <pre><code>[1] 28.16378</code></pre>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate the variance of the 'ages' data and assign it to ssq</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate the variance of the 'ages' data and assign it to ssq</span></span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>ssq <span class="ot">=</span> <span class="fu">var</span>(ages)</span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>ssq  <span class="co"># Print the variance</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>ssq  <span class="co"># Print the variance</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <pre><code>[1] 1.277377</code></pre>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate the length (number of observations) of the 'ages' data and assign it to n</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate the length (number of observations) of the 'ages' data and assign it to n</span></span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>n <span class="ot">=</span> <span class="fu">length</span>(ages)</span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>n  <span class="co"># Print the number of observations</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>n  <span class="co"># Print the number of observations</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <pre><code>[1] 40</code></pre>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Set the significance level </span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Set the significance level </span></span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>alpha <span class="ot">=</span> <span class="fl">0.05</span></span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="co"># print test statistic</span></span>
 <span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>ts<span class="ot">=</span>(xbar <span class="sc">-</span><span class="dv">30</span>)<span class="sc">/</span>(<span class="fu">sqrt</span>(ssq<span class="sc">/</span>n))</span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(ts)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(ts)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <pre><code>[1] -10.27532</code></pre>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># compute p-value</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># compute p-value</span></span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>pval<span class="ot">=</span><span class="fu">pt</span>(ts,n<span class="dv">-1</span>)<span class="sc">*</span><span class="dv">2</span></span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>pval</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>pval</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <pre><code>[1] 1.179149e-12</code></pre>
-<div class="sourceCode" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Perform a two-sided t-test to check if the mean of 'ages' is significantly different from 30</span></span>
+<div class="callout callout-style-default callout-warning callout-titled" title="Common mistake: misreading R's scientific notation">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Warning</span>Common mistake: misreading R’s scientific notation
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><code>1.179149e-12</code> is not “1.179149 times 12” — the <code>e-12</code> means “times <span class="math inline">\(10^{-12}\)</span>,” i.e., move the decimal point 12 places to the <em>left</em>. So this number is <span class="math inline">\(0.000000000001179149\)</span>, an extremely small number, not something close to 1 or 12. As a rule of thumb, <code>e-12</code>, <code>e-08</code>, etc. (negative exponent) mean “very small, close to zero,” while <code>e+08</code> or <code>e08</code> (positive exponent) would mean “very large.” Misreading this is an easy way to draw the exact opposite conclusion about how much evidence you have against <span class="math inline">\(H_0\)</span>.</p>
+</div>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Perform a two-sided t-test to check if the mean of 'ages' is significantly different from 30</span></span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="co"># t.test() is the function for performing t-tests in R</span></span>
 <span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>test <span class="ot">=</span> <span class="fu">t.test</span>(ages, <span class="at">mu =</span> <span class="dv">30</span>, <span class="at">alternative =</span> <span class="st">'two.sided'</span>)</span>
-<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>test  <span class="co"># Print the test result</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>test  <span class="co"># Print the test result</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <pre><code>
     One Sample t-test
 
@@ -334,6 +449,19 @@ mean of x
 <p>We have that <span class="math inline">\(\left|\frac{\bar X-30}{\hat\sigma/\sqrt{n}}\right|=10.28\)</span>. Using R, we get that the p-value is <span class="math inline">\(1.179\times 10^{-12}\)</span>.</p>
 <p>Here the p-value measures how much evidence there is against the null hypothesis. If the p-value is very small, then this constitutes strong evidence against the null hypothesis. If the p-value is small, but closer to 0.05, then there is evidence against the null. If it is larger, but still small, say 0.1, then this is weak evidence against the null hypothesis. It is not helpful to throw it away if it is above 0.05, therefore we should not just take <span class="math inline">\(\alpha=0.05\)</span>. Choosing <span class="math inline">\(\alpha\)</span> depends on how serious a type 1 error is. If it is not that serious, we can take <span class="math inline">\(\alpha\)</span> larger. If it is very serious, we can take <span class="math inline">\(\alpha\)</span> smaller.</p>
 <p>In this example, there is very strong evidence against the null hypothesis.</p>
+<div class="callout callout-style-default callout-warning callout-titled" title="Common mistake: statistical significance is not the same as practical importance">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Warning</span>Common mistake: statistical significance is not the same as practical importance
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>A tiny p-value tells you the observed difference is unlikely to be due to chance alone — it does <strong>not</strong> tell you the difference is large or meaningful in real-world terms. Here, the sample mean age is <span class="math inline">\(28.16\)</span>, which is statistically significantly different from <span class="math inline">\(30\)</span> (p is minuscule), but a gap of under 2 years might not matter at all for whatever decision prompted the question. With a large enough sample size, even a tiny, practically irrelevant difference can produce a very small p-value, since larger <span class="math inline">\(n\)</span> makes the test statistic more sensitive to any nonzero difference. Always look at the <em>size</em> of the estimated effect (and its confidence interval) alongside the p-value, not the p-value alone.</p>
+</div>
+</div>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -347,10 +475,10 @@ Note
 <p>Note also that we can use the confidence interval method with <span class="math display">\[ \bar X\pm t_{n-1,1-\alpha/2}\sqrt{\hat\sigma^2/n}.\]</span></p>
 </div>
 </div>
-<div class="sourceCode" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Alternative method to calculate the confidence interval</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Alternative method to calculate the confidence interval</span></span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="co"># ci will store the confidence interval values</span></span>
 <span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>ci <span class="ot">=</span> xbar <span class="sc">+</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="dv">1</span>) <span class="sc">*</span> <span class="fu">qt</span>(<span class="dv">1</span> <span class="sc">-</span> alpha <span class="sc">/</span> <span class="dv">2</span>, n <span class="sc">-</span> <span class="dv">1</span>) <span class="sc">*</span> <span class="fu">sqrt</span>(ssq <span class="sc">/</span> n)</span>
-<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>ci  <span class="co"># Print the confidence interval</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>ci  <span class="co"># Print the confidence interval</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <pre><code>[1] 27.80232 28.52524</code></pre>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -365,6 +493,19 @@ Note
 <p>Moving beyond the one-sample testing problem, we might be interested in other population parameters, say <span class="math inline">\(\theta\in \Theta\)</span>. Think Lecture 1: <span class="math inline">\({\textrm{E}}\left[Y|X\right]=\beta_0+X\beta_1\)</span>, we might want to estimate <span class="math inline">\({\textrm{E}}\left[Y|X\right]\)</span>, which amounts to <span class="math inline">\(\beta_0,\beta_1\in \mathbb{R}\)</span>! In general, we may estimate <span class="math inline">\(\theta\)</span> by <span class="math inline">\(\hat\theta\)</span>. Then we may compute the variance and distribution of <span class="math inline">\(\hat\theta\)</span>. From there, we can make confidence intervals and conduct hypothesis tests etc.</p>
 </div>
 </div>
+<div class="callout callout-style-default callout-tip callout-titled" title="Intuition: two-sample tests just apply the same idea to a difference">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Intuition: two-sample tests just apply the same idea to a difference
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Nothing new is happening conceptually here — we’re still doing the same “assume <span class="math inline">\(H_0\)</span>, see how surprising the data is” procedure. The only change is that our parameter of interest, <span class="math inline">\(\Delta=\mu_1-\mu_2\)</span>, is now a <em>difference</em> of two means instead of a single mean. Once we know how to find the distribution of <span class="math inline">\(\hat\Delta=\bar X-\bar Y\)</span> (the natural estimator of <span class="math inline">\(\Delta\)</span>), everything else — the test statistic, the p-value, the confidence interval — follows exactly the same recipe as the one-sample case above.</p>
+</div>
+</div>
 <p>Let’s do another example:</p>
 <p><strong>Exercise 2.8</strong> In a study about online dating, you are interested in determining if the average age of those who identify as men who use online dating platforms differs from those who identify as women. You have a dataset of 20 ages of each group using online dating platforms.</p>
 <p>What is the population parameter of interest here? It is <span class="math inline">\(\Delta=\mu_{1}-\mu_2\)</span>, the difference in means between the two populations. Now, suppose that <span class="math inline">\(X_1,\ldots, X_{20}\sim \mathcal{N}(\mu_1,\sigma^2)\)</span> and <span class="math inline">\(Y_1,\ldots, Y_{20}\sim \mathcal{N}(\mu_2,\sigma^2)\)</span>, and are mutually independent. (We could also invoke the CLT instead of assuming normality.) We can estimate those parameters with <strong>estimates.</strong> For instance, <span class="math inline">\(\bar X,\ \bar Y\)</span>, <span class="math display">\[\hat\sigma^2=\frac{(n_1-1)\hat\sigma_1^2+(n_2-1)\hat\sigma_2^2}{n_1+n_2-2}.\]</span></p>
@@ -377,18 +518,18 @@ Note
 <p>Next, we said earlier that <span class="math inline">\(\bar X\)</span> is independent of <span class="math inline">\(\hat\sigma_1\)</span> and <span class="math inline">\(\bar Y\)</span> is independent of <span class="math inline">\(\hat\sigma_2\)</span>. Now, recall that if two random variables are independent, then any function of them is also independent. In other words, if <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> are independent, then for real functions <span class="math inline">\(f\)</span> and <span class="math inline">\(g\)</span>, we have that <span class="math inline">\(g(X)\)</span> is independent of <span class="math inline">\(f(Y)\)</span>. It follows that <span class="math inline">\(\bar X\)</span> is independent of <span class="math inline">\(\hat\sigma_2\)</span> and <span class="math inline">\(\bar Y\)</span> is independent of <span class="math inline">\(\hat\sigma_1\)</span>. It follows that <span class="math inline">\(\bar X-\bar Y\)</span> is independent of <span class="math inline">\(\hat\sigma_p\)</span>. Then, <span class="math display">\[\frac{(\bar X-\bar Y)/\sigma\sqrt{1/n_1+1/n_2}}{\hat\sigma_p/\sigma}\]</span> is a ratio of a standard normal random variable and the square root of a Chi-squared random variable, divided by its degrees of freedom. Further, the numerator and denominator are independent. Therefore, the above quantity follows a <span class="math inline">\(t\)</span> distribution with <span class="math inline">\(n_1+n_2-2\)</span> degrees of freedom.</p>
 <p>This means that if <span class="math inline">\(\left|\frac{\bar X-\bar Y}{\hat\sigma_p\sqrt{1/n_1+1/n_2}}\right|\geq t_{n_1+n_2-2,1-\alpha/2}\)</span>, then we reject the null hypothesis.</p>
 <p>Let’s execute the test in R:</p>
-<div class="sourceCode" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Normally, I will give you a dataset. Here I generate the data</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Normally, I will give you a dataset. Here I generate the data</span></span>
 <span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">440</span>) </span>
 <span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>female_ages<span class="ot">=</span><span class="fu">rnorm</span>(<span class="dv">20</span>,<span class="dv">28</span>,<span class="dv">4</span>)</span>
 <span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>male_ages<span class="ot">=</span><span class="fu">rnorm</span>(<span class="dv">20</span>,<span class="dv">32</span>,<span class="dv">4</span>)</span>
 <span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Check for equal variance</span></span>
-<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a><span class="fu">var</span>(female_ages)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a><span class="fu">var</span>(female_ages)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <pre><code>[1] 15.72805</code></pre>
-<div class="sourceCode" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">var</span>(male_ages)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">var</span>(male_ages)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <pre><code>[1] 26.22371</code></pre>
-<div class="sourceCode" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Putting the data in a dataframe</span></span>
-<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="fu">cbind</span>(<span class="st">"Age"</span><span class="ot">=</span><span class="fu">c</span>(female_ages,male_ages),<span class="st">"Gender"</span><span class="ot">=</span><span class="fu">rep</span>(<span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">1</span>),<span class="at">each=</span><span class="dv">20</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Putting the data in a dataframe</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="fu">cbind</span>(<span class="st">"Age"</span><span class="ot">=</span><span class="fu">c</span>(female_ages,male_ages),<span class="st">"Gender"</span><span class="ot">=</span><span class="fu">rep</span>(<span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">1</span>),<span class="at">each=</span><span class="dv">20</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <pre><code>           Age Gender
  [1,] 37.19809      0
  [2,] 20.69693      0
@@ -430,20 +571,20 @@ Note
 [38,] 31.87533      1
 [39,] 23.71793      1
 [40,] 30.54803      1</code></pre>
-<div class="sourceCode" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>df<span class="ot">=</span><span class="fu">data.frame</span>(<span class="fu">cbind</span>(<span class="st">"Age"</span><span class="ot">=</span><span class="fu">c</span>(female_ages,male_ages),<span class="st">"Gender"</span><span class="ot">=</span><span class="fu">rep</span>(<span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">1</span>),<span class="at">each=</span><span class="dv">20</span>)))</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>df<span class="ot">=</span><span class="fu">data.frame</span>(<span class="fu">cbind</span>(<span class="st">"Age"</span><span class="ot">=</span><span class="fu">c</span>(female_ages,male_ages),<span class="st">"Gender"</span><span class="ot">=</span><span class="fu">rep</span>(<span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">1</span>),<span class="at">each=</span><span class="dv">20</span>)))</span>
 <span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a><span class="co">#exploring the data</span></span>
 <span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a><span class="co">#hist(x) creates a histogram of the vector x</span></span>
 <span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(df<span class="sc">$</span>Age[df<span class="sc">$</span>Gender<span class="sc">==</span><span class="dv">0</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(df<span class="sc">$</span>Age[df<span class="sc">$</span>Gender<span class="sc">==</span><span class="dv">0</span>])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><img src="Unit_1_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid"></p>
-<div class="sourceCode" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(df<span class="sc">$</span>Age[df<span class="sc">$</span>Gender<span class="sc">==</span><span class="dv">1</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(df<span class="sc">$</span>Age[df<span class="sc">$</span>Gender<span class="sc">==</span><span class="dv">1</span>])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><img src="Unit_1_files/figure-html/unnamed-chunk-4-2.png" class="img-fluid"></p>
-<div class="sourceCode" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="co">#boxplot creates boxplots of Age against gender</span></span>
-<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(Age<span class="sc">~</span>Gender, df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="co">#boxplot creates boxplots of Age against gender</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(Age<span class="sc">~</span>Gender, df)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><img src="Unit_1_files/figure-html/unnamed-chunk-4-3.png" class="img-fluid"></p>
-<div class="sourceCode" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>test<span class="ot">=</span><span class="fu">t.test</span>(Age<span class="sc">~</span>Gender,<span class="at">data=</span>df,<span class="at">var.equal=</span><span class="cn">TRUE</span>)</span>
-<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>test</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>test<span class="ot">=</span><span class="fu">t.test</span>(Age<span class="sc">~</span>Gender,<span class="at">data=</span>df,<span class="at">var.equal=</span><span class="cn">TRUE</span>)</span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>test</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <pre><code>
     Two Sample t-test
 
@@ -455,10 +596,10 @@ alternative hypothesis: true difference in means between group 0 and group 1 is 
 sample estimates:
 mean in group 0 mean in group 1 
        28.65627        32.65396 </code></pre>
-<div class="sourceCode" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Interpret the P value, and CI, what are we going to say to a stakeholder?</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Interpret the P value, and CI, what are we going to say to a stakeholder?</span></span>
 <span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a><span class="co">#e.g.</span></span>
-<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>test<span class="sc">$</span>estimate</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>test<span class="sc">$</span>estimate</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <pre><code>mean in group 0 mean in group 1 
        28.65627        32.65396 </code></pre>
 <div class="callout callout-style-default callout-note callout-titled">
@@ -474,9 +615,25 @@ Note
 <p>Note also that we can use the confidence interval method, meaning that if if 0 is in the interval: <span class="math display">\[ \hat\Delta\pm t_{n_1+n_2-2,1-\alpha/2}\hat\sigma_p\sqrt{1/n_1+1/n_2},\]</span> then we fail to reject the null hypothesis.</p>
 </div>
 </div>
-</section>
-<section id="homework-stop-2" class="level2" data-number="2.4">
-<h2 data-number="2.4" data-anchor-id="homework-stop-2"><span class="header-section-number">2.4</span> Homework stop 2</h2>
+<div class="callout callout-style-default callout-note callout-titled" title="Key takeaways before moving on">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Key takeaways before moving on
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li>A confidence interval quantifies sampling uncertainty in an estimate; the randomness lives in the <em>interval</em>, not in the fixed, unknown population parameter.</li>
+<li>A hypothesis test starts by assuming <span class="math inline">\(H_0\)</span> is true, then asks how surprising the observed data would be under that assumption — that surprise level is the p-value.</li>
+<li>A small p-value is evidence <em>against</em> <span class="math inline">\(H_0\)</span>, not a probability that <span class="math inline">\(H_0\)</span> is true.</li>
+<li>Type 1 error (false alarm: rejecting a true <span class="math inline">\(H_0\)</span>) and Type 2 error (missed detection: failing to reject a false <span class="math inline">\(H_0\)</span>) trade off against each other, and which one matters more depends on context.</li>
+<li>Two-sample tests (comparing <span class="math inline">\(\mu_1\)</span> vs.&nbsp;<span class="math inline">\(\mu_2\)</span>) use exactly the same logic as one-sample tests, just applied to the difference <span class="math inline">\(\Delta=\mu_1-\mu_2\)</span>.</li>
+</ul>
+</div>
+</div>
 <p><strong>Exercise 2.10</strong> IBM Human Resources (HR) department is evaluating job applicants from York University.</p>
 <p>They are interested to know if the 2020 ITEC graduating class has an average GPA higher than 6 (i.e.&nbsp;average GPA higher than ``B’’). They collected the GPA of 25 ITEC students graduated in 2020.</p>
 <table class="caption-top table">
@@ -542,235 +699,307 @@ Tip
 <li>Statistic vs.&nbsp;Parameter</li>
 <li>Estimate vs.&nbsp;Estimator</li>
 </ul>
+</section>
+<section id="check-your-understanding" class="level2" data-number="2.3">
+<h2 data-number="2.3" data-anchor-id="check-your-understanding"><span class="header-section-number">2.3</span> Check Your Understanding</h2>
+<style>
+details.qa-answer { margin: 0 0 1.25em 0; border-left: 3px solid #d6eaf8; padding-left: 0.75em; }
+details.qa-answer > summary { cursor: pointer; color: #2e86c1; font-weight: 600; }
+details.qa-answer > summary::marker { color: #2e86c1; }
+details.qa-answer[open] > summary { margin-bottom: 0.5em; }
+details.qa-answer p { margin: 0; }
+</style>
+<p>Review your material and complete the above exercises before continuing to the next section. The questions below are a quick self-check on the material from this page — try each one, then click <strong>Show answer</strong> to check yourself.</p>
+<p><strong>Question 1.</strong> A 90% confidence interval for the average commute time of employees at a company is <span class="math inline">\((22,28)\)</span> minutes. Which of the following is a correct interpretation? (a) There’s a 90% chance the true average commute time is between 22 and 28 minutes. (b) If we repeated this sampling procedure many times, about 90% of the resulting intervals would contain the true average commute time.</p>
+<details class="qa-answer">
+<summary>
+Show answer
+</summary>
+<p>
+(b). The true average commute time is a fixed (though unknown) number — it either is or isn’t in <span class="math inline">\((22,28)\)</span>, so it doesn’t make sense to assign it a probability. It’s the interval’s endpoints that are random, varying from sample to sample, which is exactly what statement (b) describes.
+</p>
+</details>
+<p><strong>Question 2.</strong> A researcher tests <span class="math inline">\(H_0\colon \mu=0\)</span> vs.&nbsp;<span class="math inline">\(H_1\colon \mu\neq0\)</span> and gets a p-value of <span class="math inline">\(0.03\)</span>. Using <span class="math inline">\(\alpha=0.05\)</span>, what do they conclude? What does the p-value of <span class="math inline">\(0.03\)</span> actually represent?</p>
+<details class="qa-answer">
+<summary>
+Show answer
+</summary>
+<p>
+Since <span class="math inline">\(0.03&lt;0.05\)</span>, they reject <span class="math inline">\(H_0\)</span>. The p-value of <span class="math inline">\(0.03\)</span> means: if <span class="math inline">\(H_0\)</span> were actually true (true mean is 0), there would only be a 3% chance of observing a test statistic at least as extreme as the one actually observed. That’s unlikely enough to conclude <span class="math inline">\(H_0\)</span> is probably false — it is not the probability that <span class="math inline">\(H_0\)</span> itself is true.
+</p>
+</details>
+<p><strong>Question 3.</strong> A factory’s quality control test has <span class="math inline">\(H_0\colon\)</span> “the product is safe” vs.&nbsp;<span class="math inline">\(H_1\colon\)</span> “the product is defective.” Which type of error (Type 1 or Type 2) is more serious here, and why?</p>
+<details class="qa-answer">
+<summary>
+Show answer
+</summary>
+<p>
+Type 2 error (failing to reject <span class="math inline">\(H_0\)</span> — i.e., concluding the product is safe — when it’s actually defective) is generally far more serious here, since it means a genuinely dangerous product reaches consumers. A Type 1 error (flagging a safe product as defective) is costly but not dangerous. In practice this would push a company toward a testing procedure that is more sensitive to detecting defects, even at the cost of more false alarms.
+</p>
+</details>
+<p><strong>Question 4.</strong> True or False: failing to reject <span class="math inline">\(H_0\)</span> proves that <span class="math inline">\(H_0\)</span> is true. Explain.</p>
+<details class="qa-answer">
+<summary>
+Show answer
+</summary>
+<p>
+False. Failing to reject <span class="math inline">\(H_0\)</span> only means the data didn’t provide strong enough evidence against it — it could be that <span class="math inline">\(H_0\)</span> really is true, or that it’s false but the effect was too small or the sample too small/noisy to detect it. It is never proof that <span class="math inline">\(H_0\)</span> is true, the same way a “not guilty” verdict doesn’t prove innocence.
+</p>
+</details>
+<p><strong>Question 5.</strong> In the two-sample dating-age example on this page, why can we use a <span class="math inline">\(t\)</span>-distribution (rather than, say, a Normal distribution) for the test statistic <span class="math inline">\(\frac{\bar X-\bar Y}{\hat\sigma_p\sqrt{1/n_1+1/n_2}}\)</span>?</p>
+<details class="qa-answer">
+<summary>
+Show answer
+</summary>
+<p>
+Because the true variance <span class="math inline">\(\sigma^2\)</span> is unknown and had to be estimated (via the pooled variance <span class="math inline">\(\hat\sigma_p^2\)</span>) from the data. Dividing a standard Normal by an independent, <em>estimated</em> standard deviation is exactly the situation that produces a <span class="math inline">\(t\)</span>-distribution rather than a Normal — the extra uncertainty from estimating <span class="math inline">\(\sigma^2\)</span> widens the tails compared to a Normal.
+</p>
+</details>
+<p><strong>Question 6.</strong> A 95% confidence interval for <span class="math inline">\(\mu\)</span> turns out to be <span class="math inline">\((1.2, 4.8)\)</span>. Without redoing any calculations, what can you immediately conclude about a two-sided test of <span class="math inline">\(H_0\colon \mu=0\)</span> vs.&nbsp;<span class="math inline">\(H_1\colon \mu\neq 0\)</span> at <span class="math inline">\(\alpha=0.05\)</span>?</p>
+<details class="qa-answer">
+<summary>
+Show answer
+</summary>
+<p>
+We would reject <span class="math inline">\(H_0\)</span>. The confidence-interval method mentioned on this page says: fail to reject <span class="math inline">\(H_0\colon\mu=\mu_0\)</span> at level <span class="math inline">\(\alpha\)</span> exactly when <span class="math inline">\(\mu_0\)</span> falls inside the <span class="math inline">\((1-\alpha)100\%\)</span> confidence interval. Since <span class="math inline">\(0\)</span> is not inside <span class="math inline">\((1.2,4.8)\)</span>, the test rejects <span class="math inline">\(H_0\colon\mu=0\)</span> — no need to recompute the test statistic or p-value from scratch.
+</p>
+</details>
 
 
 </section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
-window.document.addEventListener("DOMContentLoaded", function (event) {
-  const toggleBodyColorMode = (bsSheetEl) => {
-    const mode = bsSheetEl.getAttribute("data-mode");
-    const bodyEl = window.document.querySelector("body");
-    if (mode === "dark") {
-      bodyEl.classList.add("quarto-dark");
-      bodyEl.classList.remove("quarto-light");
-    } else {
-      bodyEl.classList.add("quarto-light");
-      bodyEl.classList.remove("quarto-dark");
-    }
-  }
-  const toggleBodyColorPrimary = () => {
-    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
-    if (bsSheetEl) {
-      toggleBodyColorMode(bsSheetEl);
-    }
-  }
-  toggleBodyColorPrimary();  
-  const isCodeAnnotation = (el) => {
-    for (const clz of el.classList) {
-      if (clz.startsWith('code-annotation-')) {                     
-        return true;
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
       }
+      return false;
     }
-    return false;
-  }
-  const onCopySuccess = function(e) {
-    // button target
-    const button = e.trigger;
-    // don't keep focus
-    button.blur();
-    // flash "checked"
-    button.classList.add('code-copy-button-checked');
-    var currentTitle = button.getAttribute("title");
-    button.setAttribute("title", "Copied!");
-    let tooltip;
-    if (window.bootstrap) {
-      button.setAttribute("data-bs-toggle", "tooltip");
-      button.setAttribute("data-bs-placement", "left");
-      button.setAttribute("data-bs-title", "Copied!");
-      tooltip = new bootstrap.Tooltip(button, 
-        { trigger: "manual", 
-          customClass: "code-copy-button-tooltip",
-          offset: [0, -8]});
-      tooltip.show();    
-    }
-    setTimeout(function() {
-      if (tooltip) {
-        tooltip.hide();
-        button.removeAttribute("data-bs-title");
-        button.removeAttribute("data-bs-toggle");
-        button.removeAttribute("data-bs-placement");
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
       }
-      button.setAttribute("title", currentTitle);
-      button.classList.remove('code-copy-button-checked');
-    }, 1000);
-    // clear code selection
-    e.clearSelection();
-  }
-  const getTextToCopy = function(trigger) {
-      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
       for (const childEl of codeEl.children) {
         if (isCodeAnnotation(childEl)) {
           childEl.remove();
         }
       }
       return codeEl.innerText;
-  }
-  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
-    text: getTextToCopy
-  });
-  clipboard.on('success', onCopySuccess);
-  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
-    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
-      text: getTextToCopy,
-      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
     });
-    clipboardModal.on('success', onCopySuccess);
-  }
-    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
-    var mailtoRegex = new RegExp(/^mailto:/);
-      var filterRegex = new RegExp('/' + window.location.host + '/');
-    var isInternal = (href) => {
-        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
     }
-    // Inspect non-navigation links and adorn them if external
- 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
-    for (var i=0; i<links.length; i++) {
-      const link = links[i];
-      if (!isInternal(link.href)) {
-        // undo the damage that might have been done by quarto-nav.js in the case of
-        // links that we want to consider external
-        if (link.dataset.originalHref !== undefined) {
-          link.href = link.dataset.originalHref;
-        }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
       }
-    }
-  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
-    const config = {
-      allowHTML: true,
-      maxWidth: 500,
-      delay: 100,
-      arrow: false,
-      appendTo: function(el) {
-          return el.parentElement;
-      },
-      interactive: true,
-      interactiveBorder: 10,
-      theme: 'quarto',
-      placement: 'bottom-start',
-    };
-    if (contentFn) {
-      config.content = contentFn;
-    }
-    if (onTriggerFn) {
-      config.onTrigger = onTriggerFn;
-    }
-    if (onUntriggerFn) {
-      config.onUntrigger = onUntriggerFn;
-    }
-    window.tippy(el, config); 
-  }
-  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
-  for (var i=0; i<noterefs.length; i++) {
-    const ref = noterefs[i];
-    tippyHover(ref, function() {
-      // use id or data attribute instead here
-      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
-      try { href = new URL(href).hash; } catch {}
-      const id = href.replace(/^#\/?/, "");
-      const note = window.document.getElementById(id);
-      if (note) {
-        return note.innerHTML;
-      } else {
-        return "";
-      }
-    });
-  }
-  const xrefs = window.document.querySelectorAll('a.quarto-xref');
-  const processXRef = (id, note) => {
-    // Strip column container classes
-    const stripColumnClz = (el) => {
-      el.classList.remove("page-full", "page-columns");
-      if (el.children) {
-        for (const child of el.children) {
-          stripColumnClz(child);
-        }
-      }
-    }
-    stripColumnClz(note)
-    if (id === null || id.startsWith('sec-')) {
-      // Special case sections, only their first couple elements
-      const container = document.createElement("div");
-      if (note.children && note.children.length > 2) {
-        container.appendChild(note.children[0].cloneNode(true));
-        for (let i = 1; i < note.children.length; i++) {
-          const child = note.children[i];
-          if (child.tagName === "P" && child.innerText === "") {
-            continue;
-          } else {
-            container.appendChild(child.cloneNode(true));
-            break;
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
           }
         }
-        if (window.Quarto?.typesetMath) {
-          window.Quarto.typesetMath(container);
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
         }
-        return container.innerHTML
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
       } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
         if (window.Quarto?.typesetMath) {
           window.Quarto.typesetMath(note);
         }
-        return note.innerHTML;
-      }
-    } else {
-      // Remove any anchor links if they are present
-      const anchorLink = note.querySelector('a.anchorjs-link');
-      if (anchorLink) {
-        anchorLink.remove();
-      }
-      if (window.Quarto?.typesetMath) {
-        window.Quarto.typesetMath(note);
-      }
-      if (note.classList.contains("callout")) {
-        return note.outerHTML;
-      } else {
-        return note.innerHTML;
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
       }
     }
-  }
-  for (var i=0; i<xrefs.length; i++) {
-    const xref = xrefs[i];
-    tippyHover(xref, undefined, function(instance) {
-      instance.disable();
-      let url = xref.getAttribute('href');
-      let hash = undefined; 
-      if (url.startsWith('#')) {
-        hash = url;
-      } else {
-        try { hash = new URL(url).hash; } catch {}
-      }
-      if (hash) {
-        const id = hash.replace(/^#\/?/, "");
-        const note = window.document.getElementById(id);
-        if (note !== null) {
-          try {
-            const html = processXRef(id, note.cloneNode(true));
-            instance.setContent(html);
-          } finally {
-            instance.enable();
-            instance.show();
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
           }
         } else {
-          // See if we can fetch this
-          fetch(url.split('#')[0])
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
           .then(res => res.text())
           .then(html => {
             const parser = new DOMParser();
             const htmlDoc = parser.parseFromString(html, "text/html");
-            const note = htmlDoc.getElementById(id);
+            const note = htmlDoc.querySelector('main.content');
             if (note !== null) {
-              const html = processXRef(id, note);
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
               instance.setContent(html);
             } 
           }).finally(() => {
@@ -778,185 +1007,161 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
             instance.show();
           });
         }
-      } else {
-        // See if we can fetch a full url (with no hash to target)
-        // This is a special case and we should probably do some content thinning / targeting
-        fetch(url)
-        .then(res => res.text())
-        .then(html => {
-          const parser = new DOMParser();
-          const htmlDoc = parser.parseFromString(html, "text/html");
-          const note = htmlDoc.querySelector('main.content');
-          if (note !== null) {
-            // This should only happen for chapter cross references
-            // (since there is no id in the URL)
-            // remove the first header
-            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
-              note.children[0].remove();
-            }
-            const html = processXRef(null, note);
-            instance.setContent(html);
-          } 
-        }).finally(() => {
-          instance.enable();
-          instance.show();
-        });
-      }
-    }, function(instance) {
-    });
-  }
-      let selectedAnnoteEl;
-      const selectorForAnnotation = ( cell, annotation) => {
-        let cellAttr = 'data-code-cell="' + cell + '"';
-        let lineAttr = 'data-code-annotation="' +  annotation + '"';
-        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
-        return selector;
-      }
-      const selectCodeLines = (annoteEl) => {
-        const doc = window.document;
-        const targetCell = annoteEl.getAttribute("data-target-cell");
-        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
-        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
-        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
-        const lineIds = lines.map((line) => {
-          return targetCell + "-" + line;
-        })
-        let top = null;
-        let height = null;
-        let parent = null;
-        if (lineIds.length > 0) {
-            //compute the position of the single el (top and bottom and make a div)
-            const el = window.document.getElementById(lineIds[0]);
-            top = el.offsetTop;
-            height = el.offsetHeight;
-            parent = el.parentElement.parentElement;
-          if (lineIds.length > 1) {
-            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
-            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
-            height = bottom - top;
-          }
-          if (top !== null && height !== null && parent !== null) {
-            // cook up a div (if necessary) and position it 
-            let div = window.document.getElementById("code-annotation-line-highlight");
-            if (div === null) {
-              div = window.document.createElement("div");
-              div.setAttribute("id", "code-annotation-line-highlight");
-              div.style.position = 'absolute';
-              parent.appendChild(div);
-            }
-            div.style.top = top - 2 + "px";
-            div.style.height = height + 4 + "px";
-            div.style.left = 0;
-            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
-            if (gutterDiv === null) {
-              gutterDiv = window.document.createElement("div");
-              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
-              gutterDiv.style.position = 'absolute';
-              const codeCell = window.document.getElementById(targetCell);
-              const gutter = codeCell.querySelector('.code-annotation-gutter');
-              gutter.appendChild(gutterDiv);
-            }
-            gutterDiv.style.top = top - 2 + "px";
-            gutterDiv.style.height = height + 4 + "px";
-          }
-          selectedAnnoteEl = annoteEl;
-        }
-      };
-      const unselectCodeLines = () => {
-        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
-        elementsIds.forEach((elId) => {
-          const div = window.document.getElementById(elId);
-          if (div) {
-            div.remove();
-          }
-        });
-        selectedAnnoteEl = undefined;
-      };
-        // Handle positioning of the toggle
-    window.addEventListener(
-      "resize",
-      throttle(() => {
-        elRect = undefined;
-        if (selectedAnnoteEl) {
-          selectCodeLines(selectedAnnoteEl);
-        }
-      }, 10)
-    );
-    function throttle(fn, ms) {
-    let throttle = false;
-    let timer;
-      return (...args) => {
-        if(!throttle) { // first call gets through
-            fn.apply(this, args);
-            throttle = true;
-        } else { // all the others get throttled
-            if(timer) clearTimeout(timer); // cancel #2
-            timer = setTimeout(() => {
-              fn.apply(this, args);
-              timer = throttle = false;
-            }, ms);
-        }
-      };
-    }
-      // Attach click handler to the DT
-      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
-      for (const annoteDlNode of annoteDls) {
-        annoteDlNode.addEventListener('click', (event) => {
-          const clickedEl = event.target;
-          if (clickedEl !== selectedAnnoteEl) {
-            unselectCodeLines();
-            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
-            if (activeEl) {
-              activeEl.classList.remove('code-annotation-active');
-            }
-            selectCodeLines(clickedEl);
-            clickedEl.classList.add('code-annotation-active');
-          } else {
-            // Unselect the line
-            unselectCodeLines();
-            clickedEl.classList.remove('code-annotation-active');
-          }
-        });
-      }
-  const findCites = (el) => {
-    const parentEl = el.parentElement;
-    if (parentEl) {
-      const cites = parentEl.dataset.cites;
-      if (cites) {
-        return {
-          el,
-          cites: cites.split(' ')
-        };
-      } else {
-        return findCites(el.parentElement)
-      }
-    } else {
-      return undefined;
-    }
-  };
-  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
-  for (var i=0; i<bibliorefs.length; i++) {
-    const ref = bibliorefs[i];
-    const citeInfo = findCites(ref);
-    if (citeInfo) {
-      tippyHover(citeInfo.el, function() {
-        var popup = window.document.createElement('div');
-        citeInfo.cites.forEach(function(cite) {
-          var citeDiv = window.document.createElement('div');
-          citeDiv.classList.add('hanging-indent');
-          citeDiv.classList.add('csl-entry');
-          var biblioDiv = window.document.getElementById('ref-' + cite);
-          if (biblioDiv) {
-            citeDiv.innerHTML = biblioDiv.innerHTML;
-          }
-          popup.appendChild(citeDiv);
-        });
-        return popup.innerHTML;
+      }, function(instance) {
       });
     }
-  }
-});
-</script>
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
       <a href="./Unit_1_1.html" class="pagination-link" aria-label="Review of random variables">

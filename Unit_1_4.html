@@ -2,17 +2,23 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.6.42">
+<meta name="generator" content="quarto-1.10.18">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
 <title>4&nbsp; Review Random Vectors – Regression Notes</title>
 <style>
-code{white-space: pre-wrap;}
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
 span.smallcaps{font-variant: small-caps;}
-div.columns{display: flex; gap: min(4vw, 1.5em);}
-div.column{flex: auto; overflow-x: auto;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
 div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
@@ -30,15 +36,17 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
+<link href="./Glossary.html" rel="next">
 <link href="./Unit_1_3.html" rel="prev">
-<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-2f5df379a58b258e96c21c0638c20c03.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-8da5b4427184b79ecddefad3d342027e.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-ed7344add5f1663e434276306a2aa159.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -68,7 +76,7 @@ ul.task-list li input[type="checkbox"] {
 }</script>
 
   <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-chtml.js" type="text/javascript"></script>
 
 <script type="text/javascript">
 const typesetMath = (el) => {
@@ -81,7 +89,7 @@ const typesetMath = (el) => {
     var macros = [];
     for (var i = 0; i < mathElements.length; i++) {
       var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN") {
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
         window.katex.render(texText.data, mathElements[i], {
           displayMode: mathElements[i].classList.contains('display'),
           throwOnError: false,
@@ -99,7 +107,7 @@ window.Quarto = {
 
 </head>
 
-<body class="nav-sidebar floating">
+<body class="nav-sidebar floating quarto-light">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -172,6 +180,12 @@ window.Quarto = {
  <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Review Random Vectors</span></span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Glossary.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Glossary</span></a>
+  </div>
+</li>
       </ul>
   </li>
     </ul>
@@ -188,7 +202,7 @@ window.Quarto = {
   <li><a href="#expected-value-and-covariance" id="toc-expected-value-and-covariance" class="nav-link" data-scroll-target="#expected-value-and-covariance"><span class="header-section-number">4.2</span> Expected Value and Covariance</a></li>
   <li><a href="#properties-of-expected-value-and-covariance" id="toc-properties-of-expected-value-and-covariance" class="nav-link" data-scroll-target="#properties-of-expected-value-and-covariance"><span class="header-section-number">4.3</span> Properties of expected value and covariance</a></li>
   <li><a href="#multivariate-normal-distribution" id="toc-multivariate-normal-distribution" class="nav-link" data-scroll-target="#multivariate-normal-distribution"><span class="header-section-number">4.4</span> Multivariate normal distribution</a></li>
-  <li><a href="#homework-stop-4" id="toc-homework-stop-4" class="nav-link" data-scroll-target="#homework-stop-4"><span class="header-section-number">4.5</span> Homework stop 4</a></li>
+  <li><a href="#check-your-understanding" id="toc-check-your-understanding" class="nav-link" data-scroll-target="#check-your-understanding"><span class="header-section-number">4.5</span> Check Your Understanding</a></li>
   </ul>
 </nav>
     </div>
@@ -214,11 +228,25 @@ window.Quarto = {
 </header>
 
 
+<p>This section combines the previous two: we now treat a whole collection of random variables — like an entire dataset’s worth of observations — as a single object, a random vector, and describe it using the matrix tools from the last section. This is the natural language for regression, where our data <span class="math inline">\(Y_1,\ldots,Y_n\)</span> is best thought of as one random vector <span class="math inline">\(Y\)</span>, and our estimator <span class="math inline">\(\hat\beta\)</span> turns out to be a (matrix) function of that vector.</p>
 <section id="definition-of-random-vectors" class="level2" data-number="4.1">
 <h2 data-number="4.1" data-anchor-id="definition-of-random-vectors"><span class="header-section-number">4.1</span> Definition of random vectors</h2>
 <p><strong>Definition 2.14</strong> Let <span class="math inline">\(Y_1, \cdots, Y_n\)</span> be random variables. Then <span class="math display">\[
 Y = \left( \begin{array}{c} Y_1 \\ \vdots \\ Y_n \end{array} \right)
 \]</span> is an <span class="math inline">\(n\)</span>-dimensional random vector.</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Intuition: a random vector is just a bundle of random variables">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Intuition: a random vector is just a bundle of random variables
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>There’s no new randomness concept here — a random vector is simply a way of writing down several random variables <em>together</em>, as a single column, so we can manipulate them all at once with matrix algebra instead of writing <span class="math inline">\(n\)</span> separate equations. If <span class="math inline">\(Y_1,\ldots,Y_n\)</span> are, say, the heights of <span class="math inline">\(n\)</span> randomly sampled students, then <span class="math inline">\(Y\)</span> is the vector of all <span class="math inline">\(n\)</span> heights from that one sample. Once you bundle them into <span class="math inline">\(Y\)</span>, you can ask not just “what’s the distribution of each <span class="math inline">\(Y_i\)</span> on its own?” but also “how do the <span class="math inline">\(Y_i\)</span>’s relate to <em>each other</em>?” — which is exactly what the covariance matrix below captures.</p>
+</div>
+</div>
 <p>Similar to a random variable, a random vector also comes with a probability mass function (if all the <span class="math inline">\(Y_i\)</span> are discrete) or a probability density function (if all the <span class="math inline">\(Y_i\)</span> are continuous), or a ``mixture’’ distribution (if some <span class="math inline">\(Y_i\)</span> are discrete and others are continuous). In general, a random vector is drawn from a multivariate distribution, defined by the PMF or PDF. Just as before, the PMF and PDF range is non-negative, the PMF sums to 1 over all outcomes, and the PDF integrates to 1 over <span class="math inline">\(\mathbb{R}^n\)</span>. One discrete multivariate distribution you have learned in 1131 is the Multinomial distribution. We will learn about the multivariate normal distribution soon.</p>
 </section>
 <section id="expected-value-and-covariance" class="level2" data-number="4.2">
@@ -233,6 +261,19 @@ Y = \left( \begin{array}{c} Y_1 \\ \vdots \\ Y_n \end{array} \right)
 <p>Sometimes <span class="math inline">\({\textrm{cov}}\left[Y\right]\)</span> is written as <span class="math inline">\({\textrm{Var}}\left[Y\right]\)</span>.</p>
 <p>The following are some facts about <span class="math inline">\(\Sigma\)</span>:</p>
 <p><span class="math inline">\(\Sigma\)</span> is an <span class="math inline">\(n \times n\)</span> matrix with the diagonal elements being the variances, <span class="math inline">\({\textrm{Var}}\left[Y_i\right]\)</span> for <span class="math inline">\(i=1, \ldots, n\)</span>, and the off-diagonal elements being the covariances, <span class="math inline">\({\textrm{cov}}\left[Y_i, Y_j\right]\)</span> for <span class="math inline">\(i, j = 1, \ldots, n\)</span> and <span class="math inline">\(i \ne j\)</span>. <span class="math inline">\(\Sigma\)</span> is a symmetric, non-negative definite matrix. In this course, we further restrict it to be a positive definite matrix. <span class="math inline">\(\Sigma\)</span> is referred to as the <strong>covariance matrix</strong>.</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Intuition: reading a covariance matrix">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Intuition: reading a covariance matrix
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Every entry of <span class="math inline">\(\Sigma\)</span> has a plain-language meaning. The diagonal tells you how spread out each individual <span class="math inline">\(Y_i\)</span> is on its own (its variance); the off-diagonal entry <span class="math inline">\((i,j)\)</span> tells you how <span class="math inline">\(Y_i\)</span> and <span class="math inline">\(Y_j\)</span> move together (their covariance, in the sense from <a href="./Unit_1_1.html">Unit_1_1</a>). For example, for 3 stock returns <span class="math inline">\(Y_1,Y_2,Y_3\)</span>, a <span class="math inline">\(3\times3\)</span> <span class="math inline">\(\Sigma\)</span> with large diagonal entries and large positive off-diagonal entries says: each stock is individually volatile, <em>and</em> they tend to rise and fall together — a genuinely risky portfolio, since there’s no diversification benefit. <span class="math inline">\(\Sigma\)</span> being symmetric follows immediately from <span class="math inline">\({\textrm{cov}}[Y_i,Y_j]={\textrm{cov}}[Y_j,Y_i]\)</span>; it’s positive-definite (in this course) for the same reason no variance can be negative — you can’t have a linear combination of the <span class="math inline">\(Y_i\)</span>’s with negative “spread.”</p>
+</div>
+</div>
 </section>
 <section id="properties-of-expected-value-and-covariance" class="level2" data-number="4.3">
 <h2 data-number="4.3" data-anchor-id="properties-of-expected-value-and-covariance"><span class="header-section-number">4.3</span> Properties of expected value and covariance</h2>
@@ -242,6 +283,19 @@ Y = \left( \begin{array}{c} Y_1 \\ \vdots \\ Y_n \end{array} \right)
 <li><span class="math inline">\({\textrm{E}}(A + B Y) = A + B {\textrm{E}}(Y)\)</span></li>
 <li><span class="math inline">\({\textrm{cov}}\left[A + B Y\right] = B {\textrm{cov}}\left[Y\right] B^\top\)</span>.</li>
 </ul>
+<div class="callout callout-style-default callout-tip callout-titled" title="Intuition: these are the vector versions of rules you already know">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Intuition: these are the vector versions of rules you already know
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Compare these to the scalar linearity-of-expectation and variance-of-a-sum rules from <a href="./Unit_1_1.html">Unit_1_1</a> — they’re exactly the same ideas, just written for vectors and matrices instead of single numbers. <span class="math inline">\({\textrm{E}}(A+BY)=A+B{\textrm{E}}(Y)\)</span> is “expectation passes through linear transformations,” identical in spirit to <span class="math inline">\(\mathrm{E}(aX+b)=a\mathrm{E}(X)+b\)</span>. The covariance rule <span class="math inline">\({\textrm{cov}}[A+BY]=B\,{\textrm{cov}}[Y]\,B^\top\)</span> is the multivariate analogue of <span class="math inline">\({\textrm{Var}}[aX+b]=a^2{\textrm{Var}}[X]\)</span> — the matrix <span class="math inline">\(B\)</span> takes the place of the scalar <span class="math inline">\(a\)</span>, and since matrices don’t commute, <span class="math inline">\(B\)</span> shows up once on the left and once (transposed) on the right, rather than simply being squared. This exact rule is what lets us compute the covariance matrix of <span class="math inline">\(\hat\beta=(X^\top X)^{-1}X^\top Y\)</span> later in the course, by treating <span class="math inline">\(B=(X^\top X)^{-1}X^\top\)</span>.</p>
+</div>
+</div>
 <p><strong>Exercise 2.13</strong> Let <span class="math inline">\(Y = (Y_1, \ldots, Y_n)^\top\)</span> be a random vector, where <span class="math inline">\(Y_i\)</span> are i.i.d.&nbsp;random variables with mean <span class="math inline">\(\mu\)</span> and variance <span class="math inline">\(\sigma^2\)</span>. What are the mean and covariance of <span class="math inline">\(Y\)</span>? Use properties of random vectors to compute the mean and variance of the sample mean.</p>
 <p><em>Solution 2.4</em>. First, <span class="math inline">\({\textrm{E}}(Y) = \mu 1\)</span> and <span class="math inline">\({\textrm{cov}}\left[Y\right] = \sigma^2 I\)</span>. Note that <span class="math inline">\(\bar{Y} = (Y_1 + \cdots + Y_n)/n = \frac{1}{n}1^\top Y\)</span>. Now, we have <span class="math display">\[
 {\textrm{E}}(\bar{Y}) = {\textrm{E}}\left( \frac{1}{n}1^\top Y \right) =
@@ -261,251 +315,366 @@ Y = \left( \begin{array}{c} Y_1 \\ \vdots \\ Y_n \end{array} \right)
 <p>We say that a random vector <span class="math inline">\(X\sim \mathcal{N}_d(\mu,\Sigma)\)</span> follows a multivariate normal distribution if <span class="math inline">\(X\)</span> has PDF: <span class="math display">\[
 \phi(\mathbf{x})=\left(\frac{1}{2 \pi}\right)^{d / 2}|\Sigma|^{-1 / 2} \exp \left\{-\frac{1}{2}(\mathbf{x}-\mu)^{\prime} \Sigma^{-1}(\mathbf{x}-\mu)\right\}.
 \]</span></p>
+<div class="callout callout-style-default callout-warning callout-titled" title="Common mistake: carrying over the univariate formula's σ² as if it were a single number">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Warning</span>Common mistake: carrying over the univariate formula’s σ² as if it were a single number
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The univariate Normal PDF from <a href="./Unit_1_1.html">1.1</a> has <span class="math inline">\(\sigma^2\)</span> (a single number) in the denominator and inside the exponent. Here, <span class="math inline">\(\Sigma\)</span> (the whole covariance <em>matrix</em>, not a single variance) takes its place, and the operations around it change accordingly: dividing by <span class="math inline">\(\sigma^2\)</span> becomes multiplying by the matrix inverse <span class="math inline">\(\Sigma^{-1}\)</span>, and <span class="math inline">\(|\Sigma|^{-1/2}\)</span> (using the matrix determinant) replaces <span class="math inline">\(1/\sigma\)</span>. Don’t read <span class="math inline">\(\Sigma^{-1}\)</span> as “<span class="math inline">\(1/\Sigma\)</span>” in the ordinary numeric sense, and don’t forget that <span class="math inline">\((\mathbf{x}-\mu)\)</span> is a whole vector here, not a single number — every piece of the univariate formula has a genuine matrix/vector counterpart, not just a relabeling.</p>
+</div>
+</div>
 <p>If <span class="math inline">\(X\sim \mathcal{N}_d(\mu,\Sigma)\)</span> and <span class="math inline">\(c\in \mathbb{R}^d\)</span>, <span class="math inline">\(A\in \mathbb{R}^{m\times d}\)</span> then:</p>
 <ul>
 <li><span class="math inline">\(AX\sim \mathcal{N}(A\mu,A\Sigma A^\top)\)</span>.</li>
 <li><span class="math inline">\(c^\top X\sim \mathcal{N}(c^\top\mu,c^\top\Sigma c)\)</span>.</li>
 <li>Any conditional distribution for a subset of the variables conditional on another subset of variables is a multivariate distribution.</li>
 </ul>
+<div class="callout callout-style-default callout-tip callout-titled" title="Intuition: the multivariate Normal is closed under linear transformations">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Intuition: the multivariate Normal is closed under linear transformations
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The single most useful fact here is the first bullet: take a multivariate Normal vector, apply <em>any</em> linear transformation (<span class="math inline">\(AX\)</span>, a matrix times the vector), and the result is <em>still</em> multivariate Normal — you never leave the Normal family, you just get new mean and covariance parameters (<span class="math inline">\(A\mu\)</span> and <span class="math inline">\(A\Sigma A^\top\)</span>, which is exactly the covariance rule from two sections up). This is why Normal assumptions are so convenient for regression: once we assume our data is (multivariate) Normal, any linear combination of it we might compute — including the regression estimator <span class="math inline">\(\hat\beta\)</span> itself, which is a linear function of <span class="math inline">\(Y\)</span> — is guaranteed to be Normal too, with a covariance matrix we already know how to compute.</p>
+<p>The second bullet, <span class="math inline">\(c^\top X\sim\mathcal{N}(c^\top\mu,c^\top\Sigma c)\)</span>, is just a special case where <span class="math inline">\(A\)</span> is a single row: it says any single (scalar) weighted combination of the entries of <span class="math inline">\(X\)</span> is itself an ordinary, one-dimensional Normal random variable.</p>
+</div>
+</div>
 <p>Using random vectors is a simple way of deriving lots of equations for this course. Working with vectors also allows those who are “geometrically gifted” to view the whole regression concepts geometrically! If not, not to worry!</p>
-</section>
-<section id="homework-stop-4" class="level2" data-number="4.5">
-<h2 data-number="4.5" data-anchor-id="homework-stop-4"><span class="header-section-number">4.5</span> Homework stop 4</h2>
+<div class="callout callout-style-default callout-note callout-titled" title="Key takeaways before moving on">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Key takeaways before moving on
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li>A random vector just bundles several random variables into one column so we can use matrix algebra on them together.</li>
+<li>The covariance matrix <span class="math inline">\(\Sigma\)</span> packs variances on the diagonal and covariances off the diagonal — it’s symmetric and positive-definite.</li>
+<li>Expectation and covariance of a linear transformation <span class="math inline">\(A+BY\)</span> follow the same rules as the scalar case, just with matrices in place of scalars (and <span class="math inline">\(B\)</span> appearing on both sides of <span class="math inline">\(\Sigma\)</span> in the covariance rule, transposed on one side).</li>
+<li>The multivariate Normal family is closed under linear transformations: any linear function of a multivariate Normal vector is itself (multivariate) Normal.</li>
+<li>This machinery is exactly what lets us find the mean and covariance matrix of the regression estimator <span class="math inline">\(\hat\beta=(X^\top X)^{-1}X^\top Y\)</span> later in the course.</li>
+</ul>
+</div>
+</div>
 <p><strong>Exercise 2.14</strong> For a (full-rank) non-random matrix <span class="math inline">\(X\in \mathbb{R}^{n\times p}\)</span> with <span class="math inline">\(n&gt;p\)</span>, and random vector <span class="math inline">\(Y\in \mathbb{R}^{n\times 1}\)</span> with mean <span class="math inline">\(\mu\)</span> and covariance <span class="math inline">\(\Sigma\)</span>, compute the following:</p>
 <ul>
 <li>Expected value and covariance matrix of <span class="math inline">\((X^\top X)^{-1}X^\top Y\)</span></li>
 <li>Expected value of <span class="math inline">\(Y^\top Y\)</span></li>
 <li>Expected value and covariance matrix of <span class="math inline">\(Z^\top Z\)</span> where <span class="math inline">\(Z\)</span> is a fixed, nonrandom vector of <span class="math inline">\(d\)</span> dimensions</li>
 </ul>
+</section>
+<section id="check-your-understanding" class="level2" data-number="4.5">
+<h2 data-number="4.5" data-anchor-id="check-your-understanding"><span class="header-section-number">4.5</span> Check Your Understanding</h2>
+<style>
+details.qa-answer { margin: 0 0 1.25em 0; border-left: 3px solid #d6eaf8; padding-left: 0.75em; }
+details.qa-answer > summary { cursor: pointer; color: #2e86c1; font-weight: 600; }
+details.qa-answer > summary::marker { color: #2e86c1; }
+details.qa-answer[open] > summary { margin-bottom: 0.5em; }
+details.qa-answer p { margin: 0; }
+</style>
+<p>Review your material and complete the above exercises before continuing to the next section. The questions below are a quick self-check on the material from this page — try each one, then click <strong>Show answer</strong> to check yourself.</p>
+<p><strong>Question 1.</strong> For a random vector <span class="math inline">\(Y=(Y_1,Y_2,Y_3)^\top\)</span>, what does the <span class="math inline">\((2,3)\)</span> entry of <span class="math inline">\({\textrm{cov}}[Y]\)</span> represent? What about the <span class="math inline">\((1,1)\)</span> entry?</p>
+<details class="qa-answer">
+<summary>
+Show answer
+</summary>
+<p>
+The <span class="math inline">\((2,3)\)</span> entry is <span class="math inline">\({\textrm{cov}}[Y_2,Y_3]\)</span>, the covariance between the second and third entries of <span class="math inline">\(Y\)</span>. The <span class="math inline">\((1,1)\)</span> entry is <span class="math inline">\({\textrm{Var}}[Y_1]\)</span>, the variance of the first entry — diagonal entries of a covariance matrix are always variances.
+</p>
+</details>
+<p><strong>Question 2.</strong> Why must a covariance matrix <span class="math inline">\(\Sigma\)</span> always be symmetric?</p>
+<details class="qa-answer">
+<summary>
+Show answer
+</summary>
+<p>
+Because <span class="math inline">\({\textrm{cov}}[Y_i,Y_j]={\textrm{cov}}[Y_j,Y_i]\)</span> for any two random variables (covariance doesn’t care about order), so the <span class="math inline">\((i,j)\)</span> and <span class="math inline">\((j,i)\)</span> entries of <span class="math inline">\(\Sigma\)</span> are always equal — which is exactly the definition of a symmetric matrix.
+</p>
+</details>
+<p><strong>Question 3.</strong> If <span class="math inline">\(Y\)</span> has covariance matrix <span class="math inline">\(\Sigma\)</span> and <span class="math inline">\(A\)</span> is a matrix, what is the covariance matrix of <span class="math inline">\(AY\)</span>? What happens if <span class="math inline">\(A\)</span> is just a single row vector <span class="math inline">\(c^\top\)</span>?</p>
+<details class="qa-answer">
+<summary>
+Show answer
+</summary>
+<p>
+<span class="math inline">\({\textrm{cov}}[AY]=A\Sigma A^\top\)</span>. If <span class="math inline">\(A=c^\top\)</span> is a single row (a <span class="math inline">\(1\times n\)</span> matrix), the result <span class="math inline">\(c^\top\Sigma c\)</span> is a <span class="math inline">\(1\times1\)</span> matrix, i.e., just a single number — the ordinary (scalar) variance of the scalar random variable <span class="math inline">\(c^\top Y\)</span>.
+</p>
+</details>
+<p><strong>Question 4.</strong> True or False: if <span class="math inline">\(X\)</span> is multivariate Normal, then any linear combination of its entries is also Normal.</p>
+<details class="qa-answer">
+<summary>
+Show answer
+</summary>
+<p>
+True. This is one of the most useful properties of the multivariate Normal: it’s closed under linear transformations, so <span class="math inline">\(AX\)</span> (or, as a special case, <span class="math inline">\(c^\top X\)</span> for a single linear combination) is guaranteed to be (multivariate) Normal too, with mean <span class="math inline">\(A\mu\)</span> and covariance <span class="math inline">\(A\Sigma A^\top\)</span>.
+</p>
+</details>
+<p><strong>Question 5.</strong> Why is it useful to write our whole dataset <span class="math inline">\(Y_1,\ldots,Y_n\)</span> as a single random vector <span class="math inline">\(Y\)</span>, rather than working with the <span class="math inline">\(Y_i\)</span>’s one at a time?</p>
+<details class="qa-answer">
+<summary>
+Show answer
+</summary>
+<p>
+Bundling the data into one vector lets us use matrix algebra to handle the entire dataset at once — for instance, expressing the regression estimator as the single matrix formula <span class="math inline">\(\hat\beta=(X^\top X)^{-1}X^\top Y\)</span> instead of writing out <span class="math inline">\(n\)</span> separate scalar equations. It also lets us directly capture how observations relate to each other via the covariance matrix <span class="math inline">\(\Sigma\)</span>, not just their individual variances.
+</p>
+</details>
+<p><strong>Question 6.</strong> Let <span class="math inline">\(Z\in\mathbb{R}^d\)</span> be a fixed (non-random) vector. What are <span class="math inline">\(\mathrm{E}[Z^\top Z]\)</span> and <span class="math inline">\({\textrm{cov}}[Z^\top Z]\)</span>?</p>
+<details class="qa-answer">
+<summary>
+Show answer
+</summary>
+<p>
+<span class="math inline">\(Z^\top Z=\sum_{i=1}^d Z_i^2\)</span> is just a single fixed number (it’s the squared length of <span class="math inline">\(Z\)</span>), not a random variable at all, since <span class="math inline">\(Z\)</span> is non-random. So <span class="math inline">\(\mathrm{E}[Z^\top Z]=Z^\top Z\)</span> itself (the expectation of a constant is that constant), and <span class="math inline">\({\textrm{cov}}[Z^\top Z]=0\)</span> (a constant has no variability to measure). The lesson: once every piece of an expression is non-random, expectation and covariance stop doing anything interesting.
+</p>
+</details>
 
 
 </section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
-window.document.addEventListener("DOMContentLoaded", function (event) {
-  const toggleBodyColorMode = (bsSheetEl) => {
-    const mode = bsSheetEl.getAttribute("data-mode");
-    const bodyEl = window.document.querySelector("body");
-    if (mode === "dark") {
-      bodyEl.classList.add("quarto-dark");
-      bodyEl.classList.remove("quarto-light");
-    } else {
-      bodyEl.classList.add("quarto-light");
-      bodyEl.classList.remove("quarto-dark");
-    }
-  }
-  const toggleBodyColorPrimary = () => {
-    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
-    if (bsSheetEl) {
-      toggleBodyColorMode(bsSheetEl);
-    }
-  }
-  toggleBodyColorPrimary();  
-  const isCodeAnnotation = (el) => {
-    for (const clz of el.classList) {
-      if (clz.startsWith('code-annotation-')) {                     
-        return true;
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
       }
+      return false;
     }
-    return false;
-  }
-  const onCopySuccess = function(e) {
-    // button target
-    const button = e.trigger;
-    // don't keep focus
-    button.blur();
-    // flash "checked"
-    button.classList.add('code-copy-button-checked');
-    var currentTitle = button.getAttribute("title");
-    button.setAttribute("title", "Copied!");
-    let tooltip;
-    if (window.bootstrap) {
-      button.setAttribute("data-bs-toggle", "tooltip");
-      button.setAttribute("data-bs-placement", "left");
-      button.setAttribute("data-bs-title", "Copied!");
-      tooltip = new bootstrap.Tooltip(button, 
-        { trigger: "manual", 
-          customClass: "code-copy-button-tooltip",
-          offset: [0, -8]});
-      tooltip.show();    
-    }
-    setTimeout(function() {
-      if (tooltip) {
-        tooltip.hide();
-        button.removeAttribute("data-bs-title");
-        button.removeAttribute("data-bs-toggle");
-        button.removeAttribute("data-bs-placement");
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
       }
-      button.setAttribute("title", currentTitle);
-      button.classList.remove('code-copy-button-checked');
-    }, 1000);
-    // clear code selection
-    e.clearSelection();
-  }
-  const getTextToCopy = function(trigger) {
-      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
       for (const childEl of codeEl.children) {
         if (isCodeAnnotation(childEl)) {
           childEl.remove();
         }
       }
       return codeEl.innerText;
-  }
-  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
-    text: getTextToCopy
-  });
-  clipboard.on('success', onCopySuccess);
-  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
-    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
-      text: getTextToCopy,
-      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
     });
-    clipboardModal.on('success', onCopySuccess);
-  }
-    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
-    var mailtoRegex = new RegExp(/^mailto:/);
-      var filterRegex = new RegExp('/' + window.location.host + '/');
-    var isInternal = (href) => {
-        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
     }
-    // Inspect non-navigation links and adorn them if external
- 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
-    for (var i=0; i<links.length; i++) {
-      const link = links[i];
-      if (!isInternal(link.href)) {
-        // undo the damage that might have been done by quarto-nav.js in the case of
-        // links that we want to consider external
-        if (link.dataset.originalHref !== undefined) {
-          link.href = link.dataset.originalHref;
-        }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
       }
-    }
-  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
-    const config = {
-      allowHTML: true,
-      maxWidth: 500,
-      delay: 100,
-      arrow: false,
-      appendTo: function(el) {
-          return el.parentElement;
-      },
-      interactive: true,
-      interactiveBorder: 10,
-      theme: 'quarto',
-      placement: 'bottom-start',
-    };
-    if (contentFn) {
-      config.content = contentFn;
-    }
-    if (onTriggerFn) {
-      config.onTrigger = onTriggerFn;
-    }
-    if (onUntriggerFn) {
-      config.onUntrigger = onUntriggerFn;
-    }
-    window.tippy(el, config); 
-  }
-  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
-  for (var i=0; i<noterefs.length; i++) {
-    const ref = noterefs[i];
-    tippyHover(ref, function() {
-      // use id or data attribute instead here
-      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
-      try { href = new URL(href).hash; } catch {}
-      const id = href.replace(/^#\/?/, "");
-      const note = window.document.getElementById(id);
-      if (note) {
-        return note.innerHTML;
-      } else {
-        return "";
-      }
-    });
-  }
-  const xrefs = window.document.querySelectorAll('a.quarto-xref');
-  const processXRef = (id, note) => {
-    // Strip column container classes
-    const stripColumnClz = (el) => {
-      el.classList.remove("page-full", "page-columns");
-      if (el.children) {
-        for (const child of el.children) {
-          stripColumnClz(child);
-        }
-      }
-    }
-    stripColumnClz(note)
-    if (id === null || id.startsWith('sec-')) {
-      // Special case sections, only their first couple elements
-      const container = document.createElement("div");
-      if (note.children && note.children.length > 2) {
-        container.appendChild(note.children[0].cloneNode(true));
-        for (let i = 1; i < note.children.length; i++) {
-          const child = note.children[i];
-          if (child.tagName === "P" && child.innerText === "") {
-            continue;
-          } else {
-            container.appendChild(child.cloneNode(true));
-            break;
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
           }
         }
-        if (window.Quarto?.typesetMath) {
-          window.Quarto.typesetMath(container);
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
         }
-        return container.innerHTML
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
       } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
         if (window.Quarto?.typesetMath) {
           window.Quarto.typesetMath(note);
         }
-        return note.innerHTML;
-      }
-    } else {
-      // Remove any anchor links if they are present
-      const anchorLink = note.querySelector('a.anchorjs-link');
-      if (anchorLink) {
-        anchorLink.remove();
-      }
-      if (window.Quarto?.typesetMath) {
-        window.Quarto.typesetMath(note);
-      }
-      if (note.classList.contains("callout")) {
-        return note.outerHTML;
-      } else {
-        return note.innerHTML;
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
       }
     }
-  }
-  for (var i=0; i<xrefs.length; i++) {
-    const xref = xrefs[i];
-    tippyHover(xref, undefined, function(instance) {
-      instance.disable();
-      let url = xref.getAttribute('href');
-      let hash = undefined; 
-      if (url.startsWith('#')) {
-        hash = url;
-      } else {
-        try { hash = new URL(url).hash; } catch {}
-      }
-      if (hash) {
-        const id = hash.replace(/^#\/?/, "");
-        const note = window.document.getElementById(id);
-        if (note !== null) {
-          try {
-            const html = processXRef(id, note.cloneNode(true));
-            instance.setContent(html);
-          } finally {
-            instance.enable();
-            instance.show();
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
           }
         } else {
-          // See if we can fetch this
-          fetch(url.split('#')[0])
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
           .then(res => res.text())
           .then(html => {
             const parser = new DOMParser();
             const htmlDoc = parser.parseFromString(html, "text/html");
-            const note = htmlDoc.getElementById(id);
+            const note = htmlDoc.querySelector('main.content');
             if (note !== null) {
-              const html = processXRef(id, note);
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
               instance.setContent(html);
             } 
           }).finally(() => {
@@ -513,185 +682,161 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
             instance.show();
           });
         }
-      } else {
-        // See if we can fetch a full url (with no hash to target)
-        // This is a special case and we should probably do some content thinning / targeting
-        fetch(url)
-        .then(res => res.text())
-        .then(html => {
-          const parser = new DOMParser();
-          const htmlDoc = parser.parseFromString(html, "text/html");
-          const note = htmlDoc.querySelector('main.content');
-          if (note !== null) {
-            // This should only happen for chapter cross references
-            // (since there is no id in the URL)
-            // remove the first header
-            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
-              note.children[0].remove();
-            }
-            const html = processXRef(null, note);
-            instance.setContent(html);
-          } 
-        }).finally(() => {
-          instance.enable();
-          instance.show();
-        });
-      }
-    }, function(instance) {
-    });
-  }
-      let selectedAnnoteEl;
-      const selectorForAnnotation = ( cell, annotation) => {
-        let cellAttr = 'data-code-cell="' + cell + '"';
-        let lineAttr = 'data-code-annotation="' +  annotation + '"';
-        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
-        return selector;
-      }
-      const selectCodeLines = (annoteEl) => {
-        const doc = window.document;
-        const targetCell = annoteEl.getAttribute("data-target-cell");
-        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
-        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
-        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
-        const lineIds = lines.map((line) => {
-          return targetCell + "-" + line;
-        })
-        let top = null;
-        let height = null;
-        let parent = null;
-        if (lineIds.length > 0) {
-            //compute the position of the single el (top and bottom and make a div)
-            const el = window.document.getElementById(lineIds[0]);
-            top = el.offsetTop;
-            height = el.offsetHeight;
-            parent = el.parentElement.parentElement;
-          if (lineIds.length > 1) {
-            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
-            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
-            height = bottom - top;
-          }
-          if (top !== null && height !== null && parent !== null) {
-            // cook up a div (if necessary) and position it 
-            let div = window.document.getElementById("code-annotation-line-highlight");
-            if (div === null) {
-              div = window.document.createElement("div");
-              div.setAttribute("id", "code-annotation-line-highlight");
-              div.style.position = 'absolute';
-              parent.appendChild(div);
-            }
-            div.style.top = top - 2 + "px";
-            div.style.height = height + 4 + "px";
-            div.style.left = 0;
-            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
-            if (gutterDiv === null) {
-              gutterDiv = window.document.createElement("div");
-              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
-              gutterDiv.style.position = 'absolute';
-              const codeCell = window.document.getElementById(targetCell);
-              const gutter = codeCell.querySelector('.code-annotation-gutter');
-              gutter.appendChild(gutterDiv);
-            }
-            gutterDiv.style.top = top - 2 + "px";
-            gutterDiv.style.height = height + 4 + "px";
-          }
-          selectedAnnoteEl = annoteEl;
-        }
-      };
-      const unselectCodeLines = () => {
-        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
-        elementsIds.forEach((elId) => {
-          const div = window.document.getElementById(elId);
-          if (div) {
-            div.remove();
-          }
-        });
-        selectedAnnoteEl = undefined;
-      };
-        // Handle positioning of the toggle
-    window.addEventListener(
-      "resize",
-      throttle(() => {
-        elRect = undefined;
-        if (selectedAnnoteEl) {
-          selectCodeLines(selectedAnnoteEl);
-        }
-      }, 10)
-    );
-    function throttle(fn, ms) {
-    let throttle = false;
-    let timer;
-      return (...args) => {
-        if(!throttle) { // first call gets through
-            fn.apply(this, args);
-            throttle = true;
-        } else { // all the others get throttled
-            if(timer) clearTimeout(timer); // cancel #2
-            timer = setTimeout(() => {
-              fn.apply(this, args);
-              timer = throttle = false;
-            }, ms);
-        }
-      };
-    }
-      // Attach click handler to the DT
-      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
-      for (const annoteDlNode of annoteDls) {
-        annoteDlNode.addEventListener('click', (event) => {
-          const clickedEl = event.target;
-          if (clickedEl !== selectedAnnoteEl) {
-            unselectCodeLines();
-            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
-            if (activeEl) {
-              activeEl.classList.remove('code-annotation-active');
-            }
-            selectCodeLines(clickedEl);
-            clickedEl.classList.add('code-annotation-active');
-          } else {
-            // Unselect the line
-            unselectCodeLines();
-            clickedEl.classList.remove('code-annotation-active');
-          }
-        });
-      }
-  const findCites = (el) => {
-    const parentEl = el.parentElement;
-    if (parentEl) {
-      const cites = parentEl.dataset.cites;
-      if (cites) {
-        return {
-          el,
-          cites: cites.split(' ')
-        };
-      } else {
-        return findCites(el.parentElement)
-      }
-    } else {
-      return undefined;
-    }
-  };
-  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
-  for (var i=0; i<bibliorefs.length; i++) {
-    const ref = bibliorefs[i];
-    const citeInfo = findCites(ref);
-    if (citeInfo) {
-      tippyHover(citeInfo.el, function() {
-        var popup = window.document.createElement('div');
-        citeInfo.cites.forEach(function(cite) {
-          var citeDiv = window.document.createElement('div');
-          citeDiv.classList.add('hanging-indent');
-          citeDiv.classList.add('csl-entry');
-          var biblioDiv = window.document.getElementById('ref-' + cite);
-          if (biblioDiv) {
-            citeDiv.innerHTML = biblioDiv.innerHTML;
-          }
-          popup.appendChild(citeDiv);
-        });
-        return popup.innerHTML;
+      }, function(instance) {
       });
     }
-  }
-});
-</script>
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
       <a href="./Unit_1_3.html" class="pagination-link" aria-label="Review of matrices and linear algebra">
@@ -699,6 +844,9 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       </a>          
   </div>
   <div class="nav-page nav-page-next">
+      <a href="./Glossary.html" class="pagination-link" aria-label="Glossary">
+        <span class="nav-page-text">Glossary</span> <i class="bi bi-arrow-right-short"></i>
+      </a>
   </div>
 </nav>
 </div> <!-- /content -->
