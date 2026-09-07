@@ -388,8 +388,6 @@ Note also that we can use the confidence interval method, meaning that if if 0 i
 - Two-sample tests (comparing $\mu_1$ vs. $\mu_2$) use exactly the same logic as one-sample tests, just applied to the difference $\Delta=\mu_1-\mu_2$.
 :::
 
-## Homework stop 2
-
 **Exercise 2.10** IBM Human Resources (HR) department is evaluating job applicants from York University.
 
 They are interested to know if the 2020 ITEC graduating class has an average GPA higher than 6 (i.e. average GPA higher than ``B’’). They collected the GPA of 25 ITEC students graduated in 2020.
@@ -444,3 +442,7 @@ Review your material and complete the above exercises before continuing to the n
 **Question 5.** In the two-sample dating-age example on this page, why can we use a $t$-distribution (rather than, say, a Normal distribution) for the test statistic $\frac{\bar X-\bar Y}{\hat\sigma_p\sqrt{1/n_1+1/n_2}}$?
 
 <details class="qa-answer"><summary>Show answer</summary><p>Because the true variance $\sigma^2$ is unknown and had to be estimated (via the pooled variance $\hat\sigma_p^2$) from the data. Dividing a standard Normal by an independent, *estimated* standard deviation is exactly the situation that produces a $t$-distribution rather than a Normal — the extra uncertainty from estimating $\sigma^2$ widens the tails compared to a Normal.</p></details>
+
+**Question 6.** A 95% confidence interval for $\mu$ turns out to be $(1.2, 4.8)$. Without redoing any calculations, what can you immediately conclude about a two-sided test of $H_0\colon \mu=0$ vs. $H_1\colon \mu\neq 0$ at $\alpha=0.05$?
+
+<details class="qa-answer"><summary>Show answer</summary><p>We would reject $H_0$. The confidence-interval method mentioned on this page says: fail to reject $H_0\colon\mu=\mu_0$ at level $\alpha$ exactly when $\mu_0$ falls inside the $(1-\alpha)100\%$ confidence interval. Since $0$ is not inside $(1.2,4.8)$, the test rejects $H_0\colon\mu=0$ — no need to recompute the test statistic or p-value from scratch.</p></details>

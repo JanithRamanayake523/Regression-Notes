@@ -218,8 +218,6 @@ Positive-definiteness is the matrix generalization of "being a positive number":
 - Linear independence of $X$'s columns is what guarantees $X^\top X$ is invertible in the first place.
 :::
 
-## Homework stop 3
-
 **Exercise 2.12** Let $$
 W =  \left( \begin{array}{cc} 3 & 2 \\ -4 & 6 \end{array} \right)
 $$ and $x=(2,1)^\top$. Compute $W^{-1}$, $xx^\top$ and $x^\top W$. Verify that $W W^{-1} = W^{-1} W = I_2$.
@@ -260,3 +258,7 @@ Review your material and complete the above exercises before continuing to the n
 **Question 5.** For a $2\times2$ matrix $A=\begin{pmatrix}a&b\\c&d\end{pmatrix}$, under what condition does $A^{-1}$ fail to exist?
 
 <details class="qa-answer"><summary>Show answer</summary><p>When $ad-bc=0$ (the determinant is zero), since the inverse formula $\frac{1}{ad-bc}\begin{pmatrix}d&-b\\-c&a\end{pmatrix}$ requires dividing by $ad-bc$. A matrix with zero determinant is exactly what's meant by a <em>singular</em> matrix.</p></details>
+
+**Question 6.** A $4\times4$ matrix $A$ has rank 3. Is $A$ invertible? Explain the connection between rank and invertibility.
+
+<details class="qa-answer"><summary>Show answer</summary><p>No, $A$ is not invertible. A $d\times d$ matrix is invertible exactly when it has <em>full rank</em>, i.e., rank $d$ — equivalently, when its columns (or rows) are linearly independent. Here $A$ is $4\times4$ but only has rank 3, meaning its columns are linearly dependent (one column can be written as a combination of the others), so $A$ is singular. This is the same underlying idea as needing $X$'s columns to be linearly independent for $X^\top X$ to be invertible.</p></details>

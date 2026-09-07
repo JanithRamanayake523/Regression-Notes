@@ -94,8 +94,6 @@ Using random vectors is a simple way of deriving lots of equations for this cour
 - This machinery is exactly what lets us find the mean and covariance matrix of the regression estimator $\hat\beta=(X^\top X)^{-1}X^\top Y$ later in the course.
 :::
 
-## Homework stop 4
-
 **Exercise 2.14** For a (full-rank) non-random matrix $X\in \mathbb{R}^{n\times p}$ with $n>p$, and random vector $Y\in \mathbb{R}^{n\times 1}$ with mean $\mu$ and covariance $\Sigma$, compute the following:
 
 - Expected value and covariance matrix of $(X^\top X)^{-1}X^\top Y$
@@ -133,3 +131,7 @@ Review your material and complete the above exercises before continuing to the n
 **Question 5.** Why is it useful to write our whole dataset $Y_1,\ldots,Y_n$ as a single random vector $Y$, rather than working with the $Y_i$'s one at a time?
 
 <details class="qa-answer"><summary>Show answer</summary><p>Bundling the data into one vector lets us use matrix algebra to handle the entire dataset at once — for instance, expressing the regression estimator as the single matrix formula $\hat\beta=(X^\top X)^{-1}X^\top Y$ instead of writing out $n$ separate scalar equations. It also lets us directly capture how observations relate to each other via the covariance matrix $\Sigma$, not just their individual variances.</p></details>
+
+**Question 6.** Let $Z\in\mathbb{R}^d$ be a fixed (non-random) vector. What are $\mathrm{E}[Z^\top Z]$ and ${\textrm{cov}}[Z^\top Z]$?
+
+<details class="qa-answer"><summary>Show answer</summary><p>$Z^\top Z=\sum_{i=1}^d Z_i^2$ is just a single fixed number (it's the squared length of $Z$), not a random variable at all, since $Z$ is non-random. So $\mathrm{E}[Z^\top Z]=Z^\top Z$ itself (the expectation of a constant is that constant), and ${\textrm{cov}}[Z^\top Z]=0$ (a constant has no variability to measure). The lesson: once every piece of an expression is non-random, expectation and covariance stop doing anything interesting.</p></details>
