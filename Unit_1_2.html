@@ -312,6 +312,20 @@ window.Quarto = {
 </svg>
 </div>
 <p>For example, we have the formula for a confidence interval for the population mean is given by: <span class="math inline">\(\bar X\pm 1.96\hat\sigma\)</span>. Notice that it is based only on the data. Therefore, it will change if we drew a new sample.</p>
+<div class="callout callout-style-default callout-important callout-titled" title="Numerical Example 2.1: computing a confidence interval by hand">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Important</span>Numerical Example 2.1: computing a confidence interval by hand
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Suppose we take a random sample of <span class="math inline">\(n=25\)</span> packages from a shipping company and weigh each one. We find a sample mean weight of <span class="math inline">\(\bar X=52\)</span> kg. Assume the population standard deviation is known to be <span class="math inline">\(\sigma=10\)</span> kg (in practice we’d rarely know <span class="math inline">\(\sigma\)</span> exactly, but this keeps the arithmetic simple — we’ll switch to the estimated <span class="math inline">\(\hat\sigma\)</span> and a <span class="math inline">\(t\)</span>-distribution once we get to the worked <span class="math inline">\(R\)</span> examples below). Construct a 95% confidence interval for the true mean package weight <span class="math inline">\(\mu\)</span>.</p>
+<p><em>Solution.</em> The standard error of <span class="math inline">\(\bar X\)</span> is <span class="math display">\[\textrm{SE}(\bar X)=\frac{\sigma}{\sqrt n}=\frac{10}{\sqrt{25}}=\frac{10}{5}=2.\]</span> For a 95% confidence level, the relevant multiplier is <span class="math inline">\(1.96\)</span> (this comes from the standard Normal distribution: 95% of its probability lies within <span class="math inline">\(\pm1.96\)</span> of 0). So the margin of error is <span class="math display">\[1.96\times \textrm{SE}(\bar X)=1.96\times 2=3.92.\]</span> The confidence interval is therefore <span class="math display">\[\bar X\pm 3.92 = 52\pm 3.92 = (48.08,\ 55.92).\]</span> <strong>Interpretation:</strong> we are 95% confident that the true mean package weight <span class="math inline">\(\mu\)</span> lies between 48.08 kg and 55.92 kg. More precisely, if we repeated this sampling process many times, about 95% of the intervals we’d construct this way would contain the true <span class="math inline">\(\mu\)</span> — the number <span class="math inline">\(52\)</span> that we plugged in is just one sample’s estimate, and would be different for a different sample of 25 packages.</p>
+</div>
+</div>
 <p>To summarize this section, a confidence interval is used to quantify the uncertainty in our reported estimates. By uncertainty, we specifically mean the uncertainty resulting from the fact that we have only a sample of the population, and our estimate varies depending on the sample.</p>
 </section>
 <section id="hypothesis-tests" class="level2" data-number="2.2">
@@ -380,6 +394,23 @@ window.Quarto = {
 </tr>
 </tbody>
 </table>
+</div>
+</div>
+<div class="callout callout-style-default callout-important callout-titled" title="Numerical Example 2.2: a hypothesis test and p-value by hand">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Important</span>Numerical Example 2.2: a hypothesis test and p-value by hand
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>A cereal company claims that its boxes contain, on average, <span class="math inline">\(\mu_0=500\)</span> grams of cereal. A consumer group weighs a random sample of <span class="math inline">\(n=36\)</span> boxes and finds a sample mean of <span class="math inline">\(\bar X=494\)</span> grams, with sample standard deviation <span class="math inline">\(\hat\sigma=18\)</span> grams. Test, at <span class="math inline">\(\alpha=0.05\)</span>, whether the true mean box weight differs from 500 grams.</p>
+<p><em>Solution.</em> We set up the hypotheses: <span class="math display">\[H_0\colon \mu=500 \qquad \text{vs.}\qquad H_1\colon \mu\neq 500.\]</span> Since <span class="math inline">\(n=36\)</span> is reasonably large, we can treat the test statistic as approximately standard Normal under <span class="math inline">\(H_0\)</span> (equivalently, a <span class="math inline">\(t_{35}\)</span> distribution, which is very close to Normal for this many degrees of freedom): <span class="math display">\[z=\frac{\bar X-\mu_0}{\hat\sigma/\sqrt n}=\frac{494-500}{18/\sqrt{36}}=\frac{-6}{18/6}=\frac{-6}{3}=-2.\]</span> Our observed test statistic is <span class="math inline">\(-2\)</span>, meaning the sample mean is 2 standard errors below the claimed value.</p>
+<p>The p-value is the probability of seeing a test statistic at least this extreme (in either direction), if <span class="math inline">\(H_0\)</span> were true: <span class="math display">\[p\text{-value}=2\times P(Z\leq -2)=2\times 0.0228=0.0456.\]</span> (Here <span class="math inline">\(0.0228\)</span> is the standard Normal lower-tail probability at <span class="math inline">\(-2\)</span>, read off a <span class="math inline">\(Z\)</span>-table or computed with <code>pnorm(-2)</code> in R.)</p>
+<p>Since <span class="math inline">\(0.0456&lt;\alpha=0.05\)</span>, we reject <span class="math inline">\(H_0\)</span> — though only just, since the p-value is close to the threshold. There is evidence, though not overwhelming evidence, that the true mean box weight differs from the claimed 500 grams; in particular, since <span class="math inline">\(\bar X&lt;500\)</span>, the data suggests boxes are on average <em>underfilled</em>.</p>
+<p>We can double check this with the confidence-interval method: a 95% CI for <span class="math inline">\(\mu\)</span> is <span class="math display">\[\bar X\pm 1.96\times \frac{\hat\sigma}{\sqrt n}=494\pm 1.96\times 3=494\pm 5.88=(488.12,\ 499.88).\]</span> Since the claimed value <span class="math inline">\(500\)</span> falls just outside this interval, we again reject <span class="math inline">\(H_0\colon \mu=500\)</span> — consistent with the p-value calculation above.</p>
 </div>
 </div>
 <p>Let’s do an example.</p>
@@ -504,6 +535,23 @@ Note
 </div>
 <div class="callout-body-container callout-body">
 <p>Nothing new is happening conceptually here — we’re still doing the same “assume <span class="math inline">\(H_0\)</span>, see how surprising the data is” procedure. The only change is that our parameter of interest, <span class="math inline">\(\Delta=\mu_1-\mu_2\)</span>, is now a <em>difference</em> of two means instead of a single mean. Once we know how to find the distribution of <span class="math inline">\(\hat\Delta=\bar X-\bar Y\)</span> (the natural estimator of <span class="math inline">\(\Delta\)</span>), everything else — the test statistic, the p-value, the confidence interval — follows exactly the same recipe as the one-sample case above.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-important callout-titled" title="Numerical Example 2.3: a two-sample t-test by hand">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Important</span>Numerical Example 2.3: a two-sample t-test by hand
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>A teacher wants to know whether two different study methods lead to different average test scores. Method A is used by <span class="math inline">\(n_1=10\)</span> students, giving sample mean <span class="math inline">\(\bar X=78\)</span> and sample variance <span class="math inline">\(\hat\sigma_1^2=25\)</span>. Method B is used by <span class="math inline">\(n_2=12\)</span> students, giving sample mean <span class="math inline">\(\bar Y=82\)</span> and sample variance <span class="math inline">\(\hat\sigma_2^2=36\)</span>. Assume both populations are Normal with a common (but unknown) variance <span class="math inline">\(\sigma^2\)</span>. Test <span class="math inline">\(H_0\colon \Delta=\mu_1-\mu_2=0\)</span> vs.&nbsp;<span class="math inline">\(H_1\colon \Delta\neq 0\)</span> at <span class="math inline">\(\alpha=0.05\)</span>.</p>
+<p><em>Solution.</em> First we pool the two sample variances into a single estimate of the common <span class="math inline">\(\sigma^2\)</span>, weighting each by its degrees of freedom: <span class="math display">\[\hat\sigma_p^2=\frac{(n_1-1)\hat\sigma_1^2+(n_2-1)\hat\sigma_2^2}{n_1+n_2-2}=\frac{(9)(25)+(11)(36)}{10+12-2}=\frac{225+396}{20}=\frac{621}{20}=31.05.\]</span></p>
+<p>Next, the test statistic is <span class="math display">\[t=\frac{\bar X-\bar Y}{\hat\sigma_p\sqrt{1/n_1+1/n_2}}=\frac{78-82}{\sqrt{31.05}\sqrt{1/10+1/12}}=\frac{-4}{5.572\times\sqrt{0.1833}}=\frac{-4}{5.572\times 0.4282}=\frac{-4}{2.386}\approx -1.677.\]</span></p>
+<p>This statistic follows a <span class="math inline">\(t_{n_1+n_2-2}=t_{20}\)</span> distribution under <span class="math inline">\(H_0\)</span>. The critical value for a two-sided test at <span class="math inline">\(\alpha=0.05\)</span> with 20 degrees of freedom is <span class="math inline">\(t_{20,0.975}\approx 2.086\)</span>. Since <span class="math inline">\(|{-1.677}|=1.677&lt;2.086\)</span>, we <strong>fail to reject</strong> <span class="math inline">\(H_0\)</span>: this sample does not provide strong enough evidence, at the 5% level, that the two study methods lead to different average scores (even though the observed sample means, 78 vs.&nbsp;82, do differ numerically — with only 10 and 12 students per group, that gap is well within what we’d expect from sampling variability alone).</p>
+<p>Equivalently, using the confidence-interval method, a 95% CI for <span class="math inline">\(\Delta=\mu_1-\mu_2\)</span> is <span class="math display">\[(\bar X-\bar Y)\pm t_{20,0.975}\,\hat\sigma_p\sqrt{1/n_1+1/n_2}=-4\pm 2.086\times 2.386=-4\pm 4.977=(-8.98,\ 0.98).\]</span> Since this interval contains 0, we again fail to reject <span class="math inline">\(H_0\colon \Delta=0\)</span>.</p>
 </div>
 </div>
 <p>Let’s do another example:</p>
