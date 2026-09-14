@@ -6,10 +6,8 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="author" content="Janith Ramanayake">
-<meta name="dcterms.date" content="2026-09-14">
 
-<title>Regression Notes</title>
+<title>9&nbsp; Simple linear regression – Regression Notes</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -28,6 +26,41 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -38,7 +71,8 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./Unit_1_1.html" rel="next">
+<link href="./Unit_2_6.html" rel="next">
+<link href="./Unit_2_4.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
@@ -117,7 +151,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./index.html">Preface</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./Unit_2_1.html">Linear Regression</a></li><li class="breadcrumb-item"><a href="./Unit_2_5.html"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Simple linear regression</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -144,7 +178,7 @@ window.Quarto = {
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./index.html" class="sidebar-item-text sidebar-link active">
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Preface</span></a>
   </div>
 </li>
@@ -218,7 +252,7 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./Unit_2_5.html" class="sidebar-item-text sidebar-link">
+  <a href="./Unit_2_5.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Simple linear regression</span></span></a>
   </div>
 </li>
@@ -246,43 +280,26 @@ window.Quarto = {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#preface" id="toc-preface" class="nav-link active" data-scroll-target="#preface">Preface</a>
-  <ul class="collapse">
-  <li><a href="#how-these-notes-are-laid-out-start-here-if-youre-new" id="toc-how-these-notes-are-laid-out-start-here-if-youre-new" class="nav-link" data-scroll-target="#how-these-notes-are-laid-out-start-here-if-youre-new">How these notes are laid out (start here if you’re new)</a>
-  <ul class="collapse">
-  <li><a href="#the-road-map-for-the-review-material-chapter" id="toc-the-road-map-for-the-review-material-chapter" class="nav-link" data-scroll-target="#the-road-map-for-the-review-material-chapter">The road map for the Review material chapter</a></li>
-  <li><a href="#notation-youll-see-throughout" id="toc-notation-youll-see-throughout" class="nav-link" data-scroll-target="#notation-youll-see-throughout">Notation you’ll see throughout</a></li>
-  <li><a href="#what-the-colored-boxes-mean" id="toc-what-the-colored-boxes-mean" class="nav-link" data-scroll-target="#what-the-colored-boxes-mean">What the colored boxes mean</a></li>
-  </ul></li>
-  </ul></li>
+  <li><a href="#estimated-coefficients-in-closed-form" id="toc-estimated-coefficients-in-closed-form" class="nav-link active" data-scroll-target="#estimated-coefficients-in-closed-form"><span class="header-section-number">9.1</span> Estimated coefficients in closed form</a></li>
+  <li><a href="#inference-in-slr" id="toc-inference-in-slr" class="nav-link" data-scroll-target="#inference-in-slr"><span class="header-section-number">9.2</span> Inference in SLR</a></li>
+  <li><a href="#inference-for-the-correlation-coefficient" id="toc-inference-for-the-correlation-coefficient" class="nav-link" data-scroll-target="#inference-for-the-correlation-coefficient"><span class="header-section-number">9.3</span> Inference for the correlation coefficient</a></li>
+  <li><a href="#check-your-understanding" id="toc-check-your-understanding" class="nav-link" data-scroll-target="#check-your-understanding"><span class="header-section-number">9.4</span> Check Your Understanding</a></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default">
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./Unit_2_1.html">Linear Regression</a></li><li class="breadcrumb-item"><a href="./Unit_2_5.html"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Simple linear regression</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">Regression Notes</h1>
+<h1 class="title"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Simple linear regression</span></h1>
 </div>
 
 
 
 <div class="quarto-title-meta">
 
-    <div>
-    <div class="quarto-title-meta-heading">Author</div>
-    <div class="quarto-title-meta-contents">
-             <p>Janith Ramanayake </p>
-          </div>
-  </div>
     
-    <div>
-    <div class="quarto-title-meta-heading">Published</div>
-    <div class="quarto-title-meta-contents">
-      <p class="date">September 14, 2026</p>
-    </div>
-  </div>
   
     
   </div>
@@ -292,175 +309,197 @@ window.Quarto = {
 </header>
 
 
-<section id="preface" class="level1 unnumbered">
-<h1 class="unnumbered">Preface</h1>
-<p>Welcome to the Regression Notes! Please install <a href="https://www.r-project.org/">R</a> and <a href="https://posit.co/download/rstudio-desktop/">R studio</a> (Or you can use VSCode if you’re comfortable there.)</p>
-<p>In order to make the most of these notes, do all of the exercises in the order they appear.</p>
-<p>There will likely be typos and some errors, please let me know if you encounter any.</p>
-<p>These notes should be used in conjunction with the book:</p>
-<p>Title: Introduction to Linear Regression Analysis, Volume 821 of Wiley Series in Probability and Statistics Authors: Douglas C. Montgomery, Elizabeth A. Peck, G. Geoffrey Vining Edition: 5, illustrated, reprint Publisher: John Wiley &amp; Sons, 2012 ISBN: 0470542810, 9780470542811</p>
-<div class="callout callout-style-default callout-note callout-titled">
+<p>Simple linear regression (SLR) — one covariate — is a special case of the general MLR machinery from the last three sections. Because it has only two coefficients, everything simplifies into closed-form scalar expressions, which is worth seeing explicitly: it connects the abstract matrix formula <span class="math inline">\(\hat\beta=(X^\top X)^{-1}X^\top Y\)</span> back to the concrete slope/intercept formulas you may have already seen, and it reveals a direct link between the regression slope and the correlation coefficient from <a href="./Unit_1_1.html">Unit_1_1</a>.</p>
+<p>Recall the SLR model <span class="math inline">\(Y_i=\beta_0+\beta_1X_i+\epsilon_i\)</span>, with <span class="math display">\[
+y=\begin{pmatrix}y_1\\\vdots\\y_n\end{pmatrix},\quad
+X=\begin{pmatrix}1&amp;x_1\\\vdots&amp;\vdots\\1&amp;x_n\end{pmatrix},\quad
+\beta=\begin{pmatrix}\beta_0\\\beta_1\end{pmatrix},\quad
+\epsilon=\begin{pmatrix}\epsilon_1\\\vdots\\\epsilon_n\end{pmatrix}.
+\]</span></p>
+<section id="estimated-coefficients-in-closed-form" class="level2" data-number="9.1">
+<h2 data-number="9.1" data-anchor-id="estimated-coefficients-in-closed-form"><span class="header-section-number">9.1</span> Estimated coefficients in closed form</h2>
+<p>Direct matrix multiplication gives <span class="math display">\[
+X^\top X=\begin{pmatrix}n&amp;\sum_i x_i\\\sum_i x_i&amp;\sum_i x_i^2\end{pmatrix},\qquad
+X^\top y=\begin{pmatrix}\sum_i y_i\\\sum_i x_iy_i\end{pmatrix}.
+\]</span> Using the <span class="math inline">\(2\times2\)</span> inverse formula (<span class="math inline">\(\begin{bmatrix}a&amp;b\\c&amp;d\end{bmatrix}^{-1}=\frac{1}{ad-bc}\begin{bmatrix}d&amp;-b\\-c&amp;a\end{bmatrix}\)</span>) and the identities <span class="math inline">\(\sum_i(x_i-\bar x)(y_i-\bar y)=\sum_ix_iy_i-n\bar x\bar y\)</span> and <span class="math inline">\(\sum_i(x_i-\bar x)^2=\sum_ix_i^2-n\bar x^2\)</span> from introductory statistics, <span class="math display">\[
+(X^\top X)^{-1}=\frac{1}{n\sum_i(x_i-\bar x)^2}\begin{pmatrix}\sum_ix_i^2&amp;-\sum_ix_i\\-\sum_ix_i&amp;n\end{pmatrix}.
+\]</span> Multiplying through by <span class="math inline">\(X^\top y\)</span> and simplifying (Exercise 3.20 below) gives the familiar slope and intercept formulas:</p>
+<p><strong>Exercise 3.20</strong> Show that <span class="math display">\[
+\hat\beta_1=\frac{n\sum_ix_iy_i-\sum_ix_i\sum_iy_i}{n\sum_i(x_i-\bar x)^2}=\frac{\sum_i(x_i-\bar x)(y_i-\bar y)}{\sum_i(x_i-\bar x)^2}.
+\]</span></p>
+<p>Does this look familiar? It’s exactly <span class="math display">\[
+\hat\beta_1=\hat{{\textrm{corr}}}(X,Y)\,\frac{\hat\sigma_y}{\hat\sigma_x},
+\]</span> where <span class="math inline">\(\hat{{\textrm{corr}}}(X,Y)\)</span> is the sample correlation between <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> (from <a href="./Unit_1_1.html">Unit_1_1</a>).</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Intuition: the slope is correlation, rescaled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Note
+<span class="screen-reader-only">Tip</span>Intuition: the slope is correlation, rescaled
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>This is a work in progress. Currently the <strong>Review material</strong> unit and the <strong>Linear Regression</strong> chapter are available; more units will be added as they are rebuilt.</p>
+<p>This identity says the estimated slope is entirely determined by two things: how strongly <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> move together (their correlation) and how their individual spreads compare (the ratio <span class="math inline">\(\hat\sigma_y/\hat\sigma_x\)</span>). If <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> are essentially uncorrelated, <span class="math inline">\(\hat\beta_1\approx0\)</span>, no matter how variable either one is on its own — a flat line is the least-squares best fit. The <span class="math inline">\(\hat\sigma_y/\hat\sigma_x\)</span> factor is a units conversion: it rescales the (unit-free, always-between <span class="math inline">\(-1\)</span>-and-<span class="math inline">\(1\)</span>) correlation into the actual units of “change in <span class="math inline">\(Y\)</span> per unit of <span class="math inline">\(X\)</span>.”</p>
 </div>
 </div>
-<section id="how-these-notes-are-laid-out-start-here-if-youre-new" class="level2">
-<h2 data-anchor-id="how-these-notes-are-laid-out-start-here-if-youre-new">How these notes are laid out (start here if you’re new)</h2>
-<p>If a lot of this material feels unfamiliar, or half-remembered from a previous course, that’s exactly who these notes are written for — every page mixes the formal definitions with plain-language intuition, worked numeric examples, and self-check questions, so you never have to sit with just a bare definition.</p>
-<section id="the-road-map-for-the-review-material-chapter" class="level3">
-<h3 data-anchor-id="the-road-map-for-the-review-material-chapter">The road map for the Review material chapter</h3>
-<p>The four review sections build on each other in a specific order, all pointing toward one destination: being able to write down, estimate, and test a regression model.</p>
-<div style="text-align:center; margin: 1.5em 0;">
-<svg viewbox="0 0 680 190" width="100%" style="max-width:640px;" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Flow diagram: Random variables leads to Confidence intervals and hypothesis tests, which together with Matrices and linear algebra lead to Random vectors, which leads to Regression (coming next).">
-<defs> <marker id="arrowIdx" markerwidth="8" markerheight="8" refx="6" refy="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#7f8c8d"></path></marker> </defs> <g font-size="13" text-anchor="middle"> <rect x="10" y="15" width="140" height="50" rx="6" fill="#d6eaf8" stroke="#2e86c1"></rect> <text x="80" y="36" fill="#1a5276">1.1 Random</text> <text x="80" y="52" fill="#1a5276">variables</text> <rect x="10" y="115" width="140" height="50" rx="6" fill="#d6eaf8" stroke="#2e86c1"></rect> <text x="80" y="136" fill="#1a5276">1.2 CIs &amp;</text> <text x="80" y="152" fill="#1a5276">hypothesis tests</text> <rect x="270" y="15" width="140" height="50" rx="6" fill="#fdebd0" stroke="#af601a"></rect> <text x="340" y="36" fill="#873600">1.3 Matrices &amp;</text> <text x="340" y="52" fill="#873600">linear algebra</text> <rect x="270" y="115" width="140" height="50" rx="6" fill="#d5f5e3" stroke="#1e8449"></rect> <text x="340" y="136" fill="#145a32">1.4 Random</text> <text x="340" y="152" fill="#145a32">vectors</text> <rect x="530" y="65" width="140" height="50" rx="6" fill="#d6eaf8" stroke="#2e86c1"></rect> <text x="600" y="86" fill="#1a5276">Regression</text> <text x="600" y="102" fill="#1a5276">(Chapter 3)</text> <line x1="80" y1="65" x2="80" y2="115" stroke="#7f8c8d" marker-end="url(#arrowIdx)"></line> <line x1="150" y1="140" x2="270" y2="140" stroke="#7f8c8d" marker-end="url(#arrowIdx)"></line> <line x1="340" y1="65" x2="340" y2="115" stroke="#7f8c8d" marker-end="url(#arrowIdx)"></line> <line x1="410" y1="120" x2="530" y2="95" stroke="#7f8c8d" marker-end="url(#arrowIdx)"></line> <line x1="150" y1="40" x2="270" y2="40" stroke="#7f8c8d" stroke-dasharray="4,3"></line> <text x="210" y="30" font-size="11" fill="#888">(reviewed separately)</text> </g>
-</svg>
-</div>
-<p>In words: <a href="./Unit_1_1.html">1.1</a> gives you the probability vocabulary (expectation, variance, distributions) that <a href="./Unit_1_2.html">1.2</a> uses to build confidence intervals and hypothesis tests. Separately, <a href="./Unit_1_3.html">1.3</a> gives you the matrix algebra needed to handle many variables at once, which <a href="./Unit_1_4.html">1.4</a> uses to describe a whole dataset as a single random vector. Regression itself combines both halves: it’s a hypothesis-testing problem (1.1–1.2) solved using matrix algebra (1.3–1.4). The <strong>Linear Regression</strong> chapter picks up from here: <a href="./Unit_2_1.html">3.1</a> states the regression model itself, <a href="./Unit_2_2.html">3.2</a> estimates it with least squares, <a href="./Unit_2_3.html">3.3</a> builds confidence intervals and hypothesis tests around that estimate, <a href="./Unit_2_4.html">3.4</a> checks whether the model’s assumptions actually hold, <a href="./Unit_2_5.html">3.5</a> specializes everything to the one-covariate case, and <a href="./Unit_2_6.html">3.6</a> closes with practical warnings and a full worked example.</p>
-</section>
-<section id="notation-youll-see-throughout" class="level3">
-<h3 data-anchor-id="notation-youll-see-throughout">Notation you’ll see throughout</h3>
-<p>A lot of the difficulty in a first pass through this material is really just difficulty with notation, not with the ideas themselves. Keep this table handy — it isn’t something to memorize up front, just something to glance back at whenever a symbol looks unfamiliar.</p>
-<table class="caption-top table">
-<thead>
-<tr class="header">
-<th>Symbol</th>
-<th>Read it as</th>
-<th>Means</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><span class="math inline">\(X\)</span> (capital)</td>
-<td>“the random variable X”</td>
-<td>An outcome that hasn’t happened yet / a rule for generating a number</td>
-</tr>
-<tr class="even">
-<td><span class="math inline">\(x\)</span> (lowercase)</td>
-<td>“a specific value x”</td>
-<td>One particular number <span class="math inline">\(X\)</span> could turn out to equal</td>
-</tr>
-<tr class="odd">
-<td><span class="math inline">\(\Pr(\cdot)\)</span></td>
-<td>“the probability that…”</td>
-<td>A number between 0 and 1</td>
-</tr>
-<tr class="even">
-<td><span class="math inline">\(\mathrm{E}[X]\)</span></td>
-<td>“the expectation/expected value/mean of X”</td>
-<td>The probability-weighted average of <span class="math inline">\(X\)</span></td>
-</tr>
-<tr class="odd">
-<td><span class="math inline">\(\mathrm{Var}[X]\)</span></td>
-<td>“the variance of X”</td>
-<td>The average squared distance of <span class="math inline">\(X\)</span> from its mean</td>
-</tr>
-<tr class="even">
-<td><span class="math inline">\(\mathrm{cov}[X,Y]\)</span>, <span class="math inline">\(\mathrm{corr}[X,Y]\)</span></td>
-<td>“the covariance/correlation of X and Y”</td>
-<td>How strongly (and in what direction) <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> move together</td>
-</tr>
-<tr class="odd">
-<td><span class="math inline">\(X\sim \mathcal{N}(\mu,\sigma^2)\)</span></td>
-<td>“X is distributed as…”</td>
-<td><span class="math inline">\(X\)</span> follows this particular named distribution</td>
-</tr>
-<tr class="even">
-<td><span class="math inline">\(X\perp Y\)</span></td>
-<td>“X is independent of Y”</td>
-<td>Knowing <span class="math inline">\(X\)</span> tells you nothing about <span class="math inline">\(Y\)</span></td>
-</tr>
-<tr class="odd">
-<td><span class="math inline">\(\bar X\)</span> (a bar)</td>
-<td>“X bar”</td>
-<td>The <em>sample</em> average, computed from actual data</td>
-</tr>
-<tr class="even">
-<td><span class="math inline">\(\hat\theta\)</span> (a hat)</td>
-<td>“theta hat”</td>
-<td>An <em>estimate</em> of the unknown quantity <span class="math inline">\(\theta\)</span>, computed from data</td>
-</tr>
-<tr class="odd">
-<td><span class="math inline">\(\Sigma\)</span> (capital sigma)</td>
-<td>“Sigma”, or “the covariance matrix”</td>
-<td>In <a href="./Unit_1_4.html">1.4</a> specifically, this denotes a covariance <em>matrix</em> — don’t confuse it with <span class="math inline">\(\sum\)</span> (below), even though they’re drawn almost identically!</td>
-</tr>
-<tr class="even">
-<td><span class="math inline">\(\sum_{i=1}^n\)</span></td>
-<td>“the sum from i=1 to n”</td>
-<td>Add up whatever comes after it, for each value of <span class="math inline">\(i\)</span> from 1 to <span class="math inline">\(n\)</span></td>
-</tr>
-</tbody>
-</table>
-<div class="callout callout-style-default callout-warning callout-titled" title="Common mix-up: Σ the letter vs. Σ the sum">
+<p>Similarly for the intercept:</p>
+<p><strong>Exercise 3.21</strong> Show that <span class="math inline">\(\hat\beta_0=\bar y-\hat\beta_1\bar x\)</span>.</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Intuition: the fitted line always passes through $(\bar x,\bar y)$">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Warning</span>Common mix-up: Σ the letter vs.&nbsp;Σ the sum
+<span class="screen-reader-only">Tip</span>Intuition: the fitted line always passes through <span class="math inline">\((\bar x,\bar y)\)</span>
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p><span class="math inline">\(\Sigma\)</span> (a covariance matrix, used starting in <a href="./Unit_1_4.html">1.4</a>) and <span class="math inline">\(\sum\)</span> (the summation symbol used everywhere) are typeset almost identically and easy to confuse at a glance. Context is really the only way to tell them apart: if it’s followed by “<span class="math inline">\(_{i=1}^n\)</span> (something)<span class="math inline">\(_i\)</span>”, it’s a sum; if it’s referred to as a matrix with rows/columns, it’s the covariance matrix.</p>
+<p>Rearranging <span class="math inline">\(\hat\beta_0=\bar y-\hat\beta_1\bar x\)</span> gives <span class="math inline">\(\bar y=\hat\beta_0+\hat\beta_1\bar x\)</span> — in words, the point <span class="math inline">\((\bar x,\bar y)\)</span>, the “average” data point, always lies exactly on the least squares line, regardless of the data. This gives a useful sanity check: if your fitted line doesn’t pass through the means of <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span>, something has gone wrong in the calculation.</p>
 </div>
 </div>
 </section>
-<section id="what-the-colored-boxes-mean" class="level3">
-<h3 data-anchor-id="what-the-colored-boxes-mean">What the colored boxes mean</h3>
-<p>Every page uses the same three box styles, so once you know the color code you can decide at a glance how carefully to read a given box:</p>
-<div class="callout callout-style-default callout-tip callout-titled" title="Blue 'Intuition' boxes">
+<section id="inference-in-slr" class="level2" data-number="9.2">
+<h2 data-number="9.2" data-anchor-id="inference-in-slr"><span class="header-section-number">9.2</span> Inference in SLR</h2>
+<p>Since <span class="math inline">\({\textrm{Var}}[\hat\beta]=(X^\top X)^{-1}\sigma^2\)</span>, plugging in the <span class="math inline">\(2\times2\)</span> inverse above gives closed-form expressions: <span class="math display">\[
+{\textrm{Var}}\left[\hat\beta_0\right]=\left[\frac{1}{n}+\frac{\bar x^2}{\sum_i(x_i-\bar x)^2}\right]\sigma^2,\qquad
+{\textrm{Var}}\left[\hat\beta_1\right]=\frac{\sigma^2}{\sum_i(x_i-\bar x)^2},\qquad
+{\textrm{cov}}(\hat\beta_0,\hat\beta_1)=-\frac{\bar x}{\sum_i(x_i-\bar x)^2}\sigma^2.
+\]</span></p>
+<p>Everything from <a href="./Unit_2_3.html">3.3</a> — confidence intervals <span class="math inline">\(\hat\beta_i\pm t_{dfE,\alpha/2}\sqrt{\widehat{{\textrm{Var}}}(\hat\beta_i)}\)</span>, and tests of <span class="math inline">\(H_0:\beta_i=\beta_i^0\)</span> using <span class="math inline">\(\dfrac{\hat\beta_i-\beta_i^0}{\sqrt{\widehat{{\textrm{Var}}}(\hat\beta_i)}}\sim t_{dfE}\)</span> — applies exactly as before, now for <span class="math inline">\(i\in\{0,1\}\)</span>, with these plugged-in variance formulas. Inference for the mean response and predictions, and the ANOVA table, all simplify the same way; notably, in SLR, <span class="math inline">\(R^2\)</span> is exactly the <em>square</em> of the sample correlation between <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span>.</p>
+</section>
+<section id="inference-for-the-correlation-coefficient" class="level2" data-number="9.3">
+<h2 data-number="9.3" data-anchor-id="inference-for-the-correlation-coefficient"><span class="header-section-number">9.3</span> Inference for the correlation coefficient</h2>
+<p>SLR also gives us a way to do inference directly on the correlation <span class="math inline">\(\rho={\textrm{corr}}[X,Y]\)</span>, since at the population level, <span class="math inline">\(\beta_1=\rho\,\sigma_y/\sigma_x\)</span> — the exact population analogue of the sample identity above.</p>
+<p>Because <span class="math inline">\(\sigma_y/\sigma_x&gt;0\)</span>, testing <span class="math inline">\(H_0:\rho=0\)</span> vs.&nbsp;<span class="math inline">\(H_1:\rho\neq0\)</span> is <em>equivalent</em> to testing <span class="math inline">\(H_0:\beta_1=0\)</span> vs.&nbsp;<span class="math inline">\(H_1:\beta_1\neq0\)</span> — so we can just re-use the slope test from <a href="./Unit_2_3.html">3.3</a>. Writing <span class="math inline">\(\hat\rho=\hat{{\textrm{corr}}}(X,Y)\)</span>, the test statistic works out to <span class="math display">\[
+\frac{\hat\beta_1}{\sqrt{\widehat{{\textrm{Var}}}(\hat\beta_1)}}=\frac{\hat\rho\sqrt{n-2}}{\sqrt{1-\hat\rho^2}},
+\]</span> with p-value from <span class="math inline">\(t_{dfE}\)</span>, exactly as before.</p>
+<div class="callout callout-style-default callout-warning callout-titled" title="Common mistake: expecting the same simple trick for $\rho\neq0$">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Tip</span>Blue ‘Intuition’ boxes
+<span class="screen-reader-only">Warning</span>Common mistake: expecting the same simple trick for <span class="math inline">\(\rho\neq0\)</span>
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>These translate the formal definition just above into plain language and everyday examples. If a definition feels abstract, the intuition box right after it is where the “why” lives.</p>
+<p>Testing <span class="math inline">\(H_0:\rho=0\)</span> reduces neatly to the slope test only because <span class="math inline">\(\rho=0\iff\beta_1=0\)</span>. If instead we want to test <span class="math inline">\(H_0:\rho=\rho_0\)</span> for some <em>nonzero</em> <span class="math inline">\(\rho_0\)</span>, this trick fails — the exact distribution of <span class="math inline">\(\hat\rho\)</span> under such a null is difficult to work with directly. This is why Fisher’s transformation (below) exists as a completely separate tool, not a simple extension of the slope test.</p>
 </div>
 </div>
-<div class="callout callout-style-default callout-note callout-titled" title="Worked examples and definitions">
+<p><strong>Fisher’s transformation.</strong> For <span class="math inline">\(\rho\in(-1,1)\)</span>, define <span class="math inline">\(\theta=\frac12\log\dfrac{1+\rho}{1-\rho}\)</span>, estimated by <span class="math inline">\(\hat\theta=\frac12\log\dfrac{1+\hat\rho}{1-\hat\rho}\)</span>. Remarkably, <span class="math inline">\(\hat\theta\)</span> is <em>approximately</em> Normal with mean <span class="math inline">\(\theta\)</span> and variance <span class="math inline">\(\frac{1}{n-3}\)</span> — regardless of the underlying distribution of <span class="math inline">\(X,Y\)</span> — which gives an approximate <span class="math inline">\((1-\alpha)100\%\)</span> CI for <span class="math inline">\(\theta\)</span>: <span class="math display">\[\hat\theta\pm z_{\alpha/2}\sqrt{\tfrac{1}{n-3}},\]</span> which can then be converted back to a CI for <span class="math inline">\(\rho\)</span> via the inverse transformation. A hypothesized <span class="math inline">\(\rho_0\)</span> similarly maps to <span class="math inline">\(\theta_0=\frac12\log\frac{1+\rho_0}{1-\rho_0}\)</span>, giving a standard-Normal-based test for <span class="math inline">\(H_0:\rho=\rho_0\)</span> against any nonzero <span class="math inline">\(\rho_0\)</span>.</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Intuition: why bother transforming $\rho$ at all?">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Note</span>Worked examples and definitions
+<span class="screen-reader-only">Tip</span>Intuition: why bother transforming <span class="math inline">\(\rho\)</span> at all?
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Grey/neutral boxes are either formal content (definitions, theorems) or fully worked numeric examples you can follow step by step with a calculator.</p>
+<p><span class="math inline">\(\rho\)</span> is squeezed into <span class="math inline">\((-1,1)\)</span>, and its sampling distribution becomes badly skewed as <span class="math inline">\(\hat\rho\)</span> approaches <span class="math inline">\(\pm1\)</span> (there’s much more “room” for <span class="math inline">\(\hat\rho\)</span> to be too small than too large near the boundary) — so a Normal approximation applied directly to <span class="math inline">\(\hat\rho\)</span> would be poor except when <span class="math inline">\(\rho\)</span> is close to 0. Fisher’s transformation stretches <span class="math inline">\((-1,1)\)</span> out onto the whole real line, un-squeezing the distribution near the boundaries, so that the transformed quantity <span class="math inline">\(\hat\theta\)</span> behaves (approximately) Normal everywhere.</p>
 </div>
 </div>
-<div class="callout callout-style-default callout-warning callout-titled" title="Common mistakes">
+<p><strong>Example 3.10</strong> In <a href="./Unit_2_1.html">Example 3.1</a>, test whether the correlation between weight and body fat is 0, then test whether it’s greater than <span class="math inline">\(1/2\)</span>, and construct a 95% CI for <span class="math inline">\(\rho\)</span>.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cor</span>(df)[<span class="dv">1</span>,<span class="dv">2</span>]        <span class="co"># sample correlation</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<pre><code>[1] 0.6966328</code></pre>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model)       <span class="co"># slope t-test IS the rho=0 test</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<pre><code>Coefficients:
+             Estimate Std. Error t value Pr(&gt;|t|)
+(Intercept) -27.37626   11.54743  -2.371 0.029119 *
+Weight        0.24987    0.06065   4.120 0.000643 ***</code></pre>
+<p>Since <span class="math inline">\(H_0:\rho=0\)</span> is equivalent to <span class="math inline">\(H_0:\beta_1=0\)</span>, the <code>Weight</code> row’s <span class="math inline">\(t\)</span>-value (<span class="math inline">\(4.120\)</span>) and p-value (<span class="math inline">\(0.0006\)</span>) directly answer the first question: strong evidence that weight and body fat are correlated.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cor</span>(df)[<span class="dv">1</span>,<span class="dv">2</span>]<span class="sc">^</span><span class="dv">2</span>        <span class="co"># R^2 equals sample correlation squared</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<pre><code>[1] 0.4852972</code></pre>
+<p>This matches <code>Multiple R-squared: 0.4853</code> from <code>summary(model)</code> exactly, confirming the SLR identity <span class="math inline">\(R^2=\hat\rho^2\)</span>.</p>
+<p>For <span class="math inline">\(H_0:\rho\leq1/2\)</span> vs.&nbsp;<span class="math inline">\(H_1:\rho&gt;1/2\)</span>, and for a 95% CI for <span class="math inline">\(\rho\)</span>, we’d apply Fisher’s transformation with <span class="math inline">\(\hat\rho=0.6966\)</span>, giving <span class="math inline">\(\hat\theta=\frac12\log\frac{1.6966}{0.3034}\approx0.858\)</span>; comparing against <span class="math inline">\(\theta_0=\frac12\log\frac{1.5}{0.5}\approx0.549\)</span> (for <span class="math inline">\(\rho_0=1/2\)</span>) via a one-sided Normal test, or building <span class="math inline">\(\hat\theta\pm z_{0.025}\sqrt{1/17}\)</span> and inverse-transforming both endpoints for the CI.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Key takeaways before moving on">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Warning</span>Common mistakes
+<span class="screen-reader-only">Note</span>Key takeaways before moving on
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Yellow boxes flag a specific error that beginners very commonly make at that exact point in the material — worth pausing on, since these are the misunderstandings that tend to resurface later (often on a test).</p>
+<ul>
+<li>SLR is just MLR with <span class="math inline">\(p=2\)</span>; the general matrix formulas collapse into closed-form scalar expressions for <span class="math inline">\(\hat\beta_0,\hat\beta_1\)</span> and their variances.</li>
+<li><span class="math inline">\(\hat\beta_1=\hat{{\textrm{corr}}}(X,Y)\cdot\hat\sigma_y/\hat\sigma_x\)</span>: the slope is the correlation, rescaled into the units of <span class="math inline">\(Y\)</span> per unit of <span class="math inline">\(X\)</span>. The fitted line always passes through <span class="math inline">\((\bar x,\bar y)\)</span>.</li>
+<li>In SLR, <span class="math inline">\(R^2\)</span> is exactly the squared sample correlation between <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span>.</li>
+<li>Because <span class="math inline">\(\beta_1=\rho\,\sigma_y/\sigma_x\)</span>, testing <span class="math inline">\(H_0:\rho=0\)</span> is exactly the same test as <span class="math inline">\(H_0:\beta_1=0\)</span> — no new machinery needed.</li>
+<li>Testing or building intervals for a <em>nonzero</em> <span class="math inline">\(\rho_0\)</span> needs Fisher’s transformation, since <span class="math inline">\(\hat\rho\)</span>’s own sampling distribution is not well-approximated by a Normal, especially near <span class="math inline">\(\pm1\)</span>.</li>
+</ul>
 </div>
 </div>
-<p>Each page also ends with a <strong>Check Your Understanding</strong> section — short self-check questions with click-to-reveal answers. Try to answer each one yourself before revealing the answer; if you get one wrong, that’s useful information about which intuition box to reread, not a bad sign.</p>
-<p>For a quick, page-independent lookup of terms, see the <a href="./Glossary.html">Glossary</a>.</p>
+</section>
+<section id="check-your-understanding" class="level2" data-number="9.4">
+<h2 data-number="9.4" data-anchor-id="check-your-understanding"><span class="header-section-number">9.4</span> Check Your Understanding</h2>
+<style>
+details.qa-answer { margin: 0 0 1.25em 0; border-left: 3px solid #d6eaf8; padding-left: 0.75em; }
+details.qa-answer > summary { cursor: pointer; color: #2e86c1; font-weight: 600; }
+details.qa-answer > summary::marker { color: #2e86c1; }
+details.qa-answer[open] > summary { margin-bottom: 0.5em; }
+details.qa-answer p { margin: 0; }
+</style>
+<p>Before checking your answers, complete Exercises 3.20–3.22: derive <span class="math inline">\(\hat\beta_1=\dfrac{\sum_i(x_i-\bar x)(y_i-\bar y)}{\sum_i(x_i-\bar x)^2}\)</span>, show <span class="math inline">\(\hat\beta_0=\bar y-\hat\beta_1\bar x\)</span>, and — using the hours-studied/exam-score data from <a href="./Unit_2_2.html">3.2</a> — compute <span class="math inline">\(\hat\beta\)</span>, <span class="math inline">\({\textrm{Var}}[\hat\beta_1]\)</span>, <span class="math inline">\({\textrm{Var}}[\hat\beta_0]\)</span>, and <span class="math inline">\({\textrm{cov}}(\hat\beta_0,\hat\beta_1)\)</span> directly from the closed-form formulas, then confirm they match <code>lm()</code>’s output.</p>
+<p><strong>Question 1.</strong> If <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> have sample correlation <span class="math inline">\(\hat\rho=0\)</span>, what must <span class="math inline">\(\hat\beta_1\)</span> be, and why?</p>
+<details class="qa-answer">
+<summary>
+Show answer
+</summary>
+<p>
+<span class="math inline">\(\hat\beta_1=0\)</span>, since <span class="math inline">\(\hat\beta_1=\hat\rho\cdot\hat\sigma_y/\hat\sigma_x\)</span> and multiplying by <span class="math inline">\(\hat\rho=0\)</span> gives 0 regardless of the standard deviations. Zero linear correlation and a flat (zero-slope) least squares line are the same statement.
+</p>
+</details>
+<p><strong>Question 2.</strong> Why does the least squares line in SLR always pass through the point <span class="math inline">\((\bar x,\bar y)\)</span>?</p>
+<details class="qa-answer">
+<summary>
+Show answer
+</summary>
+<p>
+Because <span class="math inline">\(\hat\beta_0=\bar y-\hat\beta_1\bar x\)</span>, rearranging gives <span class="math inline">\(\bar y=\hat\beta_0+\hat\beta_1\bar x\)</span> — plugging <span class="math inline">\(x=\bar x\)</span> into the fitted line always returns <span class="math inline">\(\bar y\)</span> exactly, by construction of the least squares intercept formula.
+</p>
+</details>
+<p><strong>Question 3.</strong> In SLR, how is <span class="math inline">\(R^2\)</span> related to the sample correlation between <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span>?</p>
+<details class="qa-answer">
+<summary>
+Show answer
+</summary>
+<p>
+<span class="math inline">\(R^2=\hat\rho^2\)</span> — the coefficient of determination is exactly the square of the sample correlation coefficient (this is specific to SLR with a single covariate; it doesn’t generalize the same way once there are multiple covariates).
+</p>
+</details>
+<p><strong>Question 4.</strong> Why is testing <span class="math inline">\(H_0:\rho=0\)</span> equivalent to testing <span class="math inline">\(H_0:\beta_1=0\)</span>, but testing <span class="math inline">\(H_0:\rho=0.4\)</span> is not equivalent to testing <span class="math inline">\(H_0:\beta_1=0.4\sigma_y/\sigma_x\)</span> in the same simple way?</p>
+<details class="qa-answer">
+<summary>
+Show answer
+</summary>
+<p>
+Both reduce to the same test only when the hypothesized value is 0: <span class="math inline">\(\rho=0\iff\beta_1=0\)</span> exactly, via <span class="math inline">\(\beta_1=\rho\sigma_y/\sigma_x\)</span>. For a nonzero hypothesized <span class="math inline">\(\rho_0\)</span>, the exact sampling distribution of <span class="math inline">\(\hat\rho\)</span> (or the corresponding <span class="math inline">\(\hat\beta_1\)</span>) under that null is complicated and not a simple <span class="math inline">\(t\)</span>-distribution, which is exactly why Fisher’s transformation is needed as a separate, approximate method.
+</p>
+</details>
+<p><strong>Question 5.</strong> What does Fisher’s transformation <span class="math inline">\(\theta=\frac12\log\frac{1+\rho}{1-\rho}\)</span> accomplish, intuitively?</p>
+<details class="qa-answer">
+<summary>
+Show answer
+</summary>
+<p>
+It maps <span class="math inline">\(\rho\in(-1,1)\)</span> onto the whole real line, “stretching out” the region near <span class="math inline">\(\pm1\)</span> where <span class="math inline">\(\hat\rho\)</span>’s sampling distribution is most skewed. The transformed estimator <span class="math inline">\(\hat\theta\)</span> is then approximately Normally distributed (with a simple variance <span class="math inline">\(1/(n-3)\)</span>) even when <span class="math inline">\(\hat\rho\)</span> itself is not well-approximated by a Normal distribution.
+</p>
+</details>
+<p><strong>Question 6.</strong> True or False: the formulas in this section (for <span class="math inline">\(\hat\beta\)</span>, its variance, etc.) require new assumptions beyond the general MLR model from earlier sections.</p>
+<details class="qa-answer">
+<summary>
+Show answer
+</summary>
+<p>
+False. SLR is just the <span class="math inline">\(p=2\)</span> special case of MLR — the formulas here are the same general MLR results (<span class="math inline">\(\hat\beta=(X^\top X)^{-1}X^\top Y\)</span>, <span class="math inline">\({\textrm{cov}}(\hat\beta)=\sigma^2(X^\top X)^{-1}\)</span>, etc.), just simplified algebraically for the specific structure of a single-covariate <span class="math inline">\(X\)</span> matrix. No new assumptions are introduced.
+</p>
+</details>
 
 
-</section>
-</section>
 </section>
 
 </main> <!-- /main -->
@@ -859,10 +898,13 @@ Note
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
+      <a href="./Unit_2_4.html" class="pagination-link" aria-label="Checking model assumptions">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Checking model assumptions</span></span>
+      </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./Unit_1_1.html" class="pagination-link" aria-label="Review of random variables">
-        <span class="nav-page-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Review of random variables</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./Unit_2_6.html" class="pagination-link" aria-label="Additional concepts and examples">
+        <span class="nav-page-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Additional concepts and examples</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

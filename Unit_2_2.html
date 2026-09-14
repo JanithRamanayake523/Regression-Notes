@@ -1,0 +1,1076 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.10.18">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>6&nbsp; Least Squares – Regression Notes</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./Unit_2_3.html" rel="next">
+<link href="./Unit_2_1.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-ed7344add5f1663e434276306a2aa159.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-chtml.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="nav-sidebar floating quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./Unit_2_1.html">Linear Regression</a></li><li class="breadcrumb-item"><a href="./Unit_2_2.html"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Least Squares</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Regression Notes</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Preface</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">Review material</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Unit_1_1.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Review of random variables</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Unit_1_2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Review of introductory statistics</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Unit_1_3.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Review of matrices and linear algebra</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Unit_1_4.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Review Random Vectors</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text">Linear Regression</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Unit_2_1.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Basics of linear regression</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Unit_2_2.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Least Squares</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Unit_2_3.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Least squares inference</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Unit_2_4.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Checking model assumptions</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Unit_2_5.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Simple linear regression</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Unit_2_6.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Additional concepts and examples</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Glossary.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Glossary</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#notation" id="toc-notation" class="nav-link active" data-scroll-target="#notation"><span class="header-section-number">6.1</span> Notation</a>
+  <ul class="collapse">
+  <li><a href="#interpreting-beta" id="toc-interpreting-beta" class="nav-link" data-scroll-target="#interpreting-beta"><span class="header-section-number">6.1.1</span> Interpreting <span class="math inline">\(\beta\)</span></a></li>
+  </ul></li>
+  <li><a href="#least-squares-estimation" id="toc-least-squares-estimation" class="nav-link" data-scroll-target="#least-squares-estimation"><span class="header-section-number">6.2</span> Least squares estimation</a>
+  <ul class="collapse">
+  <li><a href="#deriving-the-formula" id="toc-deriving-the-formula" class="nav-link" data-scroll-target="#deriving-the-formula"><span class="header-section-number">6.2.1</span> Deriving the formula</a></li>
+  </ul></li>
+  <li><a href="#example-computing-hatbeta-for-the-body-fat-data" id="toc-example-computing-hatbeta-for-the-body-fat-data" class="nav-link" data-scroll-target="#example-computing-hatbeta-for-the-body-fat-data"><span class="header-section-number">6.3</span> Example: computing <span class="math inline">\(\hat\beta\)</span> for the body fat data</a></li>
+  <li><a href="#properties-of-the-least-squares-estimator" id="toc-properties-of-the-least-squares-estimator" class="nav-link" data-scroll-target="#properties-of-the-least-squares-estimator"><span class="header-section-number">6.4</span> Properties of the least squares estimator</a></li>
+  <li><a href="#check-your-understanding" id="toc-check-your-understanding" class="nav-link" data-scroll-target="#check-your-understanding"><span class="header-section-number">6.5</span> Check Your Understanding</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./Unit_2_1.html">Linear Regression</a></li><li class="breadcrumb-item"><a href="./Unit_2_2.html"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Least Squares</span></a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Least Squares</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p>Now that we’ve settled on a model for the population, the next step is to use the data to estimate the model parameters — in particular, <span class="math inline">\(\beta\)</span>. Once we have an estimate <span class="math inline">\(\hat\beta\)</span>, we can use it to estimate <span class="math inline">\({\textrm{E}}\left[Y|X\right]\)</span> for any value of <span class="math inline">\(X\)</span>.</p>
+<section id="notation" class="level2" data-number="6.1">
+<h2 data-number="6.1" data-anchor-id="notation"><span class="header-section-number">6.1</span> Notation</h2>
+<p>Throughout, we study the population model <span class="math inline">\(Y|X=X\beta+\epsilon\)</span>, with:</p>
+<ul>
+<li><span class="math inline">\(Y\in\mathbb{R}^n\)</span>: the response variable (a random vector).</li>
+<li><span class="math inline">\(X\in\mathbb{R}^{n\times p}\)</span>: the covariate matrix — its first column is typically <span class="math inline">\(1_n\)</span>, to produce the intercept, as in <a href="./Unit_2_1.html">3.1</a>.</li>
+<li><span class="math inline">\(X_i\in\mathbb{R}^p\)</span>: the <span class="math inline">\(i^{\text{th}}\)</span> observed covariate row — treated as fixed/known, not random (we condition on it).</li>
+<li><span class="math inline">\(\beta\in\mathbb{R}^{p\times1}\)</span>: the unknown, population coefficient vector.</li>
+<li><span class="math inline">\(\epsilon\in\mathbb{R}^n\)</span>: the random error vector.</li>
+</ul>
+<p>with <span class="math inline">\(\forall i\in\{1,\ldots,n\}\)</span>, <span class="math inline">\({\textrm{E}}\left[\epsilon_i\right]=0\)</span>, <span class="math inline">\({\textrm{Var}}\left[\epsilon_i\right]=\sigma^2\)</span> (constant variance, also called <em>homogeneity</em>), and <span class="math inline">\(\epsilon_i\perp\epsilon_j\)</span> for <span class="math inline">\(i\neq j\)</span>.</p>
+<p>We’ll also refer to actually <em>observed</em> values, as opposed to the abstract random variables: <span class="math inline">\(y=(y_1,\ldots,y_n)^\top\in\mathbb{R}^n\)</span> is the observed response, and <span class="math inline">\(x_{ij}\)</span> is the <span class="math inline">\(i^{\text{th}}\)</span> observation of the <span class="math inline">\(j^{\text{th}}\)</span> covariate, giving the data table</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Observation</th>
+<th>Observed data point</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td><span class="math inline">\((y_1,x_{11},x_{12},\ldots,x_{1p})\)</span></td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td><span class="math inline">\((y_2,x_{21},x_{22},\ldots,x_{2p})\)</span></td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(\vdots\)</span></td>
+<td><span class="math inline">\(\vdots\)</span></td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(n\)</span></td>
+<td><span class="math inline">\((y_n,x_{n1},x_{n2},\ldots,x_{np})\)</span></td>
+</tr>
+</tbody>
+</table>
+<section id="interpreting-beta" class="level3" data-number="6.1.1">
+<h3 data-number="6.1.1" data-anchor-id="interpreting-beta"><span class="header-section-number">6.1.1</span> Interpreting <span class="math inline">\(\beta\)</span></h3>
+<p>Suppose (hypothetically) that we <em>knew</em> <span class="math inline">\(\beta\)</span>. Then <span class="math display">\[
+{\textrm{E}}\left[Y_i|X_i\right]={\textrm{E}}\left[\beta^\top X_i+\epsilon_i\right]=\beta^\top X_i=\beta_1X_{i,1}+\cdots+\beta_pX_{i,p}.
+\]</span> For a continuous covariate <span class="math inline">\(X_j\)</span>, we interpret <span class="math inline">\(\beta_j\)</span> as:</p>
+<blockquote class="blockquote">
+<p>Holding <span class="math inline">\(X_{i,1},\ldots,X_{i,j-1},X_{i,j+1},\ldots,X_{i,p}\)</span> constant, a one-unit increase in <span class="math inline">\(X_{i,j}\)</span> causes, <strong>on average</strong>, a <span class="math inline">\(\beta_j\)</span>-unit increase in <span class="math inline">\(Y_i\)</span>.</p>
+</blockquote>
+<p>Equivalently, <span class="math inline">\(\partial{\textrm{E}}[Y]/\partial X=\beta\)</span>: the rate of change of the mean response with respect to the <span class="math inline">\(j^{\text{th}}\)</span> covariate is <span class="math inline">\(\beta_j\)</span>.</p>
+<div class="callout callout-style-default callout-warning callout-titled" title="Common mistake: dropping &quot;on average&quot; or &quot;holding other covariates constant&quot;">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Warning</span>Common mistake: dropping “on average” or “holding other covariates constant”
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Both qualifiers are load-bearing, not boilerplate. “On average” acknowledges the random error <span class="math inline">\(\epsilon\)</span> — a one-unit increase in <span class="math inline">\(X_{i,j}\)</span> does not <em>guarantee</em> an increase in <span class="math inline">\(Y_i\)</span> for any specific individual, only in expectation. “Holding other covariates constant” matters because covariates are often correlated with each other; <span class="math inline">\(\beta_j\)</span> isolates the effect of <span class="math inline">\(X_j\)</span> alone, net of whatever the <em>other</em> covariates are doing. For example, in a model with both years of education and income as covariates, education and income tend to rise together — so to interpret education’s coefficient correctly, you must imagine comparing two people with the <em>same</em> income but different education, not just comparing “more education” to “less.”</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>For now we assume all covariates <span class="math inline">\(X_j\)</span> are continuous. Categorical covariates (which we’ll meet later in the course) require a different interpretation of their coefficients.</p>
+</div>
+</div>
+<p>Returning to <a href="./Unit_2_1.html">Example 3.1</a>, a one-unit increase in weight causes, on average, a <span class="math inline">\(\beta_2\)</span>-unit increase in body fat percentage (here <span class="math inline">\(\beta_1\)</span> is the intercept — the average body fat percentage when weight is 0, which is not a meaningful value on its own, but is needed to fix the height of the line). It’s also worth noting <span class="math inline">\({\textrm{cov}}(Y)=\sigma^2I\)</span>, directly from the MLR assumptions in <a href="./Unit_2_1.html">3.1</a>.</p>
+</section>
+</section>
+<section id="least-squares-estimation" class="level2" data-number="6.2">
+<h2 data-number="6.2" data-anchor-id="least-squares-estimation"><span class="header-section-number">6.2</span> Least squares estimation</h2>
+<p>We don’t actually know <span class="math inline">\(\beta\)</span> — just as we estimate a population mean with a sample mean, we need to <em>estimate</em> <span class="math inline">\(\beta\)</span> from data, producing <span class="math inline">\(\hat\beta\)</span>. One principled way to do this is the method of <strong>least squares</strong>.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(df)  <span class="co"># weight on x-axis, body fat on y-axis</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><img src="Unit_2_files/figure-html/unnamed-chunk-3-1.png" style="max-width:420px;display:block;margin:1em auto;"></p>
+<p>Suppose we’re choosing between two candidate lines, <span class="math inline">\(\beta=(-35,0.3)^\top\)</span> or <span class="math inline">\(\beta=(-22,0.2)^\top\)</span>. Plotting both on the data doesn’t make it obvious which is better —</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(df)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="sc">-</span><span class="dv">35</span>, <span class="fl">0.3</span>, <span class="at">lwd =</span> <span class="dv">2</span>)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="sc">-</span><span class="dv">22</span>, <span class="fl">0.2</span>, <span class="at">col =</span> <span class="st">'red'</span>, <span class="at">lwd =</span> <span class="dv">2</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><img src="Unit_2_files/figure-html/unnamed-chunk-4-1.png" style="max-width:420px;display:block;margin:1em auto;"></p>
+<p>— and even if it were, we obviously can’t compare <em>every</em> possible line by eye. We need a quantitative definition of “best.”</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Intuition: what are we minimizing, geometrically?">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Intuition: what are we minimizing, geometrically?
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>For a candidate <span class="math inline">\(\beta_0\)</span>, the vector <span class="math inline">\(\epsilon_0=Y-X\beta_0\)</span> is the collection of <em>signed vertical distances</em> from each observed point to the candidate line (or, with more covariates, to the candidate hyperplane) — positive if the point sits above the line, negative if below. Squaring and summing these distances, <span class="math inline">\(\epsilon_0^\top\epsilon_0=\sum_i(Y_i-X_i^\top\beta_0)^2\)</span>, gives a single number measuring total “misfit”: squaring makes distances above and below the line count equally (rather than canceling out) and penalizes large misses disproportionately more than small ones. The least squares line is whichever line makes this total squared misfit as small as possible.</p>
+</div>
+</div>
+<p>Formally, given proposed coefficients <span class="math inline">\(\beta_0\in\mathbb{R}^p\)</span>, the squared distance to the hyperplane <span class="math inline">\(X\beta_0\)</span> is <span class="math inline">\(\epsilon_0^\top\epsilon_0=(Y-X\beta_0)^\top(Y-X\beta_0)\)</span>. We then define our estimate as whichever <span class="math inline">\(\beta_0\)</span> minimizes this: <span class="math display">\[
+\hat\beta=\mathop{\mathrm{argmin}}_{\beta\in\mathbb{R}^p}(Y-X\beta)^\top(Y-X\beta).
+\]</span> (“Best” here specifically means smallest <em>average squared</em> distance to the line — other notions of “best,” like smallest average absolute distance, define different estimators, which we won’t use in this course.)</p>
+<section id="deriving-the-formula" class="level3" data-number="6.2.1">
+<h3 data-number="6.2.1" data-anchor-id="deriving-the-formula"><span class="header-section-number">6.2.1</span> Deriving the formula</h3>
+<p>To minimize <span class="math inline">\(g(\beta)=(Y-X\beta)^\top(Y-X\beta)\)</span>, we use ordinary calculus: find where the first derivative is zero, and check the second derivative confirms a minimum.</p>
+<p><strong>Step 1 (first derivative).</strong> Expanding, <span class="math inline">\(g(\beta)=Y^\top Y-2(X\beta)^\top Y+(X\beta)^\top X\beta=Y^\top Y-2\beta^\top X^\top Y+\beta^\top X^\top X\beta\)</span>. Using <span class="math inline">\(\frac{\partial}{\partial\beta}\beta^\top a=a\)</span> and <span class="math inline">\(\frac{\partial}{\partial\beta}\beta^\top A\beta=2A\beta\)</span> for symmetric <span class="math inline">\(A\)</span>: <span class="math display">\[
+\frac{\partial g}{\partial\beta}=-2X^\top Y+2X^\top X\beta=-2X^\top(Y-X\beta).
+\]</span></p>
+<p><strong>Step 2 (critical point).</strong> We need <span class="math inline">\(X^\top X\)</span> to be invertible, so we assume <span class="math inline">\(X\)</span> is full rank with <span class="math inline">\(n\geq p\)</span>. Setting the derivative to zero: <span class="math display">\[
+-2X^\top(Y-X\beta)=0 \implies X^\top Y=X^\top X\beta \implies \beta=(X^\top X)^{-1}X^\top Y.
+\]</span></p>
+<p><strong>Step 3 (confirm a minimum).</strong> The second derivative is <span class="math inline">\(\frac{\partial^2 g}{\partial\beta\partial\beta^\top}=2X^\top X\)</span>. Since <span class="math inline">\(X\)</span> is assumed full rank, <span class="math inline">\(X^\top X\)</span> is positive definite (in the sense of <a href="./Unit_1_3.html">Definition 2.13</a>), and a positive-definite Hessian at a critical point confirms that point is a (local, and here also global) minimum.</p>
+<p><strong>Definition 3.3</strong> The <strong>least squares estimate</strong> of the regression coefficients is <span class="math display">\[\hat\beta=(X^\top X)^{-1}X^\top Y.\]</span></p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Intuition: this is exactly the formula Unit_1_3 and Unit_1_4 were pointing toward">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Intuition: this is exactly the formula Unit_1_3 and Unit_1_4 were pointing toward
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Back in <a href="./Unit_1_3.html">Unit_1_3</a>, we noted that the whole reason to learn matrix algebra was that a regression with any number of covariates could be solved with one compact formula, <span class="math inline">\(\hat\beta=(X^\top X)^{-1}X^\top Y\)</span>. Here it is, derived from first principles: minimizing squared distances via calculus, using only the matrix-derivative rules and matrix-inverse machinery from earlier sections. No matter how many covariates <span class="math inline">\(p\)</span> has, the formula never changes shape — only the dimensions of <span class="math inline">\(X\)</span> do.</p>
+</div>
+</div>
+</section>
+</section>
+<section id="example-computing-hatbeta-for-the-body-fat-data" class="level2" data-number="6.3">
+<h2 data-number="6.3" data-anchor-id="example-computing-hatbeta-for-the-body-fat-data"><span class="header-section-number">6.3</span> Example: computing <span class="math inline">\(\hat\beta\)</span> for the body fat data</h2>
+<p><strong>Example 3.2</strong> In the body weight example (<a href="./Unit_2_1.html">Example 3.1</a>), write down <span class="math inline">\(X\)</span>, <span class="math inline">\(y\)</span>, and compute and interpret <span class="math inline">\(\hat\beta\)</span>.</p>
+<p>We have <span class="math display">\[
+y=(6,21,15,6,22,31,32,21,25,30,10,20,22,9,38,10,27,12,10,28)^\top,
+\]</span> <span class="math display">\[
+X=\left[\,1_{20}\ \middle|\ (175,181,200,159,196,192,205,173,187,188,188,240,175,168,246,160,215,159,146,219)^\top\right],
+\]</span></p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>For matrices <span class="math inline">\(A,B\)</span> with the same number of rows, <span class="math inline">\(C=[A\mid B]\)</span> denotes horizontal concatenation — placing <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span> side by side to form <span class="math inline">\(C\)</span>. So <span class="math inline">\(X\)</span> above is the matrix whose first column is all ones (for the intercept) and whose second column is the observed weights.</p>
+</div>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>X <span class="ot">=</span> <span class="fu">cbind</span>(<span class="fu">rep</span>(<span class="dv">1</span>, <span class="fu">nrow</span>(df)), df<span class="sc">$</span>Weight)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>Y <span class="ot">=</span> <span class="fu">matrix</span>(df<span class="sc">$</span>BodyFat, <span class="at">ncol =</span> <span class="dv">1</span>)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>X_p_X <span class="ot">=</span> <span class="fu">t</span>(X) <span class="sc">%*%</span> X            <span class="co"># X'X</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>X_p_X_inverse <span class="ot">=</span> <span class="fu">solve</span>(X_p_X)  <span class="co"># (X'X)^-1</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>beta_hat <span class="ot">=</span> X_p_X_inverse <span class="sc">%*%</span> <span class="fu">t</span>(X) <span class="sc">%*%</span> Y</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>beta_hat</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<pre><code>            [,1]
+[1,] -27.3762623
+[2,]   0.2498741</code></pre>
+<p>In practice, we almost never compute <span class="math inline">\(\hat\beta\)</span> by hand like this — R’s built-in <code>lm()</code> function does it for us:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># lm() fits linear regression models: first argument is a formula,</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="co"># second is the data frame. This code pattern is essential for the course.</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>model <span class="ot">=</span> <span class="fu">lm</span>(BodyFat <span class="sc">~</span> Weight, <span class="at">data =</span> df)</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<pre><code>
+Call:
+lm(formula = BodyFat ~ Weight, data = df)
+
+Residuals:
+     Min       1Q   Median       3Q      Max
+-12.5935  -5.7904   0.6536   5.2731  10.4004
+
+Coefficients:
+             Estimate Std. Error t value Pr(&gt;|t|)
+(Intercept) -27.37626   11.54743  -2.371 0.029119 *
+Weight        0.24987    0.06065   4.120 0.000643 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 7.049 on 18 degrees of freedom
+Multiple R-squared:  0.4853,    Adjusted R-squared:  0.4567
+F-statistic: 16.97 on 1 and 18 DF,  p-value: 0.0006434</code></pre>
+<p>The least squares estimates are in the <code>Estimate</code> column, matching our by-hand calculation exactly. We’ll return to the rest of this output (<code>Std. Error</code>, <code>t value</code>, <code>Pr(&gt;|t|)</code>, <code>Multiple R-squared</code>, the <code>F-statistic</code>) throughout the next section — for now, focus on the <code>Estimate</code> column.</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Intuition: reading the `lm()` formula syntax">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Intuition: reading the <code>lm()</code> formula syntax
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><code>lm(formula, data, ...)</code> fits a linear model. The <code>data</code> argument is your data frame; use <code>names(df)</code> to see the column names available to reference. The <code>formula</code> has the response on the left of <code>~</code> and the covariate(s) on the right — <code>BodyFat ~ Weight</code> means “regress <code>BodyFat</code> on <code>Weight</code>,” i.e.&nbsp;<code>BodyFat</code> is <span class="math inline">\(Y\)</span> and <code>Weight</code> is <span class="math inline">\(X\)</span>. You’ll see this exact syntax pattern reused constantly for the rest of the course, just with different variables (and, later, more than one covariate on the right-hand side).</p>
+</div>
+</div>
+<p>So our best guess at body fat percentage, given weight, is <span class="math display">\[
+\widehat{\text{Body Fat}}=-27.3762623+0.2498741\times\text{Weight}.
+\]</span> For someone who weighs 170 lbs, we’d predict body fat of <span class="math inline">\(-27.3762623+0.2498741\times170\approx15.10\%\)</span>.</p>
+</section>
+<section id="properties-of-the-least-squares-estimator" class="level2" data-number="6.4">
+<h2 data-number="6.4" data-anchor-id="properties-of-the-least-squares-estimator"><span class="header-section-number">6.4</span> Properties of the least squares estimator</h2>
+<p><strong>Exercise 3.5</strong> Compute <span class="math inline">\({\textrm{E}}\left[\hat\beta\right]\)</span> and <span class="math inline">\({\textrm{cov}}(\hat\beta)\)</span>.</p>
+<p><em>Solution 3.1.</em> It holds that <span class="math inline">\({\textrm{E}}\left[\hat\beta\right]=\beta\)</span> and <span class="math inline">\({\textrm{cov}}(\hat\beta)=\sigma^2(X^\top X)^{-1}\)</span>.</p>
+<p>Recall that an estimator is <strong>unbiased</strong> if its expectation equals the population parameter it targets. This exercise shows <span class="math inline">\(\hat\beta\)</span> is unbiased for <span class="math inline">\(\beta\)</span> — on average (across repeated samples), least squares recovers the true coefficients exactly.</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Intuition: where does $\hat\beta=(X^\top X)^{-1}X^\top Y$'s randomness come from?">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Intuition: where does <span class="math inline">\(\hat\beta=(X^\top X)^{-1}X^\top Y\)</span>’s randomness come from?
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><span class="math inline">\(\hat\beta\)</span> is a random vector purely because <span class="math inline">\(Y\)</span> is random (<span class="math inline">\(X\)</span> is treated as fixed). Substituting <span class="math inline">\(Y=X\beta+\epsilon\)</span> into the formula gives <span class="math inline">\(\hat\beta=(X^\top X)^{-1}X^\top(X\beta+\epsilon)=\beta+(X^\top X)^{-1}X^\top\epsilon\)</span> — so <span class="math inline">\(\hat\beta\)</span> is exactly the true <span class="math inline">\(\beta\)</span> <em>plus</em> a linear transformation of the error vector <span class="math inline">\(\epsilon\)</span>. This is exactly the setup from <a href="./Unit_1_4.html">Exercise 2.14</a>: applying the vector expectation/covariance rules from <a href="./Unit_1_4.html">Unit_1_4</a> to <span class="math inline">\(B=(X^\top X)^{-1}X^\top\)</span> and the error vector <span class="math inline">\(\epsilon\)</span> (which has mean 0 and covariance <span class="math inline">\(\sigma^2I\)</span>) gives exactly <span class="math inline">\({\textrm{E}}[\hat\beta]=\beta\)</span> and <span class="math inline">\({\textrm{cov}}(\hat\beta)=\sigma^2(X^\top X)^{-1}\)</span>.</p>
+</div>
+</div>
+<p>The least squares estimator is also the <strong>best linear unbiased estimator (BLUE)</strong> — this is the <a href="https://en.wikipedia.org/wiki/Gauss%E2%80%93Markov_theorem">Gauss–Markov theorem</a>. Among <em>all</em> unbiased estimators of <span class="math inline">\(\beta\)</span> that are linear combinations of <span class="math inline">\(Y_1,\ldots,Y_n\)</span>, <span class="math inline">\(\hat\beta\)</span> has the smallest variance (and hence the smallest mean squared error — recall for an estimator <span class="math inline">\(\hat\alpha\)</span> of <span class="math inline">\(\beta\)</span>, <span class="math inline">\({\textrm{MSE}}(\hat\alpha)={\textrm{E}}\left[\|\beta-\hat\alpha\|^2\right]\)</span>).</p>
+<p>Gauss–Markov does <em>not</em> require Normal errors. If we’re additionally willing to assume <span class="math inline">\(\epsilon\sim\mathcal{N}(0,\sigma^2I)\)</span> (the normal MLR), then <span class="math inline">\(\hat\beta\)</span> is also the <a href="https://en.wikipedia.org/wiki/Maximum_likelihood_estimation">maximum likelihood estimator</a> and the <strong>uniformly minimum-variance unbiased estimator (UMVUE)</strong> — it has lower variance than <em>any</em> other unbiased estimator (linear or not), no matter the true value of <span class="math inline">\(\beta\)</span>.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Key takeaways before moving on">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Key takeaways before moving on
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li><span class="math inline">\(\hat\beta=(X^\top X)^{-1}X^\top Y\)</span> minimizes the sum of squared vertical distances between the data and the fitted line/hyperplane — this is what “least squares” means.</li>
+<li>Each <span class="math inline">\(\beta_j\)</span> (for continuous <span class="math inline">\(X_j\)</span>) is interpreted as the average change in <span class="math inline">\(Y\)</span> per one-unit increase in <span class="math inline">\(X_j\)</span>, holding all other covariates fixed.</li>
+<li><span class="math inline">\(\hat\beta\)</span> is unbiased (<span class="math inline">\({\textrm{E}}[\hat\beta]=\beta\)</span>) with <span class="math inline">\({\textrm{cov}}(\hat\beta)=\sigma^2(X^\top X)^{-1}\)</span>, and by Gauss–Markov it has the smallest variance among all linear unbiased estimators — no Normality required. Under the normal MLR, it’s also the MLE and UMVUE.</li>
+<li>In R, <code>lm(response ~ covariate, data = df)</code> fits the model and <code>summary()</code> reports <span class="math inline">\(\hat\beta\)</span> in the <code>Estimate</code> column.</li>
+</ul>
+</div>
+</div>
+</section>
+<section id="check-your-understanding" class="level2" data-number="6.5">
+<h2 data-number="6.5" data-anchor-id="check-your-understanding"><span class="header-section-number">6.5</span> Check Your Understanding</h2>
+<style>
+details.qa-answer { margin: 0 0 1.25em 0; border-left: 3px solid #d6eaf8; padding-left: 0.75em; }
+details.qa-answer > summary { cursor: pointer; color: #2e86c1; font-weight: 600; }
+details.qa-answer > summary::marker { color: #2e86c1; }
+details.qa-answer[open] > summary { margin-bottom: 0.5em; }
+details.qa-answer p { margin: 0; }
+</style>
+<p>Before checking your answers, work through this on your own: using the hours-studied/exam-score data below, write out <span class="math inline">\(X\)</span> and <span class="math inline">\(y\)</span> by hand, and either compute <span class="math inline">\(\hat\beta=(X^\top X)^{-1}X^\top y\)</span> directly or fit it with <code>lm()</code>.</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Student</th>
+<th>Hours Studied</th>
+<th>Exam Score (%)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td>5</td>
+<td>55</td>
+</tr>
+<tr class="even">
+<td>6</td>
+<td>9</td>
+<td>68</td>
+</tr>
+<tr class="odd">
+<td>11</td>
+<td>14</td>
+<td>82</td>
+</tr>
+<tr class="even">
+<td>16</td>
+<td>7</td>
+<td>62</td>
+</tr>
+</tbody>
+</table>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>study_data <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">Student =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">20</span>,</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">Hours_Studied =</span> <span class="fu">c</span>(<span class="dv">5</span>, <span class="dv">8</span>, <span class="dv">12</span>, <span class="dv">6</span>, <span class="dv">10</span>, <span class="dv">9</span>, <span class="dv">15</span>, <span class="dv">7</span>, <span class="dv">11</span>, <span class="dv">13</span>, <span class="dv">14</span>, <span class="dv">20</span>, <span class="dv">5</span>, <span class="dv">6</span>, <span class="dv">18</span>, <span class="dv">7</span>, <span class="dv">16</span>, <span class="dv">4</span>, <span class="dv">3</span>, <span class="dv">19</span>),</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">Exam_Score =</span> <span class="fu">c</span>(<span class="dv">55</span>, <span class="dv">65</span>, <span class="dv">78</span>, <span class="dv">58</span>, <span class="dv">72</span>, <span class="dv">68</span>, <span class="dv">85</span>, <span class="dv">60</span>, <span class="dv">74</span>, <span class="dv">80</span>, <span class="dv">82</span>, <span class="dv">90</span>, <span class="dv">55</span>, <span class="dv">59</span>, <span class="dv">88</span>, <span class="dv">62</span>, <span class="dv">86</span>, <span class="dv">50</span>, <span class="dv">45</span>, <span class="dv">89</span>)</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Then use the questions below as a self-check on this page’s material.</p>
+<p><strong>Question 1.</strong> Why do we need <span class="math inline">\(\hat\beta\)</span> at all — why not just use <span class="math inline">\(\beta\)</span>?</p>
+<details class="qa-answer">
+<summary>
+Show answer
+</summary>
+<p>
+Because <span class="math inline">\(\beta\)</span> is an unknown population parameter — we never observe it directly, exactly as we never observe a population mean <span class="math inline">\(\mu\)</span> directly. <span class="math inline">\(\hat\beta\)</span> is our best <em>estimate</em> of <span class="math inline">\(\beta\)</span>, computed from the sample data we actually have.
+</p>
+</details>
+<p><strong>Question 2.</strong> Is <span class="math inline">\(\hat\beta\)</span> an estimate or a population parameter? What about <span class="math inline">\(\beta\)</span>?</p>
+<details class="qa-answer">
+<summary>
+Show answer
+</summary>
+<p>
+<span class="math inline">\(\beta\)</span> is a fixed, unknown population parameter. <span class="math inline">\(\hat\beta\)</span> is a statistic — a random variable computed from the (random) sample data — used to estimate <span class="math inline">\(\beta\)</span>.
+</p>
+</details>
+<p><strong>Question 3.</strong> In a model with covariates “years of education” and “income,” why do we need the phrase “holding other covariates constant” when interpreting the coefficient on education?</p>
+<details class="qa-answer">
+<summary>
+Show answer
+</summary>
+<p>
+Because education and income tend to move together (more education is generally associated with higher income), the coefficient on education by itself would confound the direct effect of education with the indirect association coming through income. “Holding income constant” isolates education’s own effect, comparing people with the same income but different education levels.
+</p>
+</details>
+<p><strong>Question 4.</strong> What does it mean for <span class="math inline">\(\hat\beta\)</span> to be “unbiased,” and what does Gauss–Markov add on top of unbiasedness?</p>
+<details class="qa-answer">
+<summary>
+Show answer
+</summary>
+<p>
+Unbiased means <span class="math inline">\({\textrm{E}}[\hat\beta]=\beta\)</span> — on average across repeated samples, least squares recovers the true coefficients. Gauss–Markov adds that, among <em>all</em> unbiased estimators that are linear in <span class="math inline">\(Y\)</span>, <span class="math inline">\(\hat\beta\)</span> has the smallest possible variance (it’s the “best,” in BLUE) — and this holds without needing to assume the errors are Normally distributed.
+</p>
+</details>
+<p><strong>Question 5.</strong> What is <span class="math inline">\({\textrm{cov}}(\hat\beta)\)</span>, and what happens to it as <span class="math inline">\(\sigma^2\)</span> increases?</p>
+<details class="qa-answer">
+<summary>
+Show answer
+</summary>
+<p>
+<span class="math inline">\({\textrm{cov}}(\hat\beta)=\sigma^2(X^\top X)^{-1}\)</span>. As <span class="math inline">\(\sigma^2\)</span> increases (noisier data), every entry of this covariance matrix scales up proportionally — so <span class="math inline">\(\hat\beta\)</span> becomes a less precise (more variable) estimate of <span class="math inline">\(\beta\)</span>, which makes sense: noisier data should give us less confidence in our estimated coefficients.
+</p>
+</details>
+<p><strong>Question 6.</strong> In R, what does the formula <code>Score ~ Hours</code> inside <code>lm(Score ~ Hours, data = study_data)</code> mean, in terms of response and covariate?</p>
+<details class="qa-answer">
+<summary>
+Show answer
+</summary>
+<p>
+The left-hand side of <code>~</code> is the response variable (<span class="math inline">\(Y\)</span>) and the right-hand side is the covariate (<span class="math inline">\(X\)</span>) — so this fits a regression of exam <code>Score</code> on <code>Hours</code> studied, i.e.&nbsp;<code>Score</code> is being predicted from <code>Hours</code>.
+</p>
+</details>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./Unit_2_1.html" class="pagination-link" aria-label="Basics of linear regression">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Basics of linear regression</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./Unit_2_3.html" class="pagination-link" aria-label="Least squares inference">
+        <span class="nav-page-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Least squares inference</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

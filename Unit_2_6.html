@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>4&nbsp; Review Random Vectors – Regression Notes</title>
+<title>10&nbsp; Additional concepts and examples – Regression Notes</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -26,6 +26,41 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -36,8 +71,8 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./Unit_2_1.html" rel="next">
-<link href="./Unit_1_3.html" rel="prev">
+<link href="./Glossary.html" rel="next">
+<link href="./Unit_2_5.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
@@ -116,7 +151,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./Unit_1_1.html">Review material</a></li><li class="breadcrumb-item"><a href="./Unit_1_4.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Review Random Vectors</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./Unit_2_1.html">Linear Regression</a></li><li class="breadcrumb-item"><a href="./Unit_2_6.html"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Additional concepts and examples</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -176,7 +211,7 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./Unit_1_4.html" class="sidebar-item-text sidebar-link active">
+  <a href="./Unit_1_4.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Review Random Vectors</span></span></a>
   </div>
 </li>
@@ -223,7 +258,7 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./Unit_2_6.html" class="sidebar-item-text sidebar-link">
+  <a href="./Unit_2_6.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Additional concepts and examples</span></span></a>
   </div>
 </li>
@@ -245,20 +280,21 @@ window.Quarto = {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#definition-of-random-vectors" id="toc-definition-of-random-vectors" class="nav-link active" data-scroll-target="#definition-of-random-vectors"><span class="header-section-number">4.1</span> Definition of random vectors</a></li>
-  <li><a href="#expected-value-and-covariance" id="toc-expected-value-and-covariance" class="nav-link" data-scroll-target="#expected-value-and-covariance"><span class="header-section-number">4.2</span> Expected Value and Covariance</a></li>
-  <li><a href="#properties-of-expected-value-and-covariance" id="toc-properties-of-expected-value-and-covariance" class="nav-link" data-scroll-target="#properties-of-expected-value-and-covariance"><span class="header-section-number">4.3</span> Properties of expected value and covariance</a></li>
-  <li><a href="#multivariate-normal-distribution" id="toc-multivariate-normal-distribution" class="nav-link" data-scroll-target="#multivariate-normal-distribution"><span class="header-section-number">4.4</span> Multivariate normal distribution</a></li>
-  <li><a href="#check-your-understanding" id="toc-check-your-understanding" class="nav-link" data-scroll-target="#check-your-understanding"><span class="header-section-number">4.5</span> Check Your Understanding</a></li>
+  <li><a href="#beware-scatter-plots-in-mlr" id="toc-beware-scatter-plots-in-mlr" class="nav-link active" data-scroll-target="#beware-scatter-plots-in-mlr"><span class="header-section-number">10.1</span> Beware scatter plots in MLR</a></li>
+  <li><a href="#a-complete-worked-example-nfl-team-wins" id="toc-a-complete-worked-example-nfl-team-wins" class="nav-link" data-scroll-target="#a-complete-worked-example-nfl-team-wins"><span class="header-section-number">10.2</span> A complete worked example: NFL team wins</a></li>
+  <li><a href="#extrapolation-and-the-convex-hull" id="toc-extrapolation-and-the-convex-hull" class="nav-link" data-scroll-target="#extrapolation-and-the-convex-hull"><span class="header-section-number">10.3</span> Extrapolation and the convex hull</a></li>
+  <li><a href="#multicollinearity" id="toc-multicollinearity" class="nav-link" data-scroll-target="#multicollinearity"><span class="header-section-number">10.4</span> Multicollinearity</a></li>
+  <li><a href="#closing-the-chapter" id="toc-closing-the-chapter" class="nav-link" data-scroll-target="#closing-the-chapter"><span class="header-section-number">10.5</span> Closing the chapter</a></li>
+  <li><a href="#check-your-understanding" id="toc-check-your-understanding" class="nav-link" data-scroll-target="#check-your-understanding"><span class="header-section-number">10.6</span> Check Your Understanding</a></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./Unit_1_1.html">Review material</a></li><li class="breadcrumb-item"><a href="./Unit_1_4.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Review Random Vectors</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./Unit_2_1.html">Linear Regression</a></li><li class="breadcrumb-item"><a href="./Unit_2_6.html"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Additional concepts and examples</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Review Random Vectors</span></h1>
+<h1 class="title"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Additional concepts and examples</span></h1>
 </div>
 
 
@@ -275,127 +311,118 @@ window.Quarto = {
 </header>
 
 
-<p>This section combines the previous two: we now treat a whole collection of random variables — like an entire dataset’s worth of observations — as a single object, a random vector, and describe it using the matrix tools from the last section. This is the natural language for regression, where our data <span class="math inline">\(Y_1,\ldots,Y_n\)</span> is best thought of as one random vector <span class="math inline">\(Y\)</span>, and our estimator <span class="math inline">\(\hat\beta\)</span> turns out to be a (matrix) function of that vector.</p>
-<section id="definition-of-random-vectors" class="level2" data-number="4.1">
-<h2 data-number="4.1" data-anchor-id="definition-of-random-vectors"><span class="header-section-number">4.1</span> Definition of random vectors</h2>
-<p><strong>Definition 2.14</strong> Let <span class="math inline">\(Y_1, \cdots, Y_n\)</span> be random variables. Then <span class="math display">\[
-Y = \left( \begin{array}{c} Y_1 \\ \vdots \\ Y_n \end{array} \right)
-\]</span> is an <span class="math inline">\(n\)</span>-dimensional random vector.</p>
-<div class="callout callout-style-default callout-tip callout-titled" title="Intuition: a random vector is just a bundle of random variables">
+<p>This final section of the chapter covers a handful of practical warnings and tools that don’t fit neatly into the earlier sections, but matter a great deal once you start fitting real regression models: a caution about reading scatter plots in MLR, one more complete worked example that ties everything together, and a few common problems (extrapolation, multicollinearity) worth knowing to watch for.</p>
+<section id="beware-scatter-plots-in-mlr" class="level2" data-number="10.1">
+<h2 data-number="10.1" data-anchor-id="beware-scatter-plots-in-mlr"><span class="header-section-number">10.1</span> Beware scatter plots in MLR</h2>
+<p>With multiple covariates, a simple scatter plot of <span class="math inline">\(Y\)</span> against one covariate <span class="math inline">\(X_j\)</span> alone can be <em>misleading</em> — it can look like there’s no relationship when there actually is one, because the scatter plot ignores the other covariates entirely.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">445</span>)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>n <span class="ot">=</span> <span class="dv">8</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>x1 <span class="ot">=</span> <span class="fu">rnorm</span>(n, <span class="dv">5</span>, <span class="dv">5</span>)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>x2 <span class="ot">=</span> <span class="fu">rnorm</span>(n, <span class="dv">3</span>, <span class="dv">5</span>)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>y <span class="ot">=</span> <span class="dv">8</span> <span class="sc">-</span> <span class="dv">5</span><span class="sc">*</span>x1 <span class="sc">+</span> <span class="dv">12</span><span class="sc">*</span>x2 <span class="sc">+</span> <span class="fu">rnorm</span>(n, <span class="dv">0</span>, <span class="dv">2</span>)   <span class="co"># y truly, strongly depends on x1!</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>df <span class="ot">=</span> <span class="fu">data.frame</span>(y, x1, x2)</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(df)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><img src="Unit_2_files/figure-html/unnamed-chunk-24-1.png" style="max-width:420px;display:block;margin:1em auto;"></p>
+<p>Even though <code>y</code> was generated with a strong (coefficient <span class="math inline">\(-5\)</span>) dependence on <code>x1</code>, the <code>y</code> vs.&nbsp;<code>x1</code> scatter plot alone can look weak or unclear, because <code>x1</code> and <code>x2</code> happen to be correlated with each other in this small sample, and their effects partially offset each other in the raw plot. (This particular kind of illusion tends to fade with a larger sample size.)</p>
+<div class="callout callout-style-default callout-warning callout-titled" title="Common mistake: judging a covariate's importance from its raw scatter plot alone">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Tip</span>Intuition: a random vector is just a bundle of random variables
+<span class="screen-reader-only">Warning</span>Common mistake: judging a covariate’s importance from its raw scatter plot alone
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>There’s no new randomness concept here — a random vector is simply a way of writing down several random variables <em>together</em>, as a single column, so we can manipulate them all at once with matrix algebra instead of writing <span class="math inline">\(n\)</span> separate equations. If <span class="math inline">\(Y_1,\ldots,Y_n\)</span> are, say, the heights of <span class="math inline">\(n\)</span> randomly sampled students, then <span class="math inline">\(Y\)</span> is the vector of all <span class="math inline">\(n\)</span> heights from that one sample. Once you bundle them into <span class="math inline">\(Y\)</span>, you can ask not just “what’s the distribution of each <span class="math inline">\(Y_i\)</span> on its own?” but also “how do the <span class="math inline">\(Y_i\)</span>’s relate to <em>each other</em>?” — which is exactly what the covariance matrix below captures.</p>
+<p>A weak-looking (or even flat) scatter plot between <span class="math inline">\(Y\)</span> and one covariate <span class="math inline">\(X_j\)</span> does <em>not</em> prove <span class="math inline">\(\beta_j\approx0\)</span> — the coefficient interpretation from <a href="./Unit_2_2.html">3.2</a> is explicitly “holding the other covariates constant,” but a two-dimensional scatter plot can’t hold anything constant. The individual coefficient’s <span class="math inline">\(t\)</span>-test from <a href="./Unit_2_3.html">3.3</a> (or a partial-regression/added-variable plot, beyond our scope here) is the correct way to judge a single covariate’s contribution in an MLR model — not eyeballing its raw scatter plot against <span class="math inline">\(Y\)</span>.</p>
 </div>
 </div>
-<p>Similar to a random variable, a random vector also comes with a probability mass function (if all the <span class="math inline">\(Y_i\)</span> are discrete) or a probability density function (if all the <span class="math inline">\(Y_i\)</span> are continuous), or a ``mixture’’ distribution (if some <span class="math inline">\(Y_i\)</span> are discrete and others are continuous). In general, a random vector is drawn from a multivariate distribution, defined by the PMF or PDF. Just as before, the PMF and PDF range is non-negative, the PMF sums to 1 over all outcomes, and the PDF integrates to 1 over <span class="math inline">\(\mathbb{R}^n\)</span>. One discrete multivariate distribution you have learned in 1131 is the Multinomial distribution. We will learn about the multivariate normal distribution soon.</p>
 </section>
-<section id="expected-value-and-covariance" class="level2" data-number="4.2">
-<h2 data-number="4.2" data-anchor-id="expected-value-and-covariance"><span class="header-section-number">4.2</span> Expected Value and Covariance</h2>
-<p><strong>Definition 2.15</strong> Let <span class="math inline">\(Y\)</span> be an <span class="math inline">\(n\)</span>-dimensional random vector, then the mean (expected value) of <span class="math inline">\(Y\)</span> is defined as <span class="math display">\[
-{\textrm{E}}(Y) = \left( \begin{array}{c} {\textrm{E}}(Y_1) \\ \vdots \\ {\textrm{E}}(Y_n) \end{array} \right) =
-\mu
-\]</span> and the covariance matrix of <span class="math inline">\(Y\)</span> is defined as <span class="math display">\[
-{\textrm{cov}}\left[Y\right] = {\textrm{E}}[ (Y - \mu) (Y - \mu)^\top ] =
-(( {\textrm{cov}}\left[Y_i, Y_j\right] \ )) = \Sigma.
-\]</span></p>
-<p>Sometimes <span class="math inline">\({\textrm{cov}}\left[Y\right]\)</span> is written as <span class="math inline">\({\textrm{Var}}\left[Y\right]\)</span>.</p>
-<p>The following are some facts about <span class="math inline">\(\Sigma\)</span>:</p>
-<p><span class="math inline">\(\Sigma\)</span> is an <span class="math inline">\(n \times n\)</span> matrix with the diagonal elements being the variances, <span class="math inline">\({\textrm{Var}}\left[Y_i\right]\)</span> for <span class="math inline">\(i=1, \ldots, n\)</span>, and the off-diagonal elements being the covariances, <span class="math inline">\({\textrm{cov}}\left[Y_i, Y_j\right]\)</span> for <span class="math inline">\(i, j = 1, \ldots, n\)</span> and <span class="math inline">\(i \ne j\)</span>. <span class="math inline">\(\Sigma\)</span> is a symmetric, non-negative definite matrix. In this course, we further restrict it to be a positive definite matrix. <span class="math inline">\(\Sigma\)</span> is referred to as the <strong>covariance matrix</strong>.</p>
-<div class="callout callout-style-default callout-tip callout-titled" title="Intuition: reading a covariance matrix">
+<section id="a-complete-worked-example-nfl-team-wins" class="level2" data-number="10.2">
+<h2 data-number="10.2" data-anchor-id="a-complete-worked-example-nfl-team-wins"><span class="header-section-number">10.2</span> A complete worked example: NFL team wins</h2>
+<p><strong>Example 3.11</strong> Using NFL team statistics (<code>MPV::table.b1</code> from the textbook’s companion package), model the number of wins (<code>Wins</code>) using passing yards (<code>PassY</code>), rushing percentage (<code>PerR</code>), and opponent rushing yards (<code>ORY</code>).</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>df <span class="ot">=</span> MPV<span class="sc">::</span>table.b1</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(df) <span class="ot">=</span> <span class="fu">c</span>(<span class="st">"Wins"</span>,<span class="st">"RushY"</span>,<span class="st">"PassY"</span>,<span class="st">"PuntA"</span>,<span class="st">"FGP"</span>,<span class="st">"TurnD"</span>,<span class="st">"PenY"</span>,<span class="st">"PerR"</span>,<span class="st">"ORY"</span>,<span class="st">"OPY"</span>)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>regression_model <span class="ot">=</span> <span class="fu">lm</span>(Wins <span class="sc">~</span> PassY <span class="sc">+</span> PerR <span class="sc">+</span> ORY, <span class="at">data =</span> df)</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(regression_model)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<pre><code>Coefficients:
+             Estimate Std. Error t value Pr(&gt;|t|)
+(Intercept) -1.808372   7.900859  -0.229 0.820899
+PassY        0.003598   0.000695   5.177 2.66e-05 ***
+PerR         0.193960   0.088233   2.198 0.037815 *
+ORY         -0.004816   0.001277  -3.771 0.000938 ***
+
+Residual standard error: 1.706 on 24 degrees of freedom
+Multiple R-squared:  0.7863,    Adjusted R-squared:  0.7596
+F-statistic: 29.44 on 3 and 24 DF,  p-value: 3.273e-08</code></pre>
+<p>All three covariates are significant. For example, holding passing yards and opponent rushing yards constant, a one-percentage-point increase in rushing percentage is associated with, on average, <span class="math inline">\(0.194\)</span> additional wins. The overall <span class="math inline">\(F\)</span> test (comparing against the intercept-only model, <code>Wins ~ 1</code>) confirms the model as a whole is highly significant:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(<span class="fu">lm</span>(Wins <span class="sc">~</span> <span class="dv">1</span>, <span class="at">data =</span> df), regression_model)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<pre><code>Model 1: Wins ~ 1
+Model 2: Wins ~ PassY + PerR + ORY
+  Res.Df    RSS Df Sum of Sq      F    Pr(&gt;F)
+1     27 326.96
+2     24  69.87  3    257.09 29.437 3.273e-08 ***</code></pre>
+<p>We can also run a <strong>partial <span class="math inline">\(F\)</span> test</strong> (<a href="./Unit_2_3.html">3.3</a>) to check whether <code>PerR</code> adds anything beyond <code>PassY</code> and <code>ORY</code>:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>regression_model2 <span class="ot">=</span> <span class="fu">lm</span>(Wins <span class="sc">~</span> PassY <span class="sc">+</span> ORY, <span class="at">data =</span> df)   <span class="co"># drops PerR</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(regression_model2, regression_model)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<pre><code>  Res.Df    RSS Df Sum of Sq      F   Pr(&gt;F)
+1     25 83.938
+2     24 69.870  1   14.068 4.8318 0.03782 *</code></pre>
+<p>Dropping <code>PerR</code> increases <span class="math inline">\(SSE\)</span> from <span class="math inline">\(69.87\)</span> to <span class="math inline">\(83.94\)</span>; the partial <span class="math inline">\(R^2\)</span> is <span class="math inline">\(SSdrop/SSE_R=14.07/83.94\approx0.168\)</span> — <code>PerR</code> explains about 16.8% of the variation <code>PassY</code> and <code>ORY</code> alone leave unexplained, matching the individual <span class="math inline">\(t\)</span>-test p-value for <code>PerR</code> (<span class="math inline">\(0.038\)</span>) exactly (recall from <a href="./Unit_2_3.html">3.3</a> that a partial <span class="math inline">\(F\)</span> test dropping one covariate is identical to that covariate’s own <span class="math inline">\(t\)</span>-test).</p>
+<p>Before trusting any of this, we’d check the assumptions as in <a href="./Unit_2_4.html">3.4</a>:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">qqnorm</span>(regression_model2<span class="sc">$</span>residuals <span class="sc">/</span> <span class="fu">summary</span>(regression_model2)<span class="sc">$</span>sigma, <span class="at">pch =</span> <span class="dv">22</span>, <span class="at">bg =</span> <span class="dv">1</span>); <span class="fu">abline</span>(<span class="dv">0</span>,<span class="dv">1</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><img src="Unit_2_files/figure-html/unnamed-chunk-27-1.png" style="max-width:340px;display:block;margin:1em auto;"></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(regression_model2<span class="sc">$</span>fitted.values, regression_model<span class="sc">$</span>residuals, <span class="at">pch =</span> <span class="dv">22</span>, <span class="at">bg =</span> <span class="dv">1</span>); <span class="fu">abline</span>(<span class="at">h =</span> <span class="dv">0</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><img src="Unit_2_files/figure-html/unnamed-chunk-27-3.png" style="max-width:340px;display:block;margin:1em auto;"></p>
+<p>Both look reasonable — no strong departure from Normality, and no obvious pattern in the residuals against fitted values.</p>
+</section>
+<section id="extrapolation-and-the-convex-hull" class="level2" data-number="10.3">
+<h2 data-number="10.3" data-anchor-id="extrapolation-and-the-convex-hull"><span class="header-section-number">10.3</span> Extrapolation and the convex hull</h2>
+<p>Predicting <span class="math inline">\(Y\)</span> at a covariate vector <span class="math inline">\(x\)</span> far outside the range of the <em>observed</em> data is called <strong>extrapolation</strong>, and it’s risky: a model that fits well within the observed region can behave very differently (and fit poorly) outside it.</p>
+<div class="callout callout-style-default callout-warning callout-titled" title="Common mistake: assuming 'each covariate is in range' means you're not extrapolating">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Tip</span>Intuition: reading a covariance matrix
+<span class="screen-reader-only">Warning</span>Common mistake: assuming ‘each covariate is in range’ means you’re not extrapolating
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Every entry of <span class="math inline">\(\Sigma\)</span> has a plain-language meaning. The diagonal tells you how spread out each individual <span class="math inline">\(Y_i\)</span> is on its own (its variance); the off-diagonal entry <span class="math inline">\((i,j)\)</span> tells you how <span class="math inline">\(Y_i\)</span> and <span class="math inline">\(Y_j\)</span> move together (their covariance, in the sense from <a href="./Unit_1_1.html">Unit_1_1</a>). For example, for 3 stock returns <span class="math inline">\(Y_1,Y_2,Y_3\)</span>, a <span class="math inline">\(3\times3\)</span> <span class="math inline">\(\Sigma\)</span> with large diagonal entries and large positive off-diagonal entries says: each stock is individually volatile, <em>and</em> they tend to rise and fall together — a genuinely risky portfolio, since there’s no diversification benefit. <span class="math inline">\(\Sigma\)</span> being symmetric follows immediately from <span class="math inline">\({\textrm{cov}}[Y_i,Y_j]={\textrm{cov}}[Y_j,Y_i]\)</span>; it’s positive-definite (in this course) for the same reason no variance can be negative — you can’t have a linear combination of the <span class="math inline">\(Y_i\)</span>’s with negative “spread.”</p>
+<p>With multiple covariates, it’s easy to extrapolate <em>without noticing</em>, even when each individual covariate’s value looks unremarkable on its own. The region actually covered by the observed data — the convex hull of the covariate vectors — can be a strange, hard-to-visualize shape in <span class="math inline">\(p\)</span> dimensions; a genuinely novel <em>combination</em> of otherwise-ordinary covariate values can still fall well outside it. Checking each covariate’s range one at a time is not enough once <span class="math inline">\(p&gt;1\)</span>.</p>
 </div>
 </div>
+<p>One practical tool: using the <strong>hat matrix</strong> <span class="math inline">\(H=X(X^\top X)^{-1}X^\top\)</span>, the observation with the largest diagonal entry <span class="math inline">\(h_{ii}\)</span> (call it <span class="math inline">\(h_{max}\)</span>) lies on the boundary of the data’s convex hull, in a relatively sparse region of covariate space. For a new point <span class="math inline">\(x\)</span> we want to predict at, checking whether <span class="math inline">\(x^\top(X^\top X)^{-1}x\leq h_{max}\)</span> tells us whether <span class="math inline">\(x\)</span> falls inside that same enclosing region — a rough, practical extrapolation check.</p>
 </section>
-<section id="properties-of-expected-value-and-covariance" class="level2" data-number="4.3">
-<h2 data-number="4.3" data-anchor-id="properties-of-expected-value-and-covariance"><span class="header-section-number">4.3</span> Properties of expected value and covariance</h2>
-<p>Let <span class="math inline">\(X,Y\in \mathbb{R}^{d}\)</span> be random vectors with <span class="math inline">\(A\in \mathbb{R}^d\)</span> and <span class="math inline">\(B\in \mathbb{R}^{n\times d}\)</span> be matrices. It holds that</p>
+<section id="multicollinearity" class="level2" data-number="10.4">
+<h2 data-number="10.4" data-anchor-id="multicollinearity"><span class="header-section-number">10.4</span> Multicollinearity</h2>
+<p><strong>Multicollinearity</strong> is near-linear dependence among the covariates themselves (the columns of <span class="math inline">\(X\)</span>). An <em>exact</em> linear dependence would make <span class="math inline">\(X^\top X\)</span> singular, so <span class="math inline">\(\hat\beta=(X^\top X)^{-1}X^\top Y\)</span> wouldn’t even exist; near-dependence doesn’t break the formula, but it seriously degrades our ability to estimate <span class="math inline">\(\beta\)</span> precisely.</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Intuition: why does near-dependence hurt estimation?">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Intuition: why does near-dependence hurt estimation?
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>If two covariates are highly correlated with each other, the data can’t clearly tell the model how to split credit for explaining <span class="math inline">\(Y\)</span> between them — many different <span class="math inline">\((\beta_j,\beta_k)\)</span> pairs would fit the data almost equally well, since increasing one coefficient and decreasing the other (in proportion to how correlated the covariates are) barely changes the fitted values. That ambiguity shows up as inflated variance on the individual coefficient estimates — <span class="math inline">\(\hat\beta\)</span> can swing wildly from sample to sample — even though the model’s overall predictions (<span class="math inline">\(\hat Y\)</span>) might still be perfectly stable and accurate.</p>
+</div>
+</div>
+<p>We detect multicollinearity with the <strong>variance inflation factor (VIF)</strong>: for covariate <span class="math inline">\(X_j\)</span>, <span class="math display">\[VIF_j=\frac{1}{1-R_j^2},\]</span> where <span class="math inline">\(R_j^2\)</span> is the <span class="math inline">\(R^2\)</span> from regressing <span class="math inline">\(X_j\)</span> on <em>all the other</em> covariates. If <span class="math inline">\(X_j\)</span> is well explained by the other covariates (<span class="math inline">\(R_j^2\)</span> close to 1), <span class="math inline">\(VIF_j\)</span> blows up — a large VIF (a common rule of thumb is <span class="math inline">\(VIF_j&gt;10\)</span>, though some fields use stricter thresholds like <span class="math inline">\(3\)</span>) signals that <span class="math inline">\(X_j\)</span> is redundant with the rest of the model, and its coefficient should be interpreted cautiously.</p>
+<p>Sometimes a fitted coefficient has an unexpected sign (contradicting subject-matter intuition). Common culprits:</p>
 <ul>
-<li><span class="math inline">\({\textrm{E}}(X+ Y) = {\textrm{E}}(X)+{\textrm{E}}(Y)\)</span></li>
-<li><span class="math inline">\({\textrm{E}}(A + B Y) = A + B {\textrm{E}}(Y)\)</span></li>
-<li><span class="math inline">\({\textrm{cov}}\left[A + B Y\right] = B {\textrm{cov}}\left[Y\right] B^\top\)</span>.</li>
+<li>The observed range of that regressor is too narrow, inflating the variance of <span class="math inline">\(\hat\beta\)</span>.</li>
+<li>An important covariate has been omitted from the model.</li>
+<li>Multicollinearity is present.</li>
+<li>A computational error was made somewhere upstream.</li>
 </ul>
-<div class="callout callout-style-default callout-tip callout-titled" title="Intuition: these are the vector versions of rules you already know">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Tip</span>Intuition: these are the vector versions of rules you already know
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Compare these to the scalar linearity-of-expectation and variance-of-a-sum rules from <a href="./Unit_1_1.html">Unit_1_1</a> — they’re exactly the same ideas, just written for vectors and matrices instead of single numbers. <span class="math inline">\({\textrm{E}}(A+BY)=A+B{\textrm{E}}(Y)\)</span> is “expectation passes through linear transformations,” identical in spirit to <span class="math inline">\(\mathrm{E}(aX+b)=a\mathrm{E}(X)+b\)</span>. The covariance rule <span class="math inline">\({\textrm{cov}}[A+BY]=B\,{\textrm{cov}}[Y]\,B^\top\)</span> is the multivariate analogue of <span class="math inline">\({\textrm{Var}}[aX+b]=a^2{\textrm{Var}}[X]\)</span> — the matrix <span class="math inline">\(B\)</span> takes the place of the scalar <span class="math inline">\(a\)</span>, and since matrices don’t commute, <span class="math inline">\(B\)</span> shows up once on the left and once (transposed) on the right, rather than simply being squared. This exact rule is what lets us compute the covariance matrix of <span class="math inline">\(\hat\beta=(X^\top X)^{-1}X^\top Y\)</span> later in the course, by treating <span class="math inline">\(B=(X^\top X)^{-1}X^\top\)</span>.</p>
-</div>
-</div>
-<p><strong>Exercise 2.13</strong> Let <span class="math inline">\(Y = (Y_1, \ldots, Y_n)^\top\)</span> be a random vector, where <span class="math inline">\(Y_i\)</span> are i.i.d.&nbsp;random variables with mean <span class="math inline">\(\mu\)</span> and variance <span class="math inline">\(\sigma^2\)</span>. What are the mean and covariance of <span class="math inline">\(Y\)</span>? Use properties of random vectors to compute the mean and variance of the sample mean.</p>
-<p><em>Solution 2.4</em>. First, <span class="math inline">\({\textrm{E}}(Y) = \mu 1\)</span> and <span class="math inline">\({\textrm{cov}}\left[Y\right] = \sigma^2 I\)</span>. Note that <span class="math inline">\(\bar{Y} = (Y_1 + \cdots + Y_n)/n = \frac{1}{n}1^\top Y\)</span>. Now, we have <span class="math display">\[
-{\textrm{E}}(\bar{Y}) = {\textrm{E}}\left( \frac{1}{n}1^\top Y \right) =
-\frac{1}{n} \left( 1^\top {\textrm{E}}(Y) \right) = \frac{1}{n} (n \mu) = \mu
-\]</span> and,</p>
-<p><span class="math display">\[\begin{align*}
-{\textrm{cov}}\left[\bar{Y}\right] &amp;={\textrm{cov}}\left[ \frac{1}{n}1^\top Y\right]\\
-&amp;=
-\left( \frac{1}{n} \right)^2
-\left( 1^\top {\textrm{cov}}\left[Y\right]  1 \right) \\
-&amp;=
-\left( \frac{1}{n} \right)^2 (n \sigma^2) = \frac{\sigma^2}{n}.
-\end{align*}\]</span></p>
 </section>
-<section id="multivariate-normal-distribution" class="level2" data-number="4.4">
-<h2 data-number="4.4" data-anchor-id="multivariate-normal-distribution"><span class="header-section-number">4.4</span> Multivariate normal distribution</h2>
-<p>We say that a random vector <span class="math inline">\(X\sim \mathcal{N}_d(\mu,\Sigma)\)</span> follows a multivariate normal distribution if <span class="math inline">\(X\)</span> has PDF: <span class="math display">\[
-\phi(\mathbf{x})=\left(\frac{1}{2 \pi}\right)^{d / 2}|\Sigma|^{-1 / 2} \exp \left\{-\frac{1}{2}(\mathbf{x}-\mu)^{\prime} \Sigma^{-1}(\mathbf{x}-\mu)\right\}.
-\]</span></p>
-<div class="callout callout-style-default callout-warning callout-titled" title="Common mistake: carrying over the univariate formula's σ² as if it were a single number">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Warning</span>Common mistake: carrying over the univariate formula’s σ² as if it were a single number
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>The univariate Normal PDF from <a href="./Unit_1_1.html">1.1</a> has <span class="math inline">\(\sigma^2\)</span> (a single number) in the denominator and inside the exponent. Here, <span class="math inline">\(\Sigma\)</span> (the whole covariance <em>matrix</em>, not a single variance) takes its place, and the operations around it change accordingly: dividing by <span class="math inline">\(\sigma^2\)</span> becomes multiplying by the matrix inverse <span class="math inline">\(\Sigma^{-1}\)</span>, and <span class="math inline">\(|\Sigma|^{-1/2}\)</span> (using the matrix determinant) replaces <span class="math inline">\(1/\sigma\)</span>. Don’t read <span class="math inline">\(\Sigma^{-1}\)</span> as “<span class="math inline">\(1/\Sigma\)</span>” in the ordinary numeric sense, and don’t forget that <span class="math inline">\((\mathbf{x}-\mu)\)</span> is a whole vector here, not a single number — every piece of the univariate formula has a genuine matrix/vector counterpart, not just a relabeling.</p>
-</div>
-</div>
-<p>If <span class="math inline">\(X\sim \mathcal{N}_d(\mu,\Sigma)\)</span> and <span class="math inline">\(c\in \mathbb{R}^d\)</span>, <span class="math inline">\(A\in \mathbb{R}^{m\times d}\)</span> then:</p>
-<ul>
-<li><span class="math inline">\(AX\sim \mathcal{N}(A\mu,A\Sigma A^\top)\)</span>.</li>
-<li><span class="math inline">\(c^\top X\sim \mathcal{N}(c^\top\mu,c^\top\Sigma c)\)</span>.</li>
-<li>Any conditional distribution for a subset of the variables conditional on another subset of variables is a multivariate distribution.</li>
-</ul>
-<div class="callout callout-style-default callout-tip callout-titled" title="Intuition: the multivariate Normal is closed under linear transformations">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Tip</span>Intuition: the multivariate Normal is closed under linear transformations
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>The single most useful fact here is the first bullet: take a multivariate Normal vector, apply <em>any</em> linear transformation (<span class="math inline">\(AX\)</span>, a matrix times the vector), and the result is <em>still</em> multivariate Normal — you never leave the Normal family, you just get new mean and covariance parameters (<span class="math inline">\(A\mu\)</span> and <span class="math inline">\(A\Sigma A^\top\)</span>, which is exactly the covariance rule from two sections up). This is why Normal assumptions are so convenient for regression: once we assume our data is (multivariate) Normal, any linear combination of it we might compute — including the regression estimator <span class="math inline">\(\hat\beta\)</span> itself, which is a linear function of <span class="math inline">\(Y\)</span> — is guaranteed to be Normal too, with a covariance matrix we already know how to compute.</p>
-<p>The second bullet, <span class="math inline">\(c^\top X\sim\mathcal{N}(c^\top\mu,c^\top\Sigma c)\)</span>, is just a special case where <span class="math inline">\(A\)</span> is a single row: it says any single (scalar) weighted combination of the entries of <span class="math inline">\(X\)</span> is itself an ordinary, one-dimensional Normal random variable.</p>
-</div>
-</div>
-<p>Using random vectors is a simple way of deriving lots of equations for this course. Working with vectors also allows those who are “geometrically gifted” to view the whole regression concepts geometrically! If not, not to worry!</p>
+<section id="closing-the-chapter" class="level2" data-number="10.5">
+<h2 data-number="10.5" data-anchor-id="closing-the-chapter"><span class="header-section-number">10.5</span> Closing the chapter</h2>
+<p>Recall the general modeling workflow: <strong>posit</strong> a model and its assumptions; <strong>estimate</strong> the parameters (least squares, <a href="./Unit_2_2.html">3.2</a>); <strong>infer</strong> — confidence intervals and hypothesis tests for those parameters (<a href="./Unit_2_3.html">3.3</a>); check the <strong>fit</strong> — does the model match the data, do the assumptions hold (<a href="./Unit_2_4.html">3.4</a>)?; and <strong>predict</strong> new responses, with honest error bars (<a href="./Unit_2_3.html">3.3</a>). Having worked through this chapter, you should be able to carry out every one of these steps for a linear regression model, end to end. Later chapters take up what to do when a step in this workflow reveals a problem — nonlinearity, non-constant variance, multicollinearity, and other violations — and how to remedy it.</p>
 <div class="callout callout-style-default callout-note callout-titled" title="Key takeaways before moving on">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -407,23 +434,17 @@ Y = \left( \begin{array}{c} Y_1 \\ \vdots \\ Y_n \end{array} \right)
 </div>
 <div class="callout-body-container callout-body">
 <ul>
-<li>A random vector just bundles several random variables into one column so we can use matrix algebra on them together.</li>
-<li>The covariance matrix <span class="math inline">\(\Sigma\)</span> packs variances on the diagonal and covariances off the diagonal — it’s symmetric and positive-definite.</li>
-<li>Expectation and covariance of a linear transformation <span class="math inline">\(A+BY\)</span> follow the same rules as the scalar case, just with matrices in place of scalars (and <span class="math inline">\(B\)</span> appearing on both sides of <span class="math inline">\(\Sigma\)</span> in the covariance rule, transposed on one side).</li>
-<li>The multivariate Normal family is closed under linear transformations: any linear function of a multivariate Normal vector is itself (multivariate) Normal.</li>
-<li>This machinery is exactly what lets us find the mean and covariance matrix of the regression estimator <span class="math inline">\(\hat\beta=(X^\top X)^{-1}X^\top Y\)</span> later in the course.</li>
+<li>A weak-looking scatter plot between <span class="math inline">\(Y\)</span> and one covariate does not prove that covariate is unimportant in an MLR model — it ignores the other covariates, which the coefficient’s own <span class="math inline">\(t\)</span>-test properly accounts for.</li>
+<li>Extrapolating beyond the observed data’s convex hull is risky and easy to do accidentally with multiple covariates, even when each covariate looks “in range” individually; the hat matrix gives one practical check.</li>
+<li>Multicollinearity (near-linear dependence among covariates) inflates the variance of individual coefficient estimates, even when overall predictions remain accurate; VIF quantifies how badly.</li>
+<li>Unexpected coefficient signs usually trace back to a narrow covariate range, an omitted variable, multicollinearity, or a computational error.</li>
+<li>The full regression workflow — posit, estimate, infer, check fit, predict — is now something you should be able to execute completely on a new dataset.</li>
 </ul>
 </div>
 </div>
-<p><strong>Exercise 2.14</strong> For a (full-rank) non-random matrix <span class="math inline">\(X\in \mathbb{R}^{n\times p}\)</span> with <span class="math inline">\(n&gt;p\)</span>, and random vector <span class="math inline">\(Y\in \mathbb{R}^{n\times 1}\)</span> with mean <span class="math inline">\(\mu\)</span> and covariance <span class="math inline">\(\Sigma\)</span>, compute the following:</p>
-<ul>
-<li>Expected value and covariance matrix of <span class="math inline">\((X^\top X)^{-1}X^\top Y\)</span></li>
-<li>Expected value of <span class="math inline">\(Y^\top Y\)</span></li>
-<li>Expected value and covariance matrix of <span class="math inline">\(Z^\top Z\)</span> where <span class="math inline">\(Z\)</span> is a fixed, nonrandom vector of <span class="math inline">\(d\)</span> dimensions</li>
-</ul>
 </section>
-<section id="check-your-understanding" class="level2" data-number="4.5">
-<h2 data-number="4.5" data-anchor-id="check-your-understanding"><span class="header-section-number">4.5</span> Check Your Understanding</h2>
+<section id="check-your-understanding" class="level2" data-number="10.6">
+<h2 data-number="10.6" data-anchor-id="check-your-understanding"><span class="header-section-number">10.6</span> Check Your Understanding</h2>
 <style>
 details.qa-answer { margin: 0 0 1.25em 0; border-left: 3px solid #d6eaf8; padding-left: 0.75em; }
 details.qa-answer > summary { cursor: pointer; color: #2e86c1; font-weight: 600; }
@@ -431,59 +452,59 @@ details.qa-answer > summary::marker { color: #2e86c1; }
 details.qa-answer[open] > summary { margin-bottom: 0.5em; }
 details.qa-answer p { margin: 0; }
 </style>
-<p>Review your material and complete the above exercises before continuing to the next section. The questions below are a quick self-check on the material from this page — try each one, then click <strong>Show answer</strong> to check yourself.</p>
-<p><strong>Question 1.</strong> For a random vector <span class="math inline">\(Y=(Y_1,Y_2,Y_3)^\top\)</span>, what does the <span class="math inline">\((2,3)\)</span> entry of <span class="math inline">\({\textrm{cov}}[Y]\)</span> represent? What about the <span class="math inline">\((1,1)\)</span> entry?</p>
+<p>Before checking your answers: show that <span class="math inline">\({\textrm{Var}}[\hat Y|X]=\sigma^2H\)</span> where <span class="math inline">\(H=X(X^\top X)^{-1}X^\top\)</span> (Exercise 3.23), and compute the VIF for each covariate in one of this chapter’s multi-covariate examples (Exercise 3.24) — is there evidence of multicollinearity?</p>
+<p><strong>Question 1.</strong> Why can a scatter plot of <span class="math inline">\(Y\)</span> against a single covariate <span class="math inline">\(X_j\)</span> be misleading in a multiple regression setting?</p>
 <details class="qa-answer">
 <summary>
 Show answer
 </summary>
 <p>
-The <span class="math inline">\((2,3)\)</span> entry is <span class="math inline">\({\textrm{cov}}[Y_2,Y_3]\)</span>, the covariance between the second and third entries of <span class="math inline">\(Y\)</span>. The <span class="math inline">\((1,1)\)</span> entry is <span class="math inline">\({\textrm{Var}}[Y_1]\)</span>, the variance of the first entry — diagonal entries of a covariance matrix are always variances.
+Because the scatter plot only shows the raw, unadjusted relationship between <span class="math inline">\(Y\)</span> and <span class="math inline">\(X_j\)</span>, while the regression coefficient <span class="math inline">\(\beta_j\)</span> specifically measures the relationship <em>holding the other covariates constant</em>. If <span class="math inline">\(X_j\)</span> is correlated with another covariate whose effect partially offsets it in the raw data, the two-dimensional plot can hide a real, strong relationship that the model (via its coefficient and <span class="math inline">\(t\)</span>-test) correctly detects.
 </p>
 </details>
-<p><strong>Question 2.</strong> Why must a covariance matrix <span class="math inline">\(\Sigma\)</span> always be symmetric?</p>
+<p><strong>Question 2.</strong> What does it mean to “extrapolate” in a regression context, and why is it riskier with multiple covariates than with one?</p>
 <details class="qa-answer">
 <summary>
 Show answer
 </summary>
 <p>
-Because <span class="math inline">\({\textrm{cov}}[Y_i,Y_j]={\textrm{cov}}[Y_j,Y_i]\)</span> for any two random variables (covariance doesn’t care about order), so the <span class="math inline">\((i,j)\)</span> and <span class="math inline">\((j,i)\)</span> entries of <span class="math inline">\(\Sigma\)</span> are always equal — which is exactly the definition of a symmetric matrix.
+Extrapolation means predicting at a covariate vector <span class="math inline">\(x\)</span> outside the region actually covered by the observed data. With one covariate, that’s just checking whether <span class="math inline">\(x\)</span> lies outside the observed range — easy to see. With several covariates, the “observed region” is a convex hull in high-dimensional space that’s hard to visualize; a covariate combination can be novel (and risky to predict at) even when every individual covariate value looks ordinary on its own.
 </p>
 </details>
-<p><strong>Question 3.</strong> If <span class="math inline">\(Y\)</span> has covariance matrix <span class="math inline">\(\Sigma\)</span> and <span class="math inline">\(A\)</span> is a matrix, what is the covariance matrix of <span class="math inline">\(AY\)</span>? What happens if <span class="math inline">\(A\)</span> is just a single row vector <span class="math inline">\(c^\top\)</span>?</p>
+<p><strong>Question 3.</strong> What does a large VIF for covariate <span class="math inline">\(X_j\)</span> tell you?</p>
 <details class="qa-answer">
 <summary>
 Show answer
 </summary>
 <p>
-<span class="math inline">\({\textrm{cov}}[AY]=A\Sigma A^\top\)</span>. If <span class="math inline">\(A=c^\top\)</span> is a single row (a <span class="math inline">\(1\times n\)</span> matrix), the result <span class="math inline">\(c^\top\Sigma c\)</span> is a <span class="math inline">\(1\times1\)</span> matrix, i.e., just a single number — the ordinary (scalar) variance of the scalar random variable <span class="math inline">\(c^\top Y\)</span>.
+It tells you <span class="math inline">\(X_j\)</span> is well explained by (i.e., strongly correlated with some combination of) the other covariates in the model — near-linear dependence, or multicollinearity. This inflates the variance of <span class="math inline">\(\hat\beta_j\)</span>, making that coefficient’s estimate unstable from sample to sample, even if the model’s overall predictions remain accurate.
 </p>
 </details>
-<p><strong>Question 4.</strong> True or False: if <span class="math inline">\(X\)</span> is multivariate Normal, then any linear combination of its entries is also Normal.</p>
+<p><strong>Question 4.</strong> In the NFL example, dropping <code>PerR</code> from the full model increased SSE from 69.87 to 83.94, with a partial-<span class="math inline">\(F\)</span> p-value of about 0.038. Is this the same result you’d get from <code>PerR</code>’s individual <span class="math inline">\(t\)</span>-test p-value in the full model? Why?</p>
 <details class="qa-answer">
 <summary>
 Show answer
 </summary>
 <p>
-True. This is one of the most useful properties of the multivariate Normal: it’s closed under linear transformations, so <span class="math inline">\(AX\)</span> (or, as a special case, <span class="math inline">\(c^\top X\)</span> for a single linear combination) is guaranteed to be (multivariate) Normal too, with mean <span class="math inline">\(A\mu\)</span> and covariance <span class="math inline">\(A\Sigma A^\top\)</span>.
+Yes — dropping exactly one covariate via the partial <span class="math inline">\(F\)</span> test is mathematically identical to that covariate’s own individual <span class="math inline">\(t\)</span>-test, as noted in <a href="./Unit_2_3.html">3.3</a>. They will always agree exactly (up to rounding) whenever only a single covariate is being dropped.
 </p>
 </details>
-<p><strong>Question 5.</strong> Why is it useful to write our whole dataset <span class="math inline">\(Y_1,\ldots,Y_n\)</span> as a single random vector <span class="math inline">\(Y\)</span>, rather than working with the <span class="math inline">\(Y_i\)</span>’s one at a time?</p>
+<p><strong>Question 5.</strong> List two of the four common explanations for a regression coefficient having an unexpected sign.</p>
 <details class="qa-answer">
 <summary>
 Show answer
 </summary>
 <p>
-Bundling the data into one vector lets us use matrix algebra to handle the entire dataset at once — for instance, expressing the regression estimator as the single matrix formula <span class="math inline">\(\hat\beta=(X^\top X)^{-1}X^\top Y\)</span> instead of writing out <span class="math inline">\(n\)</span> separate scalar equations. It also lets us directly capture how observations relate to each other via the covariance matrix <span class="math inline">\(\Sigma\)</span>, not just their individual variances.
+Any two of: the observed range of that regressor is too narrow (inflating <span class="math inline">\(\hat\beta\)</span>’s variance); an important covariate has been left out of the model; multicollinearity is present; or a computational error was made.
 </p>
 </details>
-<p><strong>Question 6.</strong> Let <span class="math inline">\(Z\in\mathbb{R}^d\)</span> be a fixed (non-random) vector. What are <span class="math inline">\(\mathrm{E}[Z^\top Z]\)</span> and <span class="math inline">\({\textrm{cov}}[Z^\top Z]\)</span>?</p>
+<p><strong>Question 6.</strong> True or False: multicollinearity makes it impossible to compute <span class="math inline">\(\hat\beta\)</span> at all.</p>
 <details class="qa-answer">
 <summary>
 Show answer
 </summary>
 <p>
-<span class="math inline">\(Z^\top Z=\sum_{i=1}^d Z_i^2\)</span> is just a single fixed number (it’s the squared length of <span class="math inline">\(Z\)</span>), not a random variable at all, since <span class="math inline">\(Z\)</span> is non-random. So <span class="math inline">\(\mathrm{E}[Z^\top Z]=Z^\top Z\)</span> itself (the expectation of a constant is that constant), and <span class="math inline">\({\textrm{cov}}[Z^\top Z]=0\)</span> (a constant has no variability to measure). The lesson: once every piece of an expression is non-random, expectation and covariance stop doing anything interesting.
+False. Only <em>exact</em> linear dependence among the covariates makes <span class="math inline">\(X^\top X\)</span> singular and <span class="math inline">\(\hat\beta\)</span> literally undefined. Multicollinearity (near-linear dependence, the much more common real-world situation) still allows <span class="math inline">\(\hat\beta\)</span> to be computed, but inflates its variance, making the individual coefficient estimates unstable and imprecise.
 </p>
 </details>
 
@@ -886,13 +907,13 @@ Show answer
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./Unit_1_3.html" class="pagination-link" aria-label="Review of matrices and linear algebra">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Review of matrices and linear algebra</span></span>
+      <a href="./Unit_2_5.html" class="pagination-link" aria-label="Simple linear regression">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Simple linear regression</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./Unit_2_1.html" class="pagination-link" aria-label="Basics of linear regression">
-        <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Basics of linear regression</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./Glossary.html" class="pagination-link" aria-label="Glossary">
+        <span class="nav-page-text">Glossary</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

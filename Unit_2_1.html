@@ -1,0 +1,1061 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.10.18">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>5&nbsp; Basics of linear regression – Regression Notes</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./Unit_2_2.html" rel="next">
+<link href="./Unit_1_4.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-ed7344add5f1663e434276306a2aa159.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-chtml.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="nav-sidebar floating quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./Unit_2_1.html">Linear Regression</a></li><li class="breadcrumb-item"><a href="./Unit_2_1.html"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Basics of linear regression</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Regression Notes</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Preface</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">Review material</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Unit_1_1.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Review of random variables</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Unit_1_2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Review of introductory statistics</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Unit_1_3.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Review of matrices and linear algebra</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Unit_1_4.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Review Random Vectors</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text">Linear Regression</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Unit_2_1.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Basics of linear regression</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Unit_2_2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Least Squares</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Unit_2_3.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Least squares inference</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Unit_2_4.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Checking model assumptions</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Unit_2_5.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Simple linear regression</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Unit_2_6.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Additional concepts and examples</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Glossary.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Glossary</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#the-simple-linear-regression-model" id="toc-the-simple-linear-regression-model" class="nav-link active" data-scroll-target="#the-simple-linear-regression-model"><span class="header-section-number">5.1</span> The simple linear regression model</a></li>
+  <li><a href="#the-multiple-linear-regression-model" id="toc-the-multiple-linear-regression-model" class="nav-link" data-scroll-target="#the-multiple-linear-regression-model"><span class="header-section-number">5.2</span> The multiple linear regression model</a></li>
+  <li><a href="#check-your-understanding" id="toc-check-your-understanding" class="nav-link" data-scroll-target="#check-your-understanding"><span class="header-section-number">5.3</span> Check Your Understanding</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./Unit_2_1.html">Linear Regression</a></li><li class="breadcrumb-item"><a href="./Unit_2_1.html"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Basics of linear regression</span></a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Basics of linear regression</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p>This section introduces the star of the course: the linear regression model. Everything before this — random variables, confidence intervals and hypothesis tests, matrix algebra, random vectors — was building toward being able to write this model down precisely and eventually estimate and test it. By the end of this section, you should be able to state the (simple and multiple) linear regression model and the normal linear regression model, and say in plain language what it means to assume each one.</p>
+<section id="the-simple-linear-regression-model" class="level2" data-number="5.1">
+<h2 data-number="5.1" data-anchor-id="the-simple-linear-regression-model"><span class="header-section-number">5.1</span> The simple linear regression model</h2>
+<p><strong>Example 3.1</strong> It is difficult to accurately determine a person’s body fat percentage without immersing them in water. However, we can easily obtain the weight of a person. A researcher would like to know if weight and body fat percentage are related. If so, for a given weight, can the person’s body fat percentage be predicted, and how accurate would that prediction be? This researcher collected the following data on 20 individuals:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 4%">
+<col style="width: 4%">
+<col style="width: 4%">
+<col style="width: 4%">
+<col style="width: 4%">
+<col style="width: 4%">
+<col style="width: 4%">
+<col style="width: 4%">
+<col style="width: 4%">
+<col style="width: 4%">
+<col style="width: 4%">
+<col style="width: 4%">
+<col style="width: 4%">
+<col style="width: 4%">
+<col style="width: 4%">
+<col style="width: 4%">
+<col style="width: 4%">
+<col style="width: 4%">
+<col style="width: 4%">
+<col style="width: 4%">
+<col style="width: 4%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Individual</th>
+<th>1</th>
+<th>2</th>
+<th>3</th>
+<th>4</th>
+<th>5</th>
+<th>6</th>
+<th>7</th>
+<th>8</th>
+<th>9</th>
+<th>10</th>
+<th>11</th>
+<th>12</th>
+<th>13</th>
+<th>14</th>
+<th>15</th>
+<th>16</th>
+<th>17</th>
+<th>18</th>
+<th>19</th>
+<th>20</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Weight (lb)</td>
+<td>175</td>
+<td>181</td>
+<td>200</td>
+<td>159</td>
+<td>196</td>
+<td>192</td>
+<td>205</td>
+<td>173</td>
+<td>187</td>
+<td>188</td>
+<td>188</td>
+<td>240</td>
+<td>175</td>
+<td>168</td>
+<td>246</td>
+<td>160</td>
+<td>215</td>
+<td>159</td>
+<td>146</td>
+<td>219</td>
+</tr>
+<tr class="even">
+<td>Body Fat (%)</td>
+<td>6</td>
+<td>21</td>
+<td>15</td>
+<td>6</td>
+<td>22</td>
+<td>31</td>
+<td>32</td>
+<td>21</td>
+<td>25</td>
+<td>30</td>
+<td>10</td>
+<td>20</td>
+<td>22</td>
+<td>9</td>
+<td>38</td>
+<td>10</td>
+<td>27</td>
+<td>12</td>
+<td>10</td>
+<td>28</td>
+</tr>
+</tbody>
+</table>
+<p>We always start with the same first step: explore the data.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>Weight <span class="ot">=</span> <span class="fu">c</span>(<span class="dv">175</span>, <span class="dv">181</span>, <span class="dv">200</span>, <span class="dv">159</span>, <span class="dv">196</span>, <span class="dv">192</span>, <span class="dv">205</span>, <span class="dv">173</span>, <span class="dv">187</span>, <span class="dv">188</span>,</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>           <span class="dv">188</span>, <span class="dv">240</span>, <span class="dv">175</span>, <span class="dv">168</span>, <span class="dv">246</span>, <span class="dv">160</span>, <span class="dv">215</span>, <span class="dv">159</span>, <span class="dv">146</span>, <span class="dv">219</span>)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>BodyFat <span class="ot">=</span> <span class="fu">c</span>(<span class="dv">6</span>, <span class="dv">21</span>, <span class="dv">15</span>, <span class="dv">6</span>, <span class="dv">22</span>, <span class="dv">31</span>, <span class="dv">32</span>, <span class="dv">21</span>, <span class="dv">25</span>, <span class="dv">30</span>,</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>            <span class="dv">10</span>, <span class="dv">20</span>, <span class="dv">22</span>, <span class="dv">9</span>, <span class="dv">38</span>, <span class="dv">10</span>, <span class="dv">27</span>, <span class="dv">12</span>, <span class="dv">10</span>, <span class="dv">28</span>)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>df <span class="ot">=</span> <span class="fu">data.frame</span>(<span class="at">Weight =</span> Weight, <span class="at">BodyFat =</span> BodyFat)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(df<span class="sc">$</span>Weight, <span class="at">freq =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(df<span class="sc">$</span>BodyFat, <span class="at">freq =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(df)</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="fu">cor</span>(df)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div style="display:flex; flex-wrap:wrap; gap:10px; justify-content:center; margin:1em 0;">
+<p><img src="Unit_2_files/figure-html/unnamed-chunk-1-1.png" style="max-width:31%;min-width:200px;"> <img src="Unit_2_files/figure-html/unnamed-chunk-1-2.png" style="max-width:31%;min-width:200px;"> <img src="Unit_2_files/figure-html/unnamed-chunk-1-3.png" style="max-width:31%;min-width:200px;"></p>
+</div>
+<p>The scatter plot (rightmost image, weight on the x-axis, body fat on the y-axis) shows a fairly strong upward, linear-looking trend, and this is confirmed by the correlation, <span class="math inline">\(\textrm{corr}(\text{Weight},\text{BodyFat})\approx0.697\)</span> — a moderately strong positive linear association, in the language of <a href="./Unit_1_1.html">Unit_1_1</a>.</p>
+<p>We have observed a sample of <em>pairs</em> <span class="math inline">\((Y_1,X_1),\ldots,(Y_n,X_n)\)</span> — here <span class="math inline">\(Y_i\)</span> is individual <span class="math inline">\(i\)</span>’s body fat percentage and <span class="math inline">\(X_i\)</span> is their weight, and <span class="math inline">\(n=20\)</span>. We’d like to say something about the relationship between <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> at the <strong>population</strong> level, not just in this one sample. One way to do this is to suppose that <span class="math display">\[{\textrm{E}}\left[Y|X\right]=f(X)\]</span> for some function <span class="math inline">\(f\)</span> — that is, <em>on average</em>, <span class="math inline">\(Y\)</span> equals <span class="math inline">\(f(X)\)</span>. Equivalently, we can write <span class="math display">\[Y|X=f(X)+\epsilon,\]</span> where <span class="math inline">\(\epsilon\)</span> is a random variable with <span class="math inline">\({\textrm{E}}\left[\epsilon\right]=0\)</span>. Read this as: <span class="math inline">\(Y_i\)</span> equals <span class="math inline">\(f(X_i)\)</span>, plus some random, individual error <span class="math inline">\(\epsilon_i\)</span> that we never actually get to observe.</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Intuition: why bother with $\epsilon$ at all?">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Intuition: why bother with <span class="math inline">\(\epsilon\)</span> at all?
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>If regression could predict <span class="math inline">\(Y\)</span> perfectly from <span class="math inline">\(X\)</span>, we wouldn’t need any of this machinery — we’d just write <span class="math inline">\(Y=f(X)\)</span> and be done. But two people can have the same weight and different body fat percentages, because body fat depends on plenty of things besides weight (diet, muscle mass, genetics, measurement error…). The error term <span class="math inline">\(\epsilon\)</span> is a catch-all for “everything about <span class="math inline">\(Y\)</span> that <span class="math inline">\(X\)</span> alone doesn’t explain.” Assuming <span class="math inline">\({\textrm{E}}\left[\epsilon\right]=0\)</span> just says these unexplained ups and downs don’t systematically push <span class="math inline">\(Y\)</span> in one direction — they average out, so <span class="math inline">\(f(X)\)</span> really is the <em>center</em> of <span class="math inline">\(Y\)</span>’s distribution given <span class="math inline">\(X\)</span>.</p>
+</div>
+</div>
+<p>Treating <span class="math inline">\(f\)</span> as an arbitrary, completely unknown function is too general to work with. The scatter plot above suggests something simpler: it looks like we could draw a single straight line through the middle of the data. So we make some assumptions that make the statistics tractable:</p>
+<ol type="1">
+<li>For all <span class="math inline">\(i\in\{1,\ldots,n\}\)</span>, <span class="math display">\[Y_i|X_i=\beta_0+\beta_1 X_i+\epsilon_i.\]</span> That is, we assume <span class="math inline">\(f\)</span> is a line, with unknown intercept <span class="math inline">\(\beta_0\)</span> and unknown slope <span class="math inline">\(\beta_1\)</span>.</li>
+<li><span class="math inline">\({\textrm{E}}\left[\epsilon_i\right]=0\)</span> and <span class="math inline">\({\textrm{Var}}\left[\epsilon_i\right]=\sigma^2\)</span> for every <span class="math inline">\(i\)</span> — the errors average to zero and all have the <em>same</em> variance <span class="math inline">\(\sigma^2\)</span> (this shared variance doesn’t depend on <span class="math inline">\(i\)</span>, or on <span class="math inline">\(X_i\)</span>).</li>
+<li><span class="math inline">\(\epsilon_i\perp\epsilon_j\)</span> for <span class="math inline">\(i\neq j\)</span> — the errors are mutually independent of one another.</li>
+</ol>
+<p><strong>Definition 3.1</strong> Assumptions 1–3 above, taken together, define the <strong>simple linear regression model</strong> (SLR).</p>
+<p>It is often also assumed that</p>
+<ol start="4" type="1">
+<li><span class="math inline">\(\epsilon_i\sim\mathcal{N}(0,\sigma^2)\)</span>,</li>
+</ol>
+<p>although this fourth assumption is not always needed. A model that includes assumption 4 on top of 1–3 is called the <strong>simple normal linear regression model</strong>.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>In general, a <em>model</em> is nothing more than a set of assumptions about a population. “The simple linear regression model” doesn’t refer to one specific line — it refers to the whole family of assumptions 1–3, which is compatible with <em>any</em> choice of <span class="math inline">\(\beta_0,\beta_1,\sigma^2\)</span>.</p>
+</div>
+</div>
+<p>Some terminology you’ll see constantly from here on:</p>
+<ul>
+<li><span class="math inline">\(Y_i\)</span> is the <strong>response variable</strong> (also called the <em>dependent</em> or <em>outcome</em> variable).</li>
+<li><span class="math inline">\(X_i\)</span> is the <strong>covariate</strong> (also called the <em>explanatory</em> or <em>independent</em> variable).</li>
+</ul>
+<p>Whenever you’re given a “question about a population” involving regression, the first thing to do is identify the response variable and the covariate(s).</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Intuition: reading the model assumptions in plain language">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Intuition: reading the model assumptions in plain language
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li>Assumption 1 says the <em>average</em> body fat percentage, as a function of weight, is a straight line — heavier weight is associated with a constant additive change in average body fat, no matter where you are on the line.</li>
+<li>Assumption 2 says: for any individual, their actual body fat won’t land exactly on the line, but the “miss” has mean zero and — crucially — the <em>typical size</em> of that miss (<span class="math inline">\(\sigma\)</span>) is the same at every weight. A very light person and a very heavy person are assumed to be equally hard (or easy) to predict.</li>
+<li>Assumption 3 says one person’s miss tells you nothing about another person’s miss — no individual’s error is more or less likely given someone else’s.</li>
+</ul>
+<p>If assumption 4 also holds, then since a Normal random variable rarely strays more than about <span class="math inline">\(2\sigma\)</span> from its mean, most individuals’ body fat percentages will fall within roughly <span class="math inline">\(2\sigma\)</span> of the line <span class="math inline">\(\beta_0+\beta_1X\)</span> — and that margin, <span class="math inline">\(2\sigma\)</span>, is the <em>same width</em> everywhere along the line, again because of assumption 2.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-warning callout-titled" title="Common mistake: thinking the model claims Y *equals* f(X)">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Warning</span>Common mistake: thinking the model claims Y <em>equals</em> f(X)
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The model never claims <span class="math inline">\(Y=\beta_0+\beta_1X\)</span> exactly for any individual — only that this line describes the <em>average</em>, <span class="math inline">\({\textrm{E}}\left[Y|X\right]\)</span>. Any one person’s actual <span class="math inline">\(Y\)</span> is <span class="math inline">\(\beta_0+\beta_1X_i+\epsilon_i\)</span>, and it will generally sit above or below the line depending on their individual <span class="math inline">\(\epsilon_i\)</span>. Knowing someone’s weight lets you make a good <em>guess</em> at their body fat percentage — it does not hand you their exact value.</p>
+</div>
+</div>
+<p>Let’s see what data generated by this model actually looks like. Suppose (hypothetically) that <span class="math inline">\(\beta_0=-15\)</span>, <span class="math inline">\(\beta_1=0.2\)</span>, and <span class="math inline">\(\sigma=5\)</span>.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">3252</span>)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co"># E(Y|X) is a line under the model:</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="fu">curve</span>(<span class="sc">-</span><span class="dv">15</span> <span class="sc">+</span> .<span class="dv">2</span><span class="sc">*</span>x, <span class="dv">125</span>, <span class="dv">280</span>, <span class="at">lwd =</span> <span class="dv">3</span>, <span class="at">xlab =</span> <span class="st">"Weight"</span>, <span class="at">ylab =</span> <span class="st">"Expected BF % (E(Y|X))"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><img src="Unit_2_files/figure-html/unnamed-chunk-2-1.png" style="max-width:420px;display:block;margin:1em auto;"></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Simulate 20 weights, then simulate BF% according to the model:</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>Weight2 <span class="ot">=</span> <span class="fu">runif</span>(<span class="dv">20</span>, <span class="dv">135</span>, <span class="dv">250</span>)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>epsilons <span class="ot">=</span> <span class="fu">rnorm</span>(<span class="at">n =</span> <span class="dv">20</span>, <span class="at">mean =</span> <span class="dv">0</span>, <span class="at">sd =</span> <span class="dv">5</span>)</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>Bfs <span class="ot">=</span> <span class="sc">-</span><span class="dv">15</span> <span class="sc">+</span> .<span class="dv">2</span><span class="sc">*</span>Weight2 <span class="sc">+</span> epsilons</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="fu">curve</span>(<span class="sc">-</span><span class="dv">15</span> <span class="sc">+</span> .<span class="dv">2</span><span class="sc">*</span>x, <span class="dv">125</span>, <span class="dv">280</span>, <span class="at">lwd =</span> <span class="dv">3</span>, <span class="at">xlab =</span> <span class="st">"Weight"</span>, <span class="at">ylab =</span> <span class="st">"BF %"</span>)</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="fu">points</span>(Weight2, Bfs, <span class="at">pch =</span> <span class="dv">22</span>, <span class="at">bg =</span> <span class="dv">2</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><img src="Unit_2_files/figure-html/unnamed-chunk-2-2.png" style="max-width:420px;display:block;margin:1em auto;"></p>
+<p>Notice how the simulated points scatter <em>uniformly</em> above and below the line — never systematically drifting away from it, and never bunching up more tightly at one end than the other. That is exactly what data generated from a simple linear regression model looks like, and it closely resembles the real weight/body-fat scatter plot we started with — which is exactly why the SLR model is a reasonable fit for this data. (Try re-running the simulation with a different <code>set.seed()</code>, or different <span class="math inline">\(\beta_0,\beta_1,\sigma\)</span>, to build intuition for how each parameter changes the picture — see Exercise 3.1 below.)</p>
+</section>
+<section id="the-multiple-linear-regression-model" class="level2" data-number="5.2">
+<h2 data-number="5.2" data-anchor-id="the-multiple-linear-regression-model"><span class="header-section-number">5.2</span> The multiple linear regression model</h2>
+<p>Why did we spend a whole section (<a href="./Unit_1_3.html">Unit_1_3</a>) on matrices before getting here? Because matrix notation lets us write the regression model compactly, in a form that scales to any number of covariates without changing shape.</p>
+<p>Recall the SLR model, <span class="math inline">\(Y_i|X_i=\beta_0+\beta_1X_i+\epsilon_i\)</span>, with <span class="math inline">\({\textrm{E}}\left[\epsilon_i\right]=0\)</span>, <span class="math inline">\({\textrm{Var}}\left[\epsilon_i\right]=\sigma^2\)</span>, and <span class="math inline">\(\epsilon_i\perp\epsilon_j\)</span> for <span class="math inline">\(i\neq j\)</span>. Let <span class="math display">\[
+\mathbf{Y}=(Y_1,\ldots,Y_n)^\top,\qquad
+\mathbf{X}=\begin{bmatrix}1 &amp; X_1\\ \vdots&amp;\vdots\\ 1&amp; X_n\end{bmatrix}=\left[\,1_n \mid (X_1,\ldots,X_n)^\top\,\right],\qquad
+\beta=(\beta_0,\beta_1)^\top,\qquad
+\mathbf{\epsilon}=(\epsilon_1,\ldots,\epsilon_n)^\top.
+\]</span> Then the SLR model can be written as <span class="math display">\[\mathbf{Y}|\mathbf{X}=\mathbf{X}\beta+\mathbf{\epsilon}.\]</span> We will often overload notation and just write <span class="math inline">\(Y\)</span> for <span class="math inline">\(\mathbf{Y}\)</span>, and <span class="math inline">\(X\)</span> for <span class="math inline">\(\mathbf{X}\)</span>.</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Intuition: where did that column of 1s come from?">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Intuition: where did that column of 1s come from?
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Multiplying out <span class="math inline">\(X\beta\)</span> row by row, row <span class="math inline">\(i\)</span> of <span class="math inline">\(X\beta\)</span> is <span class="math inline">\(1\cdot\beta_0+X_i\cdot\beta_1=\beta_0+\beta_1X_i\)</span> — exactly the right-hand side of the SLR equation for individual <span class="math inline">\(i\)</span>. The column of 1s exists purely so that matrix multiplication produces the intercept term <span class="math inline">\(\beta_0\)</span> in every row; without it, there would be no way to add a constant using <span class="math inline">\(X\beta\)</span> alone.</p>
+</div>
+</div>
+<p>This form extends to multiple covariates almost for free — just add one column to <span class="math inline">\(X\)</span> and one entry to <span class="math inline">\(\beta\)</span> per new variable. For <span class="math inline">\(k\)</span> covariates <span class="math inline">\(X_{i1},\ldots,X_{ik}\)</span>, <span class="math display">\[
+Y_i|(X_{i1},\ldots,X_{ik})=\beta_0+\beta_1X_{i1}+\cdots+\beta_kX_{ik}+\epsilon_i,
+\]</span> again with <span class="math inline">\({\textrm{E}}\left[\epsilon_i\right]=0\)</span>, <span class="math inline">\({\textrm{Var}}\left[\epsilon_i\right]=\sigma^2\)</span>, and <span class="math inline">\(\epsilon_i\perp\epsilon_j\)</span> for <span class="math inline">\(i\neq j\)</span>.</p>
+<p><strong>Definition 3.2</strong> The set of assumptions above (for general <span class="math inline">\(k\)</span>) is the <strong>multiple linear regression model</strong> (MLR) — often called just “the linear regression model.” In matrix form, letting <span class="math display">\[
+\mathbf{X}=\begin{bmatrix}1 &amp; X_{11}&amp;\cdots&amp;X_{1k}\\ \vdots&amp;\vdots&amp;&amp;\vdots\\ 1&amp; X_{n1}&amp;\cdots&amp;X_{nk}\end{bmatrix},\qquad \beta=(\beta_0,\ldots,\beta_k)^\top,
+\]</span> the MLR model is <span class="math display">\[\mathbf{Y}|\mathbf{X}=\mathbf{X}\beta+\mathbf{\epsilon},\]</span> where <span class="math inline">\({\textrm{E}}\left[\epsilon\right]=0\)</span>, <span class="math inline">\(\epsilon_i\perp\epsilon_j\)</span> for <span class="math inline">\(i\neq j\)</span>, and <span class="math inline">\({\textrm{Var}}\left[\epsilon\right]=\sigma^2I\)</span>.</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Intuition: ${\textrm{Var}}[\epsilon]=\sigma^2 I$ is just assumptions 2 and 3, bundled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Intuition: <span class="math inline">\({\textrm{Var}}[\epsilon]=\sigma^2 I\)</span> is just assumptions 2 and 3, bundled
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Recall from <a href="./Unit_1_4.html">Unit_1_4</a> that a covariance matrix has variances on the diagonal and covariances off the diagonal. <span class="math inline">\(\sigma^2I\)</span> is <span class="math inline">\(\sigma^2\)</span> on every diagonal entry and <span class="math inline">\(0\)</span> everywhere else — which says exactly “every <span class="math inline">\(\epsilon_i\)</span> has the same variance <span class="math inline">\(\sigma^2\)</span>” (the diagonal) and “every pair of errors has zero covariance, i.e.&nbsp;they don’t move together” (the off-diagonal), matching assumptions 2 and 3 written out in scalar form. This is the payoff promised back in <a href="./Unit_1_3.html">Unit_1_3</a>: one compact matrix statement replaces <span class="math inline">\(n\)</span> separate scalar assumptions, no matter how large <span class="math inline">\(n\)</span> is.</p>
+</div>
+</div>
+<p>As in the simple case, the <strong>normal MLR</strong> further assumes <span class="math inline">\(\epsilon\sim\mathcal{N}(0,\sigma^2I)\)</span>. Notice how compact this is: whether <span class="math inline">\(k=1\)</span> (SLR) or <span class="math inline">\(k=100\)</span>, the model is always written <span class="math inline">\(Y|X=X\beta+\epsilon\)</span> — only the <em>shape</em> of <span class="math inline">\(X\)</span> and <span class="math inline">\(\beta\)</span> changes. This means we can develop the mathematical theory of regression (estimation, inference, prediction) once, for a general but fixed <span class="math inline">\(k\)</span>, and it will automatically apply no matter how many covariates a particular problem has.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Key takeaways before moving on">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Key takeaways before moving on
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li>Regression starts from <span class="math inline">\({\textrm{E}}\left[Y|X\right]=f(X)\)</span>; assuming <span class="math inline">\(f\)</span> is linear and that the errors <span class="math inline">\(\epsilon_i\)</span> have mean 0, constant variance <span class="math inline">\(\sigma^2\)</span>, and are mutually independent gives the (simple) linear regression model.</li>
+<li><span class="math inline">\(Y=f(X)+\epsilon\)</span> never claims <span class="math inline">\(Y\)</span> equals <span class="math inline">\(f(X)\)</span> exactly for any one observation — only that <span class="math inline">\(f(X)\)</span> is the <em>average</em> of <span class="math inline">\(Y\)</span> given <span class="math inline">\(X\)</span>.</li>
+<li>Adding <span class="math inline">\(\epsilon_i\sim\mathcal{N}(0,\sigma^2)\)</span> upgrades the model to the (simple) normal linear regression model.</li>
+<li>In matrix form, <span class="math inline">\(Y=X\beta+\epsilon\)</span> describes both the simple case (<span class="math inline">\(X\)</span> has 2 columns) and the multiple case (<span class="math inline">\(X\)</span> has <span class="math inline">\(k+1\)</span> columns) with exactly the same notation, with <span class="math inline">\({\textrm{Var}}[\epsilon]=\sigma^2I\)</span> packaging “constant variance” and “independent errors” into one statement.</li>
+<li><span class="math inline">\(Y_i\)</span> is the response; <span class="math inline">\(X_{i1},\ldots,X_{ik}\)</span> are the covariates. Always identify these first when reading a regression question.</li>
+</ul>
+</div>
+</div>
+</section>
+<section id="check-your-understanding" class="level2" data-number="5.3">
+<h2 data-number="5.3" data-anchor-id="check-your-understanding"><span class="header-section-number">5.3</span> Check Your Understanding</h2>
+<style>
+details.qa-answer { margin: 0 0 1.25em 0; border-left: 3px solid #d6eaf8; padding-left: 0.75em; }
+details.qa-answer > summary { cursor: pointer; color: #2e86c1; font-weight: 600; }
+details.qa-answer > summary::marker { color: #2e86c1; }
+details.qa-answer[open] > summary { margin-bottom: 0.5em; }
+details.qa-answer p { margin: 0; }
+</style>
+<p>Before checking your answers below, work through these on your own: try adjusting <span class="math inline">\(\beta_0,\beta_1,\sigma\)</span> in the simulation code above and see how the data and the line change; think about whether <span class="math inline">\(\beta\)</span> is an estimate or a population parameter and why; try coming up with a non-linear form for <span class="math inline">\(f\)</span> and adjusting the simulation to use it; and write out, side by side, the assumptions of the MLR versus the normal MLR. Then use the questions below as a quick self-check on this page’s material — try each one, then click <strong>Show answer</strong>.</p>
+<p><strong>Question 1.</strong> In the body fat example, which variable is the response and which is the covariate?</p>
+<details class="qa-answer">
+<summary>
+Show answer
+</summary>
+<p>
+Body fat percentage is the response <span class="math inline">\(Y\)</span> (the outcome we want to predict); weight is the covariate <span class="math inline">\(X\)</span> (the variable we use to predict it).
+</p>
+</details>
+<p><strong>Question 2.</strong> Is <span class="math inline">\(\beta=(\beta_0,\beta_1)\)</span> a population parameter or a statistic computed from data? Why does this matter?</p>
+<details class="qa-answer">
+<summary>
+Show answer
+</summary>
+<p>
+<span class="math inline">\(\beta\)</span> is a population parameter — a fixed, unknown number (or vector) describing the true relationship in the population, exactly like <span class="math inline">\(\mu\)</span> or <span class="math inline">\(\sigma^2\)</span> elsewhere in the course. It’s unknown and we never observe it directly; the next section is about how to <em>estimate</em> it from a sample, producing <span class="math inline">\(\hat\beta\)</span>, which <em>is</em> a statistic (a random variable, since it’s computed from random data).
+</p>
+</details>
+<p><strong>Question 3.</strong> True or False: the simple linear regression model claims that every individual’s <span class="math inline">\(Y_i\)</span> lies exactly on the line <span class="math inline">\(\beta_0+\beta_1X_i\)</span>.</p>
+<details class="qa-answer">
+<summary>
+Show answer
+</summary>
+<p>
+False. The model says <span class="math inline">\(Y_i=\beta_0+\beta_1X_i+\epsilon_i\)</span>, where <span class="math inline">\(\epsilon_i\)</span> is a random error with mean 0 — so the line describes the <em>average</em> of <span class="math inline">\(Y\)</span> given <span class="math inline">\(X\)</span>, not any individual’s exact value. Individual points scatter around the line because of <span class="math inline">\(\epsilon_i\)</span>.
+</p>
+</details>
+<p><strong>Question 4.</strong> In the MLR model, what does the assumption <span class="math inline">\({\textrm{Var}}[\epsilon]=\sigma^2I\)</span> tell you, in terms of the individual errors <span class="math inline">\(\epsilon_1,\ldots,\epsilon_n\)</span>?</p>
+<details class="qa-answer">
+<summary>
+Show answer
+</summary>
+<p>
+It says every <span class="math inline">\(\epsilon_i\)</span> has the same variance <span class="math inline">\(\sigma^2\)</span> (the diagonal entries of <span class="math inline">\(\sigma^2 I\)</span>) and every pair <span class="math inline">\(\epsilon_i,\epsilon_j\)</span> (<span class="math inline">\(i\neq j\)</span>) has covariance 0, i.e.&nbsp;they’re uncorrelated (the off-diagonal entries, which are 0 in <span class="math inline">\(\sigma^2 I\)</span>) — this is exactly assumptions 2 and 3 of the MLR, written as one matrix statement.
+</p>
+</details>
+<p><strong>Question 5.</strong> What’s the difference between the (multiple) linear regression model and the normal (multiple) linear regression model?</p>
+<details class="qa-answer">
+<summary>
+Show answer
+</summary>
+<p>
+The normal MLR adds one extra assumption on top of the MLR’s three (or, in matrix form, two): that the error vector is multivariate Normal, <span class="math inline">\(\epsilon\sim\mathcal{N}(0,\sigma^2I)\)</span>, rather than just having mean 0 and covariance <span class="math inline">\(\sigma^2I\)</span>. The MLR only pins down the first two moments of <span class="math inline">\(\epsilon\)</span>; the normal MLR pins down its entire distribution.
+</p>
+</details>
+<p><strong>Question 6.</strong> Suppose you increase <span class="math inline">\(\sigma\)</span> in the simulation code above (keeping <span class="math inline">\(\beta_0,\beta_1\)</span> fixed) and re-run it. How would you expect the resulting scatter plot to change?</p>
+<details class="qa-answer">
+<summary>
+Show answer
+</summary>
+<p>
+The line itself (the mean function <span class="math inline">\(\beta_0+\beta_1X\)</span>) doesn’t move, since <span class="math inline">\(\sigma\)</span> doesn’t appear in it — but the simulated points would scatter <em>more widely</em> above and below the line, since <span class="math inline">\(\sigma\)</span> is the standard deviation of each <span class="math inline">\(\epsilon_i\)</span>. A larger <span class="math inline">\(\sigma\)</span> means individual outcomes are harder to predict from <span class="math inline">\(X\)</span> alone, even though the average relationship is unchanged.
+</p>
+</details>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./Unit_1_4.html" class="pagination-link" aria-label="Review Random Vectors">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Review Random Vectors</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./Unit_2_2.html" class="pagination-link" aria-label="Least Squares">
+        <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Least Squares</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

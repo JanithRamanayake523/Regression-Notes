@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Glossary – Regression Notes</title>
+<title>8&nbsp; Checking model assumptions – Regression Notes</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -26,6 +26,41 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -36,7 +71,8 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./Unit_2_6.html" rel="prev">
+<link href="./Unit_2_5.html" rel="next">
+<link href="./Unit_2_3.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
@@ -115,7 +151,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./Glossary.html">Glossary</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./Unit_2_1.html">Linear Regression</a></li><li class="breadcrumb-item"><a href="./Unit_2_4.html"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Checking model assumptions</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -210,7 +246,7 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./Unit_2_4.html" class="sidebar-item-text sidebar-link">
+  <a href="./Unit_2_4.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Checking model assumptions</span></span></a>
   </div>
 </li>
@@ -230,7 +266,7 @@ window.Quarto = {
   </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./Glossary.html" class="sidebar-item-text sidebar-link active">
+  <a href="./Glossary.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Glossary</span></a>
   </div>
 </li>
@@ -239,15 +275,28 @@ window.Quarto = {
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#checking-normality" id="toc-checking-normality" class="nav-link active" data-scroll-target="#checking-normality"><span class="header-section-number">8.1</span> Checking normality</a></li>
+  <li><a href="#checking-the-other-assumptions" id="toc-checking-the-other-assumptions" class="nav-link" data-scroll-target="#checking-the-other-assumptions"><span class="header-section-number">8.2</span> Checking the other assumptions</a>
+  <ul class="collapse">
+  <li><a href="#residuals-vs.-fitted-values" id="toc-residuals-vs.-fitted-values" class="nav-link" data-scroll-target="#residuals-vs.-fitted-values"><span class="header-section-number">8.2.1</span> Residuals vs.&nbsp;fitted values</a></li>
+  <li><a href="#residuals-vs.-individual-covariates" id="toc-residuals-vs.-individual-covariates" class="nav-link" data-scroll-target="#residuals-vs.-individual-covariates"><span class="header-section-number">8.2.2</span> Residuals vs.&nbsp;individual covariates</a></li>
+  <li><a href="#fitted-values-vs.-the-actual-response" id="toc-fitted-values-vs.-the-actual-response" class="nav-link" data-scroll-target="#fitted-values-vs.-the-actual-response"><span class="header-section-number">8.2.3</span> Fitted values vs.&nbsp;the actual response</a></li>
+  </ul></li>
+  <li><a href="#check-your-understanding" id="toc-check-your-understanding" class="nav-link" data-scroll-target="#check-your-understanding"><span class="header-section-number">8.3</span> Check Your Understanding</a></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default">
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./Unit_2_1.html">Linear Regression</a></li><li class="breadcrumb-item"><a href="./Unit_2_4.html"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Checking model assumptions</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title">Glossary</h1>
+<h1 class="title"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Checking model assumptions</span></h1>
 </div>
 
 
@@ -264,7 +313,78 @@ window.Quarto = {
 </header>
 
 
-<p>A quick, page-independent lookup for terms used across the Review material chapter. If you just need a refresher on what a word means without hunting back through a whole section, start here — each entry links back to the page where the concept is introduced in full.</p>
+<p>Every confidence interval, hypothesis test, and prediction interval from <a href="./Unit_2_3.html">3.3</a> is only valid to the extent that the model assumptions actually hold: (1) the relationship is linear, <span class="math inline">\(Y|X=X\beta+\epsilon\)</span>; (2) <span class="math inline">\(\epsilon_i\sim\mathcal{N}(0,\sigma^2)\)</span> for all <span class="math inline">\(i\)</span> (constant variance and Normality); (3) <span class="math inline">\(\epsilon_i\perp\epsilon_j\)</span> for <span class="math inline">\(i\neq j\)</span>. This section briefly introduces how to use the data to check whether these assumptions are reasonable — we’ll return to this in much more depth in a later chapter.</p>
+<section id="checking-normality" class="level2" data-number="8.1">
+<h2 data-number="8.1" data-anchor-id="checking-normality"><span class="header-section-number">8.1</span> Checking normality</h2>
+<p>We never observe <span class="math inline">\(\epsilon\)</span>, but we do observe the residuals <span class="math inline">\(\hat\epsilon\)</span> — our best available proxy for the true errors. To check whether <span class="math inline">\(\epsilon\)</span> looks Normal, we examine whether <span class="math inline">\(\hat\epsilon\)</span> looks Normal, using histograms and <strong>quantile-quantile (QQ) plots</strong>.</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Intuition: reading a QQ plot">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Intuition: reading a QQ plot
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>A QQ plot compares the sample’s quantiles (y-axis) against the quantiles a <em>perfect</em> Normal sample would have (x-axis, “theoretical quantiles”). If the residuals really are Normal, the points fall close to a straight line. Departures have specific shapes worth recognizing: points curving away from the line at both ends (heavy tails) suggest more extreme values than Normal predicts; an S-shape suggests a lighter-tailed, more concentrated distribution than Normal. Some wiggle at the very ends is normal even for genuinely Normal data — the extremes of any finite sample are noisy — so don’t over-read a couple of stray points at the tips.</p>
+</div>
+</div>
+<p><strong>Example 3.9</strong> Check the normality assumption for the body fat model (<a href="./Unit_2_1.html">Example 3.1</a>) and for the marketing model (<a href="./Unit_2_3.html">Example 3.7</a>).</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>model <span class="ot">=</span> <span class="fu">lm</span>(BodyFat <span class="sc">~</span> Weight, <span class="at">data =</span> df)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>car<span class="sc">::</span><span class="fu">qqPlot</span>(model<span class="sc">$</span>residuals, <span class="at">pch =</span> <span class="dv">22</span>)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(model<span class="sc">$</span>residuals, <span class="at">breaks =</span> <span class="dv">10</span>, <span class="at">xlim =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">11</span>, <span class="dv">11</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div style="display:flex; flex-wrap:wrap; gap:10px; justify-content:center; margin:1em 0;">
+<p><img src="Unit_2_files/figure-html/unnamed-chunk-15-1.png" style="max-width:47%;min-width:220px;"> <img src="Unit_2_files/figure-html/unnamed-chunk-15-2.png" style="max-width:47%;min-width:220px;"></p>
+</div>
+<p>The QQ plot points sit close to the reference line and the histogram is roughly bell-shaped — this looks okay; normality seems like a reasonable assumption here.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>full_model <span class="ot">=</span> <span class="fu">lm</span>(sales <span class="sc">~</span> youtube <span class="sc">+</span> facebook <span class="sc">+</span> newspaper, <span class="at">data =</span> marketing)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>car<span class="sc">::</span><span class="fu">qqPlot</span>(full_model<span class="sc">$</span>residuals, <span class="at">pch =</span> <span class="dv">22</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><img src="Unit_2_files/figure-html/unnamed-chunk-15-3.png" style="max-width:420px;display:block;margin:1em auto;"></p>
+<p>This is not great — the residuals curve noticeably away from the reference line, especially at the low end, suggesting the errors are not well-approximated by a Normal distribution here. We’ll see below that this ties back to a deeper problem with the marketing model.</p>
+</section>
+<section id="checking-the-other-assumptions" class="level2" data-number="8.2">
+<h2 data-number="8.2" data-anchor-id="checking-the-other-assumptions"><span class="header-section-number">8.2</span> Checking the other assumptions</h2>
+<p>Constant variance, independence, and (zero-mean) linearity are checked with other diagnostic plots.</p>
+<section id="residuals-vs.-fitted-values" class="level3" data-number="8.2.1">
+<h3 data-number="8.2.1" data-anchor-id="residuals-vs.-fitted-values"><span class="header-section-number">8.2.1</span> Residuals vs.&nbsp;fitted values</h3>
+<p>Plotting fitted values <span class="math inline">\(\hat Y\)</span> (x-axis) against residuals <span class="math inline">\(\hat\epsilon\)</span> (y-axis) checks whether the error distribution depends on the fitted value. If the assumptions hold, we expect residuals to form a horizontal band centered at 0, with roughly constant spread, at every level of <span class="math inline">\(\hat Y\)</span> — no trend, no funnel shape, no curve.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(model<span class="sc">$</span>fitted.values, model<span class="sc">$</span>residuals, <span class="at">pch =</span> <span class="dv">22</span>, <span class="at">bg =</span> <span class="dv">1</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><img src="Unit_2_files/figure-html/unnamed-chunk-16-1.png" style="max-width:420px;display:block;margin:1em auto;"></p>
+<p>This looks fine for the body fat model — no obvious pattern.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(full_model<span class="sc">$</span>fitted.values, full_model<span class="sc">$</span>residuals, <span class="at">pch =</span> <span class="dv">22</span>, <span class="at">bg =</span> <span class="dv">1</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><img src="Unit_2_files/figure-html/unnamed-chunk-17-1.png" style="max-width:420px;display:block;margin:1em auto;"></p>
+<p>The marketing model’s residuals show a clear pattern — a curved shape rather than a flat band. This typically signals either a nonlinear relationship with a covariate, or an important missing covariate; either way, the “identically distributed errors” assumption looks violated here.</p>
+</section>
+<section id="residuals-vs.-individual-covariates" class="level3" data-number="8.2.2">
+<h3 data-number="8.2.2" data-anchor-id="residuals-vs.-individual-covariates"><span class="header-section-number">8.2.2</span> Residuals vs.&nbsp;individual covariates</h3>
+<p>Plotting residuals against each covariate (or against time, if time is a covariate) can reveal dependence the fitted-vs-residual plot might hide. Again we want a horizontal band centered at 0; any visible relationship indicates a problem.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(marketing<span class="sc">$</span>youtube, full_model<span class="sc">$</span>residuals, <span class="at">pch =</span> <span class="dv">22</span>, <span class="at">bg =</span> <span class="dv">1</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><img src="Unit_2_files/figure-html/unnamed-chunk-18-1.png" style="max-width:420px;display:block;margin:1em auto;"></p>
+<div class="callout callout-style-default callout-warning callout-titled" title="Common mistake: misjudging a plot's scale">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Warning</span>Common mistake: misjudging a plot’s scale
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Be careful about your plot’s axis limits — they can distort your interpretation. Zooming out too far (or too close) can make a real problem look fine, or vice versa, and a <span class="math inline">\(y\)</span>-axis that isn’t centered at 0 can visually exaggerate or hide a trend. Compare the plot above to the same data with a fixed <code>ylim</code>:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(marketing<span class="sc">$</span>youtube, full_model<span class="sc">$</span>residuals, <span class="at">pch =</span> <span class="dv">22</span>, <span class="at">bg =</span> <span class="dv">1</span>, <span class="at">ylim =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">10</span>, <span class="dv">10</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><img src="Unit_2_files/figure-html/unnamed-chunk-19-1.png" style="max-width:420px;display:block;margin:1em auto;"></p>
+<p>With a consistent, sensible scale, it becomes clearer that the spread of the residuals is changing with the covariate’s value (a funnel shape) — a constant-variance violation that was harder to judge on the auto-scaled version. Always fix your axis limits deliberately when comparing several such plots to each other, rather than trusting each plot’s default scaling.</p>
+</div>
+</div>
+</section>
+<section id="fitted-values-vs.-the-actual-response" class="level3" data-number="8.2.3">
+<h3 data-number="8.2.3" data-anchor-id="fitted-values-vs.-the-actual-response"><span class="header-section-number">8.2.3</span> Fitted values vs.&nbsp;the actual response</h3>
+<p>Plotting fitted values against the actual response gives a sense of overall fit — points should scatter around the line <span class="math inline">\(y=x\)</span>.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(full_model<span class="sc">$</span>fitted.values, marketing<span class="sc">$</span>sales, <span class="at">pch =</span> <span class="dv">22</span>, <span class="at">bg =</span> <span class="dv">1</span>)</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="dv">0</span>, <span class="dv">1</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><img src="Unit_2_files/figure-html/unnamed-chunk-20-1.png" style="max-width:420px;display:block;margin:1em auto;"></p>
+<p>The points curve slightly above the <span class="math inline">\(y=x\)</span> line at both the high and low ends — at extreme spending levels, actual sales are systematically higher than the (linear) model predicts. This is consistent with what the residual plots already suggested: YouTube and Facebook spending appear to have a <em>nonlinear</em> relationship with sales, which a plain linear model can’t capture. We’ll see how to address this (transformations, polynomial terms, and related fixes) in a later chapter.</p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -275,40 +395,97 @@ Note
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>This glossary is a reminder, not a replacement for the full pages — the intuition boxes and worked examples on <a href="./Unit_1_1.html">1.1</a>–<a href="./Unit_1_4.html">1.4</a> are where the “why” behind each term lives.</p>
+<p>R’s <code>plot()</code> function, applied directly to a fitted model object (<code>plot(full_model)</code>), automatically produces a standard set of four diagnostic plots (residuals vs.&nbsp;fitted, a Normal QQ plot, a scale-location plot, and residuals vs.&nbsp;leverage) — a quick way to run through several of these checks at once, without building each plot by hand.</p>
 </div>
 </div>
-<p><strong>Population</strong> — the entire collection of units you’d like to learn something about (e.g., all McDonald’s hamburgers). See <a href="./Unit_1_2.html">1.2</a>.</p>
-<p><strong>Sample</strong> — a smaller, typically random, subset of the population that you actually observe. See <a href="./Unit_1_2.html">1.2</a>.</p>
-<p><strong>Random variable</strong> — a rule that maps outcomes of a random experiment to numbers. Discrete ones take countable values (described by a PMF); continuous ones take uncountably many values (described by a PDF). See <a href="./Unit_1_1.html">1.1</a>.</p>
-<p><strong>Parameter</strong> — a fixed, usually unknown, numerical fact about the population (e.g., the true population mean <span class="math inline">\(\mu\)</span>). See <a href="./Unit_1_2.html">1.2</a>.</p>
-<p><strong>Statistic / Estimator</strong> — a function of the sample data (a “recipe”) used to learn about a parameter; it’s a random variable because it changes value from sample to sample. See <a href="./Unit_1_2.html">1.2</a>.</p>
-<p><strong>Estimate</strong> — the actual number you get out of an estimator once you plug in your specific observed data. See <a href="./Unit_1_2.html">1.2</a>.</p>
-<p><strong>PMF (probability mass function)</strong> — for a discrete random variable, <span class="math inline">\(f(x)=\Pr(X=x)\)</span>; it must sum to 1 across all possible values. See <a href="./Unit_1_1.html">1.1</a>.</p>
-<p><strong>PDF (probability density function)</strong> — for a continuous random variable, a function <span class="math inline">\(f(x)\)</span> where <em>areas</em> under the curve (not single points) give probabilities; it must integrate to 1. See <a href="./Unit_1_1.html">1.1</a>.</p>
-<p><strong>CDF (cumulative distribution function)</strong> — <span class="math inline">\(F_X(x)=\Pr(X\leq x)\)</span>, a running total of probability, non-decreasing from 0 to 1. See <a href="./Unit_1_1.html">1.1</a>.</p>
-<p><strong>Expectation, <span class="math inline">\(\mathrm{E}[X]\)</span></strong> — the probability-weighted average value of a random variable; where its distribution “balances.” See <a href="./Unit_1_1.html">1.1</a>.</p>
-<p><strong>Variance, <span class="math inline">\(\mathrm{Var}[X]\)</span></strong> — the average squared distance of <span class="math inline">\(X\)</span> from its mean; measures spread. Its square root is the standard deviation, in the same units as <span class="math inline">\(X\)</span>. See <a href="./Unit_1_1.html">1.1</a>.</p>
-<p><strong>Covariance, <span class="math inline">\(\mathrm{cov}[X,Y]\)</span></strong> — measures the direction of linear association between two random variables (positive, negative, or near zero); its size depends on the units of <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span>. See <a href="./Unit_1_1.html">1.1</a>.</p>
-<p><strong>Correlation, <span class="math inline">\(\mathrm{corr}[X,Y]\)</span></strong> — covariance rescaled to always lie in <span class="math inline">\([-1,1]\)</span>, so it measures the <em>strength</em> of linear association independent of units. Zero correlation does <strong>not</strong> imply independence. See <a href="./Unit_1_1.html">1.1</a>.</p>
-<p><strong>Independence, <span class="math inline">\(X\perp Y\)</span></strong> — knowing the value of one random variable tells you nothing about the other; formally, their joint CDF factors as <span class="math inline">\(F_{XY}(x,y)=F_X(x)F_Y(y)\)</span>. See <a href="./Unit_1_1.html">1.1</a>.</p>
-<p><strong>Central Limit Theorem (CLT)</strong> — regardless of the distribution of individual <span class="math inline">\(X_i\)</span>’s, the sample mean <span class="math inline">\(\bar X\)</span> becomes approximately Normal as <span class="math inline">\(n\)</span> grows. See <a href="./Unit_1_1.html">1.1</a>.</p>
-<p><strong>Chi-squared (<span class="math inline">\(\chi^2_k\)</span>), <span class="math inline">\(t_n\)</span>, <span class="math inline">\(F_{m,n}\)</span> distributions</strong> — named distributions that arise from squaring, standardizing with an <em>estimated</em> spread, or taking ratios of Normal random variables; these are the basis of the hypothesis tests used throughout the course. See <a href="./Unit_1_1.html">1.1</a>.</p>
-<p><strong>Confidence interval</strong> — a range of values, computed from data, meant to capture the true (fixed) population parameter in a known proportion (e.g., 95%) of repeated samples. The interval is random; the parameter is not. See <a href="./Unit_1_2.html">1.2</a>.</p>
-<p><strong>Null / Alternative hypothesis (<span class="math inline">\(H_0\)</span> / <span class="math inline">\(H_1\)</span>)</strong> — two competing claims about a population parameter; a hypothesis test starts by assuming <span class="math inline">\(H_0\)</span> and asks whether the data provides strong evidence against it. See <a href="./Unit_1_2.html">1.2</a>.</p>
-<p><strong>p-value</strong> — the probability, <em>assuming <span class="math inline">\(H_0\)</span> is true</em>, of seeing a test statistic at least as extreme as the one observed. A small p-value is evidence against <span class="math inline">\(H_0\)</span>; it is not the probability that <span class="math inline">\(H_0\)</span> is true. See <a href="./Unit_1_2.html">1.2</a>.</p>
-<p><strong>Type 1 error</strong> — rejecting <span class="math inline">\(H_0\)</span> when it’s actually true (a “false alarm”). <strong>Type 2 error</strong> — failing to reject <span class="math inline">\(H_0\)</span> when the alternative is actually true (a “missed detection”). See <a href="./Unit_1_2.html">1.2</a>.</p>
-<p><strong>Matrix</strong> — a rectangular grid of numbers with <span class="math inline">\(n\)</span> rows and <span class="math inline">\(m\)</span> columns; its shape controls which operations (addition, multiplication) are legal. See <a href="./Unit_1_3.html">1.3</a>.</p>
-<p><strong>Transpose, <span class="math inline">\(A^\top\)</span></strong> — flips a matrix along its diagonal, turning rows into columns and vice versa. See <a href="./Unit_1_3.html">1.3</a>.</p>
-<p><strong>Identity matrix, <span class="math inline">\(I_n\)</span></strong> — the matrix analogue of the number 1; multiplying by it leaves a (compatible) matrix unchanged. See <a href="./Unit_1_3.html">1.3</a>.</p>
-<p><strong>Inverse, <span class="math inline">\(A^{-1}\)</span></strong> — the matrix analogue of <span class="math inline">\(1/a\)</span>; satisfies <span class="math inline">\(AA^{-1}=A^{-1}A=I_n\)</span>. Not every matrix has one — a matrix without an inverse is called <em>singular</em>. See <a href="./Unit_1_3.html">1.3</a>.</p>
-<p><strong>Linear independence</strong> — a set of vectors where none can be written as a combination of the others; needed for <span class="math inline">\(X^\top X\)</span> to be invertible. See <a href="./Unit_1_3.html">1.3</a>.</p>
-<p><strong>Positive-definite matrix</strong> — the matrix analogue of “being a positive number”: <span class="math inline">\(x^\top Ax&gt;0\)</span> for every nonzero <span class="math inline">\(x\)</span>. Covariance matrices and (well-behaved) <span class="math inline">\(X^\top X\)</span> matrices are positive-definite. See <a href="./Unit_1_3.html">1.3</a> and <a href="./Unit_1_4.html">1.4</a>.</p>
-<p><strong>Random vector</strong> — several random variables bundled into a single column, so matrix algebra can describe a whole dataset at once. See <a href="./Unit_1_4.html">1.4</a>.</p>
-<p><strong>Covariance matrix, <span class="math inline">\(\Sigma\)</span></strong> — a matrix whose diagonal holds variances and off-diagonal entries hold pairwise covariances of a random vector’s entries; symmetric and positive-definite. Don’t confuse the symbol <span class="math inline">\(\Sigma\)</span> with the summation sign <span class="math inline">\(\sum\)</span>. See <a href="./Unit_1_4.html">1.4</a>.</p>
-<p><strong>Multivariate Normal distribution</strong> — the vector generalization of the Normal distribution; closed under linear transformations, meaning any linear function of a multivariate Normal vector is itself (multivariate) Normal. See <a href="./Unit_1_4.html">1.4</a>.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Key takeaways before moving on">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Key takeaways before moving on
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li>Every inference method from <a href="./Unit_2_3.html">3.3</a> assumes linearity, Normal errors, constant variance, and independent errors — always check these before trusting a <span class="math inline">\(p\)</span>-value or interval.</li>
+<li>Residuals <span class="math inline">\(\hat\epsilon\)</span>, not the unobservable <span class="math inline">\(\epsilon\)</span>, are what we actually check — via histograms/QQ plots for Normality, and scatterplots (against fitted values, against covariates, against time) for constant variance and independence.</li>
+<li>A “good” diagnostic plot looks like a structureless, constant-width horizontal band centered at 0; curves, funnels, or trends all indicate an assumption violation.</li>
+<li>Plot scale matters — a poorly chosen axis range can hide or exaggerate a real pattern, so fix axis limits deliberately when comparing plots.</li>
+<li>In the marketing example, several diagnostics agreed: non-Normal residuals, patterned residuals vs.&nbsp;fitted values, and curvature in fitted-vs-actual — all pointing to a nonlinear relationship the current (linear) model misses.</li>
+</ul>
+</div>
+</div>
+</section>
+</section>
+<section id="check-your-understanding" class="level2" data-number="8.3">
+<h2 data-number="8.3" data-anchor-id="check-your-understanding"><span class="header-section-number">8.3</span> Check Your Understanding</h2>
+<style>
+details.qa-answer { margin: 0 0 1.25em 0; border-left: 3px solid #d6eaf8; padding-left: 0.75em; }
+details.qa-answer > summary { cursor: pointer; color: #2e86c1; font-weight: 600; }
+details.qa-answer > summary::marker { color: #2e86c1; }
+details.qa-answer[open] > summary { margin-bottom: 0.5em; }
+details.qa-answer p { margin: 0; }
+</style>
+<p>Before checking your answers, list the assumptions of the normal MLR and, for each one, write down which diagnostic plot(s) from this page you’d use to check it.</p>
+<p><strong>Question 1.</strong> Why do we check the residuals <span class="math inline">\(\hat\epsilon\)</span> for normality, rather than the true errors <span class="math inline">\(\epsilon\)</span>?</p>
+<details class="qa-answer">
+<summary>
+Show answer
+</summary>
+<p>
+Because <span class="math inline">\(\epsilon\)</span> is never observed — it depends on the unknown true <span class="math inline">\(\beta\)</span>. The residuals <span class="math inline">\(\hat\epsilon=Y-X\hat\beta\)</span> are the closest observable proxy we have, computed using the estimated <span class="math inline">\(\hat\beta\)</span> instead of the unknown true <span class="math inline">\(\beta\)</span>.
+</p>
+</details>
+<p><strong>Question 2.</strong> In a QQ plot, what does it mean if the residual points curve noticeably away from the reference line at both ends?</p>
+<details class="qa-answer">
+<summary>
+Show answer
+</summary>
+<p>
+It suggests the residuals have heavier tails than a Normal distribution — more extreme values occur than a Normal distribution would predict — so the normality assumption looks questionable.
+</p>
+</details>
+<p><strong>Question 3.</strong> What pattern should a residuals-vs-fitted-values plot show if the model’s assumptions hold? What does a funnel or curved shape indicate instead?</p>
+<details class="qa-answer">
+<summary>
+Show answer
+</summary>
+<p>
+It should look like a horizontal band of points centered at 0 with roughly constant spread, at every fitted value — no trend, curvature, or change in spread. A funnel shape indicates non-constant variance (variance changing with the fitted value); a curved shape suggests the true relationship isn’t linear, or an important covariate is missing.
+</p>
+</details>
+<p><strong>Question 4.</strong> Why can changing a plot’s axis limits change your conclusion about whether an assumption is violated?</p>
+<details class="qa-answer">
+<summary>
+Show answer
+</summary>
+<p>
+Auto-scaled axes can visually compress or stretch patterns in a way that flatters or exaggerates them — zooming out too far can make a real funnel shape or trend look flat, and an off-center <span class="math inline">\(y\)</span>-axis can hide whether residuals are actually centered at 0. Comparing plots fairly requires deliberately fixing consistent axis limits, not relying on each plot’s own auto-scaling.
+</p>
+</details>
+<p><strong>Question 5.</strong> In the marketing example, what did the fitted-vs-actual-sales plot (<span class="math inline">\(y=x\)</span> reference line) suggest was wrong with the linear model?</p>
+<details class="qa-answer">
+<summary>
+Show answer
+</summary>
+<p>
+The points curved above the <span class="math inline">\(y=x\)</span> line at both high and low fitted values, meaning actual sales were systematically higher than predicted at the extremes — a sign that the true relationship between advertising spending and sales is nonlinear, which a straight-line model can’t capture.
+</p>
+</details>
+<p><strong>Question 6.</strong> True or False: if the residuals-vs-fitted plot looks fine, you don’t need to check the residuals-vs-individual-covariate plots separately.</p>
+<details class="qa-answer">
+<summary>
+Show answer
+</summary>
+<p>
+False. A problem tied to one specific covariate (e.g.&nbsp;non-constant variance that only shows up against Facebook spending, not against the fitted values overall) can be diluted or hidden once everything is combined into a single fitted-value axis. Checking residuals against each covariate individually can reveal issues the aggregate fitted-vs-residual plot misses.
+</p>
+</details>
 
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -706,11 +883,14 @@ Note
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./Unit_2_6.html" class="pagination-link" aria-label="Additional concepts and examples">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Additional concepts and examples</span></span>
+      <a href="./Unit_2_3.html" class="pagination-link" aria-label="Least squares inference">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Least squares inference</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
+      <a href="./Unit_2_5.html" class="pagination-link" aria-label="Simple linear regression">
+        <span class="nav-page-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Simple linear regression</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
   </div>
 </nav>
 </div> <!-- /content -->

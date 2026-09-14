@@ -1,0 +1,1156 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.10.18">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>7&nbsp; Least squares inference – Regression Notes</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./Unit_2_4.html" rel="next">
+<link href="./Unit_2_2.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-ed7344add5f1663e434276306a2aa159.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-chtml.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="nav-sidebar floating quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./Unit_2_1.html">Linear Regression</a></li><li class="breadcrumb-item"><a href="./Unit_2_3.html"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Least squares inference</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Regression Notes</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Preface</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">Review material</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Unit_1_1.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Review of random variables</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Unit_1_2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Review of introductory statistics</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Unit_1_3.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Review of matrices and linear algebra</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Unit_1_4.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Review Random Vectors</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text">Linear Regression</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Unit_2_1.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Basics of linear regression</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Unit_2_2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Least Squares</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Unit_2_3.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Least squares inference</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Unit_2_4.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Checking model assumptions</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Unit_2_5.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Simple linear regression</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Unit_2_6.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Additional concepts and examples</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Glossary.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Glossary</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#residuals-and-fitted-values" id="toc-residuals-and-fitted-values" class="nav-link active" data-scroll-target="#residuals-and-fitted-values"><span class="header-section-number">7.1</span> Residuals and fitted values</a></li>
+  <li><a href="#variation-decomposition" id="toc-variation-decomposition" class="nav-link" data-scroll-target="#variation-decomposition"><span class="header-section-number">7.2</span> Variation decomposition</a></li>
+  <li><a href="#coefficients-of-determination" id="toc-coefficients-of-determination" class="nav-link" data-scroll-target="#coefficients-of-determination"><span class="header-section-number">7.3</span> Coefficients of determination</a></li>
+  <li><a href="#the-overall-f-test" id="toc-the-overall-f-test" class="nav-link" data-scroll-target="#the-overall-f-test"><span class="header-section-number">7.4</span> The overall <span class="math inline">\(F\)</span> test</a></li>
+  <li><a href="#significance-of-one-variable" id="toc-significance-of-one-variable" class="nav-link" data-scroll-target="#significance-of-one-variable"><span class="header-section-number">7.5</span> Significance of one variable</a></li>
+  <li><a href="#inference-for-the-mean-response-and-prediction-intervals" id="toc-inference-for-the-mean-response-and-prediction-intervals" class="nav-link" data-scroll-target="#inference-for-the-mean-response-and-prediction-intervals"><span class="header-section-number">7.6</span> Inference for the mean response and prediction intervals</a></li>
+  <li><a href="#partial-testing-is-a-subset-of-covariates-useful" id="toc-partial-testing-is-a-subset-of-covariates-useful" class="nav-link" data-scroll-target="#partial-testing-is-a-subset-of-covariates-useful"><span class="header-section-number">7.7</span> Partial testing: is a subset of covariates useful?</a></li>
+  <li><a href="#check-your-understanding" id="toc-check-your-understanding" class="nav-link" data-scroll-target="#check-your-understanding"><span class="header-section-number">7.8</span> Check Your Understanding</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./Unit_2_1.html">Linear Regression</a></li><li class="breadcrumb-item"><a href="./Unit_2_3.html"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Least squares inference</span></a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Least squares inference</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p>We now know how to <strong>estimate</strong> <span class="math inline">\(\beta\)</span>: <span class="math inline">\(\hat\beta=(X^\top X)^{-1}X^\top Y\)</span>, and we can predict a new response at covariate value <span class="math inline">\(x\)</span> with <span class="math inline">\(\hat y_{new}=x^\top\hat\beta\)</span>. But estimation alone doesn’t tell us how much to trust that estimate. How good is <span class="math inline">\(\hat y_{new}\)</span> as a prediction, on average? How will new observations scatter around the fitted line? How does <span class="math inline">\(\hat\beta\)</span> vary around <span class="math inline">\(\beta\)</span>? Is there real evidence that <span class="math inline">\(Y\)</span> is related to <span class="math inline">\(X\)</span> at all, or could what we observed be explained by sampling variation alone? Answering these requires studying the <em>variation</em> in our estimates and our data — this is the subject of this whole section.</p>
+<section id="residuals-and-fitted-values" class="level2" data-number="7.1">
+<h2 data-number="7.1" data-anchor-id="residuals-and-fitted-values"><span class="header-section-number">7.1</span> Residuals and fitted values</h2>
+<p>We call <span class="math inline">\(\hat Y=X\hat\beta\)</span> the <strong>fitted values</strong> — what the model estimates <span class="math inline">\(Y\)</span> to be, given the observed <span class="math inline">\(X\)</span>. We call <span class="math inline">\(\hat\epsilon=Y-\hat Y\)</span> the <strong>residual vector</strong>; its <span class="math inline">\(i^{\text{th}}\)</span> entry <span class="math inline">\(\hat\epsilon_i\)</span> is the <span class="math inline">\(i^{\text{th}}\)</span> <strong>residual</strong>, the signed vertical distance from observation <span class="math inline">\(i\)</span> to the fitted line/hyperplane. The <strong>sum of squared errors</strong> (SSE), also called the <strong>sum of squared residuals</strong>, is <span class="math inline">\(\hat\epsilon^\top\hat\epsilon=\sum_{i=1}^n\hat\epsilon_i^2\)</span> — and by construction (since <span class="math inline">\(\hat\beta\)</span> was chosen via least squares), this is the <em>smallest</em> possible value of <span class="math inline">\(\epsilon_0^\top\epsilon_0\)</span> over all choices of <span class="math inline">\(\beta_0\)</span>.</p>
+<p><strong>Example 3.3</strong> In <a href="./Unit_2_1.html">Example 3.1</a>, what is the residual of individual 3? How do we interpret it?</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>residuals <span class="ot">=</span> Y <span class="sc">-</span> X <span class="sc">%*%</span> beta_hat</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>residuals[<span class="dv">3</span>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<pre><code>[1] -7.598565</code></pre>
+<p>Individual 3’s body fat is about 7.6 percentage points <em>lower</em> than the fitted line predicts for their weight — a negative residual means the observed point sits below the fitted line.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">curve</span>(beta_hat[<span class="dv">1</span>] <span class="sc">+</span> beta_hat[<span class="dv">2</span>]<span class="sc">*</span>x, <span class="dv">125</span>, <span class="dv">280</span>, <span class="at">lwd =</span> <span class="dv">3</span>, <span class="at">xlab =</span> <span class="st">"Weight"</span>, <span class="at">ylab =</span> <span class="st">"BF %"</span>)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">points</span>(Weight, BodyFat, <span class="at">pch =</span> <span class="dv">22</span>, <span class="at">bg =</span> <span class="dv">1</span>)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co"># vertical segments from each point down to the line, labeled with its residual</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><img src="Unit_2_files/figure-html/unnamed-chunk-7-1.png" style="max-width:420px;display:block;margin:1em auto;"></p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Intuition: residuals are our only window into $\epsilon$">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Intuition: residuals are our only window into <span class="math inline">\(\epsilon\)</span>
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>We never observe the true errors <span class="math inline">\(\epsilon_i=Y_i-(\beta_0+\beta_1X_i)\)</span>, since we don’t know <span class="math inline">\(\beta_0,\beta_1\)</span>. Residuals <span class="math inline">\(\hat\epsilon_i=Y_i-(\hat\beta_0+\hat\beta_1X_i)\)</span> are the closest thing we have — the true error using our <em>estimated</em> line instead of the true one. Everything from here on (checking model assumptions, estimating <span class="math inline">\(\sigma^2\)</span>, building test statistics) is built out of residuals, precisely because they’re the only proxy for the unobservable <span class="math inline">\(\epsilon_i\)</span>’s that the data gives us.</p>
+</div>
+</div>
+</section>
+<section id="variation-decomposition" class="level2" data-number="7.2">
+<h2 data-number="7.2" data-anchor-id="variation-decomposition"><span class="header-section-number">7.2</span> Variation decomposition</h2>
+<p>The residuals describe one kind of variation in the response. We can also consider the response’s <em>total</em> variation: the <strong>sum of squares total</strong> (SST) is <span class="math display">\[
+SST=\sum_{i=1}^n(Y_i-\bar Y)^2=(Y-\bar Y1)^\top(Y-\bar Y1),
+\]</span> i.e.&nbsp;<span class="math inline">\((n-1)\)</span> times the ordinary sample variance of <span class="math inline">\(Y\)</span>. Remarkably, this decomposes as <span class="math display">\[
+SST=(Y-\bar Y1)^\top(Y-\bar Y1)=\underbrace{(Y-\hat Y)^\top(Y-\hat Y)}_{SSE}+\underbrace{(\hat Y-\bar Y)^\top(\hat Y-\bar Y)}_{SSModel},
+\]</span> so <span class="math inline">\(SST=SSE+SSModel\)</span> (SSModel is also written <span class="math inline">\(SSM\)</span> or <span class="math inline">\(SSRegression\)</span>; SSE sometimes <span class="math inline">\(SSwithin\)</span>). <span class="math inline">\(SSModel\)</span> measures variation in <span class="math inline">\(Y\)</span> <em>explained</em> by <span class="math inline">\(X\)</span> via the fitted model; <span class="math inline">\(SSE\)</span> measures variation <em>left unexplained</em>.</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Intuition: why must $\hat\epsilon^\top\hat\epsilon\leq SST$?">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Intuition: why must <span class="math inline">\(\hat\epsilon^\top\hat\epsilon\leq SST\)</span>?
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The first column of <span class="math inline">\(X\)</span> is <span class="math inline">\(1_n\)</span>, so setting <span class="math inline">\(\hat\beta_*=(\bar Y,0,\ldots,0)^\top\)</span> makes <span class="math inline">\(X\hat\beta_*=\bar Y1\)</span> — the “flat line at <span class="math inline">\(\bar Y\)</span>” model, whose residuals are exactly <span class="math inline">\(Y-\bar Y1\)</span>, with sum of squares <span class="math inline">\(SST\)</span>. Since the <em>actual</em> least squares <span class="math inline">\(\hat\beta\)</span> was chosen specifically to minimize the sum of squared residuals over <em>all</em> choices of coefficients — including <span class="math inline">\(\hat\beta_*\)</span> — the true SSE can never exceed <span class="math inline">\(SST\)</span>. In other words: however good or bad our fitted line is, it can never fit the data worse than a flat line at the average, because least squares would never have chosen it if it did.</p>
+</div>
+</div>
+<p>Each term in the decomposition has associated <strong>degrees of freedom</strong>: <span class="math inline">\(dfT=n-1\)</span>, <span class="math inline">\(dfM=(\#\text{ non-zero }\beta)-1\)</span>, <span class="math inline">\(dfE=n-(\#\text{ non-zero }\beta)\)</span>. Since <span class="math inline">\(SSE\)</span> is the variation <em>unexplained</em> by the model, it’s tied to the error variance <span class="math inline">\(\sigma^2\)</span>; we estimate <span class="math inline">\(\sigma^2\)</span> by <span class="math display">\[\hat\sigma^2=MSE=\frac{SSE}{dfE}.\]</span></p>
+<p>The <strong>null model</strong> <span class="math inline">\(Y|X=\beta_0+\epsilon\)</span> (all slopes 0 — <span class="math inline">\(Y\)</span> doesn’t depend on <span class="math inline">\(X\)</span>) only estimates a mean, so <span class="math inline">\(df=n-1\)</span>, and <span class="math inline">\(MSE\)</span> under the null model reduces to <span class="math inline">\((n-1)^{-1}SST\)</span> — exactly the usual sample variance of <span class="math inline">\(Y\)</span>. This is intuitive: with no covariates to explain any of the variation, our best estimate of <span class="math inline">\(\sigma^2\)</span> is just how much <span class="math inline">\(Y\)</span> varies on its own.</p>
+<p>All of this is usually summarized in an ANOVA (“analysis of variance”) table:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Source</th>
+<th>SS</th>
+<th>df</th>
+<th>MS</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Model</td>
+<td><span class="math inline">\(SSM\)</span></td>
+<td><span class="math inline">\(dfM\)</span></td>
+<td><span class="math inline">\(MSModel=SSM/dfM\)</span></td>
+</tr>
+<tr class="even">
+<td>Residual</td>
+<td><span class="math inline">\(SSE\)</span></td>
+<td><span class="math inline">\(dfE\)</span></td>
+<td><span class="math inline">\(MSE=SSE/dfE\)</span></td>
+</tr>
+<tr class="odd">
+<td>Total</td>
+<td><span class="math inline">\(SST\)</span></td>
+<td><span class="math inline">\(dfT\)</span></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Being able to <em>interpret</em> these quantities (and follow the derivation) matters far more than memorizing the formulas — software computes them for us in practice.</p>
+</div>
+</div>
+</section>
+<section id="coefficients-of-determination" class="level2" data-number="7.3">
+<h2 data-number="7.3" data-anchor-id="coefficients-of-determination"><span class="header-section-number">7.3</span> Coefficients of determination</h2>
+<p>A good model explains a large share of the response’s variation: <span class="math inline">\(SSModel\)</span> should be close to <span class="math inline">\(SST\)</span> (equivalently, <span class="math inline">\(SSE\)</span> close to 0). The <strong>coefficient of determination</strong> <span class="math display">\[R^2=\frac{SSModel}{SST}\]</span> is the proportion of variation in <span class="math inline">\(Y\)</span> explained by the model, with <span class="math inline">\(0\leq R^2\leq1\)</span> — and unlike the raw sum-of-squares terms, <span class="math inline">\(R^2\)</span> doesn’t change if you rescale the data. Larger <span class="math inline">\(R^2\)</span> generally means a better-fitting model, though how large is “good” is subjective and field-dependent.</p>
+<div class="callout callout-style-default callout-warning callout-titled" title="Common mistake: using raw $R^2$ to decide whether to add a covariate">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Warning</span>Common mistake: using raw <span class="math inline">\(R^2\)</span> to decide whether to add a covariate
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Adding <em>any</em> covariate to a model — even a useless, unrelated one — can never decrease <span class="math inline">\(R^2\)</span>; it can only increase it or leave it unchanged. So raw <span class="math inline">\(R^2\)</span> alone can’t tell you whether a new covariate is actually <em>useful</em>. The fix is the <strong>adjusted coefficient of determination</strong>, <span class="math display">\[\bar R^2=1-(1-R^2)\frac{n-1}{n-p},\]</span> which explicitly penalizes adding covariates (through the <span class="math inline">\(n-p\)</span> term) — it only increases if a new covariate improves the fit by more than we’d expect from chance alone. Use <span class="math inline">\(\bar R^2\)</span>, not <span class="math inline">\(R^2\)</span>, when comparing models with different numbers of covariates.</p>
+</div>
+</div>
+</section>
+<section id="the-overall-f-test" class="level2" data-number="7.4">
+<h2 data-number="7.4" data-anchor-id="the-overall-f-test"><span class="header-section-number">7.4</span> The overall <span class="math inline">\(F\)</span> test</h2>
+<p><span class="math inline">\(R^2\)</span> describes fit, but doesn’t formally test whether the covariates explain <span class="math inline">\(Y\)</span> at all, versus what we see being purely due to sampling variation. Write <span class="math inline">\(\beta=(\beta_1,\ldots,\beta_p)^\top\)</span> (using <span class="math inline">\(\beta_1\)</span> for the intercept here) and let <span class="math inline">\(\tilde\beta=(\beta_2,\ldots,\beta_p)^\top\)</span> be the coefficients <em>excluding</em> the intercept. We test <span class="math display">\[H_0:\tilde\beta=0\qquad\text{vs}\qquad H_1:\tilde\beta\neq0.\]</span></p>
+<p>This test requires the normality assumption <span class="math inline">\(\epsilon_i\sim\mathcal{N}(0,\sigma^2)\)</span> — the <strong>normal MLR</strong> — even though least squares estimation itself does not. Under the normal MLR, one can show <span class="math inline">\(SSM/\sigma^2\sim\chi^2_{dfM}\)</span>, <span class="math inline">\(SSE/\sigma^2\sim\chi^2_{dfE}\)</span>, and <span class="math inline">\(SSM\perp SSE\)</span>. Recalling from <a href="./Unit_1_1.html">Theorem 2.4</a> that a ratio of two independent, rescaled <span class="math inline">\(\chi^2\)</span>’s follows an <span class="math inline">\(F\)</span> distribution, the observed test statistic <span class="math display">\[F_{obs}=\frac{MSModel}{MSE}\sim F_{dfM,dfE}\]</span> under <span class="math inline">\(H_0\)</span>, with p-value <span class="math inline">\(\Pr(W&gt;F_{obs})\)</span> for <span class="math inline">\(W\sim F_{dfM,dfE}\)</span>.</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Intuition: why a ratio of mean squares?">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Intuition: why a ratio of mean squares?
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><span class="math inline">\(MSModel\)</span> measures how much variation the covariates explain, per degree of freedom spent; <span class="math inline">\(MSE\)</span> measures how much variation is left unexplained, per degree of freedom remaining. If the covariates genuinely explain nothing (<span class="math inline">\(H_0\)</span> true), both quantities are just independent estimates of the same noise level <span class="math inline">\(\sigma^2\)</span>, so their ratio should be close to 1. If the covariates really do explain <span class="math inline">\(Y\)</span>, <span class="math inline">\(MSModel\)</span> inflates relative to <span class="math inline">\(MSE\)</span>, and <span class="math inline">\(F_{obs}\)</span> gets pushed well above 1 — which is exactly what a large <span class="math inline">\(F_{obs}\)</span> (and a small p-value) is evidence of.</p>
+</div>
+</div>
+<p>The complete ANOVA table adds <span class="math inline">\(F\)</span> and p-value columns to the Model row:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 16%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Source</th>
+<th>SS</th>
+<th>df</th>
+<th>MS</th>
+<th>F</th>
+<th>p-value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Model</td>
+<td><span class="math inline">\(SSM\)</span></td>
+<td><span class="math inline">\(dfM\)</span></td>
+<td><span class="math inline">\(MSModel\)</span></td>
+<td><span class="math inline">\(F=MSModel/MSE\)</span></td>
+<td><span class="math inline">\(\Pr(W&gt;F_{obs})\)</span></td>
+</tr>
+<tr class="even">
+<td>Residual</td>
+<td><span class="math inline">\(SSE\)</span></td>
+<td><span class="math inline">\(dfE\)</span></td>
+<td><span class="math inline">\(MSE\)</span></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>Total</td>
+<td><span class="math inline">\(SST\)</span></td>
+<td><span class="math inline">\(dfT\)</span></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example 3.4</strong> In <a href="./Unit_2_1.html">Example 3.1</a>, compute the coefficients of determination, the ANOVA table, and test whether the model is significant overall.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model)  <span class="co"># F test results are in the last line</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<pre><code>Residual standard error: 7.049 on 18 degrees of freedom
+Multiple R-squared:  0.4853,    Adjusted R-squared:  0.4567
+F-statistic: 16.97 on 1 and 18 DF,  p-value: 0.0006434</code></pre>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>null_model <span class="ot">=</span> <span class="fu">lm</span>(BodyFat <span class="sc">~</span> <span class="dv">1</span>, <span class="at">data =</span> df)  <span class="co"># intercept-only model</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(null_model, model)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<pre><code>Analysis of Variance Table
+
+Model 1: BodyFat ~ 1
+Model 2: BodyFat ~ Weight
+  Res.Df     RSS Df Sum of Sq      F    Pr(&gt;F)
+1     19 1737.75
+2     18  894.42  1    843.33 16.972 0.0006434 ***</code></pre>
+<p>Weight explains about 48.5% of the variation in body fat percentage (<span class="math inline">\(R^2=0.4853\)</span>), or 45.7% after adjusting for the number of covariates (<span class="math inline">\(\bar R^2=0.4567\)</span> — here identical in spirit to <span class="math inline">\(R^2\)</span> since there’s only one covariate, but they’d diverge more with additional covariates). The <span class="math inline">\(F\)</span> test gives <span class="math inline">\(F_{obs}=16.97\)</span> on <span class="math inline">\((1,18)\)</span> degrees of freedom with p-value <span class="math inline">\(0.0006\)</span>, strong evidence against <span class="math inline">\(H_0:\beta_1=0\)</span> — weight really does help explain body fat percentage, well beyond what sampling variation alone would produce.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Worked Example: building the ANOVA table by hand">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Worked Example: building the ANOVA table by hand
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>n <span class="ot">=</span> <span class="fu">nrow</span>(df); p <span class="ot">=</span> <span class="dv">2</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>SST <span class="ot">=</span> <span class="fu">t</span>(Y <span class="sc">-</span> <span class="fu">mean</span>(Y)) <span class="sc">%*%</span> (Y <span class="sc">-</span> <span class="fu">mean</span>(Y))</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>Yhat <span class="ot">=</span> X <span class="sc">%*%</span> beta_hat</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>SSE <span class="ot">=</span> <span class="fu">t</span>(Y <span class="sc">-</span> Yhat) <span class="sc">%*%</span> (Y <span class="sc">-</span> Yhat)</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>SSM <span class="ot">=</span> SST <span class="sc">-</span> SSE</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>dfm <span class="ot">=</span> p <span class="sc">-</span> <span class="dv">1</span>; dfe <span class="ot">=</span> n <span class="sc">-</span> p</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>MSM <span class="ot">=</span> SSM<span class="sc">/</span>dfm; MSE <span class="ot">=</span> SSE<span class="sc">/</span>dfe</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>Fv <span class="ot">=</span> MSM<span class="sc">/</span>MSE</span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>p.val <span class="ot">=</span> <span class="dv">1</span> <span class="sc">-</span> <span class="fu">pf</span>(Fv, dfm, dfe)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<pre><code>             SS df        MS        F      p-value
+Model  843.3252  1 843.32521 16.97164 0.0006434484
+Error  894.4248 18  49.69027       NA           NA
+Total 1737.7500 19        NA       NA           NA</code></pre>
+<p>Matches <code>anova()</code> exactly — <code>lm()</code> and <code>anova()</code> are just automating this same arithmetic.</p>
+</div>
+</div>
+</section>
+<section id="significance-of-one-variable" class="level2" data-number="7.5">
+<h2 data-number="7.5" data-anchor-id="significance-of-one-variable"><span class="header-section-number">7.5</span> Significance of one variable</h2>
+<p>The overall <span class="math inline">\(F\)</span> test only tells us <em>whether at least one</em> covariate matters — not <em>which</em> ones. We now test individual coefficients, <span class="math inline">\(H_0:\beta_j=\beta_j^0\)</span> vs.&nbsp;<span class="math inline">\(H_1:\beta_j\neq\beta_j^0\)</span> (most often <span class="math inline">\(\beta_j^0=0\)</span>).</p>
+<p>Under the normal MLR, <span class="math inline">\(\epsilon\sim\mathcal{N}_n(0,\sigma^2I)\)</span>, so <span class="math inline">\(Y|X\sim\mathcal{N}_n(X\beta,\sigma^2I)\)</span>. Since <span class="math inline">\(\hat\beta=(X^\top X)^{-1}X^\top Y=AY\)</span> for <span class="math inline">\(A=(X^\top X)^{-1}X^\top\)</span>, and linear transformations of multivariate Normals are themselves multivariate Normal (<a href="./Unit_1_4.html">Unit_1_4</a>):</p>
+<p><strong>Theorem 3.1</strong> Under the normal linear regression model, <span class="math inline">\(\hat\beta\sim\mathcal{N}_p\left(\beta,(X^\top X)^{-1}\sigma^2\right)\)</span>.</p>
+<p>Since <span class="math inline">\({\textrm{Var}}[\hat\beta_j]\)</span> is the <span class="math inline">\((j,j)\)</span> entry of <span class="math inline">\((X^\top X)^{-1}\sigma^2\)</span> and <span class="math inline">\(\sigma^2\)</span> is unknown, we estimate it with <span class="math inline">\(\widehat{{\textrm{Var}}}[\hat\beta_j]=(X^\top X)^{-1}_{j,j}MSE\)</span>. It can be shown <span class="math inline">\(\hat\beta\perp MSE\)</span>, so — exactly analogous to the one-sample <span class="math inline">\(t\)</span> result from <a href="./Unit_1_1.html">Theorem 2.5</a> — <span class="math display">\[
+\frac{\hat\beta_j-\beta_j}{\sqrt{\widehat{{\textrm{Var}}}[\hat\beta_j]}}\sim t_{dfE}.
+\]</span></p>
+<p>The test proceeds exactly like any <span class="math inline">\(t\)</span>-test: compute <span class="math inline">\(TS=\dfrac{\hat\beta_j-\beta_j^0}{\sqrt{\widehat{{\textrm{Var}}}[\hat\beta_j]}}\)</span>, which follows <span class="math inline">\(t_{dfE}\)</span> under <span class="math inline">\(H_0\)</span>, and obtain the two-sided p-value <span class="math inline">\(2\Pr(|Z|&gt;|TS|)\)</span> for <span class="math inline">\(Z\sim t_{dfE}\)</span>. For one-sided alternatives <span class="math inline">\(H_1:\beta_j&gt;\beta_j^0\)</span>, the p-value is <span class="math inline">\(\Pr(Z&gt;TS)\)</span>; for <span class="math inline">\(H_1:\beta_j&lt;\beta_j^0\)</span>, it’s <span class="math inline">\(\Pr(Z&lt;TS)\)</span>.</p>
+<p><strong>Example</strong> In <a href="./Unit_2_1.html">Example 3.1</a>, test <span class="math inline">\(H_0:\beta_1=1/3\)</span> vs.&nbsp;<span class="math inline">\(H_1:\beta_1\neq1/3\)</span> (the weight coefficient), and separately <span class="math inline">\(H_0:\beta_1=0\)</span> vs.&nbsp;<span class="math inline">\(H_1:\beta_1\neq0\)</span>.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>hvar_beta <span class="ot">=</span> <span class="fu">solve</span>(<span class="fu">t</span>(X) <span class="sc">%*%</span> X) <span class="sc">*</span> MSE     <span class="co"># estimated cov(beta_hat)</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>TS <span class="ot">=</span> (beta_hat[<span class="dv">2</span>] <span class="sc">-</span> <span class="dv">1</span><span class="sc">/</span><span class="dv">3</span>) <span class="sc">/</span> <span class="fu">sqrt</span>(hvar_beta[<span class="dv">2</span>,<span class="dv">2</span>])</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="dv">2</span> <span class="sc">*</span> (<span class="dv">1</span> <span class="sc">-</span> <span class="fu">pt</span>(<span class="fu">abs</span>(TS), dfe))              <span class="co"># not-equal-to-1/3 p-value</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<pre><code>[1] 0.1857053</code></pre>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>TS <span class="ot">=</span> beta_hat[<span class="dv">2</span>] <span class="sc">/</span> <span class="fu">sqrt</span>(hvar_beta[<span class="dv">2</span>,<span class="dv">2</span>])</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="dv">2</span> <span class="sc">*</span> (<span class="dv">1</span> <span class="sc">-</span> <span class="fu">pt</span>(<span class="fu">abs</span>(TS), dfe))              <span class="co"># not-equal-to-0 p-value</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<pre><code>[1] 0.0006434484</code></pre>
+<p>The second test matches the <code>Weight</code> row of <code>summary(model)</code> exactly — the <code>t value</code> and <code>Pr(&gt;|t|)</code> columns are precisely this <span class="math inline">\(TS\)</span> and p-value for <span class="math inline">\(H_0:\beta_j=0\)</span>. We have essentially no evidence that <span class="math inline">\(\beta_1=1/3\)</span> (p-value <span class="math inline">\(0.186\)</span>), but very strong evidence that <span class="math inline">\(\beta_1\neq0\)</span> (p-value <span class="math inline">\(0.0006\)</span>).</p>
+<p>A <span class="math inline">\((1-\alpha)100\%\)</span> confidence interval for <span class="math inline">\(\beta_j\)</span> follows the same pattern as any <span class="math inline">\(t\)</span>-based interval: <span class="math display">\[\hat\beta_j\pm t_{dfE,\alpha/2}\sqrt{\widehat{{\textrm{Var}}}[\hat\beta_j]}.\]</span></p>
+<p><strong>Example 3.5</strong> Compute 95% and 99% confidence intervals for the weight coefficient.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">confint</span>(model, <span class="at">level =</span> <span class="fl">0.95</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<pre><code>                  2.5 %     97.5 %
+(Intercept) -51.6365090 -3.1160157
+Weight        0.1224448  0.3773035</code></pre>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">confint</span>(model, <span class="at">level =</span> <span class="fl">0.99</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<pre><code>                   0.5 %    99.5 %
+(Intercept) -60.61484736 5.8623227
+Weight        0.07528522 0.4244631</code></pre>
+<p>The 99% interval is wider than the 95% interval — higher confidence requires casting a wider net, since <span class="math inline">\(t_{dfE,0.005}&gt;t_{dfE,0.025}\)</span>.</p>
+<div class="callout callout-style-default callout-warning callout-titled" title="Common mistake: forgetting the interval endpoints are random">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Warning</span>Common mistake: forgetting the interval endpoints are random
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>It’s the <em>interval</em>, not the parameter, that’s random. If we repeated the study many times, each sample would produce a different interval, and <span class="math inline">\((1-\alpha)100\%\)</span> of <em>those intervals</em> would contain the fixed, true <span class="math inline">\(\beta_j\)</span> — not “there’s a 95% chance <span class="math inline">\(\beta_j\)</span> is in this particular interval,” since <span class="math inline">\(\beta_j\)</span> isn’t random at all. Given our one observed interval <span class="math inline">\((0.12,0.38)\)</span>, we say we’re “95% confident” <span class="math inline">\(\beta_1\)</span> lies in it — a statement about the <em>procedure’s</em> long-run reliability, not a probability statement about this specific interval.</p>
+</div>
+</div>
+</section>
+<section id="inference-for-the-mean-response-and-prediction-intervals" class="level2" data-number="7.6">
+<h2 data-number="7.6" data-anchor-id="inference-for-the-mean-response-and-prediction-intervals"><span class="header-section-number">7.6</span> Inference for the mean response and prediction intervals</h2>
+<p>Given covariates <span class="math inline">\(x\)</span>, the theoretical mean response is <span class="math inline">\(x^\top\beta\)</span>, estimated by <span class="math inline">\(x^\top\hat\beta\)</span>. We have <span class="math display">\[{\textrm{E}}\left[x^\top\hat\beta\right]=x^\top\beta,\qquad {\textrm{Var}}\left[x^\top\hat\beta\right]=x^\top(X^\top X)^{-1}x\,\sigma^2,\]</span> estimated by <span class="math inline">\(\widehat{{\textrm{Var}}}[x^\top\hat\beta]=x^\top(X^\top X)^{-1}x\,MSE\)</span>.</p>
+<p><strong>Exercise 3.13</strong> Under the normal MLR, show <span class="math inline">\(x^\top\hat\beta\)</span> is Normal with this mean and variance, and that <span class="math inline">\(\dfrac{x^\top\hat\beta-x^\top\beta}{\sqrt{\widehat{{\textrm{Var}}}[x^\top\hat\beta]}}\sim t_{dfE}\)</span>.</p>
+<p>A <span class="math inline">\((1-\alpha)100\%\)</span> confidence interval for the <strong>mean response</strong> <span class="math inline">\({\textrm{E}}[Y|X=x]\)</span> is <span class="math display">\[x^\top\hat\beta\pm t_{dfE,\alpha/2}\sqrt{\widehat{{\textrm{Var}}}[x^\top\hat\beta]}.\]</span> Testing <span class="math inline">\(H_0:{\textrm{E}}[Y|X=x]=\mu_0\)</span> works exactly like the single-coefficient test above, using <span class="math inline">\(TS(x,\mu_0)=\dfrac{x^\top\hat\beta-\mu_0}{\sqrt{\widehat{{\textrm{Var}}}[x^\top\hat\beta]}}\sim t_{dfE}\)</span> under <span class="math inline">\(H_0\)</span>.</p>
+<p>We might instead want to predict a <em>new individual’s</em> response <span class="math inline">\(Y_{new}|Z=z=z^\top\beta+\epsilon_{new}\)</span> — a different question from estimating the population <em>average</em>. Our prediction is <span class="math inline">\(\tilde Y_{new}=z^\top\hat\beta+\epsilon_{new}\)</span> (modeling the future error too), with variance <span class="math display">\[{\textrm{Var}}\left[\tilde Y_{new}|Z=z\right]={\textrm{Var}}[z^\top\hat\beta]+{\textrm{Var}}[\epsilon_{new}]=z^\top(X^\top X)^{-1}z\,\sigma^2+\sigma^2,\]</span> estimated by <span class="math inline">\(z^\top(X^\top X)^{-1}z\,MSE+MSE\)</span>.</p>
+<div class="callout callout-style-default callout-tip callout-titled" title="Intuition: why is the prediction interval wider?">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Intuition: why is the prediction interval wider?
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Estimating the mean response only has to account for our uncertainty about <span class="math inline">\(\beta\)</span> (through <span class="math inline">\(x^\top(X^\top X)^{-1}x\,\sigma^2\)</span>). Predicting one new individual’s response has to account for <em>that same</em> uncertainty about <span class="math inline">\(\beta\)</span>, <strong>plus</strong> the individual’s own random error <span class="math inline">\(\epsilon_{new}\)</span> (the extra <span class="math inline">\(+\sigma^2\)</span>) — an ordinary individual never sits exactly on the population mean line, even if we knew <span class="math inline">\(\beta\)</span> perfectly. That extra source of variability is why the prediction interval always strictly contains the confidence interval for the mean response at the same <span class="math inline">\(x\)</span>.</p>
+</div>
+</div>
+<p><strong>Exercise 3.14</strong> Under the normal MLR, show <span class="math inline">\(\tilde Y_{new}|Z=z\)</span> is Normal, and derive the <span class="math inline">\(t_{dfE}\)</span> pivot for it.</p>
+<p>The <span class="math inline">\((1-\alpha)100\%\)</span> <strong>prediction interval</strong> for <span class="math inline">\(Y_{new}\)</span> is <span class="math display">\[z^\top\hat\beta\pm t_{dfE,\alpha/2}\sqrt{z^\top(X^\top X)^{-1}z\,MSE+MSE}.\]</span></p>
+<div class="callout callout-style-default callout-warning callout-titled" title="Common mistake: interpreting a prediction interval like a confidence interval">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Warning</span>Common mistake: interpreting a prediction interval like a confidence interval
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>A confidence interval for the mean response is a statement about the long-run reliability of the <em>interval-producing procedure</em>, applied to the population mean (a fixed constant). A prediction interval <span class="math inline">\((a,b)\)</span> instead says: <span class="math inline">\(\Pr(Y_{new}\in(a,b))=(1-\alpha)100\%\)</span> — a genuine probability statement about a still-random future observation <span class="math inline">\(Y_{new}\)</span>, not about a procedure applied to a fixed parameter. These are conceptually different claims, even though both intervals are built the same algebraic way.</p>
+</div>
+</div>
+<p><strong>Example 3.6</strong> For someone weighing 165 lbs, find a 95% confidence interval for mean body fat and a 95% prediction interval for one individual’s body fat.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>z <span class="ot">=</span> <span class="fu">data.frame</span>(<span class="at">Weight =</span> <span class="dv">165</span>)</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="fu">predict</span>(model, <span class="at">newdata =</span> z, <span class="at">interval =</span> <span class="st">'confidence'</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<pre><code>       fit      lwr      upr
+1 13.85297 9.379675 18.32627</code></pre>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">predict</span>(model, <span class="at">newdata =</span> z, <span class="at">interval =</span> <span class="st">'prediction'</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<pre><code>       fit       lwr      upr
+1 13.85297 -1.617547 29.32349</code></pre>
+<p>We’re 95% confident the <em>average</em> body fat percentage among 165-lb people is between 9.38% and 18.33%. There’s a 95% probability that <em>one specific</em> 165-lb person’s body fat falls between <span class="math inline">\(-1.62\%\)</span> and <span class="math inline">\(29.32\%\)</span> — a much wider range, as expected.</p>
+</section>
+<section id="partial-testing-is-a-subset-of-covariates-useful" class="level2" data-number="7.7">
+<h2 data-number="7.7" data-anchor-id="partial-testing-is-a-subset-of-covariates-useful"><span class="header-section-number">7.7</span> Partial testing: is a subset of covariates useful?</h2>
+<p>We sometimes want to test whether a whole <em>subset</em> of covariates adds anything, beyond the others already in the model: <span class="math display">\[H_0:(\beta_1,\ldots,\beta_k)=0\qquad\text{vs}\qquad H_1:(\beta_1,\ldots,\beta_k)\neq0,\]</span> comparing a <strong>reduced</strong> model (the other covariates only) against the <strong>complete/full</strong> model (everything). This generalizes the overall <span class="math inline">\(F\)</span> test, which is the special case where the reduced model is the null (intercept-only) model.</p>
+<p>The key insight: <span class="math inline">\(SST\)</span> never depends on which covariates are in the model — it’s a property of <span class="math inline">\(Y\)</span> alone. So the drop in unexplained variation from adding the extra covariates is <span class="math display">\[SSdrop=SSE_R-SSE_C,\qquad dfdrop=dfE_R-dfE_C,\qquad MSdrop=SSdrop/dfdrop,\]</span> where subscripts <span class="math inline">\(R\)</span>/<span class="math inline">\(C\)</span> denote the reduced/complete model. The <strong>partial <span class="math inline">\(F\)</span> test</strong> statistic is <span class="math display">\[TS=\frac{MSdrop}{MSE_C}\sim F_{dfdrop,\,dfE_C}\quad\text{under }H_0,\]</span> with p-value <span class="math inline">\(\Pr(F_{dfdrop,dfE_C}\geq TS)\)</span>.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Taking <span class="math inline">\(k=1\)</span> (dropping a single covariate) reduces this exactly to the single-coefficient <span class="math inline">\(t\)</span>-test from earlier in this section — the partial <span class="math inline">\(F\)</span> test is a genuine generalization, not a separate idea.</p>
+</div>
+</div>
+<p>We can also define the <strong>partial coefficient of determination</strong>, <span class="math display">\[R^2(X_1,\ldots,X_{k}\mid X_{k+1},\ldots,X_p)=\frac{SSE_R-SSE_C}{SSE_R}=\frac{SSdrop}{SSE_R},\]</span> the extra proportion of the <em>remaining</em> (reduced-model) variation explained by adding <span class="math inline">\(X_1,\ldots,X_k\)</span> to a model that already has <span class="math inline">\(X_{k+1},\ldots,X_p\)</span>. Its square root is the <strong>partial correlation coefficient</strong>.</p>
+<p><strong>Example 3.7</strong> A researcher wants to know whether <em>online</em> advertising (YouTube, Facebook) adds anything to a model that already includes newspaper advertising, using the <code>marketing</code> dataset (<code>sales</code> vs.&nbsp;<code>youtube</code>, <code>facebook</code>, <code>newspaper</code>).</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(<span class="st">"marketing"</span>, <span class="at">package =</span> <span class="st">"datarium"</span>)</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(marketing)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><img src="Unit_2_files/figure-html/unnamed-chunk-13-1.png" style="max-width:420px;display:block;margin:1em auto;"></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>full_model <span class="ot">=</span> <span class="fu">lm</span>(sales <span class="sc">~</span> youtube <span class="sc">+</span> facebook <span class="sc">+</span> newspaper, <span class="at">data =</span> marketing)</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>model_red  <span class="ot">=</span> <span class="fu">lm</span>(sales <span class="sc">~</span> newspaper, <span class="at">data =</span> marketing)</span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(model_red, full_model)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<pre><code>Analysis of Variance Table
+
+Model 1: sales ~ newspaper
+Model 2: sales ~ youtube + facebook + newspaper
+  Res.Df    RSS Df Sum of Sq      F    Pr(&gt;F)
+1    198 7394.1
+2    196  801.8  2    6592.3 805.71 &lt; 2.2e-16 ***</code></pre>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>SSdrop <span class="ot">=</span> <span class="fl">7394.119</span> <span class="sc">-</span> <span class="fl">801.8284</span>   <span class="co"># SSE_R - SSE_C</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>partial_R2 <span class="ot">=</span> SSdrop <span class="sc">/</span> <span class="fl">7394.119</span></span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>partial_R2</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<pre><code>[1] 0.8915586</code></pre>
+<p>Adding YouTube and Facebook spending drops unexplained variation from 7394.1 to 801.8 — an enormous, highly significant improvement (<span class="math inline">\(F=805.71\)</span>, p-value <span class="math inline">\(\approx0\)</span>). The partial <span class="math inline">\(R^2\)</span> says these two variables explain about 89.2% of whatever variation newspaper advertising alone left unexplained. Online advertising clearly matters, well beyond what newspaper spending alone captures.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Key takeaways before moving on">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Key takeaways before moving on
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li><span class="math inline">\(\hat Y=X\hat\beta\)</span> are fitted values; <span class="math inline">\(\hat\epsilon=Y-\hat Y\)</span> are residuals — the only observable proxy for the unobservable true errors <span class="math inline">\(\epsilon\)</span>.</li>
+<li><span class="math inline">\(SST=SSM+SSE\)</span> splits total variation in <span class="math inline">\(Y\)</span> into variation explained by the model and variation left over; <span class="math inline">\(R^2=SSM/SST\)</span> is the proportion explained, and <span class="math inline">\(\bar R^2\)</span> penalizes adding covariates.</li>
+<li>The overall <span class="math inline">\(F\)</span> test (<span class="math inline">\(H_0:\)</span> all slopes are 0) and the single-coefficient <span class="math inline">\(t\)</span>-test (<span class="math inline">\(H_0:\beta_j=\beta_j^0\)</span>) both require the normal MLR, and both compare estimated variation to <span class="math inline">\(MSE\)</span>.</li>
+<li>Confidence intervals for the mean response quantify uncertainty in <span class="math inline">\(x^\top\beta\)</span>; prediction intervals are wider because they also account for one new individual’s own random error <span class="math inline">\(\epsilon_{new}\)</span>.</li>
+<li>The partial <span class="math inline">\(F\)</span> test generalizes the single-coefficient <span class="math inline">\(t\)</span>-test to a whole subset of covariates at once, by comparing <span class="math inline">\(SSE\)</span> between a reduced and a complete model; the partial <span class="math inline">\(R^2\)</span> measures the extra variation explained.</li>
+</ul>
+</div>
+</div>
+</section>
+<section id="check-your-understanding" class="level2" data-number="7.8">
+<h2 data-number="7.8" data-anchor-id="check-your-understanding"><span class="header-section-number">7.8</span> Check Your Understanding</h2>
+<style>
+details.qa-answer { margin: 0 0 1.25em 0; border-left: 3px solid #d6eaf8; padding-left: 0.75em; }
+details.qa-answer > summary { cursor: pointer; color: #2e86c1; font-weight: 600; }
+details.qa-answer > summary::marker { color: #2e86c1; }
+details.qa-answer[open] > summary { margin-bottom: 0.5em; }
+details.qa-answer p { margin: 0; }
+</style>
+<p>Before checking your answers, work through this on your own using the hours-studied/exam-score data from <a href="./Unit_2_2.html">3.2</a>: compute and interpret <span class="math inline">\(R^2\)</span>, <span class="math inline">\(\bar R^2\)</span>, and the ANOVA table; perform the overall <span class="math inline">\(F\)</span> test (state hypotheses, test statistic, p-value, and conclusion); and give a 95% confidence interval for the mean exam score of a student who studies 10 hours, plus a 95% prediction interval for one such student.</p>
+<p><strong>Question 1.</strong> What’s the difference between a fitted value <span class="math inline">\(\hat Y_i\)</span> and the true (unobserved) mean response <span class="math inline">\({\textrm{E}}[Y_i|X_i]\)</span>?</p>
+<details class="qa-answer">
+<summary>
+Show answer
+</summary>
+<p>
+<span class="math inline">\({\textrm{E}}[Y_i|X_i]=X_i^\top\beta\)</span> uses the true, unknown population coefficients <span class="math inline">\(\beta\)</span>; the fitted value <span class="math inline">\(\hat Y_i=X_i^\top\hat\beta\)</span> uses our estimated coefficients <span class="math inline">\(\hat\beta\)</span>. <span class="math inline">\(\hat Y_i\)</span> is our best <em>estimate</em> of the (unobservable) true mean response.
+</p>
+</details>
+<p><strong>Question 2.</strong> Why does adding a covariate to a model never decrease <span class="math inline">\(R^2\)</span>, and what does <span class="math inline">\(\bar R^2\)</span> fix about this?</p>
+<details class="qa-answer">
+<summary>
+Show answer
+</summary>
+<p>
+Least squares chooses the fit that minimizes <span class="math inline">\(SSE\)</span> over all available coefficients; adding a covariate only ever gives the optimizer more freedom, so <span class="math inline">\(SSE\)</span> can only go down (or stay the same), which means <span class="math inline">\(SSModel=SST-SSE\)</span> can only go up — hence <span class="math inline">\(R^2\)</span> never decreases, even if the new covariate is pure noise. <span class="math inline">\(\bar R^2\)</span> explicitly penalizes the number of covariates <span class="math inline">\(p\)</span>, so it only increases when a new covariate improves fit by more than chance alone would predict.
+</p>
+</details>
+<p><strong>Question 3.</strong> What null and alternative hypotheses does the overall <span class="math inline">\(F\)</span> test evaluate, and what extra assumption does it require beyond ordinary least squares estimation?</p>
+<details class="qa-answer">
+<summary>
+Show answer
+</summary>
+<p>
+<span class="math inline">\(H_0:\tilde\beta=0\)</span> (all slope coefficients, excluding the intercept, are zero) versus <span class="math inline">\(H_1:\tilde\beta\neq0\)</span> (at least one is nonzero). It requires the normal MLR — errors Normally distributed — even though least squares estimation itself needs no such assumption; normality is only needed to know the sampling distribution of the test statistic.
+</p>
+</details>
+<p><strong>Question 4.</strong> True or False: a 95% prediction interval for a new observation is always narrower than a 95% confidence interval for the mean response at the same covariate value.</p>
+<details class="qa-answer">
+<summary>
+Show answer
+</summary>
+<p>
+False — it’s the opposite. The prediction interval’s variance includes both the uncertainty in estimating <span class="math inline">\(\beta\)</span> <em>and</em> the individual’s own random error <span class="math inline">\(\sigma^2\)</span>, while the confidence interval for the mean only includes the first source. So the prediction interval is always at least as wide, and generally strictly wider.
+</p>
+</details>
+<p><strong>Question 5.</strong> In the partial <span class="math inline">\(F\)</span> test, what do <span class="math inline">\(SSdrop\)</span> and <span class="math inline">\(dfdrop\)</span> represent, and what happens to this test when <span class="math inline">\(k=1\)</span> (only one covariate is dropped)?</p>
+<details class="qa-answer">
+<summary>
+Show answer
+</summary>
+<p>
+<span class="math inline">\(SSdrop=SSE_R-SSE_C\)</span> is the reduction in unexplained variation gained by adding the extra covariates (equivalently, the explained variation lost by removing them); <span class="math inline">\(dfdrop\)</span> is the number of covariates dropped. When <span class="math inline">\(k=1\)</span>, the partial <span class="math inline">\(F\)</span> test reduces exactly to the ordinary single-coefficient <span class="math inline">\(t\)</span>-test for that one covariate.
+</p>
+</details>
+<p><strong>Question 6.</strong> In the marketing example, the partial <span class="math inline">\(R^2\)</span> for adding YouTube and Facebook to a newspaper-only model was about 0.89. What does this number mean, in words?</p>
+<details class="qa-answer">
+<summary>
+Show answer
+</summary>
+<p>
+Of whatever variation in sales was <em>still unexplained</em> by newspaper advertising alone, about 89% of it is explained once YouTube and Facebook spending are added to the model. It is not the proportion of total variation in sales explained by these two variables on their own — it’s specifically the extra, incremental proportion explained on top of what newspaper spending already captured.
+</p>
+</details>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./Unit_2_2.html" class="pagination-link" aria-label="Least Squares">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Least Squares</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./Unit_2_4.html" class="pagination-link" aria-label="Checking model assumptions">
+        <span class="nav-page-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Checking model assumptions</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
