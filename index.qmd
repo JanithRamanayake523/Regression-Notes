@@ -15,7 +15,7 @@ Publisher: John Wiley & Sons, 2012
 ISBN: 0470542810, 9780470542811
 
 ::: {.callout-note}
-This is a work in progress. Currently only the **Review material** unit is available; more units will be added as they are rebuilt.
+This is a work in progress. Currently the **Review material** unit and the **Linear Regression** chapter are available; more units will be added as they are rebuilt.
 :::
 
 ## How these notes are laid out (start here if you're new)
@@ -44,9 +44,9 @@ The four review sections build on each other in a specific order, all pointing t
     <rect x="270" y="115" width="140" height="50" rx="6" fill="#d5f5e3" stroke="#1e8449"/>
     <text x="340" y="136" fill="#145a32">1.4 Random</text>
     <text x="340" y="152" fill="#145a32">vectors</text>
-    <rect x="530" y="65" width="140" height="50" rx="6" fill="#eaeded" stroke="#566573"/>
-    <text x="600" y="86" fill="#333">Regression</text>
-    <text x="600" y="102" fill="#333">(coming next)</text>
+    <rect x="530" y="65" width="140" height="50" rx="6" fill="#d6eaf8" stroke="#2e86c1"/>
+    <text x="600" y="86" fill="#1a5276">Regression</text>
+    <text x="600" y="102" fill="#1a5276">(Chapter 3)</text>
     <line x1="80" y1="65" x2="80" y2="115" stroke="#7f8c8d" marker-end="url(#arrowIdx)"/>
     <line x1="150" y1="140" x2="270" y2="140" stroke="#7f8c8d" marker-end="url(#arrowIdx)"/>
     <line x1="340" y1="65" x2="340" y2="115" stroke="#7f8c8d" marker-end="url(#arrowIdx)"/>
@@ -57,7 +57,7 @@ The four review sections build on each other in a specific order, all pointing t
 </svg>
 </div>
 
-In words: [1.1](Unit_1_1.qmd) gives you the probability vocabulary (expectation, variance, distributions) that [1.2](Unit_1_2.qmd) uses to build confidence intervals and hypothesis tests. Separately, [1.3](Unit_1_3.qmd) gives you the matrix algebra needed to handle many variables at once, which [1.4](Unit_1_4.qmd) uses to describe a whole dataset as a single random vector. Regression itself will combine both halves: it's a hypothesis-testing problem (1.1–1.2) solved using matrix algebra (1.3–1.4).
+In words: [1.1](Unit_1_1.qmd) gives you the probability vocabulary (expectation, variance, distributions) that [1.2](Unit_1_2.qmd) uses to build confidence intervals and hypothesis tests. Separately, [1.3](Unit_1_3.qmd) gives you the matrix algebra needed to handle many variables at once, which [1.4](Unit_1_4.qmd) uses to describe a whole dataset as a single random vector. Regression itself combines both halves: it's a hypothesis-testing problem (1.1–1.2) solved using matrix algebra (1.3–1.4). The **Linear Regression** chapter picks up from here: [3.1](Unit_2_1.qmd) states the regression model itself, [3.2](Unit_2_2.qmd) estimates it with least squares, [3.3](Unit_2_3.qmd) builds confidence intervals and hypothesis tests around that estimate, [3.4](Unit_2_4.qmd) checks whether the model's assumptions actually hold, [3.5](Unit_2_5.qmd) specializes everything to the one-covariate case, and [3.6](Unit_2_6.qmd) closes with practical warnings and a full worked example.
 
 ### Notation you'll see throughout
 

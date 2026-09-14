@@ -15,6 +15,8 @@ Currently covered:
 - Review of introductory statistics (confidence intervals, hypothesis tests)
 - Review of matrices and linear algebra
 - Review of random vectors
+- Linear regression: the model, least squares estimation, inference, checking
+  assumptions, simple linear regression, and additional concepts/examples
 - Glossary of terms used throughout
 
 More units will be added as the course progresses, so check back for updates.

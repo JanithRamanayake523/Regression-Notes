@@ -13,7 +13,15 @@ book:
         - Unit_1_2.qmd
         - Unit_1_3.qmd
         - Unit_1_4.qmd
-        - Glossary.qmd
+    - part: "Linear Regression"
+      chapters:
+        - Unit_2_1.qmd
+        - Unit_2_2.qmd
+        - Unit_2_3.qmd
+        - Unit_2_4.qmd
+        - Unit_2_5.qmd
+        - Unit_2_6.qmd
+    - Glossary.qmd
 
 format:
   html:

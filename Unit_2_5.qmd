@@ -1,0 +1,142 @@
+# Simple linear regression
+
+Simple linear regression (SLR) — one covariate — is a special case of the general MLR machinery from the last three sections. Because it has only two coefficients, everything simplifies into closed-form scalar expressions, which is worth seeing explicitly: it connects the abstract matrix formula $\hat\beta=(X^\top X)^{-1}X^\top Y$ back to the concrete slope/intercept formulas you may have already seen, and it reveals a direct link between the regression slope and the correlation coefficient from [Unit_1_1](Unit_1_1.qmd).
+
+Recall the SLR model $Y_i=\beta_0+\beta_1X_i+\epsilon_i$, with $$
+y=\begin{pmatrix}y_1\\\vdots\\y_n\end{pmatrix},\quad
+X=\begin{pmatrix}1&x_1\\\vdots&\vdots\\1&x_n\end{pmatrix},\quad
+\beta=\begin{pmatrix}\beta_0\\\beta_1\end{pmatrix},\quad
+\epsilon=\begin{pmatrix}\epsilon_1\\\vdots\\\epsilon_n\end{pmatrix}.
+$$
+
+## Estimated coefficients in closed form
+
+Direct matrix multiplication gives $$
+X^\top X=\begin{pmatrix}n&\sum_i x_i\\\sum_i x_i&\sum_i x_i^2\end{pmatrix},\qquad
+X^\top y=\begin{pmatrix}\sum_i y_i\\\sum_i x_iy_i\end{pmatrix}.
+$$ Using the $2\times2$ inverse formula ($\begin{bmatrix}a&b\\c&d\end{bmatrix}^{-1}=\frac{1}{ad-bc}\begin{bmatrix}d&-b\\-c&a\end{bmatrix}$) and the identities $\sum_i(x_i-\bar x)(y_i-\bar y)=\sum_ix_iy_i-n\bar x\bar y$ and $\sum_i(x_i-\bar x)^2=\sum_ix_i^2-n\bar x^2$ from introductory statistics, $$
+(X^\top X)^{-1}=\frac{1}{n\sum_i(x_i-\bar x)^2}\begin{pmatrix}\sum_ix_i^2&-\sum_ix_i\\-\sum_ix_i&n\end{pmatrix}.
+$$ Multiplying through by $X^\top y$ and simplifying (Exercise 3.20 below) gives the familiar slope and intercept formulas:
+
+**Exercise 3.20** Show that $$
+\hat\beta_1=\frac{n\sum_ix_iy_i-\sum_ix_i\sum_iy_i}{n\sum_i(x_i-\bar x)^2}=\frac{\sum_i(x_i-\bar x)(y_i-\bar y)}{\sum_i(x_i-\bar x)^2}.
+$$
+
+Does this look familiar? It's exactly $$
+\hat\beta_1=\hat{{\textrm{corr}}}(X,Y)\,\frac{\hat\sigma_y}{\hat\sigma_x},
+$$ where $\hat{{\textrm{corr}}}(X,Y)$ is the sample correlation between $X$ and $Y$ (from [Unit_1_1](Unit_1_1.qmd)).
+
+::: {.callout-tip title="Intuition: the slope is correlation, rescaled"}
+This identity says the estimated slope is entirely determined by two things: how strongly $X$ and $Y$ move together (their correlation) and how their individual spreads compare (the ratio $\hat\sigma_y/\hat\sigma_x$). If $X$ and $Y$ are essentially uncorrelated, $\hat\beta_1\approx0$, no matter how variable either one is on its own — a flat line is the least-squares best fit. The $\hat\sigma_y/\hat\sigma_x$ factor is a units conversion: it rescales the (unit-free, always-between $-1$-and-$1$) correlation into the actual units of "change in $Y$ per unit of $X$."
+:::
+
+Similarly for the intercept:
+
+**Exercise 3.21** Show that $\hat\beta_0=\bar y-\hat\beta_1\bar x$.
+
+::: {.callout-tip title="Intuition: the fitted line always passes through $(\\bar x,\\bar y)$"}
+Rearranging $\hat\beta_0=\bar y-\hat\beta_1\bar x$ gives $\bar y=\hat\beta_0+\hat\beta_1\bar x$ — in words, the point $(\bar x,\bar y)$, the "average" data point, always lies exactly on the least squares line, regardless of the data. This gives a useful sanity check: if your fitted line doesn't pass through the means of $X$ and $Y$, something has gone wrong in the calculation.
+:::
+
+## Inference in SLR
+
+Since ${\textrm{Var}}[\hat\beta]=(X^\top X)^{-1}\sigma^2$, plugging in the $2\times2$ inverse above gives closed-form expressions: $$
+{\textrm{Var}}\left[\hat\beta_0\right]=\left[\frac{1}{n}+\frac{\bar x^2}{\sum_i(x_i-\bar x)^2}\right]\sigma^2,\qquad
+{\textrm{Var}}\left[\hat\beta_1\right]=\frac{\sigma^2}{\sum_i(x_i-\bar x)^2},\qquad
+{\textrm{cov}}(\hat\beta_0,\hat\beta_1)=-\frac{\bar x}{\sum_i(x_i-\bar x)^2}\sigma^2.
+$$
+
+Everything from [3.3](Unit_2_3.qmd) — confidence intervals $\hat\beta_i\pm t_{dfE,\alpha/2}\sqrt{\widehat{{\textrm{Var}}}(\hat\beta_i)}$, and tests of $H_0:\beta_i=\beta_i^0$ using $\dfrac{\hat\beta_i-\beta_i^0}{\sqrt{\widehat{{\textrm{Var}}}(\hat\beta_i)}}\sim t_{dfE}$ — applies exactly as before, now for $i\in\{0,1\}$, with these plugged-in variance formulas. Inference for the mean response and predictions, and the ANOVA table, all simplify the same way; notably, in SLR, $R^2$ is exactly the *square* of the sample correlation between $X$ and $Y$.
+
+## Inference for the correlation coefficient
+
+SLR also gives us a way to do inference directly on the correlation $\rho={\textrm{corr}}[X,Y]$, since at the population level, $\beta_1=\rho\,\sigma_y/\sigma_x$ — the exact population analogue of the sample identity above.
+
+Because $\sigma_y/\sigma_x>0$, testing $H_0:\rho=0$ vs. $H_1:\rho\neq0$ is *equivalent* to testing $H_0:\beta_1=0$ vs. $H_1:\beta_1\neq0$ — so we can just re-use the slope test from [3.3](Unit_2_3.qmd). Writing $\hat\rho=\hat{{\textrm{corr}}}(X,Y)$, the test statistic works out to $$
+\frac{\hat\beta_1}{\sqrt{\widehat{{\textrm{Var}}}(\hat\beta_1)}}=\frac{\hat\rho\sqrt{n-2}}{\sqrt{1-\hat\rho^2}},
+$$ with p-value from $t_{dfE}$, exactly as before.
+
+::: {.callout-warning title="Common mistake: expecting the same simple trick for $\\rho\\neq0$"}
+Testing $H_0:\rho=0$ reduces neatly to the slope test only because $\rho=0\iff\beta_1=0$. If instead we want to test $H_0:\rho=\rho_0$ for some *nonzero* $\rho_0$, this trick fails — the exact distribution of $\hat\rho$ under such a null is difficult to work with directly. This is why Fisher's transformation (below) exists as a completely separate tool, not a simple extension of the slope test.
+:::
+
+**Fisher's transformation.** For $\rho\in(-1,1)$, define $\theta=\frac12\log\dfrac{1+\rho}{1-\rho}$, estimated by $\hat\theta=\frac12\log\dfrac{1+\hat\rho}{1-\hat\rho}$. Remarkably, $\hat\theta$ is *approximately* Normal with mean $\theta$ and variance $\frac{1}{n-3}$ — regardless of the underlying distribution of $X,Y$ — which gives an approximate $(1-\alpha)100\%$ CI for $\theta$: $$\hat\theta\pm z_{\alpha/2}\sqrt{\tfrac{1}{n-3}},$$ which can then be converted back to a CI for $\rho$ via the inverse transformation. A hypothesized $\rho_0$ similarly maps to $\theta_0=\frac12\log\frac{1+\rho_0}{1-\rho_0}$, giving a standard-Normal-based test for $H_0:\rho=\rho_0$ against any nonzero $\rho_0$.
+
+::: {.callout-tip title="Intuition: why bother transforming $\\rho$ at all?"}
+$\rho$ is squeezed into $(-1,1)$, and its sampling distribution becomes badly skewed as $\hat\rho$ approaches $\pm1$ (there's much more "room" for $\hat\rho$ to be too small than too large near the boundary) — so a Normal approximation applied directly to $\hat\rho$ would be poor except when $\rho$ is close to 0. Fisher's transformation stretches $(-1,1)$ out onto the whole real line, un-squeezing the distribution near the boundaries, so that the transformed quantity $\hat\theta$ behaves (approximately) Normal everywhere.
+:::
+
+**Example 3.10** In [Example 3.1](Unit_2_1.qmd), test whether the correlation between weight and body fat is 0, then test whether it's greater than $1/2$, and construct a 95% CI for $\rho$.
+
+```r
+cor(df)[1,2]        # sample correlation
+```
+```
+[1] 0.6966328
+```
+```r
+summary(model)       # slope t-test IS the rho=0 test
+```
+```
+Coefficients:
+             Estimate Std. Error t value Pr(>|t|)
+(Intercept) -27.37626   11.54743  -2.371 0.029119 *
+Weight        0.24987    0.06065   4.120 0.000643 ***
+```
+
+Since $H_0:\rho=0$ is equivalent to $H_0:\beta_1=0$, the `Weight` row's $t$-value ($4.120$) and p-value ($0.0006$) directly answer the first question: strong evidence that weight and body fat are correlated.
+
+```r
+cor(df)[1,2]^2        # R^2 equals sample correlation squared
+```
+```
+[1] 0.4852972
+```
+
+This matches `Multiple R-squared: 0.4853` from `summary(model)` exactly, confirming the SLR identity $R^2=\hat\rho^2$.
+
+For $H_0:\rho\leq1/2$ vs. $H_1:\rho>1/2$, and for a 95% CI for $\rho$, we'd apply Fisher's transformation with $\hat\rho=0.6966$, giving $\hat\theta=\frac12\log\frac{1.6966}{0.3034}\approx0.858$; comparing against $\theta_0=\frac12\log\frac{1.5}{0.5}\approx0.549$ (for $\rho_0=1/2$) via a one-sided Normal test, or building $\hat\theta\pm z_{0.025}\sqrt{1/17}$ and inverse-transforming both endpoints for the CI.
+
+::: {.callout-note title="Key takeaways before moving on"}
+- SLR is just MLR with $p=2$; the general matrix formulas collapse into closed-form scalar expressions for $\hat\beta_0,\hat\beta_1$ and their variances.
+- $\hat\beta_1=\hat{{\textrm{corr}}}(X,Y)\cdot\hat\sigma_y/\hat\sigma_x$: the slope is the correlation, rescaled into the units of $Y$ per unit of $X$. The fitted line always passes through $(\bar x,\bar y)$.
+- In SLR, $R^2$ is exactly the squared sample correlation between $X$ and $Y$.
+- Because $\beta_1=\rho\,\sigma_y/\sigma_x$, testing $H_0:\rho=0$ is exactly the same test as $H_0:\beta_1=0$ — no new machinery needed.
+- Testing or building intervals for a *nonzero* $\rho_0$ needs Fisher's transformation, since $\hat\rho$'s own sampling distribution is not well-approximated by a Normal, especially near $\pm1$.
+:::
+
+## Check Your Understanding
+
+<style>
+details.qa-answer { margin: 0 0 1.25em 0; border-left: 3px solid #d6eaf8; padding-left: 0.75em; }
+details.qa-answer > summary { cursor: pointer; color: #2e86c1; font-weight: 600; }
+details.qa-answer > summary::marker { color: #2e86c1; }
+details.qa-answer[open] > summary { margin-bottom: 0.5em; }
+details.qa-answer p { margin: 0; }
+</style>
+
+Before checking your answers, complete Exercises 3.20–3.22: derive $\hat\beta_1=\dfrac{\sum_i(x_i-\bar x)(y_i-\bar y)}{\sum_i(x_i-\bar x)^2}$, show $\hat\beta_0=\bar y-\hat\beta_1\bar x$, and — using the hours-studied/exam-score data from [3.2](Unit_2_2.qmd) — compute $\hat\beta$, ${\textrm{Var}}[\hat\beta_1]$, ${\textrm{Var}}[\hat\beta_0]$, and ${\textrm{cov}}(\hat\beta_0,\hat\beta_1)$ directly from the closed-form formulas, then confirm they match `lm()`'s output.
+
+**Question 1.** If $X$ and $Y$ have sample correlation $\hat\rho=0$, what must $\hat\beta_1$ be, and why?
+
+<details class="qa-answer"><summary>Show answer</summary><p>$\hat\beta_1=0$, since $\hat\beta_1=\hat\rho\cdot\hat\sigma_y/\hat\sigma_x$ and multiplying by $\hat\rho=0$ gives 0 regardless of the standard deviations. Zero linear correlation and a flat (zero-slope) least squares line are the same statement.</p></details>
+
+**Question 2.** Why does the least squares line in SLR always pass through the point $(\bar x,\bar y)$?
+
+<details class="qa-answer"><summary>Show answer</summary><p>Because $\hat\beta_0=\bar y-\hat\beta_1\bar x$, rearranging gives $\bar y=\hat\beta_0+\hat\beta_1\bar x$ — plugging $x=\bar x$ into the fitted line always returns $\bar y$ exactly, by construction of the least squares intercept formula.</p></details>
+
+**Question 3.** In SLR, how is $R^2$ related to the sample correlation between $X$ and $Y$?
+
+<details class="qa-answer"><summary>Show answer</summary><p>$R^2=\hat\rho^2$ — the coefficient of determination is exactly the square of the sample correlation coefficient (this is specific to SLR with a single covariate; it doesn't generalize the same way once there are multiple covariates).</p></details>
+
+**Question 4.** Why is testing $H_0:\rho=0$ equivalent to testing $H_0:\beta_1=0$, but testing $H_0:\rho=0.4$ is not equivalent to testing $H_0:\beta_1=0.4\sigma_y/\sigma_x$ in the same simple way?
+
+<details class="qa-answer"><summary>Show answer</summary><p>Both reduce to the same test only when the hypothesized value is 0: $\rho=0\iff\beta_1=0$ exactly, via $\beta_1=\rho\sigma_y/\sigma_x$. For a nonzero hypothesized $\rho_0$, the exact sampling distribution of $\hat\rho$ (or the corresponding $\hat\beta_1$) under that null is complicated and not a simple $t$-distribution, which is exactly why Fisher's transformation is needed as a separate, approximate method.</p></details>
+
+**Question 5.** What does Fisher's transformation $\theta=\frac12\log\frac{1+\rho}{1-\rho}$ accomplish, intuitively?
+
+<details class="qa-answer"><summary>Show answer</summary><p>It maps $\rho\in(-1,1)$ onto the whole real line, "stretching out" the region near $\pm1$ where $\hat\rho$'s sampling distribution is most skewed. The transformed estimator $\hat\theta$ is then approximately Normally distributed (with a simple variance $1/(n-3)$) even when $\hat\rho$ itself is not well-approximated by a Normal distribution.</p></details>
+
+**Question 6.** True or False: the formulas in this section (for $\hat\beta$, its variance, etc.) require new assumptions beyond the general MLR model from earlier sections.
+
+<details class="qa-answer"><summary>Show answer</summary><p>False. SLR is just the $p=2$ special case of MLR — the formulas here are the same general MLR results ($\hat\beta=(X^\top X)^{-1}X^\top Y$, ${\textrm{cov}}(\hat\beta)=\sigma^2(X^\top X)^{-1}$, etc.), just simplified algebraically for the specific structure of a single-covariate $X$ matrix. No new assumptions are introduced.</p></details>
